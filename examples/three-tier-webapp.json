@@ -1,0 +1,132 @@
+{
+  "name": "E-Commerce Platform",
+  "description": "Classic 3-tier web application: load balancer → app servers → database cluster. Uses file-based commands for testing real agent behavior.",
+  "tags": { "env": "demo", "tier": "test", "team": "platform" },
+  "components": [
+    {
+      "name": "PostgreSQL Primary",
+      "component_type": "database",
+      "host": "agent-primary",
+      "check_cmd": "test -f /tmp/appcontrol/postgresql-primary.running",
+      "start_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/postgresql-primary.running",
+      "stop_cmd": "rm -f /tmp/appcontrol/postgresql-primary.running",
+      "check_interval_secs": 10,
+      "start_timeout_secs": 30,
+      "stop_timeout_secs": 30,
+      "integrity_check_cmd": "test -f /tmp/appcontrol/postgresql-primary.running && test -f /tmp/appcontrol/postgresql-primary.data",
+      "infra_check_cmd": "test -d /tmp/appcontrol",
+      "rebuild_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/postgresql-primary.data",
+      "position": { "x": 400, "y": 400 }
+    },
+    {
+      "name": "PostgreSQL Standby",
+      "component_type": "database",
+      "host": "agent-dr",
+      "check_cmd": "test -f /tmp/appcontrol/postgresql-standby.running",
+      "start_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/postgresql-standby.running",
+      "stop_cmd": "rm -f /tmp/appcontrol/postgresql-standby.running",
+      "check_interval_secs": 10,
+      "start_timeout_secs": 30,
+      "stop_timeout_secs": 30,
+      "integrity_check_cmd": "test -f /tmp/appcontrol/postgresql-standby.running && test -f /tmp/appcontrol/postgresql-primary.data",
+      "position": { "x": 600, "y": 400 }
+    },
+    {
+      "name": "Redis Cache",
+      "component_type": "cache",
+      "host": "agent-primary",
+      "check_cmd": "test -f /tmp/appcontrol/redis-cache.running",
+      "start_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/redis-cache.running",
+      "stop_cmd": "rm -f /tmp/appcontrol/redis-cache.running",
+      "check_interval_secs": 10,
+      "start_timeout_secs": 30,
+      "stop_timeout_secs": 30,
+      "position": { "x": 500, "y": 300 }
+    },
+    {
+      "name": "App Server 1",
+      "component_type": "appserver",
+      "host": "agent-primary",
+      "check_cmd": "test -f /tmp/appcontrol/app-server-1.running",
+      "start_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/app-server-1.running",
+      "stop_cmd": "rm -f /tmp/appcontrol/app-server-1.running",
+      "check_interval_secs": 10,
+      "start_timeout_secs": 30,
+      "stop_timeout_secs": 30,
+      "integrity_check_cmd": "test -f /tmp/appcontrol/app-server-1.running && test -f /tmp/appcontrol/postgresql-primary.running",
+      "position": { "x": 350, "y": 200 },
+      "site_overrides": [
+        {
+          "site_code": "LYON",
+          "host_override": "agent-dr",
+          "check_cmd_override": "test -f /tmp/appcontrol/app-server-1-dr.running",
+          "start_cmd_override": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/app-server-1-dr.running",
+          "stop_cmd_override": "rm -f /tmp/appcontrol/app-server-1-dr.running"
+        }
+      ]
+    },
+    {
+      "name": "App Server 2",
+      "component_type": "appserver",
+      "host": "agent-primary",
+      "check_cmd": "test -f /tmp/appcontrol/app-server-2.running",
+      "start_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/app-server-2.running",
+      "stop_cmd": "rm -f /tmp/appcontrol/app-server-2.running",
+      "check_interval_secs": 10,
+      "start_timeout_secs": 30,
+      "stop_timeout_secs": 30,
+      "integrity_check_cmd": "test -f /tmp/appcontrol/app-server-2.running && test -f /tmp/appcontrol/postgresql-primary.running",
+      "position": { "x": 550, "y": 200 },
+      "site_overrides": [
+        {
+          "site_code": "LYON",
+          "host_override": "agent-dr",
+          "check_cmd_override": "test -f /tmp/appcontrol/app-server-2-dr.running",
+          "start_cmd_override": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/app-server-2-dr.running",
+          "stop_cmd_override": "rm -f /tmp/appcontrol/app-server-2-dr.running"
+        }
+      ]
+    },
+    {
+      "name": "Batch Processor",
+      "component_type": "batch",
+      "host": "agent-primary",
+      "check_cmd": "test -f /tmp/appcontrol/batch-processor.running",
+      "start_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/batch-processor.running",
+      "stop_cmd": "rm -f /tmp/appcontrol/batch-processor.running",
+      "check_interval_secs": 15,
+      "start_timeout_secs": 30,
+      "stop_timeout_secs": 60,
+      "position": { "x": 700, "y": 200 }
+    },
+    {
+      "name": "HAProxy Load Balancer",
+      "component_type": "loadbalancer",
+      "host": "agent-primary",
+      "check_cmd": "test -f /tmp/appcontrol/haproxy-lb.running",
+      "start_cmd": "mkdir -p /tmp/appcontrol && touch /tmp/appcontrol/haproxy-lb.running",
+      "stop_cmd": "rm -f /tmp/appcontrol/haproxy-lb.running",
+      "check_interval_secs": 10,
+      "start_timeout_secs": 15,
+      "stop_timeout_secs": 15,
+      "infra_check_cmd": "test -d /tmp/appcontrol",
+      "position": { "x": 450, "y": 50 }
+    }
+  ],
+  "dependencies": [
+    { "from": "App Server 1", "to": "PostgreSQL Primary", "type": "strong" },
+    { "from": "App Server 1", "to": "Redis Cache", "type": "weak" },
+    { "from": "App Server 2", "to": "PostgreSQL Primary", "type": "strong" },
+    { "from": "App Server 2", "to": "Redis Cache", "type": "weak" },
+    { "from": "Batch Processor", "to": "PostgreSQL Primary", "type": "strong" },
+    { "from": "PostgreSQL Standby", "to": "PostgreSQL Primary", "type": "strong" },
+    { "from": "HAProxy Load Balancer", "to": "App Server 1", "type": "strong" },
+    { "from": "HAProxy Load Balancer", "to": "App Server 2", "type": "strong" }
+  ],
+  "notes": {
+    "start_order": "PostgreSQL Primary → PostgreSQL Standby + Redis Cache (parallel) → App Server 1 + App Server 2 + Batch Processor (parallel) → HAProxy",
+    "stop_order": "HAProxy → App Servers + Batch (parallel) → Redis + Standby (parallel) → PostgreSQL Primary",
+    "testing": "All commands use /tmp/appcontrol/ directory with .running files. Start creates file, stop removes it, check verifies existence.",
+    "dr_site": "PostgreSQL Standby is on agent-dr for DR testing. Other components on agent-primary."
+  }
+}

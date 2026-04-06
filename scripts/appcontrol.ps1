@@ -875,6 +875,7 @@ function Do-Help {
     Write-Host "  stop                    Stop all running processes"
     Write-Host "  status                  Show status of all components"
     Write-Host "  add-site <name> [port]  Add a new site (default gateway port: 4443)"
+    Write-Host "  import-example [name] [site]  Import an example application map"
     Write-Host "  upgrade                 Stop, update binaries+frontend, restart"
     Write-Host "  logs [file]             Show recent log output"
     Write-Host "  help                    Show this help message"
@@ -890,6 +891,9 @@ function Do-Help {
     Write-Host "  .\appcontrol.ps1 add-site Production 4443"
     Write-Host "  .\appcontrol.ps1 add-site DR-Site 4444"
     Write-Host "  .\appcontrol.ps1 status"
+    Write-Host "  .\appcontrol.ps1 import-example                              # list examples"
+    Write-Host "  .\appcontrol.ps1 import-example metrics-demo-windows         # auto-select site"
+    Write-Host "  .\appcontrol.ps1 import-example metrics-demo-windows Production  # specify site"
     Write-Host "  .\appcontrol.ps1 logs gateway-Production.log"
     Write-Host "  .\appcontrol.ps1 stop"
     Write-Host "  .\appcontrol.ps1 upgrade"
@@ -900,7 +904,203 @@ function Do-Help {
     Write-Host "  config/     Settings + sites (preserved)"
     Write-Host "  logs/       Log files"
     Write-Host "  frontend/   Web UI static files (overwritten by upgrade)"
+    Write-Host "  examples/   Example application maps"
     Write-Host ""
+}
+
+# ---------------------------------------------------------------------------
+# IMPORT-EXAMPLE
+# ---------------------------------------------------------------------------
+function Do-ImportExample {
+    $settings = Read-Settings
+    if (-not $settings) {
+        Write-Err "No config/settings.json found. Run install first."
+        return
+    }
+
+    $port = $settings.backend_port
+    if (-not $port) { $port = "3000" }
+    $adminEmail = $settings.admin_email
+    if (-not $adminEmail) { $adminEmail = $Email }
+    $adminPassword = $settings.admin_password
+    if (-not $adminPassword) { $adminPassword = $Password }
+
+    $examplesDir = Join-Path $script:ScriptDir "examples"
+
+    # Download examples if not present
+    if (-not (Test-Path $examplesDir)) {
+        Write-Info "Downloading examples..."
+        Ensure-Dir $examplesDir
+        $tarFile = Join-Path $script:BinDir "examples.tar.gz"
+        try {
+            Download-File -Url ($script:ReleasesBase + "/examples.tar.gz") -OutPath $tarFile
+            # Extract tar.gz
+            if ($script:IsWin) {
+                tar -xzf $tarFile -C $script:ScriptDir 2>$null
+            } else {
+                tar xzf $tarFile -C $script:ScriptDir
+            }
+            Remove-Item $tarFile -Force -ErrorAction SilentlyContinue
+            Write-Ok "Examples downloaded to examples/"
+        } catch {
+            Write-Err "Failed to download examples: $_"
+            return
+        }
+    }
+
+    # List available examples
+    $suffix = ""
+    if ($script:IsWin) { $suffix = "-windows" }
+
+    $jsonFiles = Get-ChildItem -Path $examplesDir -Filter "*.json" -ErrorAction SilentlyContinue
+    if (-not $jsonFiles -or $jsonFiles.Count -eq 0) {
+        Write-Err "No example files found in examples/"
+        return
+    }
+
+    if (-not $Arg1) {
+        Write-Host ""
+        Write-Host "Available examples:" -ForegroundColor Yellow
+        Write-Host ""
+        foreach ($f in $jsonFiles) {
+            $name = $f.BaseName
+            $tag = ""
+            if ($name -like "*-windows") { $tag = " (Windows)" }
+            elseif ($jsonFiles | Where-Object { $_.BaseName -eq "$name-windows" }) { $tag = " (Linux/macOS)" }
+            Write-Host ("  " + $name) -ForegroundColor White -NoNewline
+            Write-Host $tag -ForegroundColor DarkGray
+        }
+        Write-Host ""
+        Write-Host "Usage: .\appcontrol.ps1 import-example <name>" -ForegroundColor Cyan
+        Write-Host ""
+        if ($suffix) {
+            Write-Host "Tip: Windows versions have a '-windows' suffix." -ForegroundColor DarkGray
+        }
+        return
+    }
+
+    # Resolve the example file
+    $exampleName = $Arg1
+    $exampleFile = Join-Path $examplesDir ($exampleName + ".json")
+    if (-not (Test-Path $exampleFile)) {
+        # Try with -windows suffix
+        $exampleFile = Join-Path $examplesDir ($exampleName + "-windows.json")
+        if (-not (Test-Path $exampleFile)) {
+            Write-Err ("Example not found: " + $exampleName)
+            Write-Info "Run '.\appcontrol.ps1 import-example' to list available examples."
+            return
+        }
+    }
+
+    Write-Info ("Importing: " + (Split-Path -Leaf $exampleFile))
+
+    # Login
+    $baseUri = "http://localhost:" + $port
+    try {
+        $token = Login-Backend -Port $port -AdminEmail $adminEmail -AdminPassword $adminPassword
+    } catch {
+        Write-Err "Failed to login. Is the backend running?"
+        return
+    }
+
+    # Get available sites
+    $sitesResult = Invoke-Api -Method "GET" -Uri ($baseUri + "/api/v1/sites") -Token $token
+    $sites = @()
+    if ($sitesResult -and $sitesResult.sites) { $sites = @($sitesResult.sites) }
+
+    if ($sites.Count -eq 0) {
+        Write-Err "No sites configured. Run 'add-site' first."
+        return
+    }
+
+    # Select site
+    $siteId = $null
+    if ($Arg2) {
+        # Site specified as argument
+        $match = $sites | Where-Object { $_.site_name -eq $Arg2 -or $_.site_code -eq $Arg2 -or $_.id -eq $Arg2 }
+        if ($match) {
+            $siteId = $match.id
+            Write-Info ("Using site: " + $match.site_name)
+        } else {
+            Write-Err ("Site not found: " + $Arg2)
+            return
+        }
+    } elseif ($sites.Count -eq 1) {
+        $siteId = $sites[0].id
+        Write-Info ("Using site: " + $sites[0].site_name)
+    } else {
+        Write-Host ""
+        Write-Host "Available sites:" -ForegroundColor Yellow
+        for ($i = 0; $i -lt $sites.Count; $i++) {
+            $s = $sites[$i]
+            $stype = if ($s.site_type) { " (" + $s.site_type + ")" } else { "" }
+            Write-Host ("  [" + ($i + 1) + "] " + $s.site_name + $stype) -ForegroundColor White
+        }
+        Write-Host ""
+        $choice = Read-Host "Select site number"
+        $idx = [int]$choice - 1
+        if ($idx -ge 0 -and $idx -lt $sites.Count) {
+            $siteId = $sites[$idx].id
+            Write-Info ("Using site: " + $sites[$idx].site_name)
+        } else {
+            Write-Err "Invalid selection."
+            return
+        }
+    }
+
+    # Get agents on this site to show which host will be used
+    $agentsResult = Invoke-Api -Method "GET" -Uri ($baseUri + "/api/v1/agents") -Token $token
+    if ($agentsResult -and $agentsResult.agents) {
+        $agentCount = @($agentsResult.agents).Count
+        Write-Info ("Agents available: " + $agentCount)
+        foreach ($a in $agentsResult.agents) {
+            Write-Host ("  - " + $a.hostname + " (" + $a.id.Substring(0, 8) + ")") -ForegroundColor DarkGray
+        }
+    }
+
+    # Read example and wrap in import envelope
+    $jsonContent = Get-Content -Path $exampleFile -Raw -Encoding UTF8
+    $importBody = @{
+        json    = $jsonContent
+        site_id = $siteId
+    }
+
+    try {
+        $result = Invoke-Api -Method "POST" -Uri ($baseUri + "/api/v1/import/json") -Body $importBody -Token $token
+        if ($result -and $result.application_id) {
+            Write-Ok ("Application imported: " + $result.application_name + " (ID: " + $result.application_id + ")")
+            Write-Info ("Components: " + $result.components_created + ", Dependencies: " + $result.dependencies_created)
+            if ($result.warnings -and $result.warnings.Count -gt 0) {
+                foreach ($w in $result.warnings) { Write-Warn $w }
+            }
+        } else {
+            Write-Ok "Import completed."
+        }
+    } catch {
+        Write-Err ("Import failed: " + $_)
+        return
+    }
+
+    # Windows metrics demo: copy check.bat and run setup.ps1
+    if ((Split-Path -Leaf $exampleFile) -eq "metrics-demo-windows.json") {
+        $checkBat = Join-Path $examplesDir "metrics-demo-check.bat"
+        $setupPs1 = Join-Path $examplesDir "metrics-demo-setup.ps1"
+
+        if (Test-Path $checkBat) {
+            $agentDir = $script:BinDir
+            Copy-Item $checkBat -Destination $agentDir -Force
+            Write-Ok ("Copied metrics-demo-check.bat to " + $agentDir)
+        }
+
+        if (Test-Path $setupPs1) {
+            Write-Info "Running metrics demo setup (creating JSON metrics files)..."
+            & powershell -ExecutionPolicy Bypass -File $setupPs1
+            Write-Ok "Metrics demo setup complete."
+        }
+
+        Write-Host ""
+        Write-Info "Metrics demo ready. Run Start All from the UI to see metrics."
+    }
 }
 
 # ---------------------------------------------------------------------------
@@ -914,9 +1114,10 @@ switch ($cmd) {
     "start"    { Do-Start }
     "stop"     { Do-Stop }
     "status"   { Do-Status }
-    "add-site" { Do-AddSite }
-    "upgrade"  { Do-Upgrade }
-    "logs"     { Do-Logs }
-    "help"     { Do-Help }
+    "add-site"       { Do-AddSite }
+    "import-example" { Do-ImportExample }
+    "upgrade"        { Do-Upgrade }
+    "logs"           { Do-Logs }
+    "help"           { Do-Help }
     default    { Do-Help }
 }

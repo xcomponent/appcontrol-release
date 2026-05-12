@@ -159,14 +159,14 @@ Windows examples use `%TEMP%\appcontrol\` instead of `/tmp/appcontrol/` for flag
 
 ```bash
 # Download the examples archive from the latest release
-gh release download --repo fredericcarre/appcontrol --pattern 'examples.tar.gz'
+gh release download --repo xcomponent/appcontrol-release --pattern 'examples.tar.gz'
 tar xzf examples.tar.gz
 ```
 
 ### From a git clone
 
 ```bash
-git clone https://github.com/fredericcarre/appcontrol.git
+git clone https://github.com/xcomponent/appcontrol-release.git
 # Examples are in appcontrol/examples/
 ```
 

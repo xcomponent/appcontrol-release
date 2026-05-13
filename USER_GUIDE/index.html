@@ -1,0 +1,3851 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
+      
+      
+        <meta name="author" content="AppControl">
+      
+      
+        <link rel="canonical" href="https://docs.appcontrol.io/USER_GUIDE/">
+      
+      
+        <link rel="prev" href="../GLOSSARY/">
+      
+      
+        <link rel="next" href="../PERMISSIONS/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Overview - AppControl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#appcontrol-v4-user-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AppControl" class="md-header__button md-logo" aria-label="AppControl" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AppControl
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/xcomponent/appcontrol-release" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xcomponent/appcontrol-release
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../QUICKSTART/" class="md-tabs__link">
+          
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../INTEGRATION_COOKBOOK/" class="md-tabs__link">
+          
+  
+    
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PRODUCTION_DEPLOYMENT/" class="md-tabs__link">
+          
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CONFIGURATION/" class="md-tabs__link">
+          
+  
+    
+  
+  Configuration
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/cli/" class="md-tabs__link">
+          
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../COMPLIANCE_DORA_NIS2/" class="md-tabs__link">
+          
+  
+    
+  
+  Compliance
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CHANGELOG/" class="md-tabs__link">
+          
+  
+    
+  
+  Release
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AppControl" class="md-nav__button md-logo" aria-label="AppControl" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AppControl
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/xcomponent/appcontrol-release" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xcomponent/appcontrol-release
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICKSTART/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEMO_SCENARIOS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Demo scenarios
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../POSITIONING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Where it fits (positioning)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GLOSSARY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Application Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-an-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating an Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#importing-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Importing Applications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Auto-Discovery
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map View
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Map View">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interactive-dag-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interactive DAG Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-detail-panel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Detail Panel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-site-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Site View
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-application-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Application Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-application-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Application Stop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-branch-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Branch Restart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dr-site-switchover" class="md-nav__link">
+    <span class="md-ellipsis">
+      DR Site Switchover
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dry-run-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dry Run Simulation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagnostic-rebuild" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostic &amp; Rebuild
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Infrastructure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hostings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hostings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-site-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Site Probe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enrollment-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enrollment Tokens
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Users &amp; Permissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Users & Permissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#team-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Team Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sharing-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sharing &amp; Permissions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reports-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reports &amp; Compliance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings &amp; Administration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Settings & Administration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supervision-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supervision Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Catalog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Catalog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initializing-the-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initializing the Catalog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catalog-import-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Catalog Import Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      REST API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      UI Integration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduler-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduler Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduler Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest-api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      REST API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-appctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI (appctl)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tls-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      TLS Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-security-5-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Certificate Security (5 Layers)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Certificate Rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-workflows-4-eyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approval Workflows (4-Eyes)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#break-glass-emergency-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Break-Glass Emergency Access
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PERMISSIONS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Permissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RUNBOOKS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Runbooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Operations
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../INTEGRATION_COOKBOOK/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../METRICS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MIGRATION_FROM_SCRIPTS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration from scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BACKUP_RESTORE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Backup & restore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UPGRADE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade procedures
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DISASTER_RECOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disaster recovery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PRODUCTION_DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HIGH_AVAILABILITY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High availability
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENT_INSTALLATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AZURE_GATEWAY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OPENSHIFT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HARDENING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hardening checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAPACITY_PLANNING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Capacity planning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LIMITS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Limits & quotas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Configuration
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONFIGURATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQLITE_IMPLEMENTATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQLite implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/cli/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CLI (appctl)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration env vars
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors & exit codes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/fsm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FSM states
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prometheus metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/enums/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enums
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/mcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MCP tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Compliance
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Compliance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPLIANCE_DORA_NIS2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DORA & NIS2 mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Release
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Release
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RELEASE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Application Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-an-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating an Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#importing-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Importing Applications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Auto-Discovery
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map View
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Map View">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interactive-dag-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interactive DAG Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-detail-panel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Detail Panel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-site-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Site View
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-application-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Application Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-application-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Application Stop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-branch-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Branch Restart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dr-site-switchover" class="md-nav__link">
+    <span class="md-ellipsis">
+      DR Site Switchover
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dry-run-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dry Run Simulation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagnostic-rebuild" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostic &amp; Rebuild
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Infrastructure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hostings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hostings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-site-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Site Probe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enrollment-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enrollment Tokens
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Users &amp; Permissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Users & Permissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#team-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Team Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sharing-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sharing &amp; Permissions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reports-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reports &amp; Compliance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings &amp; Administration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Settings & Administration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supervision-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supervision Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Catalog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Catalog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initializing-the-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initializing the Catalog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catalog-import-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Catalog Import Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      REST API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      UI Integration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduler-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduler Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduler Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest-api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      REST API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-appctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI (appctl)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tls-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      TLS Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-security-5-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Certificate Security (5 Layers)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Certificate Rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-workflows-4-eyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approval Workflows (4-Eyes)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#break-glass-emergency-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Break-Glass Emergency Access
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/fredericcarre/appcontrol/edit/main/docs/USER_GUIDE.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="appcontrol-v4-user-guide">AppControl v4 — User Guide<a class="headerlink" href="#appcontrol-v4-user-guide" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Operational mastery and IT system resilience.</strong>
+Map your applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain full DORA-compliant audit trails.</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#login">Login</a></li>
+<li><a href="#dashboard">Dashboard</a></li>
+<li><a href="#application-management">Application Management</a></li>
+<li><a href="#creating-an-application">Creating an Application (Onboarding Wizard)</a></li>
+<li><a href="#importing-applications">Importing Applications</a></li>
+<li><a href="#auto-discovery">Auto-Discovery</a></li>
+<li><a href="#map-view">Map View</a></li>
+<li><a href="#interactive-dag-visualization">Interactive DAG Visualization</a></li>
+<li><a href="#component-detail-panel">Component Detail Panel</a></li>
+<li><a href="#multi-site-view">Multi-Site View</a></li>
+<li><a href="#operations">Operations</a></li>
+<li><a href="#full-application-start">Full Application Start</a></li>
+<li><a href="#full-application-stop">Full Application Stop</a></li>
+<li><a href="#error-branch-restart">Error Branch Restart</a></li>
+<li><a href="#dr-site-switchover">DR Site Switchover</a></li>
+<li><a href="#custom-commands">Custom Commands</a></li>
+<li><a href="#dry-run-simulation">Dry Run Simulation</a></li>
+<li><a href="#diagnostic--rebuild">Diagnostic &amp; Rebuild</a></li>
+<li><a href="#infrastructure">Infrastructure</a></li>
+<li><a href="#agents">Agents</a></li>
+<li><a href="#gateways">Gateways</a></li>
+<li><a href="#sites">Sites</a></li>
+<li><a href="#enrollment-tokens">Enrollment Tokens</a></li>
+<li><a href="#users--permissions">Users &amp; Permissions</a></li>
+<li><a href="#user-management">User Management</a></li>
+<li><a href="#team-management">Team Management</a></li>
+<li><a href="#sharing--permissions">Sharing &amp; Permissions</a></li>
+<li><a href="#reports--compliance">Reports &amp; Compliance</a></li>
+<li><a href="#settings--administration">Settings &amp; Administration</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#api-keys">API Keys</a></li>
+<li><a href="#supervision-mode">Supervision Mode</a></li>
+<li><a href="#scheduler-integration">Scheduler Integration</a></li>
+<li><a href="#security-architecture">Security Architecture</a></li>
+</ul>
+<hr />
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="login">Login<a class="headerlink" href="#login" title="Permanent link">&para;</a></h3>
+<p>AppControl supports multiple authentication methods: <strong>OIDC</strong> (Keycloak, Okta, Azure AD), <strong>SAML 2.0</strong> (ADFS, Azure AD), and <strong>local authentication</strong> for development environments.</p>
+<p>After authenticating, you are redirected to the Dashboard. Your session uses RS256-signed JWT tokens with automatic refresh.</p>
+<p><img alt="login" src="../screenshots/login.png" />
+<em>Login page — supports OIDC, SAML 2.0, and local authentication</em></p>
+<h3 id="dashboard">Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h3>
+<p>The Dashboard is your command center. It provides a real-time overview of all applications you have access to.</p>
+<p><strong>What you see at a glance:</strong></p>
+<ul>
+<li><strong>Application cards</strong> — each card shows the application name, overall health status, and a component count breakdown (running, failed, stopped)</li>
+<li><strong>KPI tiles</strong> — aggregate metrics across your portfolio: total applications, components running, components failed, agents connected</li>
+<li><strong>Live event feed</strong> — the most recent operations, state changes, and alerts across all visible applications</li>
+<li><strong>Quick filters</strong> — focus on applications by status (healthy, degraded, failed) or by site</li>
+<li><strong>Search</strong> — locate applications by name or tag instantly</li>
+</ul>
+<p>The Dashboard updates in <strong>real time</strong> via WebSocket — status changes appear immediately without manual refresh.</p>
+<p><img alt="dashboard" src="../screenshots/dashboard.png" />
+<em>Dashboard — real-time overview of all applications with KPIs and live event feed</em></p>
+<hr />
+<h2 id="application-management">Application Management<a class="headerlink" href="#application-management" title="Permanent link">&para;</a></h2>
+<h3 id="creating-an-application">Creating an Application<a class="headerlink" href="#creating-an-application" title="Permanent link">&para;</a></h3>
+<p>The <strong>Onboarding Wizard</strong> guides you through creating a new application step by step. No YAML files or CLI commands needed.</p>
+<p><strong>The wizard walks you through:</strong></p>
+<ol>
+<li><strong>Welcome</strong> — introduction and getting started</li>
+<li><strong>App Info</strong> — name, description, and primary site selection</li>
+<li><strong>Sites</strong> — configure primary and DR site assignments</li>
+<li><strong>Components</strong> — define each component with its type, agent, and commands (check, start, stop)</li>
+<li><strong>Dependencies</strong> — draw the dependency graph between components</li>
+<li><strong>Review</strong> — verify the complete configuration before creation</li>
+<li><strong>Done</strong> — application is created and agents start monitoring immediately</li>
+</ol>
+<p><img alt="onboarding" src="../screenshots/onboarding.png" />
+<em>Onboarding Wizard — guided application creation</em></p>
+<p>Each component requires at minimum a <strong>name</strong>, <strong>type</strong>, and <strong>agent assignment</strong>. The check command determines how AppControl monitors the component's health. Start and stop commands enable orchestrated operations.</p>
+<p><img alt="onboarding-components" src="../screenshots/onboarding-components.png" />
+<em>Component configuration — define check, start, and stop commands for each component</em></p>
+<h3 id="importing-applications">Importing Applications<a class="headerlink" href="#importing-applications" title="Permanent link">&para;</a></h3>
+<p>For teams that prefer infrastructure-as-code, AppControl supports <strong>YAML and JSON import</strong> of application definitions.</p>
+<p><strong>Import workflow:</strong></p>
+<ol>
+<li>Upload a YAML/JSON file defining components, dependencies, and commands</li>
+<li>AppControl validates the structure (checks for DAG cycles, missing references, invalid types)</li>
+<li>The <strong>Import Wizard</strong> lets you review the parsed application, map components to agents, and resolve conflicts</li>
+<li>The application is created with full version tracking in <code>config_versions</code></li>
+</ol>
+<p>You can also import from <strong>existing AppControl v3 configurations</strong> — the importer automatically maps legacy component types and command formats.</p>
+<p><img alt="import" src="../screenshots/import.png" />
+<em>Import page — upload YAML/JSON application definitions</em></p>
+<h3 id="auto-discovery">Auto-Discovery<a class="headerlink" href="#auto-discovery" title="Permanent link">&para;</a></h3>
+<p>The <strong>Discovery</strong> feature automatically detects running processes on monitored servers and suggests application topologies.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Agents scan their hosts for running processes, listening ports, and service definitions</li>
+<li>Discovery correlates processes across agents to identify multi-server applications</li>
+<li>A <strong>draft topology</strong> is generated with suggested component names, types, and dependencies</li>
+<li>You review and refine the draft before promoting it to a real application</li>
+</ol>
+<p>This is especially useful for onboarding existing applications that don't have formal documentation.</p>
+<p><img alt="discovery" src="../screenshots/discovery.png" />
+<em>Auto-Discovery — detect and map running applications automatically</em></p>
+<hr />
+<h2 id="map-view">Map View<a class="headerlink" href="#map-view" title="Permanent link">&para;</a></h2>
+<h3 id="interactive-dag-visualization">Interactive DAG Visualization<a class="headerlink" href="#interactive-dag-visualization" title="Permanent link">&para;</a></h3>
+<p>The Map View is the heart of AppControl. It renders your application's component topology as an <strong>interactive directed acyclic graph (DAG)</strong> powered by React Flow.</p>
+<p><strong>Key capabilities:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pan &amp; Zoom</strong></td>
+<td>Navigate large topologies with mouse drag and scroll wheel</td>
+</tr>
+<tr>
+<td><strong>Color-coded nodes</strong></td>
+<td>Each node reflects its FSM state: green (running), red (failed), gray (stopped), blue pulse (starting/stopping)</td>
+</tr>
+<tr>
+<td><strong>Dependency edges</strong></td>
+<td>Directional arrows show which components depend on which</td>
+</tr>
+<tr>
+<td><strong>Error branch</strong></td>
+<td>Failed components and their dependents are highlighted in pink for quick identification</td>
+</tr>
+<tr>
+<td><strong>Toolbar actions</strong></td>
+<td>Start All, Stop All, Restart Branch, Switchover, Diagnose, Export</td>
+</tr>
+<tr>
+<td><strong>Layout controls</strong></td>
+<td>Automatic arrangement: top-down, left-right, or radial</td>
+</tr>
+<tr>
+<td><strong>Mini-map</strong></td>
+<td>Overview navigation for large application graphs</td>
+</tr>
+<tr>
+<td><strong>Keyboard shortcuts</strong></td>
+<td><code>Ctrl+F</code> search, <code>Space</code> toggle start/stop, <code>F5</code> refresh, <code>?</code> show all shortcuts</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="map-view" src="../screenshots/map-view.png" />
+<em>Map View — interactive DAG visualization with color-coded component states</em></p>
+<h3 id="component-detail-panel">Component Detail Panel<a class="headerlink" href="#component-detail-panel" title="Permanent link">&para;</a></h3>
+<p>Click any component node to open the <strong>Detail Panel</strong> on the right side. It provides deep insight into a single component.</p>
+<p><strong>Panel tabs:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Status</strong></td>
+<td>Current FSM state, last check result, uptime counter, state history timeline</td>
+</tr>
+<tr>
+<td><strong>Checks</strong></td>
+<td>Results from all three diagnostic levels (health, integrity, infrastructure) with stdout/stderr</td>
+</tr>
+<tr>
+<td><strong>Metrics</strong></td>
+<td>Visualizations of metrics extracted from check commands (gauges, sparklines, charts)</td>
+</tr>
+<tr>
+<td><strong>Commands</strong></td>
+<td>Execute start, stop, or custom commands with live terminal output</td>
+</tr>
+<tr>
+<td><strong>Logs</strong></td>
+<td>Agent log tail for this component with search and filtering</td>
+</tr>
+<tr>
+<td><strong>Config</strong></td>
+<td>Component configuration: commands, intervals, timeouts, environment variables</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="map-view-detail-panel" src="../screenshots/map-view-detail-panel.png" />
+<em>Detail Panel — component status, check results, metrics, and command execution</em></p>
+<h3 id="multi-site-view">Multi-Site View<a class="headerlink" href="#multi-site-view" title="Permanent link">&para;</a></h3>
+<p>When an application is configured with <strong>site overrides</strong> (primary + DR), the Map View displays split-panel component nodes showing the status on each site simultaneously.</p>
+<p>This gives operators instant visibility into both the primary and disaster recovery deployments without switching views.</p>
+<!-- SCREENSHOT:map-view-multi-site -->
+<p><em>Multi-Site View — primary and DR status side by side on each component node</em></p>
+<hr />
+<h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">&para;</a></h2>
+<p>AppControl supports seven core operations. Every operation is logged in the audit trail <strong>before</strong> execution begins.</p>
+<h3 id="full-application-start">Full Application Start<a class="headerlink" href="#full-application-start" title="Permanent link">&para;</a></h3>
+<p>Starts all components following the dependency graph <strong>bottom-up</strong>:</p>
+<ul>
+<li>Components with no dependencies start first</li>
+<li>Each component waits for its dependencies to reach <code>RUNNING</code></li>
+<li>Components at the same level start <strong>in parallel</strong></li>
+<li>Progress is tracked per-component with real-time updates on the map</li>
+</ul>
+<h3 id="full-application-stop">Full Application Stop<a class="headerlink" href="#full-application-stop" title="Permanent link">&para;</a></h3>
+<p>Stops all components in <strong>reverse dependency order</strong> (top-down):</p>
+<ul>
+<li>Components with no dependents stop first</li>
+<li>Each component waits for all its dependents to reach <code>STOPPED</code></li>
+<li>Configurable timeout per component with force-stop option</li>
+</ul>
+<h3 id="error-branch-restart">Error Branch Restart<a class="headerlink" href="#error-branch-restart" title="Permanent link">&para;</a></h3>
+<p>When a component fails, AppControl identifies the <strong>error branch</strong>: the failed component and all its dependents (highlighted in pink on the map).</p>
+<p>The restart sequence:
+1. Stop all components in the error branch (top-down)
+2. Restart the root cause component
+3. Start all dependent components (bottom-up) once the root is running</p>
+<p>This avoids restarting the entire application when only a subset is affected.</p>
+<h3 id="dr-site-switchover">DR Site Switchover<a class="headerlink" href="#dr-site-switchover" title="Permanent link">&para;</a></h3>
+<p>Migrates an application from the primary site to the DR site in <strong>six phases</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Pre-check</strong></td>
+<td>Validate DR site readiness: agents connected, resources available</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Quiesce</strong></td>
+<td>Gracefully stop incoming traffic and drain active sessions</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Stop Primary</strong></td>
+<td>Stop all components on the primary site (reverse DAG)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Data Sync</strong></td>
+<td>Verify data replication is complete and consistent</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Start DR</strong></td>
+<td>Start all components on the DR site (DAG order)</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Validate</strong></td>
+<td>Run health checks to confirm successful switchover</td>
+</tr>
+</tbody>
+</table>
+<p>Each phase is logged and can be monitored in real time. Rollback is available during phases 1-3.</p>
+<p><strong>Cross-site detection:</strong> Before switchover, the system checks if components are already running on the target site (via cross-site probe). If detected, a warning is displayed to the operator.</p>
+<h3 id="custom-commands">Custom Commands<a class="headerlink" href="#custom-commands" title="Permanent link">&para;</a></h3>
+<p>Execute predefined commands on specific components: log rotation, cache clearing, configuration reload, database maintenance, or any custom operation. Commands are subject to permission checks and fully audited.</p>
+<h3 id="dry-run-simulation">Dry Run Simulation<a class="headerlink" href="#dry-run-simulation" title="Permanent link">&para;</a></h3>
+<p>Simulate any operation without making changes:</p>
+<ul>
+<li>Validates the DAG and dependency order</li>
+<li>Checks agent connectivity and user permissions</li>
+<li>Reports the expected execution sequence</li>
+<li>Identifies potential issues before they happen</li>
+</ul>
+<p><strong>Always recommended before switchovers or large-scale operations in production.</strong></p>
+<h3 id="diagnostic-rebuild">Diagnostic &amp; Rebuild<a class="headerlink" href="#diagnostic-rebuild" title="Permanent link">&para;</a></h3>
+<p>A three-level progressive assessment followed by surgical reconstruction:</p>
+<ol>
+<li><strong>Level 1 (Health)</strong> — identify which components are not running</li>
+<li><strong>Level 2 (Integrity)</strong> — check data consistency for failed components</li>
+<li><strong>Level 3 (Infrastructure)</strong> — verify OS, filesystem, and prerequisites</li>
+<li><strong>Assessment report</strong> — findings with recommended actions</li>
+<li><strong>Rebuild execution</strong> — targeted fixes based on the assessment</li>
+</ol>
+<hr />
+<h2 id="infrastructure">Infrastructure<a class="headerlink" href="#infrastructure" title="Permanent link">&para;</a></h2>
+<h3 id="agents">Agents<a class="headerlink" href="#agents" title="Permanent link">&para;</a></h3>
+<p>Agents are lightweight Rust binaries deployed on monitored servers. They execute health checks, start/stop commands, and report status back through the gateway using <strong>mTLS</strong>.</p>
+<p><strong>The Agents page shows:</strong></p>
+<ul>
+<li>All registered agents with connection status (connected, disconnected)</li>
+<li>Heartbeat timestamps and latency</li>
+<li>Agent version and OS information</li>
+<li>Number of components managed by each agent</li>
+<li>System metrics (CPU, memory, disk) when available</li>
+</ul>
+<p>Communication uses <strong>delta-only sync</strong>: agents send only state changes, not full status on every check cycle.</p>
+<p><img alt="agents" src="../screenshots/agents.png" />
+<em>Agents — monitor connected agents, heartbeat status, and managed components</em></p>
+<h3 id="gateways">Gateways<a class="headerlink" href="#gateways" title="Permanent link">&para;</a></h3>
+<p>Gateways are the communication hubs between agents and the backend. Each site or zone has its own gateway. Agents connect to their zone's gateway via <strong>mTLS WebSocket</strong>.</p>
+<p><strong>The Gateways page shows:</strong></p>
+<ul>
+<li>Registered gateways with connection status</li>
+<li>Associated site and zone</li>
+<li>Number of agents connected through each gateway</li>
+<li>Gateway version and uptime</li>
+</ul>
+<p><img alt="gateways" src="../screenshots/gateways.png" />
+<em>Gateways — manage communication hubs and monitor agent connections</em></p>
+<h3 id="sites">Sites<a class="headerlink" href="#sites" title="Permanent link">&para;</a></h3>
+<p>Sites represent physical or logical locations: datacenters, DR sites, staging environments. Every application and gateway belongs to a site.</p>
+<p><strong>Site types:</strong> <code>primary</code> (production), <code>dr</code> (disaster recovery), <code>staging</code>, <code>development</code>.</p>
+<p>Sites are configured at setup time and used during DR switchover operations to orchestrate transitions between locations.</p>
+<p><img alt="sites" src="../screenshots/sites.png" />
+<em>Sites — configure datacenters, DR sites, and environments</em></p>
+<h3 id="hostings">Hostings<a class="headerlink" href="#hostings" title="Permanent link">&para;</a></h3>
+<p>A <strong>hosting</strong> groups related sites by physical datacenter or cloud region. For example, "Datacenter Paris" might contain sites <code>prod-paris</code> and <code>staging-paris</code>.</p>
+<p><strong>Key features:</strong>
+- Create hostings and assign sites to them from the <strong>Hostings</strong> admin page
+- During switchover, sites are grouped by hosting so operators can identify intra-hosting vs. cross-hosting failovers
+- The hosting name appears as a badge on the Sites page and in JSON exports</p>
+<!-- SCREENSHOT:hostings -->
+<p><em>Hostings — group sites by datacenter or cloud region</em></p>
+<h3 id="cross-site-probe">Cross-Site Probe<a class="headerlink" href="#cross-site-probe" title="Permanent link">&para;</a></h3>
+<p>When a DR binding profile exists, AppControl automatically monitors the <strong>passive site</strong> to detect if a component is unexpectedly running there (e.g., started manually outside AppControl).</p>
+<p><strong>How it works:</strong>
+1. Every 5 minutes, the backend sends the component's <code>check_cmd</code> to the passive site's agent
+2. If the check succeeds (exit code 0), the component is flagged as running on the wrong site
+3. A <strong>DUAL</strong> warning badge appears on the component in the map view
+4. A <code>CrossSiteAlert</code> WebSocket event is broadcast to connected clients</p>
+<p>This prevents "split-brain" scenarios where the same application runs on both sites simultaneously after a manual intervention.</p>
+<h3 id="enrollment-tokens">Enrollment Tokens<a class="headerlink" href="#enrollment-tokens" title="Permanent link">&para;</a></h3>
+<p>New agents and gateways are onboarded using <strong>enrollment tokens</strong> for secure, authenticated registration.</p>
+<p><strong>Enrollment workflow:</strong></p>
+<ol>
+<li>An administrator generates an enrollment token (scoped to <code>agent</code> or <code>gateway</code>)</li>
+<li>The token is provided during installation via CLI flag or config file</li>
+<li>On first connection, the component presents the token and receives mTLS certificates</li>
+<li>The token is single-use and expires after a configurable duration</li>
+</ol>
+<p><img alt="enrollment" src="../screenshots/enrollment.png" />
+<em>Enrollment Tokens — generate and manage secure registration tokens</em></p>
+<hr />
+<h2 id="users-permissions">Users &amp; Permissions<a class="headerlink" href="#users-permissions" title="Permanent link">&para;</a></h2>
+<h3 id="user-management">User Management<a class="headerlink" href="#user-management" title="Permanent link">&para;</a></h3>
+<p>Manage all users in your organization. Users can be created manually or auto-provisioned through OIDC/SAML on first login.</p>
+<p><strong>User roles:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Scope</th>
+<th>Capabilities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Admin</strong></td>
+<td>Organization-wide</td>
+<td>Full platform access, manage users/teams/sites/agents</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>Per-application</td>
+<td>Start, stop, restart where granted <code>operate</code> permission</td>
+</tr>
+<tr>
+<td><strong>Editor</strong></td>
+<td>Per-application</td>
+<td>Modify configuration where granted <code>edit</code> permission</td>
+</tr>
+<tr>
+<td><strong>Viewer</strong></td>
+<td>Per-application</td>
+<td>Read-only access to maps, logs, and reports</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="users" src="../screenshots/users.png" />
+<em>Users — manage accounts, roles, and organization membership</em></p>
+<h3 id="team-management">Team Management<a class="headerlink" href="#team-management" title="Permanent link">&para;</a></h3>
+<p>Teams group users for collective permission assignment. When a team is granted access to an application, all current and future members inherit that permission.</p>
+<p><strong>Effective permission</strong> = MAX(direct user permission, team permissions). Team membership never reduces access.</p>
+<p><img alt="teams" src="../screenshots/teams.png" />
+<em>Teams — organize users into groups for collective permission management</em></p>
+<h3 id="sharing-permissions">Sharing &amp; Permissions<a class="headerlink" href="#sharing-permissions" title="Permanent link">&para;</a></h3>
+<p>Applications can be shared with users and teams through a <strong>Google Docs-style sharing dialog</strong>:</p>
+<ul>
+<li><strong>User search with autocomplete</strong> — find users by name or email</li>
+<li><strong>Permission level selector</strong> — view, operate, edit, manage, or owner</li>
+<li><strong>Share links</strong> — generate time-limited, use-limited links for convenient access</li>
+<li><strong>Bulk operations</strong> — share with multiple users or teams at once</li>
+</ul>
+<p>All permission changes are recorded in the audit trail.</p>
+<hr />
+<h2 id="reports-compliance">Reports &amp; Compliance<a class="headerlink" href="#reports-compliance" title="Permanent link">&para;</a></h2>
+<p>AppControl provides comprehensive reporting aligned with <strong>DORA</strong> (Digital Operational Resilience Act) requirements.</p>
+<table>
+<thead>
+<tr>
+<th>Report</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Availability</strong></td>
+<td>Uptime/downtime metrics per application and component over configurable periods</td>
+</tr>
+<tr>
+<td><strong>Incidents</strong></td>
+<td>Failure timeline with root causes, resolution times, and impacted components</td>
+</tr>
+<tr>
+<td><strong>Switchover History</strong></td>
+<td>DR switchover history with phase-by-phase timing and outcomes</td>
+</tr>
+<tr>
+<td><strong>Audit Trail</strong></td>
+<td>Complete action log: every user action with timestamps and details</td>
+</tr>
+<tr>
+<td><strong>RTO Analysis</strong></td>
+<td>Recovery Time Objective analysis comparing actual vs. configured targets</td>
+</tr>
+</tbody>
+</table>
+<p>Reports support <strong>configurable date ranges</strong>, <strong>drill-down</strong> from summary to component-level detail, and <strong>PDF export</strong> for regulatory submission.</p>
+<p><img alt="reports" src="../screenshots/reports.png" />
+<em>Reports — DORA compliance metrics, availability charts, and incident timelines</em></p>
+<hr />
+<h2 id="settings-administration">Settings &amp; Administration<a class="headerlink" href="#settings-administration" title="Permanent link">&para;</a></h2>
+<h3 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h3>
+<p>The Settings page provides access to system configuration, user profile management, and platform preferences.</p>
+<p><strong>Configurable options:</strong></p>
+<ul>
+<li>User profile (name, email, password)</li>
+<li>Notification preferences (email, webhook, in-app)</li>
+<li>OIDC/SAML identity provider configuration</li>
+<li>Organization settings</li>
+<li>Certificate management and PKI rotation</li>
+</ul>
+<p><img alt="settings" src="../screenshots/settings.png" />
+<em>Settings — system configuration and user preferences</em></p>
+<h3 id="api-keys">API Keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h3>
+<p>API keys enable programmatic access for <strong>scheduler integration</strong>, automation scripts, and CI/CD pipelines.</p>
+<p><strong>Creating an API key:</strong></p>
+<ol>
+<li>Navigate to <strong>Settings &gt; API Keys</strong></li>
+<li>Click <strong>Create API Key</strong></li>
+<li>Provide a descriptive name (e.g., "Control-M Production")</li>
+<li>Copy the generated key immediately — it won't be shown again</li>
+</ol>
+<p><strong>Key format:</strong> <code>ac_&lt;uuid&gt;</code> — passed via <code>Authorization: Bearer ac_&lt;uuid&gt;</code></p>
+<p>Keys are stored as <strong>SHA-256 hashes</strong> (plaintext never stored), revocable at any time, and all usage is fully audited.</p>
+<p><img alt="api-keys" src="../screenshots/api-keys.png" />
+<em>API Keys — create, manage, and revoke programmatic access keys</em></p>
+<h3 id="supervision-mode">Supervision Mode<a class="headerlink" href="#supervision-mode" title="Permanent link">&para;</a></h3>
+<p>The Supervision Mode provides a <strong>full-screen NOC display</strong> designed for operations centers and wall monitors.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Auto-rotating views across all monitored applications</li>
+<li>Large, high-contrast status indicators optimized for wall displays</li>
+<li>Configurable rotation interval</li>
+<li>Alert highlighting for failed or degraded applications</li>
+<li>No sidebar or navigation chrome — maximum screen real estate</li>
+</ul>
+<p>Access via the <code>/supervision</code> route or press <code>F11</code> from any page.</p>
+<p><img alt="supervision" src="../screenshots/supervision.png" />
+<em>Supervision Mode — full-screen NOC display for operations centers</em></p>
+<h3 id="component-catalog">Component Catalog<a class="headerlink" href="#component-catalog" title="Permanent link">&para;</a></h3>
+<p>The Component Catalog allows you to define <strong>custom component types</strong> specific to your organization. Each catalog entry includes an icon, color, category, and optional default commands that are pre-filled when a user creates a component of that type.</p>
+<p><strong>Built-in types:</strong> database, middleware, appserver, webfront, service, batch, custom, application</p>
+<h4 id="initializing-the-catalog">Initializing the Catalog<a class="headerlink" href="#initializing-the-catalog" title="Permanent link">&para;</a></h4>
+<p>Use the CLI to seed the built-in types and import custom ones:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Seed the 8 built-in component types (idempotent)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>appcontrol.sh<span class="w"> </span>init-catalog
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Import custom types from a JSON file</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>appcontrol.sh<span class="w"> </span>import-catalog<span class="w"> </span>--file<span class="w"> </span>catalog.json
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># List all types in the catalog</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>appcontrol.sh<span class="w"> </span>list-catalog
+</span></code></pre></div>
+<h4 id="catalog-import-format">Catalog Import Format<a class="headerlink" href="#catalog-import-format" title="Permanent link">&para;</a></h4>
+<p>The import file is a JSON object with an <code>entries</code> array:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;entries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="nt">&quot;type_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oracle-rac&quot;</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Oracle RAC Cluster&quot;</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Oracle Real Application Clusters&quot;</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">&quot;icon&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;database&quot;</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#F80000&quot;</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;database&quot;</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">      </span><span class="nt">&quot;default_check_cmd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;srvctl status database -d ${DB_NAME}&quot;</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="nt">&quot;default_start_cmd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;srvctl start database -d ${DB_NAME}&quot;</span><span class="p">,</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="nt">&quot;default_stop_cmd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;srvctl stop database -d ${DB_NAME}&quot;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="nt">&quot;type_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;controlm-job&quot;</span><span class="p">,</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Control-M Job&quot;</span><span class="p">,</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">      </span><span class="nt">&quot;icon&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;calendar&quot;</span><span class="p">,</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">      </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#E31837&quot;</span><span class="p">,</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;scheduler&quot;</span><span class="p">,</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">      </span><span class="nt">&quot;default_check_cmd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ctmpsm -LISTALL | grep ${JOB_NAME}&quot;</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type_key</code></td>
+<td>yes</td>
+<td>Unique slug identifier (e.g., <code>oracle-rac</code>, <code>kafka-connect</code>)</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>yes</td>
+<td>Display name shown in the UI</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>no</td>
+<td>Tooltip description</td>
+</tr>
+<tr>
+<td><code>icon</code></td>
+<td>no</td>
+<td>Lucide icon name: <code>database</code>, <code>layers</code>, <code>server</code>, <code>globe</code>, <code>cog</code>, <code>clock</code>, <code>zap</code>, <code>shield</code>, <code>network</code>, <code>calendar</code>, <code>terminal</code>, <code>box</code> (default)</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>no</td>
+<td>Hex color for the icon (default: <code>#455A64</code>)</td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>no</td>
+<td>Grouping in the palette (e.g., <code>database</code>, <code>middleware</code>, <code>scheduler</code>)</td>
+</tr>
+<tr>
+<td><code>default_check_cmd</code></td>
+<td>no</td>
+<td>Pre-filled check command when this type is selected</td>
+</tr>
+<tr>
+<td><code>default_start_cmd</code></td>
+<td>no</td>
+<td>Pre-filled start command</td>
+</tr>
+<tr>
+<td><code>default_stop_cmd</code></td>
+<td>no</td>
+<td>Pre-filled stop command</td>
+</tr>
+<tr>
+<td><code>default_env_vars</code></td>
+<td>no</td>
+<td>Default environment variables as JSON object</td>
+</tr>
+<tr>
+<td><code>display_order</code></td>
+<td>no</td>
+<td>Sort order in the palette (default: 0)</td>
+</tr>
+</tbody>
+</table>
+<p>Duplicate <code>type_key</code> values are skipped during import (not overwritten).</p>
+<h4 id="rest-api">REST API<a class="headerlink" href="#rest-api" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># List catalog entries</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>GET<span class="w"> </span>/api/v1/catalog/component-types
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Create a custom type (admin only)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>POST<span class="w"> </span>/api/v1/catalog/component-types
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Update a type (admin only)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>PUT<span class="w"> </span>/api/v1/catalog/component-types/:id
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Delete a custom type (admin only, built-in types cannot be deleted)</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>DELETE<span class="w"> </span>/api/v1/catalog/component-types/:id
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1"># Bulk import (admin only)</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>POST<span class="w"> </span>/api/v1/catalog/component-types/import
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1"># Seed built-in types (admin only, idempotent)</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>POST<span class="w"> </span>/api/v1/catalog/component-types/seed
+</span></code></pre></div>
+<h4 id="ui-integration">UI Integration<a class="headerlink" href="#ui-integration" title="Permanent link">&para;</a></h4>
+<p>Once catalog entries are loaded, they appear in:</p>
+<ul>
+<li><strong>Component Palette</strong> (drag &amp; drop): dynamically populated with search/filter when more than 8 types, grouped by category</li>
+<li><strong>Component Editor</strong> (type selector): searchable dropdown with icon previews, category labels, and automatic pre-fill of default commands</li>
+</ul>
+<hr />
+<h2 id="scheduler-integration">Scheduler Integration<a class="headerlink" href="#scheduler-integration" title="Permanent link">&para;</a></h2>
+<p>AppControl integrates with enterprise schedulers via <strong>REST API</strong> and <strong>CLI</strong>. It is designed to be called by schedulers, not to replace them.</p>
+<p><strong>Supported schedulers:</strong> Control-M, AutoSys, Dollar Universe, TWS</p>
+<h3 id="rest-api_1">REST API<a class="headerlink" href="#rest-api_1" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Start an application (returns operation ID)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://appcontrol/api/v1/apps/<span class="o">{</span>id<span class="o">}</span>/start<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer ac_&lt;api-key&gt;&quot;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Check application status</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>curl<span class="w"> </span>https://appcontrol/api/v1/apps/<span class="o">{</span>id<span class="o">}</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer ac_&lt;api-key&gt;&quot;</span>
+</span></code></pre></div>
+<h3 id="cli-appctl">CLI (<code>appctl</code>)<a class="headerlink" href="#cli-appctl" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Start and wait for completion</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>appctl<span class="w"> </span>app<span class="w"> </span>start<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Trading Platform&quot;</span><span class="w"> </span>--wait<span class="w"> </span>--timeout<span class="w"> </span><span class="m">300</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Check status</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>appctl<span class="w"> </span>app<span class="w"> </span>status<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Trading Platform&quot;</span><span class="w"> </span>--format<span class="w"> </span>json
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Stop a specific component</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>appctl<span class="w"> </span>component<span class="w"> </span>stop<span class="w"> </span>--app<span class="w"> </span><span class="s2">&quot;Trading Platform&quot;</span><span class="w"> </span>--component<span class="w"> </span><span class="s2">&quot;Order Service&quot;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="security-architecture">Security Architecture<a class="headerlink" href="#security-architecture" title="Permanent link">&para;</a></h2>
+<h3 id="tls-architecture">TLS Architecture<a class="headerlink" href="#tls-architecture" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>                        EXTERNAL NETWORK
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  Browsers/CLI  ────► :443  (HTTPS via nginx)
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  Agents        ────► :4443 (WSS mTLS direct to gateway)
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>                         │
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>           ┌─────────────┴─────────────┐
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>           ▼                           ▼
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  ┌─────────────────┐       ┌──────────────────┐
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  │  NGINX (web UI) │       │  GATEWAY (zone)  │
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  │  /api/* → :3000 │       │  :4443 direct    │
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  │  /     → :8080  │       │  mTLS for agents │
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>  └─────────────────┘       └──────────────────┘
+</span></code></pre></div>
+<h3 id="certificate-security-5-layers">Certificate Security (5 Layers)<a class="headerlink" href="#certificate-security-5-layers" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Token-based enrollment</strong> — SHA-256 hashed, scoped, expirable, revocable</li>
+<li><strong>mTLS</strong> — per-organization CA, mutual authentication on every connection</li>
+<li><strong>Certificate pinning</strong> — fingerprint verified on every reconnect</li>
+<li><strong>Certificate revocation</strong> — real-time revocation deactivates agents/gateways immediately</li>
+<li><strong>Audit trail</strong> — all enrollment and certificate events logged in append-only tables</li>
+</ol>
+<h3 id="certificate-rotation">Certificate Rotation<a class="headerlink" href="#certificate-rotation" title="Permanent link">&para;</a></h3>
+<p>Seamless CA migration without downtime:</p>
+<ol>
+<li>Import new CA certificate</li>
+<li>Dual-trust period — both CAs trusted</li>
+<li>Agents automatically request new certificates</li>
+<li>Monitor progress in the UI</li>
+<li>Finalize — remove old CA</li>
+</ol>
+<h3 id="authentication-methods">Authentication Methods<a class="headerlink" href="#authentication-methods" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OIDC</strong></td>
+<td>Browser SSO (Keycloak, Okta, Azure AD)</td>
+</tr>
+<tr>
+<td><strong>SAML 2.0</strong></td>
+<td>Enterprise SSO (ADFS, Azure AD)</td>
+</tr>
+<tr>
+<td><strong>API Keys</strong></td>
+<td>Machine-to-machine (schedulers, CI/CD)</td>
+</tr>
+<tr>
+<td><strong>Local</strong></td>
+<td>Development and standalone deployments</td>
+</tr>
+</tbody>
+</table>
+<h3 id="approval-workflows-4-eyes">Approval Workflows (4-Eyes)<a class="headerlink" href="#approval-workflows-4-eyes" title="Permanent link">&para;</a></h3>
+<p>For critical operations in regulated environments:</p>
+<ol>
+<li>Operator initiates an operation requiring approval</li>
+<li>Approvers receive notifications and review details</li>
+<li>Once required approvals are reached, the operation executes automatically</li>
+<li>All decisions are recorded in the audit trail</li>
+</ol>
+<h3 id="break-glass-emergency-access">Break-Glass Emergency Access<a class="headerlink" href="#break-glass-emergency-access" title="Permanent link">&para;</a></h3>
+<p>Bypass normal permissions in emergencies:</p>
+<ul>
+<li>Immediate access with justification required</li>
+<li>High-priority alert sent to all administrators</li>
+<li>Time-limited window (default: 30 minutes)</li>
+<li>Every action logged with break-glass flag</li>
+<li>Mandatory post-incident review</li>
+</ul>
+<hr />
+<p><em>Screenshots are auto-generated by CI from the running application. To regenerate, run <code>npm run screenshots</code> from the <code>frontend/</code> directory with the full stack running, or trigger the <code>docs-screenshots</code> workflow manually.</em></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-05-12T21:37:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-05-12</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-02-23T13:56:03+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-02-23</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../GLOSSARY/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Glossary">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Glossary
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../PERMISSIONS/" class="md-footer__link md-footer__link--next" aria-label="Next: Permissions">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Permissions
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/fredericcarre/appcontrol">Source on GitHub</a>
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/fredericcarre/appcontrol" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "navigation.tracking", "navigation.indexes", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.action.edit", "content.tabs.link"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

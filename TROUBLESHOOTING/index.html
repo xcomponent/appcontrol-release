@@ -1,0 +1,3960 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
+      
+      
+        <meta name="author" content="AppControl">
+      
+      
+        <link rel="canonical" href="https://docs.appcontrol.io/TROUBLESHOOTING/">
+      
+      
+        <link rel="prev" href="../RUNBOOKS/">
+      
+      
+        <link rel="next" href="../INTEGRATION_COOKBOOK/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Troubleshooting - AppControl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#troubleshooting-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AppControl" class="md-header__button md-logo" aria-label="AppControl" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AppControl
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/xcomponent/appcontrol-release" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xcomponent/appcontrol-release
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../QUICKSTART/" class="md-tabs__link">
+          
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../USER_GUIDE/" class="md-tabs__link">
+          
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../INTEGRATION_COOKBOOK/" class="md-tabs__link">
+          
+  
+    
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PRODUCTION_DEPLOYMENT/" class="md-tabs__link">
+          
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CONFIGURATION/" class="md-tabs__link">
+          
+  
+    
+  
+  Configuration
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/cli/" class="md-tabs__link">
+          
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../COMPLIANCE_DORA_NIS2/" class="md-tabs__link">
+          
+  
+    
+  
+  Compliance
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CHANGELOG/" class="md-tabs__link">
+          
+  
+    
+  
+  Release
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AppControl" class="md-nav__button md-logo" aria-label="AppControl" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AppControl
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/xcomponent/appcontrol-release" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xcomponent/appcontrol-release
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICKSTART/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEMO_SCENARIOS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Demo scenarios
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../POSITIONING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Where it fits (positioning)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GLOSSARY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../USER_GUIDE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PERMISSIONS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Permissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RUNBOOKS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Runbooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-will-not-connect-to-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent will not connect to gateway
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enrollment-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enrollment fails
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat-timeout-components-flip-to-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Heartbeat timeout (components flip to UNREACHABLE)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      Certificate expired
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advisory-mode-agent-reports-but-does-not-execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advisory mode — agent reports but does not execute
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gateway-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateway issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gateway issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gateway-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateway down
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mtls-handshake-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      mTLS handshake failure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limited" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate-limited
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backend-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backend issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5xx-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      5xx errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db-pool-exhausted" class="md-nav__link">
+    <span class="md-ellipsis">
+      DB pool exhausted
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slow-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Slow queries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jwt_secret-insecure-panic" class="md-nav__link">
+    <span class="md-ellipsis">
+      JWT_SECRET insecure panic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors-rejects-browser-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      CORS rejects browser request
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oidc-discovery-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      OIDC discovery failed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saml-assertion-invalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      SAML assertion invalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-key-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      API key expired
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forbidden-on-a-resource-you-should-own" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Forbidden" on a resource you should own
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fsm-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      FSM issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FSM issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-stuck-in-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component stuck in STARTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stuck-in-unreachable-after-agent-reconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stuck in UNREACHABLE after agent reconnect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-oscillates-between-running-and-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      State oscillates between RUNNING and FAILED
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operation-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operation issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Operation issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-times-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start times out
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-hangs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop hangs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sequencer-suspends-mid-dag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequencer suspends mid-DAG
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-branch-not-detected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error branch not detected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dry-run-says-ok-but-actual-run-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dry-run says OK but actual run fails
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discovery-auto-discovery-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery / auto-discovery noise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-fan-out-sync-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster (fan-out) sync issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dr-switchover-stuck-in-phase-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      DR switchover stuck in phase X
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostic-rebuild-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostic + Rebuild rejected
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-file-a-bug-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to file a bug report
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to file a bug report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-logs-last-200-lines-from-each" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Logs (last 200 lines from each)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configuration-redact-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configuration (redact secrets)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-minimal-reproduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Minimal reproduction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-database-state-optional-helpful" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Database state (optional, helpful)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-file-log-paths-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. File log paths reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Operations
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../INTEGRATION_COOKBOOK/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../METRICS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MIGRATION_FROM_SCRIPTS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration from scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BACKUP_RESTORE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Backup & restore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UPGRADE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade procedures
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DISASTER_RECOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disaster recovery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PRODUCTION_DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HIGH_AVAILABILITY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High availability
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENT_INSTALLATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AZURE_GATEWAY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OPENSHIFT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HARDENING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hardening checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAPACITY_PLANNING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Capacity planning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LIMITS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Limits & quotas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Configuration
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONFIGURATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQLITE_IMPLEMENTATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQLite implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/cli/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CLI (appctl)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration env vars
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors & exit codes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/fsm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FSM states
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prometheus metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/enums/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enums
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/mcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MCP tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Compliance
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Compliance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPLIANCE_DORA_NIS2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DORA & NIS2 mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Release
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Release
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RELEASE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-will-not-connect-to-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent will not connect to gateway
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enrollment-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enrollment fails
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat-timeout-components-flip-to-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Heartbeat timeout (components flip to UNREACHABLE)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      Certificate expired
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advisory-mode-agent-reports-but-does-not-execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advisory mode — agent reports but does not execute
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gateway-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateway issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gateway issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gateway-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateway down
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mtls-handshake-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      mTLS handshake failure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limited" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate-limited
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backend-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backend issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5xx-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      5xx errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db-pool-exhausted" class="md-nav__link">
+    <span class="md-ellipsis">
+      DB pool exhausted
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slow-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Slow queries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jwt_secret-insecure-panic" class="md-nav__link">
+    <span class="md-ellipsis">
+      JWT_SECRET insecure panic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors-rejects-browser-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      CORS rejects browser request
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oidc-discovery-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      OIDC discovery failed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saml-assertion-invalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      SAML assertion invalid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-key-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      API key expired
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forbidden-on-a-resource-you-should-own" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Forbidden" on a resource you should own
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fsm-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      FSM issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FSM issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-stuck-in-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component stuck in STARTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stuck-in-unreachable-after-agent-reconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stuck in UNREACHABLE after agent reconnect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-oscillates-between-running-and-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      State oscillates between RUNNING and FAILED
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operation-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operation issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Operation issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-times-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start times out
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-hangs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop hangs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sequencer-suspends-mid-dag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequencer suspends mid-DAG
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-branch-not-detected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error branch not detected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dry-run-says-ok-but-actual-run-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dry-run says OK but actual run fails
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discovery-auto-discovery-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery / auto-discovery noise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-fan-out-sync-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster (fan-out) sync issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dr-switchover-stuck-in-phase-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      DR switchover stuck in phase X
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostic-rebuild-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostic + Rebuild rejected
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-file-a-bug-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to file a bug report
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to file a bug report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-logs-last-200-lines-from-each" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Logs (last 200 lines from each)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configuration-redact-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configuration (redact secrets)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-minimal-reproduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Minimal reproduction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-database-state-optional-helpful" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Database state (optional, helpful)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-file-log-paths-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. File log paths reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/fredericcarre/appcontrol/edit/main/docs/TROUBLESHOOTING.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="troubleshooting-guide">Troubleshooting Guide<a class="headerlink" href="#troubleshooting-guide" title="Permanent link">&para;</a></h1>
+<p>This page lists the most common production issues with AppControl, their likely causes, and concrete resolution steps. Each entry is structured as <strong>symptom → diagnosis commands → resolution</strong>.</p>
+<p>For step-by-step incident-response procedures, see also <a href="../RUNBOOKS/">Operational Runbooks</a>. For DR-specific scenarios, see <a href="../DISASTER_RECOVERY/">Disaster Recovery</a>.</p>
+<h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#agent-issues">Agent issues</a></li>
+<li><a href="#gateway-issues">Gateway issues</a></li>
+<li><a href="#backend-issues">Backend issues</a></li>
+<li><a href="#authentication-issues">Authentication issues</a></li>
+<li><a href="#fsm-issues">FSM issues</a></li>
+<li><a href="#operation-issues">Operation issues</a></li>
+<li><a href="#discovery--auto-discovery-noise">Discovery / auto-discovery noise</a></li>
+<li><a href="#cluster-fan-out-sync-issues">Cluster (fan-out) sync issues</a></li>
+<li><a href="#dr-switchover-stuck-in-phase-x">DR switchover stuck in phase X</a></li>
+<li><a href="#diagnostic--rebuild-rejected">Diagnostic + Rebuild rejected</a></li>
+<li><a href="#how-to-file-a-bug-report">How to file a bug report</a></li>
+</ul>
+<hr />
+<h2 id="agent-issues">Agent issues<a class="headerlink" href="#agent-issues" title="Permanent link">&para;</a></h2>
+<h3 id="agent-will-not-connect-to-gateway">Agent will not connect to gateway<a class="headerlink" href="#agent-will-not-connect-to-gateway" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>The Agents page shows the agent as <code>UNREACHABLE</code>. No heartbeat events are received. <code>systemctl status appcontrol-agent</code> reports the binary is running.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 1. Are reconnection attempts visible in the agent journal?</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>appcontrol-agent<span class="w"> </span>--since<span class="w"> </span><span class="s2">&quot;5 min ago&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;connect|gateway|tls&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># 2. Can the agent host reach the gateway TCP port?</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>nc<span class="w"> </span>-vz<span class="w"> </span>gateway.example.com<span class="w"> </span><span class="m">4443</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># 3. Does the TLS handshake succeed?</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>gateway.example.com:4443<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>-cert<span class="w"> </span>/etc/appcontrol/tls/agent.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span>-key<span class="w"> </span>/etc/appcontrol/tls/agent.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span>-CAfile<span class="w"> </span>/etc/appcontrol/tls/ca.crt<span class="w"> </span>-showcerts<span class="w"> </span>&lt;<span class="w"> </span>/dev/null
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Network firewall blocks 4443</td>
+<td>Open outbound TCP 4443 from the agent subnet to the gateway</td>
+</tr>
+<tr>
+<td>Wrong gateway URL</td>
+<td>Edit <code>/etc/appcontrol/agent.yaml</code>, fix <code>gateway.url</code> or <code>gateway.urls</code>, <code>systemctl reload appcontrol-agent</code></td>
+</tr>
+<tr>
+<td>DNS resolution failure</td>
+<td><code>getent hosts gateway.example.com</code> — if empty, fix <code>/etc/resolv.conf</code> or <code>/etc/hosts</code></td>
+</tr>
+<tr>
+<td>Gateway pod down</td>
+<td><code>kubectl get pods -n appcontrol -l app.kubernetes.io/component=gateway</code>; restart if needed</td>
+</tr>
+<tr>
+<td><code>tls_insecure: false</code> against self-signed gateway cert</td>
+<td>Use a CA-signed gateway cert, or set <code>gateway.tls_insecure: true</code> (dev only)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enrollment-fails">Enrollment fails<a class="headerlink" href="#enrollment-fails" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p><code>appcontrol-agent --enroll …</code> exits non-zero. Returns HTTP 401, 409, or 500.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">HTTP code</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">401</td>
+<td>Token invalid or revoked</td>
+<td>Generate a new token: <code>appctl pki create-token --name &lt;n&gt; --max-uses 1 --scope agent</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">409</td>
+<td>Token <code>max_uses</code> exhausted</td>
+<td>Generate a new token with a higher <code>max_uses</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">410</td>
+<td>Token expired</td>
+<td>Generate a new token; defaults to 24 h validity</td>
+</tr>
+<tr>
+<td style="text-align: right;">500</td>
+<td>PKI not initialized</td>
+<td><code>appctl pki init --org-name "&lt;your org&gt;"</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">Connection refused</td>
+<td>Gateway unreachable</td>
+<td>Verify <code>https://gateway:4443/health</code> is reachable; check the gateway pod</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>Certificate verify failed</code></td>
+<td>Agent presented a wrong CA</td>
+<td>Re-run enrollment which writes the fresh CA to <code>/etc/appcontrol/tls/ca.crt</code></td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../AGENT_INSTALLATION/#8-troubleshooting">Agent Installation §8</a> for the full enrollment-error table.</p>
+<h3 id="heartbeat-timeout-components-flip-to-unreachable">Heartbeat timeout (components flip to <code>UNREACHABLE</code>)<a class="headerlink" href="#heartbeat-timeout-components-flip-to-unreachable" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>Components managed by an apparently healthy agent transition to <code>UNREACHABLE</code> periodically. The agent process is up but the backend marks it stale.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. Confirm the agent is still sending heartbeats</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>appcontrol-agent<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>heartbeat<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-10
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># 2. Compare the configured timeout</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT name, heartbeat_timeout_seconds FROM organizations;&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 3. Check connection latency between agent and gateway</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>appcontrol-agent<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;rtt|latency&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-5
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Network is dropping idle WebSocket connections</td>
+<td>Reduce keep-alive interval on the load balancer to &lt; 60 s; or raise heartbeat frequency</td>
+</tr>
+<tr>
+<td><code>heartbeat_timeout_seconds</code> too low for the network</td>
+<td><code>UPDATE organizations SET heartbeat_timeout_seconds = 300;</code> (default is 180 s)</td>
+</tr>
+<tr>
+<td>Backend <code>heartbeat_monitor</code> is over-aggressive</td>
+<td>Check backend logs for <code>marking agent stale</code> — verify clock skew with NTP</td>
+</tr>
+<tr>
+<td>Agent log shows repeated <code>pong timeout</code></td>
+<td>A firewall is killing idle WS frames — switch the gateway to port 443 (passes as HTTPS)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="certificate-expired">Certificate expired<a class="headerlink" href="#certificate-expired" title="Permanent link">&para;</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Symptom</p>
+<p>Agent journal shows <code>certificate has expired</code> or <code>unable to get local issuer certificate</code>. The agent does not reconnect.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Check the agent cert expiry</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>/etc/appcontrol/tls/agent.crt<span class="w"> </span>-noout<span class="w"> </span>-dates
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Check the CA cert expiry</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>/etc/appcontrol/tls/ca.crt<span class="w"> </span>-noout<span class="w"> </span>-dates
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<ol>
+<li>Generate a new enrollment token: <code>appctl pki create-token --name renewal --max-uses 1 --scope agent</code>.</li>
+<li>Stop the agent: <code>sudo systemctl stop appcontrol-agent</code>.</li>
+<li>Re-enroll: <code>sudo appcontrol-agent --enroll https://gateway:4443 --token ac_enroll_...</code>.</li>
+<li>Start the agent: <code>sudo systemctl start appcontrol-agent</code>.</li>
+</ol>
+<p>If the CA itself expired, see <a href="../DISASTER_RECOVERY/">Disaster Recovery — CA loss</a>.</p>
+<h3 id="advisory-mode-agent-reports-but-does-not-execute">Advisory mode — agent reports but does not execute<a class="headerlink" href="#advisory-mode-agent-reports-but-does-not-execute" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>Operator clicks <strong>Start</strong> but nothing happens on the host. The map updates check status but no command runs.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 1. Is the application or agent in advisory mode?</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT id, name, settings-&gt;&gt;&#39;mode&#39; FROM applications WHERE id = &#39;&lt;app_id&gt;&#39;;&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># 2. Check the action log — operations should be recorded even if no-op</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT action_type, details FROM action_log WHERE target_id=&#39;&lt;app_id&gt;&#39; ORDER BY created_at DESC LIMIT 5;&quot;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application is in <code>advisory</code> mode</td>
+<td>Toggle to <code>operate</code> mode in <strong>Settings &gt; Application &gt; Mode</strong></td>
+</tr>
+<tr>
+<td>Component has <code>is_optional=true</code> and was skipped</td>
+<td>Inspect the sequencer log; flip <code>is_optional=false</code> if required</td>
+</tr>
+<tr>
+<td>User has only <code>view</code> permission</td>
+<td>Grant <code>operate</code> permission via the Share dialog</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="gateway-issues">Gateway issues<a class="headerlink" href="#gateway-issues" title="Permanent link">&para;</a></h2>
+<h3 id="gateway-down">Gateway down<a class="headerlink" href="#gateway-down" title="Permanent link">&para;</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Symptom</p>
+<p>All agents in a zone go <code>UNREACHABLE</code> at once. The gateway pod is crash-looping or not reachable.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1. Pod state</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>gateway
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 2. Logs</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>gateway<span class="w"> </span>--tail<span class="o">=</span><span class="m">100</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># 3. Health endpoint (from outside the cluster)</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>curl<span class="w"> </span>-k<span class="w"> </span>https://gateway.example.com:4443/health
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># Returns: ok agents=42 backend=connected buffer_msgs=0 buffer_bytes=0</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backend WebSocket URL wrong</td>
+<td>Edit <code>BACKEND_URL</code> env var, must end with <code>/ws/gateway</code></td>
+</tr>
+<tr>
+<td>TLS cert / key mismatch</td>
+<td>Verify file paths and <code>openssl rsa -in gateway.key -modulus</code> matches the cert</td>
+</tr>
+<tr>
+<td>Listening port already taken</td>
+<td>Check <code>ss -tlnp | grep 4443</code>; change <code>LISTEN_PORT</code> if conflicting</td>
+</tr>
+<tr>
+<td>OOM kill</td>
+<td>Increase <code>resources.limits.memory</code> in the Helm values</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mtls-handshake-failure">mTLS handshake failure<a class="headerlink" href="#mtls-handshake-failure" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>Gateway logs show repeated <code>tls handshake failure</code> or <code>unknown ca</code>. Agents cannot connect.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># From the agent host, simulate the full handshake</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>gateway.example.com:4443<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>-cert<span class="w"> </span>/etc/appcontrol/tls/agent.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>-key<span class="w"> </span>/etc/appcontrol/tls/agent.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>-CAfile<span class="w"> </span>/etc/appcontrol/tls/ca.crt<span class="w"> </span>-verify_return_error
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Compare the issuer fingerprint of the gateway&#39;s chain and the agent&#39;s CA</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>/etc/appcontrol/tls/ca.crt<span class="w"> </span>-noout<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gateway and agent use different CAs</td>
+<td>Re-enroll the agent against the current backend PKI</td>
+</tr>
+<tr>
+<td>Gateway cert SAN does not include the DNS the agent uses</td>
+<td>Reissue the gateway cert with the right DNS SANs</td>
+</tr>
+<tr>
+<td>Clock skew &gt; 5 min</td>
+<td>Sync NTP on both ends; certs are sensitive to clock drift</td>
+</tr>
+<tr>
+<td><code>TLS_ENABLED=false</code> on one side</td>
+<td>Verify both gateway and agent have <code>tls.enabled: true</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="rate-limited">Rate-limited<a class="headerlink" href="#rate-limited" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>Gateway returns HTTP 429 on <code>/enroll</code>, or per-agent log spam shows "rate limit exceeded".</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># 1. Identify the offending agent</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>gateway<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;rate limit&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $NF}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># 2. The agent is likely sending too many CheckResults — investigate why deltas are flapping</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="s2">  SELECT component_id, count(*) FROM check_events</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="s2">  WHERE created_at &gt; now() - interval &#39;5 minutes&#39;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="s2">  GROUP BY component_id ORDER BY count(*) DESC LIMIT 10;&quot;</span>
+</span></code></pre></div>
+<p>If the rate is legitimate (large cluster of components on one agent), raise the per-agent rate limit in the gateway config; otherwise fix the flapping <code>check_cmd</code>.</p>
+<hr />
+<h2 id="backend-issues">Backend issues<a class="headerlink" href="#backend-issues" title="Permanent link">&para;</a></h2>
+<h3 id="5xx-errors">5xx errors<a class="headerlink" href="#5xx-errors" title="Permanent link">&para;</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Symptom</p>
+<p>The frontend shows "Internal Server Error". <code>curl /api/v1/apps</code> returns HTTP 500/502/503.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># 1. Backend pod state</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>backend
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>backend<span class="w"> </span>--tail<span class="o">=</span><span class="m">200</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># 2. Database reachability</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:3000/ready
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># 3. Recent panics</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>backend<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;panicked|FATAL|thread&quot;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DB unreachable</td>
+<td>See <a href="#db-pool-exhausted">DB pool exhausted</a> and <code>/ready</code></td>
+</tr>
+<tr>
+<td>Panic on startup (insecure JWT in production)</td>
+<td>Set a 32+ char <code>JWT_SECRET</code> via <code>openssl rand -base64 48</code></td>
+</tr>
+<tr>
+<td>Missing migration</td>
+<td>Check <code>kubectl logs</code> for <code>sqlx::migrate</code> errors; investigate the partial migration</td>
+</tr>
+<tr>
+<td>Unhandled JSON deserialization error</td>
+<td>Capture the request payload, file a bug report</td>
+</tr>
+</tbody>
+</table>
+<h3 id="db-pool-exhausted">DB pool exhausted<a class="headerlink" href="#db-pool-exhausted" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>Backend logs show <code>acquire timeout</code> or <code>pool timed out while waiting for an open connection</code>. P95 latency spikes.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 1. Current pool size and utilization</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3000/metrics<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>db_pool
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># 2. Long-running queries in PostgreSQL</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="s2">  SELECT pid, now() - query_start AS duration, state, query</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="s2">  FROM pg_stat_activity WHERE state = &#39;active&#39; AND query_start &lt; now() - interval &#39;2 seconds&#39;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="s2">  ORDER BY duration DESC LIMIT 10;&quot;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Long-running query holds a connection</td>
+<td>Identify the query, add an index, or rewrite</td>
+</tr>
+<tr>
+<td>Pool too small</td>
+<td>Raise <code>DB_POOL_SIZE</code> (default 20; rule of thumb: 10 + apps × 0.5, capped at 50)</td>
+</tr>
+<tr>
+<td>Idle connection timeout &gt; LB idle timeout</td>
+<td>Set <code>DB_IDLE_TIMEOUT_SECS</code> below the LB idle limit (e.g. AWS ALB = 350)</td>
+</tr>
+<tr>
+<td>Connection leak in a custom handler</td>
+<td>Review recent backend changes for missing <code>drop</code> on a tx</td>
+</tr>
+</tbody>
+</table>
+<h3 id="slow-queries">Slow queries<a class="headerlink" href="#slow-queries" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>P95 API latency above 2 s. Specific endpoints (<code>/apps</code>, <code>/applications/:id</code>) feel sluggish.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Identify the slowest queries</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">SELECT</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="k">substring</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">query</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="n">calls</span><span class="p">,</span><span class="w"> </span><span class="n">total_exec_time</span><span class="p">,</span><span class="w"> </span><span class="n">mean_exec_time</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">FROM</span><span class="w"> </span><span class="n">pg_stat_statements</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">mean_exec_time</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1">-- Check check_events partition sizes</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="k">SELECT</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="n">inhrelid</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">partition</span><span class="p">,</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="n">inhrelid</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">size</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="k">FROM</span><span class="w"> </span><span class="n">pg_inherits</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">inhparent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;check_events&#39;</span><span class="p">::</span><span class="n">regclass</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="n">inhrelid</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>check_events</code> partition not pruned</td>
+<td>Set <code>RETENTION_CHECK_EVENTS_DAYS=90</code> and let background task drop old partitions</td>
+</tr>
+<tr>
+<td>Missing index on a custom query</td>
+<td><code>EXPLAIN ANALYZE</code> then <code>CREATE INDEX</code></td>
+</tr>
+<tr>
+<td>Sequential scan on <code>state_transitions</code></td>
+<td>Verify <code>idx_state_transitions_component_created</code> exists</td>
+</tr>
+<tr>
+<td>Tablespace fragmentation</td>
+<td><code>VACUUM ANALYZE state_transitions;</code> (off-hours)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="jwt_secret-insecure-panic"><code>JWT_SECRET</code> insecure panic<a class="headerlink" href="#jwt_secret-insecure-panic" title="Permanent link">&para;</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Symptom</p>
+<p>Backend exits at startup with <code>FATAL: JWT_SECRET must be set to a strong value in production</code>.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Generate a strong secret</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nv">NEW</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">48</span><span class="k">)</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Update the Kubernetes secret</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>appcontrol-jwt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span>--namespace<span class="w"> </span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span>--from-literal<span class="o">=</span>jwt-secret<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$NEW</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1"># Restart the backend</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deployment/appcontrol-backend
+</span></code></pre></div>
+<p>Note: rotating <code>JWT_SECRET</code> invalidates <strong>all</strong> active sessions — users must log in again.</p>
+<h3 id="cors-rejects-browser-request">CORS rejects browser request<a class="headerlink" href="#cors-rejects-browser-request" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>The browser console shows <code>CORS policy: No 'Access-Control-Allow-Origin' header</code>.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<p><code>CORS_ORIGINS</code> must explicitly list the frontend origin in production. Example:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nv">CORS_ORIGINS</span><span class="o">=</span>https://appcontrol.example.com,https://admin.example.com
+</span></code></pre></div>
+<p>In development (<code>APP_ENV=development</code>), an empty <code>CORS_ORIGINS</code> is permissive. In production, an empty value rejects <strong>all</strong> cross-origin requests by design.</p>
+<hr />
+<h2 id="authentication-issues">Authentication issues<a class="headerlink" href="#authentication-issues" title="Permanent link">&para;</a></h2>
+<h3 id="oidc-discovery-failed">OIDC discovery failed<a class="headerlink" href="#oidc-discovery-failed" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>Backend logs <code>failed to fetch OIDC discovery document</code>. Login redirect returns 500.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 1. Verify the discovery URL is reachable from the backend</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>curl<span class="w"> </span>-sv<span class="w"> </span>https://keycloak.example.com/realms/appcontrol/.well-known/openid-configuration
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1"># 2. Check the variable is set</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>OIDC
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrong URL</td>
+<td>Fix <code>OIDC_DISCOVERY_URL</code> (the realm path matters)</td>
+</tr>
+<tr>
+<td>Network egress blocked</td>
+<td>Allow egress from the backend pods to the IdP</td>
+</tr>
+<tr>
+<td>Self-signed IdP cert</td>
+<td>Mount the IdP's CA into the backend container's trust store</td>
+</tr>
+</tbody>
+</table>
+<h3 id="saml-assertion-invalid">SAML assertion invalid<a class="headerlink" href="#saml-assertion-invalid" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>SAML POST to <code>/api/v1/auth/saml/acs</code> returns <code>invalid signature</code> or <code>assertion expired</code>.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<p>Inspect the SAMLResponse with <a href="https://samltool.com">https://samltool.com</a> (paste the base64 from the network tab).</p>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrong IdP signing cert</td>
+<td>Re-fetch and base64-encode the IdP cert into <code>SAML_IDP_CERT</code></td>
+</tr>
+<tr>
+<td>Clock skew</td>
+<td>Sync NTP; SAML enforces a 5-min <code>NotBefore</code>/<code>NotOnOrAfter</code> window</td>
+</tr>
+<tr>
+<td><code>SAML_WANT_ASSERTIONS_SIGNED=true</code> but IdP sends unsigned assertion</td>
+<td>Either enable signed assertions in IdP or set the env var to <code>false</code> (not recommended)</td>
+</tr>
+<tr>
+<td><code>SAML_SP_ACS_URL</code> mismatch</td>
+<td>The IdP's "Reply URL" must equal exactly the backend ACS URL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="api-key-expired">API key expired<a class="headerlink" href="#api-key-expired" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>Scheduler integration receives HTTP 401 with <code>key expired</code>.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># 1. Identify the offending key</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="s2">  SELECT id, name, expires_at FROM api_keys</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="s2">  WHERE user_id = &#39;&lt;user_id&gt;&#39; AND expires_at &lt; now();&quot;</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1"># 2. Create a new key via the UI or API; copy the plaintext immediately</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://appcontrol.example.com/api/v1/api-keys<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$ADMIN_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;scheduler-2026-q2&quot;,&quot;expires_in_days&quot;:365}&#39;</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># 3. Update the scheduler configuration with the new key</span>
+</span></code></pre></div>
+<h3 id="forbidden-on-a-resource-you-should-own">"Forbidden" on a resource you should own<a class="headerlink" href="#forbidden-on-a-resource-you-should-own" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>User has been granted <code>manage</code> on an application but still gets HTTP 403.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">-- What permissions does the user have (direct + team)?</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">permission_level</span><span class="p">,</span><span class="w"> </span><span class="k">source</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">permission_level</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;direct&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">source</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">app_permissions_users</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;uid&gt;&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">app_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;aid&gt;&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">expires_at</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">now</span><span class="p">())</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">pt</span><span class="p">.</span><span class="n">permission_level</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;team:&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">app_permissions_teams</span><span class="w"> </span><span class="n">pt</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">team_members</span><span class="w"> </span><span class="n">tm</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">tm</span><span class="p">.</span><span class="n">team_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="p">.</span><span class="n">team_id</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">teams</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="p">.</span><span class="n">team_id</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">tm</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;uid&gt;&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">pt</span><span class="p">.</span><span class="n">app_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;aid&gt;&#39;</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">pt</span><span class="p">.</span><span class="n">expires_at</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">pt</span><span class="p">.</span><span class="n">expires_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">now</span><span class="p">())</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permission has <code>expires_at</code> in the past</td>
+<td>Update or remove the <code>expires_at</code></td>
+</tr>
+<tr>
+<td>Team membership missing</td>
+<td>Add the user to the team</td>
+</tr>
+<tr>
+<td>Workspace restriction excludes the site</td>
+<td>Add the user (or their team) to a workspace that includes the site</td>
+</tr>
+<tr>
+<td>Stale JWT cached</td>
+<td>User signs out and back in to refresh claims</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="fsm-issues">FSM issues<a class="headerlink" href="#fsm-issues" title="Permanent link">&para;</a></h2>
+<h3 id="component-stuck-in-starting">Component stuck in <code>STARTING</code><a class="headerlink" href="#component-stuck-in-starting" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>The map shows a component blue-pulsing in <code>STARTING</code> for minutes. The sequencer waits forever.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># 1. Is the start command still running on the host?</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>ssh<span class="w"> </span>&lt;host&gt;<span class="w"> </span>ps<span class="w"> </span>-ef<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>grep<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;&lt;expected process&gt;&quot;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># 2. Latest health check</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="s2">  SELECT exit_code, stdout, duration_ms, created_at</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="s2">  FROM check_events</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="s2">  WHERE component_id = &#39;&lt;cid&gt;&#39; ORDER BY created_at DESC LIMIT 5;&quot;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>start_cmd</code> returned but process actually died</td>
+<td>Fix the start command; ensure the process daemonizes correctly</td>
+</tr>
+<tr>
+<td><code>check_cmd</code> checks a different process</td>
+<td>Realign check and start commands</td>
+</tr>
+<tr>
+<td><code>start_timeout_seconds</code> too short</td>
+<td>Raise it on the component config (default 120 s)</td>
+</tr>
+<tr>
+<td>Health check polled too infrequently</td>
+<td>Sequencer polls every 3 s during transitions — usually fine; if not, file a bug</td>
+</tr>
+</tbody>
+</table>
+<h3 id="stuck-in-unreachable-after-agent-reconnect">Stuck in <code>UNREACHABLE</code> after agent reconnect<a class="headerlink" href="#stuck-in-unreachable-after-agent-reconnect" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>Agent reconnects and heartbeats again, but its components remain <code>UNREACHABLE</code>.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># 1. Check the last 5 state transitions</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="s2">  SELECT previous_state, next_state, trigger, created_at</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="s2">  FROM state_transitions WHERE component_id=&#39;&lt;cid&gt;&#39;</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="s2">  ORDER BY created_at DESC LIMIT 5;&quot;</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># 2. Force a fresh health check</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://appcontrol.example.com/api/v1/components/&lt;cid&gt;/check<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<p>The FSM expects a fresh <code>CheckResult</code> to leave <code>UNREACHABLE</code>. Trigger a manual check (above). If the issue recurs, see <a href="../RUNBOOKS/#runbook-1-agent-not-connecting">Runbook 1</a>.</p>
+<h3 id="state-oscillates-between-running-and-failed">State oscillates between <code>RUNNING</code> and <code>FAILED</code><a class="headerlink" href="#state-oscillates-between-running-and-failed" title="Permanent link">&para;</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Symptom</p>
+<p>A component flips state every 30 s. Operators see "flapping" alerts.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">-- Inspect recent transitions</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">previous_state</span><span class="p">,</span><span class="w"> </span><span class="n">next_state</span><span class="p">,</span><span class="w"> </span><span class="k">trigger</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">,</span><span class="w"> </span><span class="n">details</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">state_transitions</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">component_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1">-- Inspect recent check results</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">exit_code</span><span class="p">,</span><span class="w"> </span><span class="n">duration_ms</span><span class="p">,</span><span class="w"> </span><span class="k">substring</span><span class="p">(</span><span class="k">stdout</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">stdout</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="k">FROM</span><span class="w"> </span><span class="n">check_events</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">component_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>check_cmd</code> is non-deterministic</td>
+<td>Make the check idempotent and stable</td>
+</tr>
+<tr>
+<td>Timeout on check</td>
+<td>Raise the agent-level command timeout; default is <code>check_interval_seconds</code></td>
+</tr>
+<tr>
+<td>Resource exhaustion on host</td>
+<td>Inspect CPU/RAM; the host may be killing the process under load</td>
+</tr>
+<tr>
+<td>Race between two agents managing the same process</td>
+<td>Verify one agent per component; remove duplicates</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="operation-issues">Operation issues<a class="headerlink" href="#operation-issues" title="Permanent link">&para;</a></h2>
+<h3 id="start-times-out">Start times out<a class="headerlink" href="#start-times-out" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>A start operation runs the configured <code>start_cmd</code> but never completes. The orchestrator marks the operation timed-out.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<ol>
+<li>Inspect the action log: <code>SELECT * FROM action_log WHERE target_id='&lt;app_id&gt;' ORDER BY created_at DESC LIMIT 5;</code>.</li>
+<li>The <code>details</code> JSON shows which component failed and the timeout that triggered.</li>
+<li>Common fix: raise <code>start_timeout_seconds</code> on the offending component (default 120 s).</li>
+<li>If many components share the same issue, raise the app-level timeout in <strong>Settings &gt; Operations</strong>.</li>
+</ol>
+<h3 id="stop-hangs">Stop hangs<a class="headerlink" href="#stop-hangs" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>A stop operation is stuck — components remain in <code>STOPPING</code>.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Is the stop process still running?</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ssh<span class="w"> </span>&lt;host&gt;<span class="w"> </span>ps<span class="w"> </span>-ef<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;&lt;process&gt;&quot;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Did the agent receive the command?</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>appcontrol-agent<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;ExecuteCommand|stop&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-5
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<ul>
+<li>The component's <code>stop_cmd</code> may be waiting for graceful shutdown that never completes. Use the <strong>Force Stop</strong> action in the UI, which sends <code>kill -9</code> after the timeout.</li>
+<li>If <code>stop_timeout_seconds</code> is too short, raise it on the component (default 60 s).</li>
+</ul>
+<h3 id="sequencer-suspends-mid-dag">Sequencer suspends mid-DAG<a class="headerlink" href="#sequencer-suspends-mid-dag" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>Start operation runs the first DAG levels successfully then halts. UI shows "Operation suspended — operator intervention required".</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<p>The sequencer <strong>suspends</strong> (rather than cancels) on a component failure to give operators a chance to fix the underlying issue without losing in-flight progress. Two next steps:</p>
+<ol>
+<li>Inspect the failed component, fix the root cause (often a missing prereq or a bad command).</li>
+<li>Resume the operation from the UI ("Resume" button) or via API: <code>POST /api/v1/operations/:id/resume</code>.</li>
+</ol>
+<p>If you cannot resume, cancel the operation: <code>POST /api/v1/operations/:id/cancel</code> and start fresh.</p>
+<h3 id="error-branch-not-detected">Error branch not detected<a class="headerlink" href="#error-branch-not-detected" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>A component fails, but the "Restart error branch" button targets only the failed component — not its downstream dependents.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<p>The error-branch algorithm walks <strong>downstream</strong> (dependent of failed → dependent of dependent…). If your topology has weak coupling that AppControl does not yet treat as dependencies, the dependents are not reached.</p>
+<ul>
+<li>Verify the <code>dependencies</code> rows for the failed component: <code>SELECT to_component_id FROM dependencies WHERE from_component_id = '&lt;failed_cid&gt;';</code>.</li>
+<li>If a dependency is missing, add it via the map editor (drag an edge between components).</li>
+</ul>
+<h3 id="dry-run-says-ok-but-actual-run-fails">Dry-run says OK but actual run fails<a class="headerlink" href="#dry-run-says-ok-but-actual-run-fails" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p><code>appctl start &lt;app&gt; --dry-run</code> reports a clean plan. The same operation without <code>--dry-run</code> fails.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<p>Dry-run validates:</p>
+<ul>
+<li>DAG (cycles, missing references)</li>
+<li>Permissions</li>
+<li>Agent connectivity</li>
+<li>Command syntax (presence, not semantics)</li>
+</ul>
+<p>Dry-run does <strong>not</strong> execute commands, so it cannot detect:</p>
+<ul>
+<li>Wrong credentials in <code>start_cmd</code></li>
+<li>Missing prerequisites on the host (port already in use, disk full)</li>
+<li>Race conditions between components</li>
+</ul>
+<p>For tighter pre-flight validation, run the diagnostic engine (Level 3) before a critical operation: <code>appctl diagnose &lt;app&gt; --level 3</code>.</p>
+<hr />
+<h2 id="discovery-auto-discovery-noise">Discovery / auto-discovery noise<a class="headerlink" href="#discovery-auto-discovery-noise" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Symptom</p>
+<p>Auto-discovery surfaces hundreds of irrelevant processes (cron jobs, OS daemons), making the draft topology unusable.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<p>Discovery is heuristic. Two ways to tame it:</p>
+<ol>
+<li><strong>Filter at the agent</strong> — set <code>APPCONTROL_DISCOVERY_EXCLUDE</code> in the agent's environment to a comma-separated deny-list. Matching is case-insensitive and uses prefix semantics, so <code>crond</code> also suppresses <code>crond-worker</code> etc. Example: <code>APPCONTROL_DISCOVERY_EXCLUDE=crond,rsyslogd,sshd</code>. The deny-list is read on every discovery scan (no agent restart needed if the variable is exported in the systemd unit and the agent is restarted, or if the variable is sourced from <code>/etc/environment</code>).</li>
+<li><strong>Curate in the UI</strong> — discovery presents a draft topology; uncheck any process you do not want before promoting it to an application.</li>
+</ol>
+<p>If discovery produces no signal at all, check that the agent has permission to read <code>/proc</code> (Linux) or <code>tasklist</code> (Windows). Container agents may need <code>--pid=host</code> to see host processes.</p>
+<hr />
+<h2 id="cluster-fan-out-sync-issues">Cluster (fan-out) sync issues<a class="headerlink" href="#cluster-fan-out-sync-issues" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p>A fan-out cluster shows divergent member states or a parent state that does not reflect members.</p>
+</div>
+<p><strong>Diagnosis:</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">-- Are all members reporting check results?</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">cm</span><span class="p">.</span><span class="n">hostname</span><span class="p">,</span><span class="w"> </span><span class="n">cms</span><span class="p">.</span><span class="n">current_state</span><span class="p">,</span><span class="w"> </span><span class="n">cms</span><span class="p">.</span><span class="n">last_check_at</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">cluster_members</span><span class="w"> </span><span class="n">cm</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">cluster_member_state</span><span class="w"> </span><span class="n">cms</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">cms</span><span class="p">.</span><span class="n">cluster_member_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cm</span><span class="p">.</span><span class="n">id</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">cm</span><span class="p">.</span><span class="n">component_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">cm</span><span class="p">.</span><span class="n">is_enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1">-- Does the parent component&#39;s state match the policy?</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">cluster_mode</span><span class="p">,</span><span class="w"> </span><span class="n">cluster_health_policy</span><span class="p">,</span><span class="w"> </span><span class="n">cluster_min_healthy_pct</span><span class="p">,</span><span class="w"> </span><span class="n">current_state</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="k">FROM</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p><strong>Resolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Member's <code>agent_id</code> is wrong</td>
+<td>Update <code>cluster_members.agent_id</code>; verify the agent is reachable</td>
+</tr>
+<tr>
+<td><code>cluster_health_policy = threshold_pct</code> but <code>cluster_min_healthy_pct</code> too high</td>
+<td>Lower the threshold or fix the failing members</td>
+</tr>
+<tr>
+<td>Member's <code>check_cmd_override</code> is wrong</td>
+<td>Test the override on the host; correct as needed</td>
+</tr>
+<tr>
+<td>Member's <code>is_enabled = false</code> is skipping live nodes</td>
+<td>Re-enable: <code>UPDATE cluster_members SET is_enabled = true WHERE id = '&lt;mid&gt;';</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="dr-switchover-stuck-in-phase-x">DR switchover stuck in phase X<a class="headerlink" href="#dr-switchover-stuck-in-phase-x" title="Permanent link">&para;</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">Symptom</p>
+<p>A switchover starts but stays in phase 1–6 for an unusually long time.</p>
+</div>
+<p><strong>Resolution by phase:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Phase</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1 (Prepare)</td>
+<td>Target site agents not connected</td>
+<td><code>kubectl logs gateway-dr ...</code>; reconnect agents</td>
+</tr>
+<tr>
+<td style="text-align: right;">2 (Validate)</td>
+<td>Pre-flight health check failed on target</td>
+<td>Inspect <code>switchover_log.details</code>; fix the failing component</td>
+</tr>
+<tr>
+<td style="text-align: right;">3 (StopSource)</td>
+<td>Source component's <code>stop_cmd</code> hangs</td>
+<td>Raise <code>stop_timeout_seconds</code>, or "force stop"</td>
+</tr>
+<tr>
+<td style="text-align: right;">4 (Sync)</td>
+<td>Data replication lag exceeds threshold</td>
+<td>Wait for replication, or trigger an emergency sync</td>
+</tr>
+<tr>
+<td style="text-align: right;">5 (StartTarget)</td>
+<td>Target component fails to start</td>
+<td>Fix the host issue, then resume</td>
+</tr>
+<tr>
+<td style="text-align: right;">6 (Commit)</td>
+<td>Database write contention</td>
+<td>Should never linger; if it does, file a bug report</td>
+</tr>
+</tbody>
+</table>
+<p>Inspect:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">phase</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">started_at</span><span class="p">,</span><span class="w"> </span><span class="n">ended_at</span><span class="p">,</span><span class="w"> </span><span class="n">details</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">switchover_log</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">application_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;aid&gt;&#39;</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">started_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+</span></code></pre></div>
+<p>To force-cancel (only before phase 6): <code>POST /api/v1/apps/:id/switchover/cancel</code>. See <a href="../RUNBOOKS/#runbook-6-dr-switchover-stuck-in-phase">Runbook 6</a>.</p>
+<hr />
+<h2 id="diagnostic-rebuild-rejected">Diagnostic + Rebuild rejected<a class="headerlink" href="#diagnostic-rebuild-rejected" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Symptom</p>
+<p><code>POST /api/v1/apps/:id/rebuild</code> returns HTTP 409 <code>rebuild_protected</code>.</p>
+</div>
+<p><strong>Resolution:</strong></p>
+<p>The rebuild engine refuses to touch any component flagged <code>rebuild_protected = true</code>. This is intentional protection for databases of record and other irreplaceable components.</p>
+<p>Options:</p>
+<ol>
+<li>Rebuild the application <strong>excluding</strong> the protected components — pass <code>exclude_component_ids</code> in the rebuild request body.</li>
+<li>Temporarily unprotect a component (requires <code>manage</code> permission):</li>
+</ol>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">rebuild_protected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Re-protect after the rebuild finishes. The change is recorded in <code>config_versions</code>.</p>
+<hr />
+<h2 id="how-to-file-a-bug-report">How to file a bug report<a class="headerlink" href="#how-to-file-a-bug-report" title="Permanent link">&para;</a></h2>
+<p>When opening an issue, attach the following so the maintainer can reproduce:</p>
+<h3 id="1-environment">1. Environment<a class="headerlink" href="#1-environment" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Version of every component</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>appctl<span class="w"> </span>version
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>/app/appcontrol-backend<span class="w"> </span>--version
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-gateway<span class="w"> </span>--<span class="w"> </span>/app/appcontrol-gateway<span class="w"> </span>--version
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>appcontrol-agent<span class="w"> </span>--version
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># Database flavor</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT version();&quot;</span>
+</span></code></pre></div>
+<h3 id="2-logs-last-200-lines-from-each">2. Logs (last 200 lines from each)<a class="headerlink" href="#2-logs-last-200-lines-from-each" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--tail<span class="o">=</span><span class="m">200</span><span class="w"> </span>&gt;<span class="w"> </span>backend.log
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>gateway<span class="w"> </span>--tail<span class="o">=</span><span class="m">200</span><span class="w"> </span>&gt;<span class="w"> </span>gateway.log
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>appcontrol-agent<span class="w"> </span>--since<span class="w"> </span><span class="s2">&quot;1 hour ago&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>agent.log
+</span></code></pre></div>
+<h3 id="3-configuration-redact-secrets">3. Configuration (redact secrets)<a class="headerlink" href="#3-configuration-redact-secrets" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Backend env (redact JWT_SECRET, DATABASE_URL password)</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;^[A-Z_]+=&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;SECRET|PASSWORD|KEY|DATABASE_URL&#39;</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Gateway YAML</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-gateway<span class="w"> </span>--<span class="w"> </span>cat<span class="w"> </span>/etc/appcontrol/gateway.yaml
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># Agent YAML</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>cat<span class="w"> </span>/etc/appcontrol/agent.yaml
+</span></code></pre></div>
+<h3 id="4-minimal-reproduction">4. Minimal reproduction<a class="headerlink" href="#4-minimal-reproduction" title="Permanent link">&para;</a></h3>
+<p>A 3-step recipe that triggers the bug on a fresh <code>docker compose -f docker/docker-compose.release.yaml up -d</code> install. If the bug requires a specific application topology, attach the JSON export from <strong>Settings &gt; Application &gt; Export</strong>.</p>
+<h3 id="5-database-state-optional-helpful">5. Database state (optional, helpful)<a class="headerlink" href="#5-database-state-optional-helpful" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">-- Component, last 5 transitions, last 5 check events</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">current_state</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span><span class="p">;</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">previous_state</span><span class="p">,</span><span class="w"> </span><span class="n">next_state</span><span class="p">,</span><span class="w"> </span><span class="k">trigger</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">state_transitions</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">component_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">exit_code</span><span class="p">,</span><span class="w"> </span><span class="k">substring</span><span class="p">(</span><span class="k">stdout</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">),</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">check_events</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">component_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;cid&gt;&#39;</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="6-file-log-paths-reference">6. File log paths reference<a class="headerlink" href="#6-file-log-paths-reference" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Log path (Linux)</th>
+<th>Log path (Kubernetes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent</td>
+<td><code>journalctl -u appcontrol-agent</code></td>
+<td>n/a (runs outside K8s)</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td><code>journalctl -u appcontrol-gateway</code> (when on a VM)</td>
+<td><code>kubectl logs -l app.kubernetes.io/component=gateway</code></td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>n/a (typically Kubernetes)</td>
+<td><code>kubectl logs -l app.kubernetes.io/component=backend</code></td>
+</tr>
+<tr>
+<td>Frontend (nginx)</td>
+<td><code>/var/log/nginx/</code> inside the container</td>
+<td><code>kubectl logs -l app.kubernetes.io/component=frontend</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>/var/log/postgresql/</code></td>
+<td>depends on managed-service provider</td>
+</tr>
+</tbody>
+</table>
+<p>Submit the bundle to the project issue tracker. Reproducible bug reports with attached logs are typically triaged within 48 h.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-05-13T14:38:10+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-05-13</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-05-13T13:52:06+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-05-13</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../RUNBOOKS/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Runbooks">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Runbooks
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../INTEGRATION_COOKBOOK/" class="md-footer__link md-footer__link--next" aria-label="Next: Integration cookbook">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Integration cookbook
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/fredericcarre/appcontrol">Source on GitHub</a>
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/fredericcarre/appcontrol" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "navigation.tracking", "navigation.indexes", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.action.edit", "content.tabs.link"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

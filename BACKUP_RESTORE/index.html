@@ -1,0 +1,3574 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
+      
+      
+        <meta name="author" content="AppControl">
+      
+      
+        <link rel="canonical" href="https://docs.appcontrol.io/BACKUP_RESTORE/">
+      
+      
+        <link rel="prev" href="../MIGRATION_FROM_SCRIPTS/">
+      
+      
+        <link rel="next" href="../UPGRADE/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Backup & restore - AppControl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backup-restore" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AppControl" class="md-header__button md-logo" aria-label="AppControl" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AppControl
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Backup & restore
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/xcomponent/appcontrol-release" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xcomponent/appcontrol-release
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../QUICKSTART/" class="md-tabs__link">
+          
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../USER_GUIDE/" class="md-tabs__link">
+          
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../INTEGRATION_COOKBOOK/" class="md-tabs__link">
+          
+  
+    
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PRODUCTION_DEPLOYMENT/" class="md-tabs__link">
+          
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CONFIGURATION/" class="md-tabs__link">
+          
+  
+    
+  
+  Configuration
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/cli/" class="md-tabs__link">
+          
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../COMPLIANCE_DORA_NIS2/" class="md-tabs__link">
+          
+  
+    
+  
+  Compliance
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CHANGELOG/" class="md-tabs__link">
+          
+  
+    
+  
+  Release
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AppControl" class="md-nav__button md-logo" aria-label="AppControl" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AppControl
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/xcomponent/appcontrol-release" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xcomponent/appcontrol-release
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICKSTART/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEMO_SCENARIOS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Demo scenarios
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../POSITIONING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Where it fits (positioning)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GLOSSARY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../USER_GUIDE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PERMISSIONS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Permissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RUNBOOKS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Runbooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Operations
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../INTEGRATION_COOKBOOK/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../METRICS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MIGRATION_FROM_SCRIPTS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration from scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Backup & restore
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Backup & restore
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-back-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to back up
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      PostgreSQL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dump-full-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dump — full backup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_dump — full backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#incremental-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incremental backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wal-archiving-for-pitr" class="md-nav__link">
+    <span class="md-ellipsis">
+      WAL archiving for PITR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partitioned-check_events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Partitioned check_events
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partitioned check_events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-partition-dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-partition dump
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skipping-cold-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skipping cold partitions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQLite
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SQLite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#live-backup-with-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Live backup with .backup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsync-cold-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      rsync (cold backup)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify integrity
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-can-be-regenerated-vs-preserved" class="md-nav__link">
+    <span class="md-ellipsis">
+      What can be regenerated vs preserved
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What can be regenerated vs preserved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#append-only-must-be-preserved" class="md-nav__link">
+    <span class="md-ellipsis">
+      APPEND-ONLY — must be preserved
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regenerable-backup-nice-to-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      REGENERABLE — backup nice-to-have
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-back-up-via-helmsecrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      CONFIG — back up via Helm/secrets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restore validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Restore validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-row-counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Row counts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-last-action_log-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Last action_log entry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-foreign-key-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Foreign-key integrity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-backend-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Backend /ready
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-agent-reconnection" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Agent reconnection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-application-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Application state
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-from-sqlite-to-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration from SQLite to PostgreSQL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration from SQLite to PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-provision-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 — provision PostgreSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-run-migrations-on-the-empty-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 — run migrations on the empty target
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-export-from-sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 — export from SQLite
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-transform-and-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4 — transform and import
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-switch-the-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5 — switch the backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-run-validation-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6 — run validation queries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keys-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keys &amp; secrets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Keys & secrets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ca-private-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      CA private key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jwt_secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      JWT_SECRET
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent-client-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent client certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-server-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateway server certificate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kms-recommendation-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      KMS recommendation (roadmap)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-crontab-and-retention-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample crontab and retention policy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sample crontab and retention policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended cadence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crontab-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      crontab example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appcontrol-backup-dailysh" class="md-nav__link">
+    <span class="md-ellipsis">
+      appcontrol-backup-daily.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appcontrol-restore-verifysh" class="md-nav__link">
+    <span class="md-ellipsis">
+      appcontrol-restore-verify.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encryption-at-rest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption at rest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-site-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-site replication
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UPGRADE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade procedures
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DISASTER_RECOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disaster recovery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PRODUCTION_DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HIGH_AVAILABILITY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High availability
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENT_INSTALLATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AZURE_GATEWAY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OPENSHIFT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HARDENING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hardening checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAPACITY_PLANNING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Capacity planning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LIMITS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Limits & quotas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Configuration
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONFIGURATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SQLITE_IMPLEMENTATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQLite implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/cli/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CLI (appctl)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration env vars
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors & exit codes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/fsm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FSM states
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prometheus metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/enums/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enums
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/mcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MCP tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Compliance
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Compliance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPLIANCE_DORA_NIS2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DORA & NIS2 mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Release
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Release
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RELEASE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-back-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to back up
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      PostgreSQL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dump-full-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dump — full backup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_dump — full backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#incremental-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incremental backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wal-archiving-for-pitr" class="md-nav__link">
+    <span class="md-ellipsis">
+      WAL archiving for PITR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partitioned-check_events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Partitioned check_events
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partitioned check_events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-partition-dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-partition dump
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skipping-cold-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skipping cold partitions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQLite
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SQLite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#live-backup-with-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Live backup with .backup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsync-cold-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      rsync (cold backup)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify integrity
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-can-be-regenerated-vs-preserved" class="md-nav__link">
+    <span class="md-ellipsis">
+      What can be regenerated vs preserved
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What can be regenerated vs preserved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#append-only-must-be-preserved" class="md-nav__link">
+    <span class="md-ellipsis">
+      APPEND-ONLY — must be preserved
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regenerable-backup-nice-to-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      REGENERABLE — backup nice-to-have
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-back-up-via-helmsecrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      CONFIG — back up via Helm/secrets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restore validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Restore validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-row-counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Row counts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-last-action_log-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Last action_log entry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-foreign-key-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Foreign-key integrity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-backend-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Backend /ready
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-agent-reconnection" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Agent reconnection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-application-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Application state
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-from-sqlite-to-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration from SQLite to PostgreSQL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration from SQLite to PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-provision-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 — provision PostgreSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-run-migrations-on-the-empty-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 — run migrations on the empty target
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-export-from-sqlite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 — export from SQLite
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-transform-and-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4 — transform and import
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-switch-the-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5 — switch the backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-run-validation-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6 — run validation queries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keys-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keys &amp; secrets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Keys & secrets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ca-private-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      CA private key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jwt_secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      JWT_SECRET
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent-client-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent client certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-server-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateway server certificate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kms-recommendation-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      KMS recommendation (roadmap)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-crontab-and-retention-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample crontab and retention policy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sample crontab and retention policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended cadence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crontab-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      crontab example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appcontrol-backup-dailysh" class="md-nav__link">
+    <span class="md-ellipsis">
+      appcontrol-backup-daily.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appcontrol-restore-verifysh" class="md-nav__link">
+    <span class="md-ellipsis">
+      appcontrol-restore-verify.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encryption-at-rest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption at rest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-site-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-site replication
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/fredericcarre/appcontrol/edit/main/docs/BACKUP_RESTORE.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="backup-restore">Backup &amp; Restore<a class="headerlink" href="#backup-restore" title="Permanent link">&para;</a></h1>
+<p>This page documents how to back up and restore the AppControl backend state. AppControl persists everything required for resilience and audit in PostgreSQL (or SQLite for small deployments). Gateways and agents are stateless from a backup perspective — they hold mTLS certs (re-issuable) and an ephemeral local buffer (≤ 100 MB sled).</p>
+<p>For DR scenarios that consume these backups, see <a href="../DISASTER_RECOVERY/">Disaster Recovery</a>.</p>
+<h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#what-to-back-up">What to back up</a></li>
+<li><a href="#postgresql">PostgreSQL</a></li>
+<li><a href="#pg_dump--full-backup">pg_dump — full backup</a></li>
+<li><a href="#wal-archiving-for-pitr">WAL archiving for PITR</a></li>
+<li><a href="#partitioned-check_events">Partitioned <code>check_events</code></a></li>
+<li><a href="#sqlite">SQLite</a></li>
+<li><a href="#what-can-be-regenerated-vs-preserved">What can be regenerated vs preserved</a></li>
+<li><a href="#restore-validation">Restore validation</a></li>
+<li><a href="#migration-from-sqlite-to-postgresql">Migration from SQLite to PostgreSQL</a></li>
+<li><a href="#keys--secrets">Keys &amp; secrets</a></li>
+<li><a href="#sample-crontab-and-retention-policy">Sample crontab and retention policy</a></li>
+</ul>
+<hr />
+<h2 id="what-to-back-up">What to back up<a class="headerlink" href="#what-to-back-up" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Asset</th>
+<th>Storage</th>
+<th>Recovery if lost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL data directory</td>
+<td><code>/var/lib/postgresql/data/</code> (or managed service)</td>
+<td>From backup</td>
+</tr>
+<tr>
+<td>Append-only audit (<code>action_log</code>, <code>state_transitions</code>, <code>check_events</code>, <code>switchover_log</code>, <code>config_versions</code>)</td>
+<td>PostgreSQL tables</td>
+<td>From backup — <strong>no other source</strong></td>
+</tr>
+<tr>
+<td>CA private key</td>
+<td><code>pki_authorities</code> table (encrypted)</td>
+<td>From backup — losing it forces re-enrollment of every agent</td>
+</tr>
+<tr>
+<td><code>JWT_SECRET</code></td>
+<td>Kubernetes secret <code>appcontrol-jwt</code></td>
+<td>Can be regenerated (invalidates all sessions)</td>
+</tr>
+<tr>
+<td><code>DATABASE_URL</code></td>
+<td>Kubernetes secret <code>appcontrol-db</code></td>
+<td>Known config</td>
+</tr>
+<tr>
+<td>OIDC / SAML client secrets</td>
+<td>env vars or Kubernetes secrets</td>
+<td>Re-issue from your IdP</td>
+</tr>
+<tr>
+<td>Gateway certs</td>
+<td>Kubernetes secret <code>appcontrol-gateway-tls</code></td>
+<td>Re-issue with <code>appctl pki issue-gateway</code></td>
+</tr>
+<tr>
+<td>Agent certs</td>
+<td><code>/etc/appcontrol/tls/</code> on each host</td>
+<td>Re-enroll if CA is intact; restore from full host backup otherwise</td>
+</tr>
+<tr>
+<td>Helm values, config-management state</td>
+<td>git / SCM</td>
+<td>From git history</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h2>
+<h3 id="pg_dump-full-backup">pg_dump — full backup<a class="headerlink" href="#pg_dump-full-backup" title="Permanent link">&para;</a></h3>
+<p>The standard tool for logical backups. Produces a portable <code>.dump</code> file usable across minor versions.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Backend uses no extensions beyond gen_random_uuid (pgcrypto); a logical dump is sufficient</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pg_dump<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--host<span class="o">=</span>db.internal<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--username<span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--format<span class="o">=</span>custom<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>--compress<span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>--file<span class="o">=</span>appcontrol-<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M<span class="k">)</span>.dump<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>appcontrol
+</span></code></pre></div>
+<p>Restore:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pg_restore<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--host<span class="o">=</span>db-new.internal<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--username<span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--clean<span class="w"> </span>--if-exists<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--no-acl<span class="w"> </span>--no-owner<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--jobs<span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>--dbname<span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>appcontrol-20260513-0300.dump
+</span></code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">Verifying the dump</p>
+<p>A backup that cannot be restored is not a backup. Always:</p>
+<ol>
+<li>Restore to a sandbox PostgreSQL instance after every cron run.</li>
+<li>Run the <a href="#restore-validation">validation queries</a> below.</li>
+<li>Alert if any check fails.</li>
+</ol>
+</div>
+<h4 id="incremental-backups">Incremental backups<a class="headerlink" href="#incremental-backups" title="Permanent link">&para;</a></h4>
+<p>PostgreSQL has no native "incremental" logical dump. For incremental, use either:</p>
+<ul>
+<li><strong><code>pg_dump --table=</code> per-table</strong> scoped to mutable tables (small) plus periodic full dumps of immutable tables.</li>
+<li><strong>WAL archiving</strong> (recommended; see below).</li>
+</ul>
+<h3 id="wal-archiving-for-pitr">WAL archiving for PITR<a class="headerlink" href="#wal-archiving-for-pitr" title="Permanent link">&para;</a></h3>
+<p>Point-in-time recovery requires continuous WAL archiving plus periodic base backups. Recommended setup:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># postgresql.conf</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">wal_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">replica</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">archive_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">on</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">archive_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;aws s3 cp %p s3://appcontrol-wal/%f --no-progress&#39;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">archive_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">60</span><span class="w">          </span><span class="c1"># seconds — force a switch every 60s for tight RPO</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">max_wal_senders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3</span>
+</span></code></pre></div>
+<p>Take periodic base backups (e.g. daily 03:00):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pg_basebackup<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--host<span class="o">=</span>db.internal<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--username<span class="o">=</span>replicator<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--pgdata<span class="o">=</span>/backup/base-<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>--format<span class="o">=</span>tar<span class="w"> </span>--gzip<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span>--wal-method<span class="o">=</span>stream<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span>--checkpoint<span class="o">=</span>fast
+</span></code></pre></div>
+<p>Restore to a target time:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1. Extract base backup</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>/backup/base-20260513.tar.gz<span class="w"> </span>-C<span class="w"> </span>/var/lib/postgresql/data
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 2. Tell PostgreSQL where to fetch WAL and when to stop</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>/var/lib/postgresql/data/postgresql.auto.conf<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s">restore_command = &#39;aws s3 cp s3://appcontrol-wal/%f %p&#39;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="s">recovery_target_time = &#39;2026-05-13 10:30:00 UTC&#39;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="s">EOF</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>touch<span class="w"> </span>/var/lib/postgresql/data/recovery.signal
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>systemctl<span class="w"> </span>start<span class="w"> </span>postgresql
+</span></code></pre></div>
+<p><strong>RPO with archive_timeout=60s:</strong> typically 1–2 min in the worst case (60 s of unarchived WAL + sync lag to S3).</p>
+<h3 id="partitioned-check_events">Partitioned <code>check_events</code><a class="headerlink" href="#partitioned-check_events" title="Permanent link">&para;</a></h3>
+<p><code>check_events</code> is partitioned by month (migration <code>V005</code>). Each monthly partition is an independent PostgreSQL table:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">inhrelid</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">partition</span><span class="p">,</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">       </span><span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="n">inhrelid</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">size</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">pg_inherits</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">inhparent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;check_events&#39;</span><span class="p">::</span><span class="n">regclass</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">partition</span><span class="p">;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1">-- check_events_y2026m01    8 GB</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">-- check_events_y2026m02    9 GB</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- check_events_y2026m03    11 GB</span>
+</span></code></pre></div>
+<h4 id="per-partition-dump">Per-partition dump<a class="headerlink" href="#per-partition-dump" title="Permanent link">&para;</a></h4>
+<p>For very large <code>check_events</code>, dump each partition separately to limit dump time:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">for</span><span class="w"> </span>p<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>psql<span class="w"> </span>-At<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="s2">&quot;SELECT inhrelid::regclass FROM pg_inherits WHERE inhparent = &#39;check_events&#39;::regclass&quot;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>pg_dump<span class="w"> </span>--format<span class="o">=</span>custom<span class="w"> </span>--compress<span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>--table<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span><span class="w"> </span>--file<span class="o">=</span><span class="s2">&quot;ce-</span><span class="si">${</span><span class="nv">p</span><span class="si">}</span><span class="s2">.dump&quot;</span><span class="w"> </span><span class="nv">$DATABASE_URL</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">done</span>
+</span></code></pre></div>
+<p>Restore:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>ce-*.dump<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>pg_restore<span class="w"> </span>--dbname<span class="o">=</span><span class="nv">$DATABASE_URL_NEW</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">done</span>
+</span></code></pre></div>
+<p>This is dramatically faster than restoring the full DB because partition restores parallelize trivially.</p>
+<h4 id="skipping-cold-partitions">Skipping cold partitions<a class="headerlink" href="#skipping-cold-partitions" title="Permanent link">&para;</a></h4>
+<p>You can choose to not back up partitions older than your retention requirement (e.g. &gt; 6 months):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Drop locally, no backup, before they&#39;re rotated by retention</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;DROP TABLE check_events_y2025m11;&quot;</span>
+</span></code></pre></div>
+<p>This is a regulatory decision — DORA Article 16 expects incident records for 5+ years; check policy before dropping.</p>
+<hr />
+<h2 id="sqlite">SQLite<a class="headerlink" href="#sqlite" title="Permanent link">&para;</a></h2>
+<p>AppControl supports SQLite for small / air-gapped / single-host deployments (see <a href="../SQLITE_IMPLEMENTATION/">SQLite Implementation</a>).</p>
+<h3 id="live-backup-with-backup">Live backup with <code>.backup</code><a class="headerlink" href="#live-backup-with-backup" title="Permanent link">&para;</a></h3>
+<p>SQLite's <code>.backup</code> command produces a transactionally consistent copy of the live DB without locking:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># From the backend host</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sqlite3<span class="w"> </span>/var/lib/appcontrol/appcontrol.db<span class="w"> </span><span class="s2">&quot;.backup &#39;/backup/appcontrol-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M<span class="k">)</span><span class="s2">.db&#39;&quot;</span>
+</span></code></pre></div>
+<p>This uses the SQLite online backup API: it copies pages while the backend continues to write.</p>
+<h3 id="rsync-cold-backup">rsync (cold backup)<a class="headerlink" href="#rsync-cold-backup" title="Permanent link">&para;</a></h3>
+<p>For an <em>idle</em> database (backend stopped), <code>rsync</code> is fastest:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>systemctl<span class="w"> </span>stop<span class="w"> </span>appcontrol-backend
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>rsync<span class="w"> </span>-a<span class="w"> </span>/var/lib/appcontrol/appcontrol.db<span class="w"> </span>/backup/appcontrol.db
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>systemctl<span class="w"> </span>start<span class="w"> </span>appcontrol-backend
+</span></code></pre></div>
+<p>This causes a service outage; prefer <code>.backup</code> for live systems.</p>
+<h3 id="verify-integrity">Verify integrity<a class="headerlink" href="#verify-integrity" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sqlite3<span class="w"> </span>/backup/appcontrol.db<span class="w"> </span><span class="s2">&quot;PRAGMA integrity_check;&quot;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># Should return: ok</span>
+</span></code></pre></div>
+<hr />
+<h2 id="what-can-be-regenerated-vs-preserved">What can be regenerated vs preserved<a class="headerlink" href="#what-can-be-regenerated-vs-preserved" title="Permanent link">&para;</a></h2>
+<p>The system distinguishes <strong>append-only</strong> from <strong>mutable</strong> tables. Append-only tables are the regulatory record; losing them is a compliance breach.</p>
+<h3 id="append-only-must-be-preserved">APPEND-ONLY — must be preserved<a class="headerlink" href="#append-only-must-be-preserved" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Purpose</th>
+<th>DORA mapping</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action_log</code></td>
+<td>Every user action, written before execute</td>
+<td>Art. 16 (incident records)</td>
+</tr>
+<tr>
+<td><code>state_transitions</code></td>
+<td>Every FSM state change</td>
+<td>Art. 16</td>
+</tr>
+<tr>
+<td><code>check_events</code></td>
+<td>Every health/integrity/infra check (partitioned)</td>
+<td>Art. 8(2), Art. 11</td>
+</tr>
+<tr>
+<td><code>switchover_log</code></td>
+<td>DR switchover phase-by-phase records</td>
+<td>Art. 11, Art. 25</td>
+</tr>
+<tr>
+<td><code>config_versions</code></td>
+<td>Every config change with before/after JSONB</td>
+<td>Art. 8</td>
+</tr>
+<tr>
+<td><code>enrollment_audit</code> <em>(if present)</em></td>
+<td>Token uses for agent/gateway enrollment</td>
+<td>Art. 16</td>
+</tr>
+<tr>
+<td><code>break_glass_sessions</code></td>
+<td>Emergency access sessions</td>
+<td>Art. 16</td>
+</tr>
+</tbody>
+</table>
+<h3 id="regenerable-backup-nice-to-have">REGENERABLE — backup nice-to-have<a class="headerlink" href="#regenerable-backup-nice-to-have" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Regenerated by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>components.current_state</code></td>
+<td>The next health-check cycle</td>
+</tr>
+<tr>
+<td><code>fsm_cache</code> / <code>cluster_member_state</code></td>
+<td>Agent reconnect + first check</td>
+</tr>
+<tr>
+<td><code>agent_metrics</code></td>
+<td>Resumed on agent reconnect</td>
+</tr>
+<tr>
+<td><code>revoked_tokens</code></td>
+<td>Tokens auto-expire; entries are short-lived</td>
+</tr>
+<tr>
+<td><code>notification_queue</code></td>
+<td>Notifications re-delivered if subscribed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config-back-up-via-helmsecrets">CONFIG — back up via Helm/secrets<a class="headerlink" href="#config-back-up-via-helmsecrets" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>organizations</code>, <code>users</code>, <code>teams</code>, <code>team_members</code>, <code>app_permissions_users/teams</code>, <code>applications</code>, <code>components</code>, <code>dependencies</code>, <code>sites</code>, <code>hostings</code>, <code>binding_profiles</code>, <code>agents</code>, <code>gateways</code>, <code>api_keys</code>, <code>enrollment_tokens</code>.</li>
+</ul>
+<p>These tables hold the operational configuration. They are not append-only — they evolve over time — but they are critical to restore exactly. A full PostgreSQL dump covers them.</p>
+<hr />
+<h2 id="restore-validation">Restore validation<a class="headerlink" href="#restore-validation" title="Permanent link">&para;</a></h2>
+<p>Run this checklist after every restore (DR drill or production).</p>
+<h3 id="1-row-counts">1. Row counts<a class="headerlink" href="#1-row-counts" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">SELECT</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">organizations</span><span class="p">)</span><span class="w">         </span><span class="k">AS</span><span class="w"> </span><span class="n">organizations</span><span class="p">,</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">)</span><span class="w">                 </span><span class="k">AS</span><span class="w"> </span><span class="n">users</span><span class="p">,</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span><span class="p">)</span><span class="w">          </span><span class="k">AS</span><span class="w"> </span><span class="n">applications</span><span class="p">,</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">components</span><span class="p">)</span><span class="w">            </span><span class="k">AS</span><span class="w"> </span><span class="n">components</span><span class="p">,</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dependencies</span><span class="p">)</span><span class="w">          </span><span class="k">AS</span><span class="w"> </span><span class="n">dependencies</span><span class="p">,</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">agents</span><span class="p">)</span><span class="w">                </span><span class="k">AS</span><span class="w"> </span><span class="n">agents</span><span class="p">,</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">action_log</span><span class="p">)</span><span class="w">            </span><span class="k">AS</span><span class="w"> </span><span class="n">action_log</span><span class="p">,</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">state_transitions</span><span class="p">)</span><span class="w">     </span><span class="k">AS</span><span class="w"> </span><span class="n">state_transitions</span><span class="p">,</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">  </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">switchover_log</span><span class="p">)</span><span class="w">        </span><span class="k">AS</span><span class="w"> </span><span class="n">switchover_log</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Compare to the last known-good counts (snapshot them before the disaster).</p>
+<h3 id="2-last-action_log-entry">2. Last action_log entry<a class="headerlink" href="#2-last-action_log-entry" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">max</span><span class="p">(</span><span class="n">created_at</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">last_action</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">action_log</span><span class="p">;</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1">-- Should be close to the recovery_target_time (PITR) or just before the backup time</span>
+</span></code></pre></div>
+<h3 id="3-foreign-key-integrity">3. Foreign-key integrity<a class="headerlink" href="#3-foreign-key-integrity" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">-- Components without an application (should be 0)</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="k">c</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">applications</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">application_id</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1">-- action_log without a user (should be 0)</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">action_log</span><span class="w"> </span><span class="n">al</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">al</span><span class="p">.</span><span class="n">user_id</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">al</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="c1">-- check_events partitions all present</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">generate_series</span><span class="p">(</span><span class="s1">&#39;2026-01-01&#39;</span><span class="p">::</span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="k">current_date</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1 month&#39;</span><span class="p">::</span><span class="nb">interval</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">month</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="k">EXCEPT</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tableoid</span><span class="p">::</span><span class="n">regclass</span><span class="p">::</span><span class="nb">text</span><span class="p">::</span><span class="nb">date</span><span class="p">)</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="k">FROM</span><span class="w"> </span><span class="n">check_events</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="4-backend-ready">4. Backend <code>/ready</code><a class="headerlink" href="#4-backend-ready" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3000/ready
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># {&quot;status&quot;:&quot;ready&quot;}</span>
+</span></code></pre></div>
+<h3 id="5-agent-reconnection">5. Agent reconnection<a class="headerlink" href="#5-agent-reconnection" title="Permanent link">&para;</a></h3>
+<p>Within the heartbeat timeout window (default 180 s), expect all previously-active agents to reconnect:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">SELECT</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">last_heartbeat_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">interval</span><span class="w"> </span><span class="s1">&#39;5 minutes&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">connected</span><span class="p">,</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">last_heartbeat_at</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">interval</span><span class="w"> </span><span class="s1">&#39;5 minutes&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">disconnected</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">FROM</span><span class="w"> </span><span class="n">agents</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">is_active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+</span></code></pre></div>
+<p><code>disconnected</code> should approach 0 within 5 minutes.</p>
+<h3 id="6-application-state">6. Application state<a class="headerlink" href="#6-application-state" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">-- Components in UNKNOWN should resolve within one check_interval</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">current_state</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">current_state</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="migration-from-sqlite-to-postgresql">Migration from SQLite to PostgreSQL<a class="headerlink" href="#migration-from-sqlite-to-postgresql" title="Permanent link">&para;</a></h2>
+<p>If you outgrew SQLite, migrate to PostgreSQL with the following procedure. The DB schema is bytewise identical apart from UUID encoding (TEXT on SQLite, native UUID on PostgreSQL) and JSON column types (<code>TEXT</code> vs <code>JSONB</code>).</p>
+<h3 id="step-1-provision-postgresql">Step 1 — provision PostgreSQL<a class="headerlink" href="#step-1-provision-postgresql" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>pg-target<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">POSTGRES_DB</span><span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">POSTGRES_USER</span><span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">5432</span>:5432<span class="w"> </span>postgres:16-alpine
+</span></code></pre></div>
+<h3 id="step-2-run-migrations-on-the-empty-target">Step 2 — run migrations on the empty target<a class="headerlink" href="#step-2-run-migrations-on-the-empty-target" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nv">DATABASE_URL</span><span class="o">=</span>postgres://appcontrol:appcontrol@localhost:5432/appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>appcontrol-backend<span class="w"> </span>--migrate-only
+</span></code></pre></div>
+<h3 id="step-3-export-from-sqlite">Step 3 — export from SQLite<a class="headerlink" href="#step-3-export-from-sqlite" title="Permanent link">&para;</a></h3>
+<p>For each table in dependency order (see <a href="https://github.com/fredericcarre/appcontrol/blob/main/migrations/CLAUDE.md">migrations/CLAUDE.md</a>):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>sqlite3<span class="w"> </span>/var/lib/appcontrol/appcontrol.db<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="s">.mode csv</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="s">.headers on</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="s">.output /tmp/organizations.csv</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="s">SELECT * FROM organizations;</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="s">.output /tmp/users.csv</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="s">SELECT * FROM users;</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="s">-- repeat for each table</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<h3 id="step-4-transform-and-import">Step 4 — transform and import<a class="headerlink" href="#step-4-transform-and-import" title="Permanent link">&para;</a></h3>
+<p>UUIDs in SQLite are stored as TEXT in canonical form (<code>550e8400-...</code>). PostgreSQL accepts the same form when inserted into <code>UUID</code> columns.</p>
+<p>JSON columns in SQLite are TEXT; PostgreSQL wants <code>::jsonb</code>. The migration helper handles the cast on import:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="s">\copy organizations FROM &#39;/tmp/organizations.csv&#39; WITH (FORMAT csv, HEADER true);</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="s">\copy users FROM &#39;/tmp/users.csv&#39; WITH (FORMAT csv, HEADER true);</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="s">-- ...</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="s">-- Re-cast JSON columns if needed</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="s">UPDATE organizations SET settings = settings::text::jsonb;</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<h3 id="step-5-switch-the-backend">Step 5 — switch the backend<a class="headerlink" href="#step-5-switch-the-backend" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Update the secret</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>appcontrol-db<span class="w"> </span>--namespace<span class="w"> </span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span>--from-literal<span class="o">=</span>database-url<span class="o">=</span><span class="s2">&quot;postgres://appcontrol:appcontrol@pg.internal:5432/appcontrol?sslmode=require&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="c1"># Restart the backend</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deployment/appcontrol-backend
+</span></code></pre></div>
+<h3 id="step-6-run-validation-queries">Step 6 — run validation queries<a class="headerlink" href="#step-6-run-validation-queries" title="Permanent link">&para;</a></h3>
+<p>Use the <a href="#restore-validation">restore validation queries</a> above.</p>
+<div class="admonition warning">
+<p class="admonition-title">Migration is one-way</p>
+<p>There is no automated PostgreSQL → SQLite path. SQLite is intended for small installs (&lt; 50 agents); once you migrate, plan to stay on PostgreSQL.</p>
+</div>
+<hr />
+<h2 id="keys-secrets">Keys &amp; secrets<a class="headerlink" href="#keys-secrets" title="Permanent link">&para;</a></h2>
+<h3 id="ca-private-key">CA private key<a class="headerlink" href="#ca-private-key" title="Permanent link">&para;</a></h3>
+<p>The per-organization CA is stored encrypted in the <code>pki_authorities</code> table. If you lose this row:</p>
+<ul>
+<li><strong>Every agent must be re-enrolled</strong> with a new CA — there is no other way.</li>
+<li>Plan for this by including <code>pki_authorities</code> in your DB backup (it is part of the <code>pg_dump</code>).</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Roadmap: external CA</p>
+<p>Delegating CA signing to HashiCorp Vault PKI or AWS KMS so the private key never lives in the backend database is on the roadmap. It is not yet implemented (see <a href="../HARDENING/#pki-and-certificate-hygiene">Hardening</a>). Today the CA lives encrypted in <code>organizations.ca_private_key</code>; protect it via PostgreSQL TDE or volume-level encryption (LUKS, EBS encryption) and a hardened Kubernetes secret-access policy.</p>
+</div>
+<h3 id="jwt_secret"><code>JWT_SECRET</code><a class="headerlink" href="#jwt_secret" title="Permanent link">&para;</a></h3>
+<p>Stored in the Kubernetes secret <code>appcontrol-jwt</code>. Back it up the same way you back up other Kubernetes secrets (Sealed Secrets, HashiCorp Vault, AWS Secrets Manager). Losing it forces every user to re-authenticate.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>appcontrol-jwt<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>appcontrol-jwt.yaml.enc
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="c1"># Store encrypted in your secret store</span>
+</span></code></pre></div>
+<h3 id="agent-client-certificates">Agent client certificates<a class="headerlink" href="#agent-client-certificates" title="Permanent link">&para;</a></h3>
+<p>Each agent host has its own client cert at <code>/etc/appcontrol/tls/agent.crt</code>. If the host is wiped:</p>
+<ul>
+<li>If the CA is intact, re-enroll: <code>appcontrol-agent --enroll …</code>.</li>
+<li>If the CA is gone, see CA recovery above.</li>
+</ul>
+<h3 id="gateway-server-certificate">Gateway server certificate<a class="headerlink" href="#gateway-server-certificate" title="Permanent link">&para;</a></h3>
+<p>Stored as Kubernetes secret <code>appcontrol-gateway-tls</code>. Re-issue at any time via <code>appctl pki issue-gateway</code>.</p>
+<h3 id="kms-recommendation-roadmap">KMS recommendation (roadmap)<a class="headerlink" href="#kms-recommendation-roadmap" title="Permanent link">&para;</a></h3>
+<p>In a future release the backend will be able to delegate CA signing to a KMS or HSM (AWS KMS, GCP Cloud KMS, Azure Key Vault, HashiCorp Vault PKI). The benefits will be:</p>
+<ul>
+<li>Prevent an admin from exfiltrating the CA from the backend DB.</li>
+<li>Help satisfy DORA Article 9 (cryptographic key management).</li>
+<li>Allow hardware-backed key rotation.</li>
+</ul>
+<p>This is not yet implemented. The CA private key is currently held encrypted in the database. Until KMS integration ships, mitigate by:</p>
+<ul>
+<li>enabling at-rest encryption on the PostgreSQL volume (PostgreSQL TDE, LUKS, AWS EBS encryption);</li>
+<li>restricting <code>SELECT</code> on <code>pki_authorities</code> / <code>organizations.ca_private_key</code> to the backend service account only;</li>
+<li>rotating the CA on a regular cadence (see <a href="../HARDENING/#pki-and-certificate-hygiene">PKI rotation</a>).</li>
+</ul>
+<hr />
+<h2 id="sample-crontab-and-retention-policy">Sample crontab and retention policy<a class="headerlink" href="#sample-crontab-and-retention-policy" title="Permanent link">&para;</a></h2>
+<h3 id="recommended-cadence">Recommended cadence<a class="headerlink" href="#recommended-cadence" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Cadence</th>
+<th>What</th>
+<th>Retention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Every 1 min</td>
+<td>WAL archive segment to S3</td>
+<td>30 days</td>
+</tr>
+<tr>
+<td>Daily 03:00</td>
+<td>Full <code>pg_dump</code> of all DBs</td>
+<td>30 daily files</td>
+</tr>
+<tr>
+<td>Weekly Sun 04:00</td>
+<td>Tar+gzip last 7 daily dumps to cold storage</td>
+<td>12 weekly archives</td>
+</tr>
+<tr>
+<td>Monthly 1<sup>st</sup> 05:00</td>
+<td>Promote last weekly to year-tier cold storage</td>
+<td>12 monthly + 7 yearly archives</td>
+</tr>
+<tr>
+<td>Daily 06:00</td>
+<td><code>pg_basebackup</code> for fast PITR base</td>
+<td>7 base backups</td>
+</tr>
+<tr>
+<td>Daily 23:00</td>
+<td>Sandbox-restore the latest daily and run validation</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<h3 id="crontab-example">crontab example<a class="headerlink" href="#crontab-example" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a># m h dom mon dow command
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>0  3  *  *  *  /usr/local/bin/appcontrol-backup-daily.sh
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>0  4  *  *  0  /usr/local/bin/appcontrol-backup-weekly.sh
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>0  5  1  *  *  /usr/local/bin/appcontrol-backup-monthly.sh
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>0  6  *  *  *  /usr/local/bin/appcontrol-basebackup.sh
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>0 23  *  *  *  /usr/local/bin/appcontrol-restore-verify.sh
+</span></code></pre></div>
+<h3 id="appcontrol-backup-dailysh"><code>appcontrol-backup-daily.sh</code><a class="headerlink" href="#appcontrol-backup-dailysh" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="ch">#!/usr/bin/env bash</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="nv">DEST</span><span class="o">=</span><span class="s2">&quot;s3://appcontrol-backups/daily/</span><span class="k">$(</span>date<span class="w"> </span>+%Y/%m/%d<span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="nv">DUMP</span><span class="o">=</span><span class="s2">&quot;/tmp/appcontrol-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M<span class="k">)</span><span class="s2">.dump&quot;</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>pg_dump<span class="w"> </span>--host<span class="o">=</span>db.internal<span class="w"> </span>--username<span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">        </span>--format<span class="o">=</span>custom<span class="w"> </span>--compress<span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">        </span>--file<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span><span class="w"> </span>appcontrol
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="c1"># Server-side encryption for at-rest protection</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEST</span><span class="s2">/&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">    </span>--sse<span class="w"> </span>aws:kms<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">    </span>--sse-kms-key-id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KMS_KEY_ID</span><span class="s2">&quot;</span>
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>rm<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="c1"># Retention: delete &gt; 30 days</span>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">  </span>awk<span class="w"> </span><span class="s1">&#39;$1 &lt; &quot;&#39;</span><span class="k">$(</span>date<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;30 days ago&#39;</span><span class="w"> </span>+%Y-%m-%d<span class="k">)</span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span><span class="p">|</span>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="w">  </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="w"> </span><span class="p">|</span>
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="w">  </span>xargs<span class="w"> </span>-r<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>aws<span class="w"> </span>s3<span class="w"> </span>rm<span class="w"> </span><span class="s2">&quot;s3://appcontrol-backups/{}&quot;</span>
+</span></code></pre></div>
+<h3 id="appcontrol-restore-verifysh"><code>appcontrol-restore-verify.sh</code><a class="headerlink" href="#appcontrol-restore-verifysh" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="ch">#!/usr/bin/env bash</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># Find the most recent daily backup</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="nv">LATEST</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">  </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">&quot;s3://appcontrol-backups/</span><span class="nv">$LATEST</span><span class="s2">&quot;</span><span class="w"> </span>/tmp/latest.dump
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="c1"># Wipe and restore the sandbox DB</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;DROP DATABASE IF EXISTS appcontrol_test;&quot;</span>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;CREATE DATABASE appcontrol_test;&quot;</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>pg_restore<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="w">    </span>-d<span class="w"> </span>appcontrol_test<span class="w"> </span>/tmp/latest.dump
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="c1"># Validation queries</span>
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a><span class="nv">COUNT</span><span class="o">=</span><span class="k">$(</span><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-At<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="w">    </span>-d<span class="w"> </span>appcontrol_test<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT count(*) FROM action_log;&quot;</span><span class="k">)</span>
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;action_log rows: </span><span class="nv">$COUNT</span><span class="s2">&quot;</span>
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$COUNT</span><span class="s2">&quot;</span><span class="w"> </span>-lt<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;VALIDATION FAILED: action_log too small&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a><span class="k">fi</span>
+</span></code></pre></div>
+<h3 id="encryption-at-rest">Encryption at rest<a class="headerlink" href="#encryption-at-rest" title="Permanent link">&para;</a></h3>
+<p>All cron jobs use <code>--sse aws:kms</code> to ensure backups are encrypted at rest with a customer-managed KMS key. This satisfies DORA Article 9 (cryptographic protection of data at rest).</p>
+<h3 id="off-site-replication">Off-site replication<a class="headerlink" href="#off-site-replication" title="Permanent link">&para;</a></h3>
+<p>Daily backups are replicated to a second region via S3 cross-region replication. The replicated region is used for the doomsday scenario (<a href="../DISASTER_RECOVERY/#9-doomsday-primary--dr-simultaneously-lost">§9 of Disaster Recovery</a>).</p>
+<div class="language-hcl highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_s3_bucket_replication_configuration&quot;</span><span class="w"> </span><span class="nv">&quot;appcontrol_backups&quot;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="na">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_s3_bucket.backups_primary.id</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="na">role</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_iam_role.replication.arn</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">  </span><span class="nb">rule</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">    </span><span class="na">id</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;replicate-all&quot;</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span><span class="na">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Enabled&quot;</span>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">    </span><span class="nb">destination</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">      </span><span class="na">bucket</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_s3_bucket.backups_secondary.arn</span>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">      </span><span class="na">storage_class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;GLACIER_IR&quot;</span>
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../DISASTER_RECOVERY/">Disaster Recovery</a> — scenarios that consume these backups</li>
+<li><a href="../HARDENING/">Hardening</a> — backup-encryption requirements</li>
+<li><a href="../COMPLIANCE_DORA_NIS2/">Compliance — DORA / NIS2</a> — regulatory retention requirements</li>
+<li>PostgreSQL docs — <a href="https://www.postgresql.org/docs/16/app-pgdump.html"><code>pg_dump</code></a>, <a href="https://www.postgresql.org/docs/16/continuous-archiving.html">continuous archiving</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-05-13T14:39:00+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-05-13</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-05-13T13:52:06+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-05-13</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../MIGRATION_FROM_SCRIPTS/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Migration from scripts">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Migration from scripts
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../UPGRADE/" class="md-footer__link md-footer__link--next" aria-label="Next: Upgrade procedures">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Upgrade procedures
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/fredericcarre/appcontrol">Source on GitHub</a>
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/fredericcarre/appcontrol" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "navigation.tracking", "navigation.indexes", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.action.edit", "content.tabs.link"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

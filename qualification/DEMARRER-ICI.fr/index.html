@@ -604,6 +604,8 @@
       
         
       
+        
+      
     
     
       
@@ -735,6 +737,27 @@
   
   <span class="md-ellipsis">
     OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../INSTALLATION-WINDOWS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift from Windows (FR)
   </span>
   
 
@@ -1980,6 +2003,9 @@
 
 
 <h1 id="appcontrol-sur-openshift-premiere-evaluation-client">AppControl sur OpenShift — première évaluation client<a class="headerlink" href="#appcontrol-sur-openshift-premiere-evaluation-client" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Installation depuis un poste Windows :</strong> commencer par le <a href="../INSTALLATION-WINDOWS.fr/">guide Windows en trois étapes</a>, avec le ZIP complet et l’assistant PowerShell sans Python. Les commandes Python ci-dessous concernent le kit Linux/macOS.</p>
+</blockquote>
 <p><strong>Version à remettre : release officielle 1.20.4</strong>, avec son kit OpenShift et
 son checksum. Lire <code>VALIDATION.fr.md</code> et <code>provenance.json</code> dans le kit pour les
 preuves de cette version. Les candidats d'octobre restent des historiques.</p>
@@ -2093,8 +2119,10 @@ de charge ni une base suffisante pour diminuer les réservations.</p>
 <p>Les tests vérifient TLS/mTLS, accès anonyme refusé, clé lecture seule refusée en
 exécution, SCC restricted-v2, UID arbitraire, racines en lecture seule et absence
 de privilèges additionnels. Les scans des cinq images exactes et des dépendances applicatives, outils de
-développement inclus, accompagnent le kit. La publication exige zéro alerte
-signalée. Leur date et leur périmètre figurent dans les preuves de release ;
+développement inclus, accompagnent le kit. La publication exige zéro
+vulnérabilité signalée. Les avertissements de maintenance RustSec restent
+visibles dans le rapport brut et ne doivent pas être présentés comme des
+vulnérabilités ni comme absents. La date et le périmètre des scans figurent dans les preuves de release ;
 cela ne remplace pas un pentest et ne signifie pas absence de faille.
 Rescanner après tout changement de base.</p>
 <p>La PKI générée est destinée à l'évaluation : certificats de service de 90 jours,
@@ -2129,7 +2157,7 @@ droits système : limiter ces droits reste indispensable.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-28T13:40:44+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-28</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-31T10:33:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-31</span>
   </span>
 
     

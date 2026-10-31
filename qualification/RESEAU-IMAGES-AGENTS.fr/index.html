@@ -604,6 +604,8 @@
       
         
       
+        
+      
     
     
       
@@ -735,6 +737,27 @@
   
   <span class="md-ellipsis">
     OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../INSTALLATION-WINDOWS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift from Windows (FR)
   </span>
   
 
@@ -2088,14 +2111,13 @@ inspection intermédiaire qui supprime le certificat client. Vérifier que le
 réseau autorise WebSocket et une connexion longue. Un proxy authentifié imposé
 aux agents nécessite une qualification spécifique ; il n'est pas couvert par ce test.</p>
 <h2 id="dou-viennent-les-images">D'où viennent les images ?<a class="headerlink" href="#dou-viennent-les-images" title="Permanent link">&para;</a></h2>
-<p>Au 8 octobre 2026, le téléchargement anonyme du dépôt de développement
-<code>ghcr.io/fredericcarre/appcontrol-backend</code> fonctionne ; l'accès anonyme au dépôt
-<code>ghcr.io/xcomponent/appcontrol-backend</code> retourne HTTP 401. Ne pas donner un tag
-historique comme s'il contenait les corrections de cette branche.
-Les images qualifiées dans le Sandbox se trouvent dans <strong>son registre interne</strong>,
-non accessible depuis le cluster client. Le kit final ed757ba inclut les archives
-OCI des cinq images exactes : leur import ne nécessite aucun accès au Sandbox.</p>
-<p>Le kit final utilise le chemin hors ligne ci-dessous. Les autres options restent possibles :</p>
+<p>Le kit officiel 1.20.4 fournit les archives OCI des cinq images exactes et leurs
+références dans <code>images.source.lock.json</code>. Les importer dans le registre interne
+du client ne nécessite aucun accès au Sandbox ni au registre source. Consulter
+<code>provenance.json</code> et les preuves datées du kit pour les digests qualifiés.
+Les observations de visibilité des registres et le candidat ed757ba du
+8 octobre sont des historiques ; ils ne décrivent pas la livraison 1.20.4.</p>
+<p>Le kit utilise le chemin hors ligne ci-dessous. Les autres options restent possibles :</p>
 <ol>
 <li><strong>Registre éditeur autorisé :</strong> remettre les cinq références par digest et les
    modalités d'authentification. Un <code>imagePullSecret</code> déjà créé dans le projet
@@ -2158,9 +2180,9 @@ pour les mises à jour : les certificats et identifiants y sont réutilisés.</p
    Créer un compte de service dédié et un dossier persistant possédé par ce compte
    (mode 0700). Ses droits OS définissent les commandes possibles ; ne pas donner
    root pour la simple recette.</li>
-<li>Depuis ce compte, tester DNS/TCP/certificat puis lancer :</li>
+<li>Depuis ce compte et la racine du kit extrait, tester DNS/TCP/certificat puis lancer :</li>
 </ol>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python3<span class="w"> </span>enroll-agent.py<span class="w"> </span>--binary<span class="w"> </span>/opt/appcontrol/appcontrol-agent<span class="w"> </span><span class="se">\</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python3<span class="w"> </span>scripts/qualification/enroll-agent.py<span class="w"> </span>--binary<span class="w"> </span>/opt/appcontrol/appcontrol-agent<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--gateway<span class="w"> </span>wss://gateway-appcontrol.apps.cluster.banque<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--ca<span class="w"> </span>/etc/appcontrol/agent-ca.crt<span class="w"> </span>--token-file<span class="w"> </span>/chemin/prive/token<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--state-dir<span class="w"> </span>/chemin/prive/agent<span class="w"> </span>--preflight-only
@@ -2219,7 +2241,7 @@ Ils ne remplacent pas les tests des nouveaux artefacts ni ceux du réseau client
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-28T11:42:18+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-28</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-31T08:43:56+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-31</span>
   </span>
 
     

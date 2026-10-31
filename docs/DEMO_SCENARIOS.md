@@ -1,6 +1,16 @@
-# Scénarios de démo — AppControl
+# Scénarios vidéo courts — AppControl
 
-Ce document est la **source de vérité narrative** des démos vidéo intégrées au README et au site. Chaque scénario est exploitable à plusieurs niveaux :
+Ce document est la source narrative des capsules vidéo courtes intégrées au
+README et au site. Il ne décrit pas la démonstration bancaire exécutable de
+reconstruction, dont les références sont :
+
+- [architecture technique](../demo-rebuild/ARCHITECTURE-DEMO.fr.md) ;
+- [processus de reconstruction](../demo-rebuild/PROCESSUS-RECONSTRUCTION.fr.md) ;
+- [conducteur opérateur](../demo-rebuild/DEMO-OPERATEUR-10-MIN.fr.md).
+
+Les affirmations ou écrans prospectifs ci-dessous ne doivent pas être présentés
+comme des capacités déjà validées par la démo bancaire. Chaque scénario est
+exploitable à plusieurs niveaux :
 
 - texte court intégré au README (déjà fait)
 - spec Playwright pour l'enregistrement automatique (à venir)

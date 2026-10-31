@@ -388,14 +388,12 @@ The backend automatically adds the following security headers to every response 
 | `/ws` | GET | JWT | Client WebSocket (real-time events) |
 | `/ws/gateway` | GET | - | Gateway WebSocket (internal) |
 
-### Redis — Removed
+### Token revocation and rate limiting
 
-Redis is **no longer used** by AppControl. Token revocation and rate limiting are handled entirely by PostgreSQL:
+Token revocation and rate limiting use the application database:
 
 - **Token revocation:** Revoked token fingerprints are stored in the `revoked_tokens` table with automatic expiry cleanup.
 - **Rate limiting:** Counters use PostgreSQL (when `HA_MODE=true`) or in-memory (single instance).
-
-The `REDIS_URL` environment variable is no longer recognized.
 
 ---
 
@@ -807,9 +805,9 @@ APPCONTROL_VERSION=0.2.0 docker compose -f docker/docker-compose.release.yaml up
 | Service | Image | Port | Description |
 |---------|-------|------|-------------|
 | `postgres` | `postgres:16-alpine` | 5432 | PostgreSQL database |
-| `backend` | `ghcr.io/xcomponent/appcontrol-release-backend` | 3000 | API server |
-| `frontend` | `ghcr.io/xcomponent/appcontrol-release-frontend` | 8080 | React SPA (nginx) |
-| `gateway` | `ghcr.io/xcomponent/appcontrol-release-gateway` | 4443 | Agent relay |
+| `backend` | `ghcr.io/xcomponent/appcontrol-backend` | 3000 | API server |
+| `frontend` | `ghcr.io/xcomponent/appcontrol-frontend` | 8080 | React SPA (nginx) |
+| `gateway` | `ghcr.io/xcomponent/appcontrol-gateway` | 4443 | Agent relay |
 
 **Default environment variables in docker-compose.release.yaml:**
 

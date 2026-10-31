@@ -149,11 +149,11 @@ kubectl exec -n appcontrol deploy/appcontrol-backend -- \
 
 ---
 
-## Runbook 5: Redis Failure — OBSOLETE
+## Runbook 5: Token revocation storage failure
 
-> **This runbook is obsolete.** The Redis dependency was removed in Phase 10. Token revocation and rate limiting now use PostgreSQL directly. No Redis instance is required.
->
-> If you are experiencing token revocation issues, check PostgreSQL connectivity instead (see Runbook 2 for database troubleshooting). Revoked tokens are stored in the `revoked_tokens` table with automatic expiry cleanup.
+Check application database connectivity (see Runbook 2). Revoked token fingerprints
+are stored in `revoked_tokens`. Authentication must refuse a request when the
+revocation check fails; do not disable this check to restore access.
 
 ---
 

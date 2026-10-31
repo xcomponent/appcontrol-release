@@ -16,6 +16,9 @@ ADMIN_PASSWORD="${SEED_ADMIN_PASSWORD:-admin}"
 EXAMPLE_FILE="${EXAMPLE_FILE:-/workspace/examples/banking-core-system.json}"
 DEMO_APP_NAME="${DEMO_APP_NAME:-Core Banking System}"
 DEMO_AGENT_HOSTNAME="${DEMO_AGENT_HOSTNAME:-demo-host}"
+DEMO_SITE_NAME="${DEMO_SITE_NAME:-Default}"
+DEMO_SITE_CODE="${DEMO_SITE_CODE:-default}"
+DEMO_SITE_LOCATION="${DEMO_SITE_LOCATION:-}"
 TOKEN_OUT="${TOKEN_OUT:-/workspace/state/enrollment-token}"
 
 log() { echo "[seed-demo] $*"; }
@@ -26,33 +29,44 @@ fail() { echo "[seed-demo] ERROR: $*" >&2; exit 1; }
 # exits 1 with the response body on stderr on any non-2xx status. This
 # replaces "curl -sf" so callers always know why an HTTP call failed.
 api_call() {
-  local method=$1 path=$2 body=${3:-}
-  shift 3 || true
-  local extra=("$@")
+  local method=$1 path=$2 body=""
+  shift 2
+  # The body is optional. A following curl flag must remain an argument,
+  # and a two-argument GET must never pass METHOD/PATH as additional URLs.
+  if [ "$#" -gt 0 ] && [[ "$1" != -* ]]; then
+    body=$1
+    shift
+  fi
   local tmp http_code resp_body
   tmp=$(mktemp)
-  local -a auth_args=()
+  # Keep one nonempty array; empty-array expansion under set -u also fails
+  # with the Bash 3.2 supplied by macOS.
+  local -a curl_args=(-sS -o "$tmp" -w "%{http_code}" -X "$method" "${BACKEND_URL}${path}")
   if [ -n "${AUTH_TOKEN:-}" ]; then
-    auth_args+=(-H "Authorization: Bearer $AUTH_TOKEN")
+    curl_args+=(-H "Authorization: Bearer $AUTH_TOKEN")
   fi
-  local -a body_args=()
   if [ -n "$body" ]; then
-    body_args+=(-H "Content-Type: application/json" -d "$body")
+    curl_args+=(-H "Content-Type: application/json" -d "$body")
+  fi
+  if [ "$#" -gt 0 ]; then
+    curl_args+=("$@")
   fi
 
-  http_code=$(curl -sS -o "$tmp" -w "%{http_code}" \
-    -X "$method" "${BACKEND_URL}${path}" \
-    "${auth_args[@]}" "${body_args[@]}" "${extra[@]}" || echo "000")
+  if ! http_code=$(curl "${curl_args[@]}"); then
+    rm -f "$tmp"
+    log "[$method $path] connection failed" >&2
+    return 22
+  fi
   resp_body=$(cat "$tmp")
   rm -f "$tmp"
 
-  if [ "$http_code" = "000" ]; then
-    log "[$method $path] connection failed"
+  if [[ ! "$http_code" =~ ^[0-9]{3}$ ]]; then
+    log "[$method $path] invalid HTTP status" >&2
     return 22
   fi
   if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
-    log "[$method $path] HTTP $http_code"
-    log "  response: $resp_body"
+    log "[$method $path] HTTP $http_code" >&2
+    log "  response: $resp_body" >&2
     return 22
   fi
   printf '%s' "$resp_body"
@@ -87,9 +101,11 @@ SITES_RESPONSE=$(api_call GET /api/v1/sites '') \
 SITE_COUNT=$(echo "$SITES_RESPONSE" | jq -r '(.sites // .) | length' 2>/dev/null || echo 0)
 log "Sites in org: $SITE_COUNT"
 if [ "${SITE_COUNT:-0}" = "0" ]; then
-  log "Creating default site"
-  api_call POST /api/v1/sites \
-    '{"name":"Default","code":"default","site_type":"primary"}' >/dev/null \
+  log "Creating primary demo site '$DEMO_SITE_NAME'"
+  SITE_PAYLOAD=$(jq -n --arg name "$DEMO_SITE_NAME" --arg code "$DEMO_SITE_CODE" \
+    --arg location "$DEMO_SITE_LOCATION" \
+    '{name:$name,code:$code,site_type:"primary",location:(if $location == "" then null else $location end)}')
+  api_call POST /api/v1/sites "$SITE_PAYLOAD" >/dev/null \
     || fail "Creating default site failed"
 fi
 
@@ -107,10 +123,13 @@ else
   log "Importing $EXAMPLE_FILE (hosts → '$DEMO_AGENT_HOSTNAME')"
 
   REWRITTEN=$(jq --arg h "$DEMO_AGENT_HOSTNAME" '
-    {
-      format_version: "4.0",
-      application: (
-        .components |= map(
+    if (.application.components? | type) == "array" then
+      .application.components |= map(.host = $h)
+    else
+      {
+        format_version: "4.0",
+        application: (
+          .components |= map(
           # Force every component onto our single demo agent.
           .host = $h
           # The v4 import expects commands nested under .commands as
@@ -129,14 +148,15 @@ else
           | del(.check_cmd, .start_cmd, .stop_cmd,
                 .integrity_check_cmd, .infra_check_cmd, .rebuild_cmd)
         )
-        | .tags = (
+          | .tags = (
             if (.tags | type) == "object" then
               (.tags | to_entries | map(.key + "=" + (.value | tostring)))
             else (.tags // [])
             end
-          )
-      )
-    }
+            )
+        )
+      }
+    end
   ' "$EXAMPLE_FILE")
 
   IMPORT_PAYLOAD=$(jq -n --arg json "$REWRITTEN" '{json: $json}')
@@ -148,10 +168,25 @@ fi
 
 # 5. Provision an enrollment token for the demo agent
 mkdir -p "$(dirname "$TOKEN_OUT")"
+# Bootstrap trust comes from the authenticated control plane, never from an
+# unverified enrollment connection. Share only the public CA with demo agents.
+api_call GET /api/v1/pki/ca | jq -er '.ca_cert_pem' > "$(dirname "$TOKEN_OUT")/enrollment-ca.crt"
+TOKEN_USABLE=false
 if [ -s "$TOKEN_OUT" ]; then
-  log "Enrollment token already present at $TOKEN_OUT — leaving it"
+  TOKENS=$(api_call GET /api/v1/enrollment/tokens '') || fail "Cannot validate cached enrollment token"
+  if jq -e --rawfile cached "$TOKEN_OUT" '
+    .tokens | any(.scope == "agent" and .revoked_at == null
+      and .token_prefix == ($cached[0:18])
+      and (.max_uses == null or .current_uses < .max_uses)
+      and ((.expires_at | sub("\\.[0-9]+"; "") | sub("\\+00:00$"; "Z") | fromdateiso8601) > (now + 300)))
+  ' <<<"$TOKENS" >/dev/null; then
+    TOKEN_USABLE=true
+  fi
+fi
+if [ "$TOKEN_USABLE" = true ]; then
+  log "Cached enrollment token remains valid — retaining it"
 else
-  log "Creating enrollment token for the demo agent"
+  log "Creating enrollment token for the demo agents (missing, expired, revoked or exhausted cache)"
   TOKEN_RESPONSE=$(api_call POST /api/v1/enrollment/tokens \
     '{"name":"demo-agent","scope":"agent","valid_hours":168}') \
     || fail "Creating enrollment token failed (see HTTP body above)"

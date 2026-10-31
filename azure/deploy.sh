@@ -26,7 +26,7 @@ CONTAINER_NAME="${CONTAINER_NAME:-appcontrol-gateway}"
 IDENTITY_NAME="${IDENTITY_NAME:-appcontrol-identity}"
 
 # Image — use GHCR or your own ACR
-IMAGE="${IMAGE:-ghcr.io/xcomponent/appcontrol-release-azure-gateway:latest}"
+IMAGE="${IMAGE:-ghcr.io/xcomponent/appcontrol-azure-gateway:latest}"
 
 # Backend URL (OpenShift WebSocket endpoint)
 BACKEND_URL="${BACKEND_URL:?ERROR: BACKEND_URL is required. Example: wss://appcontrol-api-user-dev.apps.sandbox.openshiftapps.com/ws/gateway}"
@@ -303,7 +303,7 @@ case "${1:-}" in
         echo "  GATEWAY_ID           Gateway identifier (default: azure-gateway-01)"
         echo "  GATEWAY_ZONE         Gateway zone (default: azure)"
         echo "  VM_RESOURCE_GROUP    Target RG for VM role assignment"
-        echo "  IMAGE                Docker image (default: ghcr.io/xcomponent/appcontrol-release-azure-gateway:latest)"
+        echo "  IMAGE                Docker image (default: ghcr.io/xcomponent/appcontrol-azure-gateway:latest)"
         echo "  ACR_NAME             ACR name (required for --build)"
         echo "  CPU                  CPU cores (default: 1)"
         echo "  MEMORY               Memory in GB (default: 1.5)"

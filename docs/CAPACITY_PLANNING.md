@@ -1,6 +1,6 @@
 # Capacity Planning
 
-This page provides sizing guidance for AppControl deployments — from a 10-app pilot to a 1000-app enterprise install. All numbers are derived from the code (see source references) and from typical production deployments; treat them as starting points and validate with load testing.
+This page provides sizing guidance for AppControl deployments — from a 10-app pilot to a 1000-app enterprise install. Except for explicitly identified microbenchmarks, the numbers below are planning estimates, not validated production capacity. The supported evaluation topology uses one backend with Recreate updates; see [the dated OpenShift audit](qualification/AUDIT-BANQUE-2026-10-08.fr.md).
 
 For the topology these resources support, see [High Availability](HIGH_AVAILABILITY.md). For storage growth math, see [Backup & Restore](BACKUP_RESTORE.md).
 
@@ -13,7 +13,6 @@ For the topology these resources support, see [High Availability](HIGH_AVAILABIL
 - [Agent host footprint](#agent-host-footprint)
 - [Gateway sizing](#gateway-sizing)
 - [Agents per backend replica](#agents-per-backend-replica)
-- [Cache (Redis) — no longer used](#cache-redis--no-longer-used)
 - [WebSocket fan-out and latency targets](#websocket-fan-out-and-latency-targets)
 - [Worked example: 200 apps × 30 components × 1 check / min](#worked-example-200-apps--30-components--1-check--min)
 - [Worked example: 5000 agents, mostly idle](#worked-example-5000-agents-mostly-idle)
@@ -37,12 +36,16 @@ criterion benchmark suite that ships with the repository. The suite lives in
 ```bash
 # Full run (~10s per bench)
 cargo bench -p appcontrol-benchmarks --bench fsm
-cargo bench -p appcontrol-benchmarks --bench dag_topo
-cargo bench -p appcontrol-benchmarks --bench permission_resolution
+cargo bench -p appcontrol-benchmarks --features sqlite-bench --bench dag_topo
+cargo bench -p appcontrol-benchmarks --features sqlite-bench --bench permission_resolution
 
 # Quick run (~2s per bench, fine for spot-checks)
-cargo bench -p appcontrol-benchmarks -- --quick
+cargo bench -p appcontrol-benchmarks --features sqlite-bench -- --quick
 ```
+
+Run the backend DAG and SQLite permission benchmarks separately from the PostgreSQL workspace:
+Cargo unifies dependency features within an invocation. Its dedicated CI job
+checks both its fixture tests and all benchmark targets with `sqlite-bench`.
 
 Criterion writes a full HTML report under `target/criterion/`; open
 `target/criterion/report/index.html` in a browser to drill into the
@@ -120,7 +123,7 @@ For quick reference:
 
 ### CPU per HTTP RPS
 
-The backend serves stateless REST + WebSocket. Typical per-request CPU:
+The backend serves REST + WebSocket and retains live agent routing and operation state in memory. Typical per-request CPU:
 
 | Endpoint class | CPU per request | Latency P50 / P95 |
 |----------------|-----------------|-------------------|
@@ -129,7 +132,7 @@ The backend serves stateless REST + WebSocket. Typical per-request CPU:
 | `POST /apps/:id/start` (DAG + sequencer kickoff) | 8 ms | 80 / 200 ms |
 | `GET /reports/availability` (aggregations) | 50 ms | 200 / 800 ms |
 
-A 2-vCPU replica sustains roughly 300–500 RPS of mixed traffic with P95 < 200 ms. Beyond that, scale horizontally.
+These endpoint estimates require a workload benchmark. They do not establish a throughput guarantee or authorize horizontal backend scaling.
 
 ### RAM per replica
 
@@ -163,15 +166,11 @@ Examples:
 | 100 | 50 (cap) | 10 + 50, capped |
 | 500 | 50 (cap) | always capped — add PgBouncer if needed |
 
-If you run 3+ backend replicas, total connections = `replicas × DB_POOL_SIZE`. Confirm PostgreSQL's `max_connections` ≥ this total + 20 % headroom.
+For the supported single backend, reserve database connections for administration and migrations in addition to the application pool.
 
 ### Replicas
 
-```
-recommended_replicas = ceil(peak_RPS / 300) + 1  (the +1 covers rolling upgrades)
-```
-
-For most installs, 3 replicas is the right starting point. Above 1500 RPS sustained, scale to 5–7.
+Use one backend with Recreate updates. Distributed command routing and operation recovery are not qualified; increasing the replica count or enabling HA_MODE does not make them safe. Plan a maintenance interruption.
 
 ---
 
@@ -333,17 +332,7 @@ This is bounded by:
 2. **DB pool size.** Each agent's state update is a brief DB write. At 10 000 agents and 30 s check interval, the worst case is ~ 330 writes / s — well within a 20-connection pool.
 3. **CPU.** Each WS frame requires deserialization (serde_json), FSM logic, and an SQL `INSERT`. Empirical: 1 vCPU handles ~ 500 inbound WS frames / s.
 
-To scale beyond 10 000 agents per replica, add backend replicas — agents are evenly distributed across the gateway pool, and gateway → backend hashing keeps a given agent's traffic on a stable backend (or fans out, depending on your LB config).
-
----
-
-## Cache (Redis) — no longer used
-
-Phase 10 (see [CHANGELOG](CHANGELOG.md)) removed the Redis dependency. Token revocation and rate limiting now use PostgreSQL exclusively.
-
-**You do not need to provision Redis for AppControl.** If your environment requires a cache layer for unrelated reasons, deploy Redis independently and ignore AppControl's connection settings.
-
-The `REDIS_URL` environment variable is no longer recognized by the backend.
+The 10 000-agent estimate is not a qualified limit. Do not add backend replicas to address it; benchmark the single-backend deployment and qualify distributed command routing before considering another topology.
 
 ---
 
@@ -470,12 +459,12 @@ DB_POOL_SIZE = min(50, 10 + 200 × 0.5) = min(50, 110) = 50
 
 ```yaml
 backend:
-  replicaCount: 3
+  replicaCount: 1
   resources:
     requests: { cpu: "1",   memory: 1Gi }
     limits:   { cpu: "2",   memory: 2Gi }
   env:
-    HA_MODE: "true"
+    HA_MODE: "false"
     DB_POOL_SIZE: "50"
     RETENTION_CHECK_EVENTS_DAYS: "90"
 
@@ -528,7 +517,7 @@ WS throughput is low (< 1 frame/s baseline). One backend replica suffices, but a
 
 ```yaml
 backend:
-  replicaCount: 3
+  replicaCount: 1
   resources:
     requests: { cpu: "500m", memory: 512Mi }
     limits:   { cpu: "1",    memory: 1Gi }

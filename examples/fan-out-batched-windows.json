@@ -1,6 +1,6 @@
 {
   "name": "Fan-out Batched Concurrency Demo (Windows)",
-  "description": "v1.18.0 fan-out concurrency: the IIS tier has 8 members but they don't all start at once. With `cluster_concurrency_mode: batched` and `cluster_batch_size: 3`, the sequencer fires 3 starts in parallel, waits for the aggregate parent state to converge to RUNNING (or the start window to expire), then fires the next 3, then the last 2. Use this on real tiers to avoid stomping a downstream DB / auth / LB when 100+ members come up at once. Reuses the `marker-*.bat` helpers installed by demo-rebuild/scripts/windows/setup.bat.",
+  "description": "Fan-out concurrency: the IIS tier has 8 members but they don't all start at once. With `cluster_concurrency_mode: batched` and `cluster_batch_size: 3`, the sequencer fires 3 starts in parallel, waits for those 3 members to reach RUNNING (or their start window to expire), then fires the next 3, then the last 2. Use this on real tiers to avoid stomping a downstream DB, authentication service, or load balancer when many members come up at once. Reuses the `marker-*.bat` helpers installed by demo-rebuild/scripts/windows/setup.bat.",
   "tags": { "env": "demo", "feature": "fan-out-batched", "os": "windows" },
   "components": [
     {

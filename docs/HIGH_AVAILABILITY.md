@@ -1,6 +1,9 @@
 # High Availability
 
-This page describes how to deploy AppControl in a high-availability topology and explains the failure modes survived by each pattern. For DR scenarios that survive site loss, see [Disaster Recovery](DISASTER_RECOVERY.md).
+This page distinguishes the current reconstruction deployment from HA patterns that still require implementation and qualification. For DR scenarios, see [Disaster Recovery](DISASTER_RECOVERY.md).
+
+!!! warning "Current reconstruction boundary — 12 September 2026"
+    Use **one backend**, disable backend autoscaling, and schedule backend upgrades with an interruption. The Helm defaults use `replicaCount: 1` and `strategy.type: Recreate`. Command routing and WebSocket subscribers are local to the backend process; cross-backend routing and durable resumption of interrupted reconstruction operations are not implemented. A shared database, an ownership lease or `HA_MODE=true` does not supply these guarantees. See the [reconstruction improvement plan](../demo-rebuild/AMELIORATIONS-PRODUIT.fr.md), R01–R04.
 
 ## Table of contents
 
@@ -20,14 +23,14 @@ This page describes how to deploy AppControl in a high-availability topology and
 
 ```
                 ┌──────────────────────────┐
-                │ External LB / Ingress    │  L7, TLS, sticky NOT required
+                │ External LB / Ingress    │  L7, TLS, one backend target
                 │   appcontrol.example.com │
                 └────────┬─────────────────┘
                          │
         ┌────────────────┴────────────────┐
         │                                 │
    ┌────▼─────┐                      ┌────▼─────┐
-   │ Frontend │  x N (nginx)         │ Backend  │  x 3 (Rust + Axum)
+   │ Frontend │  x N (nginx)         │ Backend  │  x 1 (Rust + Axum)
    │  pods    │                      │  pods    │
    └──────────┘                      └────┬─────┘
                                           │ sqlx pool (TCP+TLS)
@@ -55,38 +58,36 @@ This page describes how to deploy AppControl in a high-availability topology and
 
 Three failure domains are independent:
 
-- **Backend** is stateless except for `DashMap` caches; share the database, scale horizontally.
-- **Gateway** is fully stateless. Failover is **agent-driven**, not server-driven.
+- **Backend** persists application/audit records in the database, but keeps connections and active execution tasks in process memory. Do not scale it horizontally for reconstruction yet.
+- **Gateway** has no database dependency. Agent reconnection to another gateway is separate from backend HA and must be qualified with the configured endpoints.
 - **Database** uses PostgreSQL native replication (managed or self-hosted with Patroni).
 
 ---
 
 ## Backend HA
 
-The backend is stateless: all persistent state lives in PostgreSQL. Caches in process memory (`DashMap`) are advisory; the DB is authoritative.
+Persistent records survive a backend restart when the database survives. Live gateway routes, browser subscriptions and executing reconstruction tasks do not become available to another backend merely because it shares that database.
 
-### Required configuration for HA
+### Shared settings do not implement backend HA
 
 | Environment variable | Required for HA | Notes |
 |----------------------|-----------------|-------|
-| `HA_MODE=true` | **Yes** | Rate limiting moves from in-memory `DashMap` to PostgreSQL counters; safe across replicas. |
+| `HA_MODE=true` | Rate limiting only | Uses PostgreSQL counters; does not route commands/events between backends or resume operations. |
 | `DATABASE_URL` | **Yes** | All replicas point at the same DB (or a load-balanced read-write endpoint). |
 | `JWT_SECRET` | **Yes** | Must be **identical** across replicas; JWTs signed by replica A must validate on replica B. |
 | `JWT_ISSUER` | Yes | Must be identical across replicas. |
 | `DB_POOL_SIZE` | Tune | Each replica opens its own pool. Total connections = `replicas × DB_POOL_SIZE`. Don't exceed PostgreSQL's `max_connections`. |
-| `SHUTDOWN_TIMEOUT_SECS` | Recommended | Set to ~ Kubernetes `terminationGracePeriodSeconds - 5s` so drain completes before pod kill. |
+| `SHUTDOWN_TIMEOUT_SECS` | Shutdown setting | Must fit within the pod termination grace period; it is not an operation completion or recovery guarantee. |
 
 See [Configuration — Backend HA](CONFIGURATION.md#high-availability).
 
 ### Replica count
 
-For most installs, **3 replicas** is the sweet spot:
+Use **one backend** for the current reconstruction pilot. The chart generates no HPA; do not attach an external autoscaler or override the count above one. Size and load-test this instance against the client's workload.
 
-- One replica handles ~ 5000 agents and ~ 100 RPS comfortably.
-- 3 replicas gives N+1 redundancy for rolling upgrades and node failures.
-- `PodDisruptionBudget.minAvailable: 2` keeps service up during voluntary disruptions.
+The backend PDB uses `minAvailable: 1`; with one replica this can block a voluntary node drain. It does not provide redundancy or preserve an operation during a Deployment update. `Recreate` prevents old/new replicas from overlapping during that update and causes a planned control-plane interruption. Finish or reconcile operations before maintenance.
 
-For very large installs (> 10k agents), scale to 5+ replicas and shard by load-balancer rules — there is currently no application-level sharding.
+Multiple backend replicas are a future qualification target: gateway connected to B, command submitted to A, browser on another backend, followed by loss of the connection owner. These cases require cross-backend routing and a defined interruption/reconciliation contract before an HA claim.
 
 ### Load-balancer health checks
 
@@ -97,7 +98,7 @@ For very large installs (> 10k agents), scale to 5+ replicas and shard by load-b
 | LB pool health | `/ready` | 5 s | LB stops routing new requests to the pod |
 
 ```yaml
-# Helm probes (defaults)
+# Illustrative probes; inspect the rendered chart for its actual timings
 livenessProbe:
   httpGet: { path: /health, port: 3000 }
   initialDelaySeconds: 30
@@ -110,19 +111,11 @@ readinessProbe:
 
 ### Sticky sessions
 
-**Not required.** Every request carries a JWT or API key — any replica can serve any request. The WebSocket endpoint (`/ws`) is also stateless: subscriptions are recomputed on every connect from the user's permissions. See [WebSocket affinity](#websocket-affinity).
+A single backend needs no affinity between backend replicas. With multiple backends, JWT validation alone is insufficient: the gateway connection and its command route may belong to another process. HTTP cookie/IP affinity does not align independently established gateway and browser connections. See [WebSocket affinity](#websocket-affinity).
 
 ### Drain behavior
 
-On `SIGTERM`:
-
-1. Backend logs `shutdown initiated`.
-2. Backend stops accepting new TCP connections (axum `with_graceful_shutdown`).
-3. In-flight HTTP requests continue until completion or `SHUTDOWN_TIMEOUT_SECS`.
-4. WebSocket clients receive a normal close frame; they reconnect to another replica.
-5. Backend exits 0.
-
-If `SHUTDOWN_TIMEOUT_SECS` expires, axum drops in-flight requests and returns 502 to clients. For long-running operations, ensure the timeout is generous.
+The backend has a shutdown signal handler and an HTTP graceful-shutdown path. They do not checkpoint reconstruction tasks or transfer them to another process. Do not use a timeout or pod readiness as proof that an operation completed. Stop new operation submissions, await terminal results and resolve ambiguous external jobs before a planned restart. After an unexpected restart, obtain fresh checks and reconcile recorded operations before retrying; an external command may have continued running.
 
 ---
 
@@ -224,20 +217,15 @@ archive_command = 'your-wal-archive-command'  # see BACKUP_RESTORE.md
 
 ### Failover handling
 
-The backend uses a sqlx connection pool. On primary loss:
+The backend uses a sqlx connection pool. On primary loss, requests can fail while connections and the read-write endpoint recover. `DB_CONNECT_TIMEOUT_SECS` is a connection timeout, not an end-to-end failover guarantee. Verify the provider's promotion, DNS/LB behavior and recovery of the pool in the deployment being qualified. An interrupted operation still requires reconciliation.
 
-1. Open connections fail with `connection terminated by server`.
-2. The pool marks connections as dead and reconnects.
-3. Within `DB_CONNECT_TIMEOUT_SECS` (default 30), the pool succeeds against the new primary if the LB / DNS has switched.
-4. In-flight requests return HTTP 503 until the pool recovers.
-
-For zero-503 failover, place [PgBouncer](https://www.pgbouncer.org/) between the backend and PostgreSQL:
+An optional PgBouncer layer can manage database connections; it does not guarantee error-free failover or resume an interrupted reconstruction:
 
 ```
 backend pods ─── (sqlx) ──▶ pgbouncer ──▶ PostgreSQL primary
 ```
 
-PgBouncer absorbs the connection churn, lets you scale to 10s of backend replicas without exceeding PostgreSQL's `max_connections`, and gives you a single endpoint to reconfigure during failover.
+Size connection pools against PostgreSQL's limits and test database failover with an active operation. Database redundancy does not remove the single-backend reconstruction boundary.
 
 ### Read replicas
 
@@ -249,7 +237,7 @@ Adding read-replica routing — a separate `DATABASE_REPLICA_URL` pool that repo
 
 ## Agent reconnect semantics
 
-Agents are designed to survive any single gateway or backend failure transparently.
+Agents can reconnect after a gateway or backend failure. Reconnection does not prove completion of commands that were in flight or resume a backend reconstruction task.
 
 ### State at the agent
 
@@ -269,11 +257,9 @@ The agent maintains:
 3. On successful connect, agent sends `Register { agent_id, hostname, ip_addresses, labels, version }`.
 4. Agent replays the offline buffer in chronological order before resuming real-time deltas.
 
-### Delta resume — `last_seq`
+### Results and ACKs
 
-For `CommandResult` and `CheckResult` (state-changing messages), the agent stamps a monotonic `sequence_id` per connection (resets on each connect). The backend acks each message. Unacked messages older than 30 s are retransmitted (max 3 attempts).
-
-The backend deduplicates by `(agent_id, sequence_id)` so the same operation is never recorded twice. See [Security Architecture §4](SECURITY_ARCHITECTURE.md).
+Command results are correlated by request UUID; real backend/gateway/agent tests verify matching results and ACKs. This is a transport/persistence proof, not an exactly-once guarantee for an external effect or a durable reconstruction-resume mechanism. Inspect the recorded command and provider job before repeating an ambiguous action. See the [process and ACK evidence](../demo-rebuild/media/output/validation/reconstruction-v2/executor-e2e/summary.json) and improvement-plan R02/R03.
 
 ### Buffer-on-disk during disconnect
 
@@ -295,25 +281,19 @@ The backend exposes two WebSocket endpoints:
 - `/ws` for the frontend (browsers + CLI watch operations).
 - `/ws/gateway` for gateways (one persistent connection per gateway).
 
-### Hub model — no sticky session needed
+### Hub model — process-local routing
 
-The hub keeps an in-memory `DashMap<user_id, Vec<Sender>>` of WebSocket senders. When a backend replica receives an event, it does **not** know which other replicas have subscribers; instead:
-
-1. Replica A persists the event to PostgreSQL.
-2. PostgreSQL issues a `NOTIFY` on a dedicated channel.
-3. All replicas listen via `LISTEN`; each replica forwards the event to its local subscribers.
-
-The result: a user connected to replica A receives every event regardless of which replica produced it.
+The hub keeps gateway routes and WebSocket senders in process memory. The reconstruction path calls that local hub. A PostgreSQL `LISTEN/NOTIFY` bridge for cross-backend commands/events is **not implemented** in this path. Database persistence alone does not deliver a command to a gateway owned by another backend or publish an event to that backend's browser subscribers.
 
 ### Implication for load balancing
 
-- **Sticky session is not required** for correctness.
-- **Sticky session is acceptable** if your LB does session affinity by cookie or IP — it just means the user's WebSocket stays on the same replica until that replica restarts.
-- During a replica rollout, browsers reconnect to another replica automatically; in-flight operations resume because state is in the DB.
+- Route browser/API and gateway connections to the same single backend for the current pilot.
+- Sticky HTTP sessions are not a substitute for cross-backend routing.
+- A browser can reconnect after restart; an in-flight operation does **not** automatically resume. Inspect its persisted status and reconcile external effects before a fresh assessment and approved retry.
 
 ### Implication for monitoring
 
-Track `ws_connections_active` per replica in Prometheus. Imbalance is fine over short periods but should rebalance after a few minutes of client churn.
+Monitor backend readiness, gateway/agent connectivity and operation/command results separately. A healthy pod or an open WebSocket is not proof that the requested application recovery completed.
 
 ---
 
@@ -343,8 +323,6 @@ backend appcontrol_backend
     option httpchk GET /ready
     http-check expect status 200
     server backend-1 10.0.0.11:3000 check
-    server backend-2 10.0.0.12:3000 check
-    server backend-3 10.0.0.13:3000 check
 ```
 
 ### HAProxy — gateway (TCP, mTLS pass-through)
@@ -373,8 +351,6 @@ backend gateway_pool
 upstream appcontrol_backend {
     least_conn;
     server backend-1:3000 max_fails=3 fail_timeout=10s;
-    server backend-2:3000 max_fails=3 fail_timeout=10s;
-    server backend-3:3000 max_fails=3 fail_timeout=10s;
 }
 
 map $http_upgrade $connection_upgrade {
@@ -417,121 +393,92 @@ server {
 
 ## Example Helm values overlay
 
+This overlay retains one backend and two gateway/frontend replicas. It is a reconstruction pilot configuration, not a qualified multi-backend HA topology. Use the production secrets, authentication and network settings from the deployment guide.
+
 ```yaml
-# ha-values.yaml — overlay over production-values.yaml
+# reconstruction-values.yaml — overlay over production-values.yaml
 backend:
-  replicaCount: 3
+  replicaCount: 1
+  strategy:
+    type: Recreate
   env:
-    HA_MODE: "true"
+    APP_ENV: "production"
+    HA_MODE: "false"
     SHUTDOWN_TIMEOUT_SECS: "25"
   resources:
-    requests: { cpu: "1",   memory: 1Gi }
-    limits:   { cpu: "2",   memory: 2Gi }
-  affinity:
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: backend
-            topologyKey: kubernetes.io/hostname
+    requests: { cpu: "1", memory: 1Gi }
+    limits: { cpu: "2", memory: 2Gi }
 
 gateway:
   replicaCount: 2
-  affinity:
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: gateway
-            topologyKey: topology.kubernetes.io/zone   # spread across AZs
+  service:
+    type: LoadBalancer
 
 frontend:
   replicaCount: 2
 
 podDisruptionBudget:
   enabled: true
-  backend:  { minAvailable: 2 }
-  gateway:  { minAvailable: 1 }
+  backend: { minAvailable: 1 }
+  gateway: { minAvailable: 1 }
   frontend: { minAvailable: 1 }
 
-# Disable in-cluster PostgreSQL — use managed
 postgresql:
   enabled: false
-
-# External Service for gateway agents
-gatewayService:
-  type: LoadBalancer
-  loadBalancerSourceRanges:
-    - 10.0.0.0/8        # restrict to internal networks
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb   # Layer 4 NLB
 ```
 
-Apply:
+No backend HPA is generated by the chart. Also disable any external HPA, KEDA or platform policy targeting this Deployment. Inspect the rendered values before applying them. Use the [planned maintenance procedure](PRODUCTION_DEPLOYMENT.md#backend-frontend--gateway-planned-update) for an existing installation; do not upgrade during an active or unresolved operation.
 
 ```bash
-helm upgrade appcontrol ./helm/appcontrol \
+helm template appcontrol ./helm/appcontrol \
   --namespace appcontrol \
   --values production-values.yaml \
-  --values ha-values.yaml
+  --values reconstruction-values.yaml
 ```
 
 ---
 
 ## What survives, what does not
 
-| Failure | Backend HA (3 replicas) | Gateway HA (2 gateways) | Database HA (managed) | What still works | What is degraded |
-|---------|:-----------------------:|:-----------------------:|:---------------------:|------------------|------------------|
-| 1 backend pod | yes | n/a | n/a | All HTTP / WS; LB removes failed pod within 5 s | Brief 5xx burst (< 100 ms typical) |
-| All backend pods | no | n/a | n/a | Nothing; agents stay connected to the gateway but commands fail | 100 % control plane outage |
-| 1 gateway pod | n/a | yes | n/a | All agents fail over to other gateway within 10–60 s | Agents using the failed gateway briefly UNREACHABLE |
-| All gateways | n/a | no | n/a | Agents continue running checks locally; backend cannot reach them | Operations cannot execute |
-| PostgreSQL primary | yes | n/a | yes | Backend retries; new primary serves traffic within ~ 30 s | 30 s of 503 |
-| PostgreSQL primary + replica | yes | n/a | no | Nothing; backend cannot start | Total outage; restore from backup |
-| 1 AZ (with anti-affinity across AZs) | yes | yes | yes (managed multi-AZ) | All HTTP / WS; agents in other AZs fine | Agents in the lost AZ unreachable until AZ recovers |
-| Network partition between AZs | partial | partial | depends on managed-DB topology | Each AZ continues serving its local agents | See DR §5 |
-| Network from agents to gateway | n/a | n/a | n/a | Agent continues local checks, buffers events | Agents UNREACHABLE in UI; events replayed on reconnect |
-| Agent process killed | yes | yes | yes | Managed processes survive (double-fork + setsid) | Component shows UNREACHABLE until agent restarts |
-| Agent host rebooted | yes | yes | yes | Agent reconnects on boot via systemd / service | Components UNREACHABLE during reboot window |
+These are boundaries to verify in the client environment, not guaranteed recovery times.
 
-For scenarios beyond this matrix (regional outage, doomsday), see [Disaster Recovery](DISASTER_RECOVERY.md).
+| Failure | Current behavior and required verification |
+|---------|----------------------------------------------|
+| Single backend stops | Control-plane interruption. Database records remain if the DB survives; restart one backend, collect fresh checks and reconcile interrupted operations. No automatic task transfer/resume. |
+| One of several gateways stops | Agents can reconnect to a configured reachable gateway. Verify registration, fresh checks and correlated command results; a job already in flight may need reconciliation. |
+| All gateways stop | Backend cannot send commands to those agents. Existing managed processes may continue; collect fresh evidence after reconnect. |
+| PostgreSQL primary fails | Recovery depends on the DB provider and connection endpoint. Requests/operations may fail; test this case and reconcile external commands. |
+| PostgreSQL and its replica are lost | Restore the control-plane DB and required keys/configuration from tested backups. |
+| A site or inter-site link is lost | Single-backend availability depends on its site; target agents and data may also be unreachable. No automatic backend failover or external fencing is implied. See DR §5 and §8. |
+| Agent process is killed | Detached managed processes can survive; verify on the target OS. The detailed SIGKILL proof was run on macOS, separately from Linux/Docker reconstruction captures. |
+| Agent host reboots | Process detachment does not survive host loss. Re-establish infrastructure and agent connectivity, then diagnose and recover the workload as required. |
+
+For regional outages and loss of both sites, see [Disaster Recovery](DISASTER_RECOVERY.md).
 
 ---
 
 ## Verification
 
-After deploying HA, run this checklist to confirm topology.
+Check the intended topology and then run isolated failure drills. Readiness is necessary but does not qualify recovery.
 
 ```bash
-# 3 backend replicas, all ready
-kubectl get pods -n appcontrol -l app.kubernetes.io/component=backend
-# Expect: 3 pods, all Running, Ready 1/1
+# Expect exactly one backend and strategy Recreate
+kubectl get deployment -n appcontrol appcontrol-backend \
+  -o jsonpath='{.spec.replicas}{" "}{.spec.strategy.type}{"\n"}'
 
-# Anti-affinity spread across nodes
-kubectl get pods -n appcontrol -l app.kubernetes.io/component=backend -o wide
-# Expect: each replica on a different NODE
+# Expect no HPA targeting appcontrol-backend; also inspect external scaling policies
+kubectl get hpa -n appcontrol
 
-# 2 gateways across zones
-kubectl get pods -n appcontrol -l app.kubernetes.io/component=gateway -o jsonpath='{.items[*].spec.nodeName}'
+# Inspect gateway placement and actual endpoint reachability
+kubectl get pods -n appcontrol -l app.kubernetes.io/component=gateway -o wide
 
-# PDB
+# One backend with minAvailable=1 can block voluntary eviction
 kubectl get pdb -n appcontrol
-# Expect: backend minAvailable=2, gateway minAvailable=1
-
-# Database HA
-psql $DATABASE_URL -c "SELECT pg_is_in_recovery();"   # primary: f
-psql $REPLICA_URL -c "SELECT pg_is_in_recovery();"   # replica: t
-
-# HA mode in backend
-kubectl exec -n appcontrol deploy/appcontrol-backend -- env | grep HA_MODE
-# Expect: HA_MODE=true
 ```
 
-Once verified, run a chaos drill: delete one backend pod, watch the LB shed traffic, verify a CLI `appctl status` succeeds without retry. Repeat for gateway, then for the database (managed-failover button).
+For the current pilot, test backend loss as an **interruption and reconciliation** exercise, gateway loss as a reconnection exercise and database restore as a separate recovery exercise. Record operation UUIDs, provider job outcomes, fresh checks and the business acceptance result. Do not infer automatic recovery from pod restart or a lease test.
+
+Before offering multiple backends, separately qualify command routing to a gateway connected elsewhere, events reaching a browser on another replica, loss of the connection owner, concurrent operations and deployment updates. These capabilities remain implementation/qualification work; the current examples do not enable them.
 
 ---
 

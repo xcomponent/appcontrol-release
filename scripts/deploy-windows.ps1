@@ -61,9 +61,9 @@ $DefaultConfig = @{
 
     # Docker images (for docker mode)
     images = @{
-        backend = "ghcr.io/xcomponent/appcontrol-release-backend:latest"
-        frontend = "ghcr.io/xcomponent/appcontrol-release-frontend:latest"
-        gateway = "ghcr.io/xcomponent/appcontrol-release-gateway:latest"
+        backend = "ghcr.io/xcomponent/appcontrol-backend:latest"
+        frontend = "ghcr.io/xcomponent/appcontrol-frontend:latest"
+        gateway = "ghcr.io/xcomponent/appcontrol-gateway:latest"
         postgres = "postgres:16-alpine"
     }
 }

@@ -214,7 +214,7 @@ echo "Deploying gateway container..."
 AZ_CMD="az container create \
     --resource-group $RESOURCE_GROUP \
     --name $CONTAINER_NAME \
-    --image ghcr.io/xcomponent/appcontrol-release-azure-gateway:$VERSION \
+    --image ghcr.io/xcomponent/appcontrol-azure-gateway:$VERSION \
     --os-type Linux \
     --ports $GATEWAY_PORT \
     --cpu $CPU \

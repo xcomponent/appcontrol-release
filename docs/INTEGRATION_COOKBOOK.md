@@ -11,16 +11,17 @@ All recipes assume:
 
 ### Create an API Key
 
-```bash
-# Via CLI
-appctl api-key create --name "control-m-integration" --scopes "operate"
+Create a key in Settings → API Keys, or use the API with an authenticated account. For a single application's lifecycle operations:
 
-# Via API
+```bash
+jq -n --arg app "$APP_ID" '{name: "control-m-integration", allowed_actions: [("app:" + $app + ":read"), ("app:" + $app + ":start"), ("app:" + $app + ":stop")]}' > key-request.json
 curl -X POST https://appcontrol.example.com/api/v1/api-keys \
   -H "Authorization: Bearer $JWT_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"name": "control-m-integration", "scopes": ["operate"]}'
+  --data-binary @key-request.json
 ```
+
+Keys are a ceiling on the account's application permissions. They default to read-only with a 30-day expiry when omitted. Restricted keys deny unclassified routes; the recipes below need capabilities matching their actual endpoints. Recovery planning requires `plan`, diagnosis `diagnose`, and recovery execution `execute`, alongside the account's required RBAC. Legacy `*` keys retain full account permissions and should not be used for analysis-only AI integrations.
 
 Save the returned key — it's shown only once.
 
@@ -97,7 +98,7 @@ APP_ID="billing-prod"
 ACTION="$1"
 
 # Check current state via API
-STATE=$(curl -s -H "X-API-Key: $AC_API_KEY" \
+STATE=$(curl -s -H "Authorization: ApiKey $AC_API_KEY" \
   "https://appcontrol.example.com/api/v1/orchestration/apps/$APP_ID/status" \
   | jq -r '.all_running')
 
@@ -128,7 +129,7 @@ TIMEOUT="${U_TIMEOUT:-300}"
 # Start via REST API (Dollar Universe prefers API calls over CLI)
 RESPONSE=$(curl -s -w "\n%{http_code}" \
   -X POST "https://appcontrol.example.com/api/v1/orchestration/apps/$APP_ID/start" \
-  -H "X-API-Key: $AC_API_KEY" \
+  -H "Authorization: ApiKey $AC_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"dry_run": false}')
 
@@ -141,7 +142,7 @@ fi
 # Wait for completion
 WAIT_RESPONSE=$(curl -s -w "\n%{http_code}" \
   "https://appcontrol.example.com/api/v1/orchestration/apps/$APP_ID/wait-running?timeout=$TIMEOUT" \
-  -H "X-API-Key: $AC_API_KEY")
+  -H "Authorization: ApiKey $AC_API_KEY")
 
 STATUS=$(echo "$WAIT_RESPONSE" | head -1 | jq -r '.status')
 case "$STATUS" in
@@ -164,7 +165,7 @@ In your XL Release template, add an **HTTP Request** task:
 |-------|-------|
 | URL | `https://appcontrol.example.com/api/v1/orchestration/apps/${app_id}/start` |
 | Method | POST |
-| Headers | `X-API-Key: ${api_key}`, `Content-Type: application/json` |
+| Headers | `Authorization: ApiKey ${api_key}`, `Content-Type: application/json` |
 | Body | `{"dry_run": false}` |
 
 ### HTTP Task: Wait for Running
@@ -175,7 +176,7 @@ Add a second HTTP Request task:
 |-------|-------|
 | URL | `https://appcontrol.example.com/api/v1/orchestration/apps/${app_id}/wait-running?timeout=300` |
 | Method | GET |
-| Headers | `X-API-Key: ${api_key}` |
+| Headers | `Authorization: ApiKey ${api_key}` |
 | Expected Status | 200 |
 
 ### Validate Your XL Release Sequence
@@ -184,7 +185,7 @@ Before migrating, validate that your XL Release template's restart order matches
 
 ```bash
 curl -X POST "https://appcontrol.example.com/api/v1/apps/$APP_ID/validate-sequence" \
-  -H "X-API-Key: $AC_API_KEY" \
+  -H "Authorization: ApiKey $AC_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "sequence": ["redis-cache", "postgres-db", "api-server", "web-frontend"],
@@ -262,14 +263,14 @@ pipeline {
             steps {
                 sh """
                     curl -f -X POST ${AC_URL}/api/v1/orchestration/apps/${APP_ID}/start \
-                      -H "X-API-Key: ${AC_API_KEY}" \
+                      -H "Authorization: ApiKey ${AC_API_KEY}" \
                       -H "Content-Type: application/json" \
                       -d '{"dry_run": false}'
                 """
                 // Wait for all components to be running
                 sh """
                     STATUS=\$(curl -s ${AC_URL}/api/v1/orchestration/apps/${APP_ID}/wait-running?timeout=300 \
-                      -H "X-API-Key: ${AC_API_KEY}" | jq -r '.status')
+                      -H "Authorization: ApiKey ${AC_API_KEY}" | jq -r '.status')
                     if [ "\$STATUS" != "running" ]; then
                       echo "Application failed to start: \$STATUS"
                       exit 1
@@ -298,13 +299,13 @@ restart_application:
     - |
       # Trigger restart
       curl -f -X POST "$AC_URL/api/v1/orchestration/apps/$APP_ID/start" \
-        -H "X-API-Key: $AC_API_KEY" \
+        -H "Authorization: ApiKey $AC_API_KEY" \
         -H "Content-Type: application/json" \
         -d '{"dry_run": false}'
 
       # Wait for running
       STATUS=$(curl -s "$AC_URL/api/v1/orchestration/apps/$APP_ID/wait-running?timeout=300" \
-        -H "X-API-Key: $AC_API_KEY" | jq -r '.status')
+        -H "Authorization: ApiKey $AC_API_KEY" | jq -r '.status')
 
       if [ "$STATUS" != "running" ]; then
         echo "Restart failed: $STATUS"
@@ -366,7 +367,7 @@ Use AppControl's audit trail to feed ServiceNow change records:
 ```bash
 # Export audit trail for a time range
 curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/reports/audit?from=2026-02-23&to=2026-02-24" \
-  -H "X-API-Key: $AC_API_KEY" \
+  -H "Authorization: ApiKey $AC_API_KEY" \
   | jq '.entries[] | {
       type: .action,
       target: .entity_type,
@@ -384,7 +385,7 @@ curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/reports/audit?from=2
 ```bash
 # Get DOT format for Graphviz rendering
 curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/topology?format=dot" \
-  -H "X-API-Key: $AC_API_KEY" \
+  -H "Authorization: ApiKey $AC_API_KEY" \
   | jq -r '.content' > app_topology.dot
 
 # Render to PNG
@@ -395,7 +396,7 @@ dot -Tpng app_topology.dot -o app_topology.png
 
 ```bash
 curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/topology?format=yaml" \
-  -H "X-API-Key: $AC_API_KEY" \
+  -H "Authorization: ApiKey $AC_API_KEY" \
   | jq -r '.content' > app_topology.yaml
 ```
 
@@ -403,7 +404,7 @@ curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/topology?format=yaml
 
 ```bash
 curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/topology?format=json" \
-  -H "X-API-Key: $AC_API_KEY" > app_topology.json
+  -H "Authorization: ApiKey $AC_API_KEY" > app_topology.json
 ```
 
 ---
@@ -415,15 +416,15 @@ curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/topology?format=json
 ```bash
 # What would a start do?
 curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/plan?operation=start" \
-  -H "X-API-Key: $AC_API_KEY" | jq '.plan'
+  -H "Authorization: ApiKey $AC_API_KEY" | jq '.plan'
 
 # What would a stop do?
 curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/plan?operation=stop" \
-  -H "X-API-Key: $AC_API_KEY" | jq '.plan'
+  -H "Authorization: ApiKey $AC_API_KEY" | jq '.plan'
 
 # Plan for a specific component and its dependencies
 curl -s "https://appcontrol.example.com/api/v1/apps/$APP_ID/plan?operation=start&scope=$COMPONENT_ID" \
-  -H "X-API-Key: $AC_API_KEY" | jq '.plan'
+  -H "Authorization: ApiKey $AC_API_KEY" | jq '.plan'
 ```
 
 Response example:

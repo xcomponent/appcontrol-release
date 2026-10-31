@@ -23,7 +23,7 @@ PostgreSQL Cluster (×3)
 - Visual rendering with stacked cards and node count badge
 - Commands execute on the primary node (first in the list)
 
-### 1bis. Fan-out Cluster Demo (`fan-out-jboss-linux.json`, `fan-out-iis-windows.json`)
+### 1bis. Fan-out cluster demos
 
 Demonstrates the **fan-out** cluster mode: each cluster member is a first-class entity with its own FSM, state cache, and operations. Use this when each node must be monitored and operated independently (e.g. a JBoss/IIS pool of N hosts).
 
@@ -31,6 +31,7 @@ Demonstrates the **fan-out** cluster mode: each cluster member is a first-class 
 |------|----|----|----|
 | `fan-out-jboss-linux.json` | Linux (`/tmp/...`, `touch`/`rm`) | `threshold_pct` at 80% | 6 JBoss members |
 | `fan-out-iis-windows.json` | Windows (`%TEMP%\...`, `type nul`/`del`) | `quorum` (majority) | 4 IIS members |
+| `fan-out-batched-windows.json` | Windows (`marker-*.bat`) | `all_healthy`, batches of 3 | 8 IIS members |
 
 Both stacks: `LB (aggregate, x2) → App tier (fan-out) → DB (aggregate)`.
 
@@ -41,9 +42,14 @@ Both stacks: `LB (aggregate, x2) → App tier (fan-out) → DB (aggregate)`.
 - `cluster_members[]` with per-member `hostname`, `install_path`, command overrides, and optional `agent` (defaults to parent)
 - Aggregated component state derived from per-member states (RUNNING/DEGRADED/FAILED)
 - Members panel in the UI with batch Start/Stop and individual member operations
+- Bulk operations dispatch in parallel; individual operations wait for the selected member
+- `cluster_concurrency_mode: "batched"` throttles a whole-component operation and waits only for the members in the current wave
+- Member command overrides are optional: shell or native commands inherit from the parent and support member hostname/install-path templating
 - Comparison with the **aggregate** mode (LB and DB in the same map)
 
 After import, open the App tier component → **Members** tab → drop one member's flag file (`rm /tmp/appcontrol-fanout/jboss-003.running`) and observe the parent state transition driven by the configured policy.
+
+See [Fan-out clusters](../docs/FAN_OUT.md) for operation semantics and configuration guidance.
 
 ### 2. Metrics Demo (`metrics-demo.json`)
 
@@ -154,6 +160,19 @@ The default examples use Unix shell commands (`test -f`, `touch`, `rm -f`) which
 Windows examples use `%TEMP%\appcontrol\` instead of `/tmp/appcontrol/` for flag files.
 
 ## Getting the Examples
+
+### Log source examples
+
+The following files are ready-to-edit API payloads:
+
+| File | Purpose |
+|---|---|
+| `log-source-file.json` | Read an application log file from a Linux or Windows agent |
+| `log-source-windows-event.json` | Read a filtered Windows Event Log |
+
+They are not application maps and must be sent to
+`POST /api/v1/components/:component_id/log-sources`. See
+[Component logs](../docs/LOGS.md) for complete UI and API instructions.
 
 ### From the latest release (recommended)
 

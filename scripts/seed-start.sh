@@ -71,9 +71,9 @@ log "Waiting for agent '$DEMO_AGENT_HOSTNAME' to register"
 for i in $(seq 1 120); do
   AGENTS=$(api_call GET /api/v1/agents '') || true
   AGENT_STATUS=$(echo "$AGENTS" | jq -r --arg h "$DEMO_AGENT_HOSTNAME" \
-    '.agents[]? | select(.hostname == $h) | .is_active' 2>/dev/null | head -n 1)
+    '[.agents[]? | select(.hostname == $h and .connected == true)] | length > 0' 2>/dev/null)
   if [ "$AGENT_STATUS" = "true" ]; then
-    log "Agent registered and active after $((i * 2))s"
+    log "Agent registered and connected after $((i * 2))s"
     break
   fi
   if [ "$i" = "120" ]; then
@@ -100,6 +100,7 @@ log "Start response: $(echo "$START_RESPONSE" | jq -c .)"
 # Logs only when state changes, plus first/last iteration.
 log "Waiting for components to converge to RUNNING"
 PREV=""
+CONVERGED=false
 for i in $(seq 1 90); do
   APP_AGG=$(api_call GET /api/v1/apps '' \
     | jq --arg id "$APP_ID" '.apps[] | select(.id == $id)')
@@ -116,11 +117,13 @@ for i in $(seq 1 90); do
   fi
   if [ "${TOTAL:-0}" -gt 0 ] && \
      [ "$((RUNNING + DEGRADED))" = "$TOTAL" ]; then
+    CONVERGED=true
     log "All components RUNNING/DEGRADED"
     break
   fi
   sleep 4
 done
 
+[ "$CONVERGED" = true ] || fail "Components did not converge: $PREV"
 log "Final aggregate: $PREV"
 log "Done."

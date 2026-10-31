@@ -2,6 +2,9 @@
 
 This guide covers deploying AppControl in a production Kubernetes environment.
 
+!!! warning "Reconstruction deployment boundary — 12 September 2026"
+    The current reconstruction pilot uses **one backend**, `strategy.type: Recreate` and no backend autoscaler. Cross-backend command/event routing and durable operation resume are not implemented. This topology has a planned control-plane interruption during backend updates and does not claim backend HA. Complete the client's [hardening checks](HARDENING.md) and [reconstruction qualification](../demo-rebuild/AMELIORATIONS-PRODUIT.fr.md) before critical use; a Helm install alone does not qualify production recovery.
+
 ## Prerequisites
 
 | Component | Version | Notes |
@@ -25,7 +28,7 @@ This guide covers deploying AppControl in a production Kubernetes environment.
          ┌────▼───┐  ┌────▼───┐  ┌────▼────┐
          │Frontend│  │Backend │  │ Gateway  │
          │(nginx) │  │(Axum)  │  │ (Axum)  │
-         │ x2     │  │ x2     │  │  x2     │
+         │ x2     │  │ x1     │  │  x2     │
          └────────┘  └──┬──┬──┘  └────┬────┘
                         │  │          │
               ┌─────────┘  └────┐     │  Agents connect
@@ -179,7 +182,9 @@ global:
     - name: regcred
 
 backend:
-  replicaCount: 3
+  replicaCount: 1
+  strategy:
+    type: Recreate
   image:
     tag: "v0.1.0"
   resources:
@@ -191,6 +196,9 @@ backend:
       memory: 2Gi
   env:
     RUST_LOG: "info"
+    APP_ENV: "production"
+    HA_MODE: "false"  # Rate-limit setting; does not enable backend HA
+    SHUTDOWN_TIMEOUT_SECS: "25"
     CORS_ORIGINS: "https://appcontrol.your-domain.com"
   database:
     existingSecret: "appcontrol-db"
@@ -223,7 +231,7 @@ postgresql:
 podDisruptionBudget:
   enabled: true
   backend:
-    minAvailable: 2
+    minAvailable: 1
   gateway:
     minAvailable: 1
   frontend:
@@ -256,7 +264,14 @@ networkPolicy:
 
 ## Step 6: Deploy
 
+Render the chart and check the backend replica count, `Recreate` strategy, explicit environment settings and secret references before installation. The chart has no HPA; disable any external autoscaler targeting the backend. The production authentication configuration must be supplied and verified as described in [Hardening](HARDENING.md); setting `APP_ENV` does not configure an identity provider.
+
 ```bash
+# Inspect locally before applying; protect rendered files if your values contain secrets
+helm template appcontrol ./helm/appcontrol \
+  --namespace appcontrol \
+  --values production-values.yaml
+
 # Add the Helm chart
 helm install appcontrol ./helm/appcontrol \
   --namespace appcontrol \
@@ -346,34 +361,37 @@ Upgrade components in this order to avoid protocol mismatches:
 
 1. **Backend** — handles database migrations and API changes
 2. **Frontend** — depends on updated API
-3. **Gateways** — stateless relays, safe to roll at any time
+3. **Gateways** — relay upgrades require verified alternate endpoints and command reconciliation
 4. **Agents** — depend on gateway + backend being ready
 
-### Backend, Frontend & Gateway (Helm rolling update)
+### Backend, Frontend & Gateway (planned update)
+
+Schedule a maintenance window and stop new operation submissions. Wait for active reconstructions/switchovers to reach their intended terminal state, and reconcile any command/provider job with an unknown result. Do not upgrade during an active or unresolved operation. Back up the database and required configuration, and verify image/database compatibility before proceeding.
+
+The backend uses `Recreate`: Kubernetes terminates the old backend before bringing up the new one for this Deployment update. Control-plane access is interrupted. A PDB does not preserve active operations or make this update zero-downtime. With one backend and `minAvailable: 1`, voluntary node eviction can also be blocked; plan node maintenance explicitly.
 
 ```bash
 # 1. Update image tags in production-values.yaml
-# 2. Helm upgrade (rolling update, zero downtime thanks to PDB)
+# 2. Render and verify one backend, Recreate and no backend HPA
+helm template appcontrol ./helm/appcontrol \
+  --namespace appcontrol \
+  --values production-values.yaml
+
+# 3. Upgrade during the maintenance window; backend access will be interrupted
 helm upgrade appcontrol ./helm/appcontrol \
   --namespace appcontrol \
   --values production-values.yaml
 
-# 3. Monitor rollout
+# 4. Monitor rollout
 kubectl rollout status -n appcontrol deployment/appcontrol-backend
 kubectl rollout status -n appcontrol deployment/appcontrol-gateway
 kubectl rollout status -n appcontrol deployment/appcontrol-frontend
 
-# 4. Verify health
+# 5. Verify readiness, then fresh agent/component checks and operation histories
 kubectl exec -n appcontrol deploy/appcontrol-backend -- curl -s localhost:3000/ready
 ```
 
-Gateway upgrades are **zero-downtime** thanks to:
-
-- **PodDisruptionBudget** (`minAvailable: 1`) prevents all gateway pods from
-  terminating simultaneously.
-- **Agent-driven failover**: agents configured with multiple `gateway.urls`
-  automatically reconnect to the next available gateway when a pod terminates
-  during a rolling update.
+Gateway redundancy and configured `gateway.urls` allow agents to reconnect to another reachable gateway. Verify this behavior on the actual endpoints and certificates; a command in flight can still require reconciliation. Gateway/frontend replica counts do not remove the backend interruption or qualify multi-backend reconstruction. A PDB constrains supported voluntary evictions; it is not a blanket guarantee of service continuity during Deployment updates.
 
 ### Agent binary upgrades
 
@@ -425,13 +443,21 @@ gateway:
 
 ### Backend, Frontend & Gateway
 
+Use the same maintenance and reconciliation procedure as an upgrade. Select a tested previous image version compatible with the current database; Helm does not reverse database migrations or restore application data. Preserve the current single-backend topology instead of blindly restoring a release whose values used multiple backends or rolling updates.
+
 ```bash
-# Helm rollback to previous revision
-helm rollback appcontrol -n appcontrol
+# Set the tested previous image tags in the current production-values.yaml
+# Keep backend.replicaCount=1 and backend.strategy.type=Recreate
+helm template appcontrol ./helm/appcontrol \
+  --namespace appcontrol --values production-values.yaml
+helm upgrade appcontrol ./helm/appcontrol \
+  --namespace appcontrol --values production-values.yaml
 
 # Verify
 kubectl rollout status -n appcontrol deployment/appcontrol-backend
 ```
+
+After restart, verify new checks and reconcile affected operation records. A stored operation does not automatically continue from its previous step.
 
 ### Agents
 

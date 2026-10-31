@@ -1,0 +1,9 @@
+{
+  "name": "Application log",
+  "source_type": "file",
+  "description": "Tail the application log on the machine running the assigned agent.",
+  "file_path": "/var/log/my-application/application.log",
+  "max_lines": 500,
+  "max_age_hours": 24,
+  "is_sensitive": false
+}

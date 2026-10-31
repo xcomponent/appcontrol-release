@@ -201,7 +201,7 @@ az vm list -g <resource-group> --show-details \
 | `GATEWAY_ID` | `azure-gateway-01` | Gateway identifier |
 | `GATEWAY_SITE_ID` | (none) | Site UUID (optional, assign via UI if empty) |
 | `VM_RESOURCE_GROUP` | same as `RESOURCE_GROUP` | Resource group for VM role assignment |
-| `IMAGE` | `ghcr.io/xcomponent/appcontrol-release-azure-gateway:latest` | Docker image |
+| `IMAGE` | `ghcr.io/xcomponent/appcontrol-azure-gateway:latest` | Docker image |
 | `ACR_NAME` | (empty) | Azure Container Registry name (for `--build`) |
 | `CPU` | `1` | CPU cores |
 | `MEMORY` | `1.5` | Memory in GB |
@@ -300,7 +300,7 @@ Ensure "Virtual Machine Contributor" is assigned on the correct resource group.
 
 ### Gateway can't connect to backend
 
-- Verify the backend route is accessible: `curl https://<backend-route>/health`
+- Verify the AppControl route is accessible: `curl https://<appcontrol-route>/health`
 - Check that the WebSocket endpoint works: the URL must end with `/ws/gateway`
 - Ensure CORS allows the gateway origin (or use the backend's internal URL)
 

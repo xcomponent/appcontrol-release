@@ -1,21 +1,22 @@
-# Docker Compose for running AppControl from the latest GitHub release.
-# No local build required — pulls pre-built images from GHCR.
+# Customer Docker Compose deployment. Run it from the docker/ directory of
+# appcontrol-compose.tar.gz so nginx/nginx.conf is available. Copy
+# .env.example to .env and replace every CHANGE_* value before starting.
 #
 # Usage:
-#   docker compose -f docker/docker-compose.release.yaml up -d
+#   docker compose -f docker-compose.release.yaml up -d
 #
 #   # Trust the self-signed CA (required for browser login):
-#   ./docker/trust-ca.sh
+#   ./trust-ca.sh
 #   # Then restart your browser
 #
 #   open https://localhost
-#   Login: admin@localhost / admin (change SEED_ADMIN_PASSWORD for production!)
+#   Login: values of SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD in .env
 #
 #   # Pin a specific version:
-#   APPCONTROL_VERSION=0.2.0 docker compose -f docker/docker-compose.release.yaml up -d
+#   APPCONTROL_VERSION=1.2.3 docker compose -f docker-compose.release.yaml up -d
 #
 #   # Tear down:
-#   docker compose -f docker/docker-compose.release.yaml down -v
+#   docker compose -f docker-compose.release.yaml down
 #
 # Note: The self-signed CA must be trusted by your browser for HTTPS to work.
 # Without it, the login page loads but API calls fail with certificate errors.
@@ -29,7 +30,7 @@ services:
     environment:
       POSTGRES_DB: appcontrol
       POSTGRES_USER: appcontrol
-      POSTGRES_PASSWORD: appcontrol_dev
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
     ports:
       - "5432:5432"
     volumes:
@@ -41,22 +42,25 @@ services:
       retries: 5
 
   backend:
-    image: ghcr.io/xcomponent/appcontrol-release-backend:${APPCONTROL_VERSION:-latest}
+    image: ${APPCONTROL_IMAGE_PREFIX:-ghcr.io/xcomponent/appcontrol}-backend:${APPCONTROL_VERSION:-latest}
     expose:
       - "3000"
     environment:
-      DATABASE_URL: postgres://appcontrol:appcontrol_dev@postgres:5432/appcontrol
+      # Optional native knowledge extraction. Empty values keep model extraction unavailable.
+      KNOWLEDGE_ANTHROPIC_API_KEY: ${KNOWLEDGE_ANTHROPIC_API_KEY:-}
+      KNOWLEDGE_ANTHROPIC_MODEL: ${KNOWLEDGE_ANTHROPIC_MODEL:-}
+      DATABASE_URL: postgres://appcontrol:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/appcontrol
       PORT: "3000"
-      JWT_SECRET: dev-secret-change-in-production
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
       RUST_LOG: info,appcontrol_backend=debug
       CERT_EXPORT_PATH: /certs
       # ── Initial admin user (created on first start) ──
-      SEED_ENABLED: "true"
-      SEED_ADMIN_EMAIL: admin@localhost
-      SEED_ADMIN_PASSWORD: admin
-      SEED_ADMIN_DISPLAY_NAME: Admin
-      SEED_ORG_NAME: Default Organization
-      SEED_ORG_SLUG: default
+      SEED_ENABLED: ${SEED_ENABLED:-true}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@localhost}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:?Set SEED_ADMIN_PASSWORD in .env}
+      SEED_ADMIN_DISPLAY_NAME: ${SEED_ADMIN_DISPLAY_NAME:-Admin}
+      SEED_ORG_NAME: ${SEED_ORG_NAME:-Default Organization}
+      SEED_ORG_SLUG: ${SEED_ORG_SLUG:-default}
       # ── SSO (optional) ──
       # OIDC_DISCOVERY_URL: https://login.example.com/.well-known/openid-configuration
       # OIDC_CLIENT_ID: appcontrol
@@ -71,21 +75,21 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:3000/health || exit 1"]
+      test: ["CMD", "/usr/local/bin/appcontrol-backend", "--health-check-url", "http://localhost:3000/health"]
       interval: 5s
       timeout: 5s
       retries: 30
       start_period: 30s
 
   frontend:
-    image: ghcr.io/xcomponent/appcontrol-release-frontend:${APPCONTROL_VERSION:-latest}
+    image: ${APPCONTROL_IMAGE_PREFIX:-ghcr.io/xcomponent/appcontrol}-frontend:${APPCONTROL_VERSION:-latest}
     expose:
       - "8080"
     depends_on:
       - backend
 
   gateway:
-    image: ghcr.io/xcomponent/appcontrol-release-gateway:${APPCONTROL_VERSION:-latest}
+    image: ${APPCONTROL_IMAGE_PREFIX:-ghcr.io/xcomponent/appcontrol}-gateway:${APPCONTROL_VERSION:-latest}
     ports:
       - "4443:4443"  # Exposed directly for agent connections
     environment:
@@ -107,7 +111,7 @@ services:
 
   # Certificate initialization container
   init-certs:
-    image: ghcr.io/xcomponent/appcontrol-release-init-certs:${APPCONTROL_VERSION:-latest}
+    image: ${APPCONTROL_IMAGE_PREFIX:-ghcr.io/xcomponent/appcontrol}-init-certs:${APPCONTROL_VERSION:-latest}
     environment:
       CERT_DIR: /certs
       BACKEND_URL: http://backend:3000
@@ -115,8 +119,8 @@ services:
       EXTRA_SANS: appcontrol,nginx
       GATEWAY_CN: gateway
       # Credentials for gateway cert generation (uses same as backend seed)
-      SEED_ADMIN_EMAIL: admin@localhost
-      SEED_ADMIN_PASSWORD: admin
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@localhost}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:?Set SEED_ADMIN_PASSWORD in .env}
     volumes:
       - certs:/certs
     depends_on:

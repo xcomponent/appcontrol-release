@@ -1,241 +1,132 @@
-# Deploying AppControl on Red Hat OpenShift Developer Sandbox
+# Deploying and testing AppControl on OpenShift
 
-This guide deploys AppControl (Backend, Frontend, PostgreSQL) on the **free OpenShift Developer Sandbox** at [console.redhat.com/openshift/sandbox](https://console.redhat.com/openshift/sandbox).
+The Helm chart in `helm/appcontrol` is the single source of truth for both
+Kubernetes and OpenShift. The OpenShift profile adds a TLS Route, disables
+Ingress, and leaves UID/GID selection to the namespace Security Context
+Constraint (SCC).
 
-The gateway and agent run separately — typically on an Azure Container Instance near your workloads. See [AZURE_GATEWAY.md](AZURE_GATEWAY.md) for that part.
+## What is tested
 
-## Architecture
+The `OpenShift` GitHub Actions workflow has two levels:
 
-```
-┌─────────────────────────────────────────────────────┐
-│  OpenShift Developer Sandbox                        │
-│                                                     │
-│  ┌───────────┐  ┌───────────┐  ┌────────────────┐  │
-│  │ Frontend  │──│  Backend  │──│  PostgreSQL 16 │  │
-│  │  (nginx)  │  │  (Axum)   │  │  (RHEL image)  │  │
-│  └─────┬─────┘  └─────┬─────┘  └────────────────┘  │
-│        │              │                              │
-│   Route (TLS)    Route (TLS)                        │
-│        │              │                              │
-└────────┼──────────────┼──────────────────────────────┘
-         │              │
-    Users (browser)     │
-                        │  wss:// (WebSocket)
-                        │
-              ┌─────────▼──────────┐
-              │  Azure Container   │
-              │  Gateway + Agent   │
-              │  (Managed Identity)│
-              └────────────────────┘
-                    │
-              az vm start/stop
-```
+1. Every relevant pull request renders and lints the chart, checks the Route,
+   and rejects fixed UIDs/GIDs, privileged containers, or incomplete
+   `restricted-v2` security contexts.
+2. Manual and scheduled runs deploy AppControl to a real OpenShift cluster,
+   verify the SCC selected by admission, deploy an agent, and execute the same
+   start/check/stop/restart scenario as the local full-stack E2E test.
 
-## Prerequisites
+The CI does not install an OpenShift cluster inside a GitHub-hosted runner.
+OpenShift Local requires a virtual machine and is not suitable for nested
+virtualization there. Instead, the workflow connects to an existing cluster.
 
-| Tool | Install |
-|------|---------|
-| `oc` CLI | [Download](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/) |
-| Red Hat account | [Create free account](https://sso.redhat.com) |
-| OpenShift Sandbox | [Start sandbox](https://console.redhat.com/openshift/sandbox) |
+## Red Hat Developer Sandbox
 
-## Step 1: Get Your Sandbox
+The no-cost Red Hat Developer Sandbox is suitable for this E2E job. It is a
+shared, quota-limited trial environment, so use one dedicated project and let
+the workflow remove its release after every run.
 
-1. Go to [console.redhat.com/openshift/sandbox](https://console.redhat.com/openshift/sandbox)
-2. Click **Start your Sandbox for free**
-3. Verify your account (phone number required)
-4. Wait for the sandbox to provision (~30 seconds)
+1. Start a sandbox from
+   [Red Hat Developer Sandbox](https://developers.redhat.com/developer-sandbox).
+2. In the OpenShift console, open **Copy login command**, then **Display Token**.
+3. Record the three values shown by:
 
-## Step 2: Login with `oc` CLI
+   ```bash
+   oc whoami --show-server
+   oc whoami -t
+   oc project -q
+   ```
 
-1. In the OpenShift web console, click your username (top right) → **Copy login command**
-2. Click **Display Token**
-3. Copy the `oc login` command and run it:
+4. In the GitHub repository, create these Actions secrets:
 
-```bash
-oc login --token=sha256~xxxxxxxxxxxx --server=https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443
-```
+   | Secret | Value |
+   |---|---|
+   | `OPENSHIFT_SERVER` | Output of `oc whoami --show-server` |
+   | `OPENSHIFT_TOKEN` | Output of `oc whoami -t` |
+   | `OPENSHIFT_NAMESPACE` | Output of `oc project -q` |
 
-4. Verify:
+Tokens and sandbox instances expire. Replace `OPENSHIFT_TOKEN` when login
+starts failing, and update all three values when a new sandbox is provisioned.
 
-```bash
-oc whoami
-oc project
-```
+## Launch the CI deployment
 
-## Step 3: Deploy AppControl
+After the workflow is present on GitHub:
 
-### Quick deploy (auto-generates passwords)
+1. Open **Actions → OpenShift**.
+2. Select **Run workflow**.
+3. Select the branch to test.
+4. Follow the `Real OpenShift deployment and execution` job.
 
-```bash
-cd openshift/
-./deploy.sh
-```
+The normal `CI / Docker Build` matrix builds backend, frontend, gateway, and
+agent once, in parallel, and publishes immutable SHA-tagged images to GHCR.
+The OpenShift job verifies and consumes those exact images; it does not rebuild
+them. It then creates short-lived secrets, installs the chart, runs the E2E
+scenario, uploads diagnostics on failure, and removes only resources belonging
+to its `appcontrol-e2e` release.
 
-### Custom configuration
+Scheduled workflows run only from the default branch. The weekly schedule
+therefore becomes active after this change is merged into `main`.
+
+## Manual Helm deployment
+
+Production deployments should use an external or operator-managed PostgreSQL
+database. Create secrets without placing credentials in a values file:
 
 ```bash
-export POSTGRES_PASSWORD="my-secure-password"
-export JWT_SECRET="$(openssl rand -base64 48)"
-export SEED_ADMIN_EMAIL="admin@mycompany.com"
-export SEED_ADMIN_DISPLAY_NAME="Platform Admin"
-export SEED_ORG_NAME="My Company"
-export SEED_ORG_SLUG="mycompany"
+oc create secret generic appcontrol-database \
+  --from-literal=database-url='postgresql://USER:PASSWORD@HOST:5432/appcontrol'
 
-./deploy.sh
+oc create secret generic appcontrol-jwt \
+  --from-literal=jwt-secret="$(openssl rand -hex 48)"
 ```
 
-### Using a specific image tag
+Deploy:
 
 ```bash
-export IMAGE_TAG="v4.0.0"
-./deploy.sh
+helm upgrade --install appcontrol helm/appcontrol \
+  --namespace "$(oc project -q)" \
+  -f helm/appcontrol/values-openshift.yaml \
+  --set backend.database.existingSecret=appcontrol-database \
+  --set backend.jwt.existingSecret=appcontrol-jwt \
+  --set backend.image.repository=REGISTRY/appcontrol-backend \
+  --set frontend.image.repository=REGISTRY/appcontrol-frontend \
+  --set gateway.image.repository=REGISTRY/appcontrol-gateway \
+  --set backend.image.tag=VERSION \
+  --set frontend.image.tag=VERSION \
+  --set gateway.image.tag=VERSION \
+  --wait --timeout 12m
 ```
 
-The script will:
-1. Create secrets (PostgreSQL credentials, JWT key)
-2. Deploy PostgreSQL 16 with persistent storage
-3. Deploy the Backend (runs migrations automatically)
-4. Deploy the Frontend (nginx with API proxy)
-5. Create OpenShift Routes with TLS edge termination
-6. Print the URLs and credentials
-
-## Step 4: Access AppControl
-
-The script prints the URLs at the end. Example:
-
-```
-Frontend:  https://appcontrol-username-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
-Backend:   https://appcontrol-api-username-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
-```
-
-Login with the `SEED_ADMIN_EMAIL` you configured (default: `admin@localhost`).
-Leave the password empty in dev mode.
-
-## Step 5: Connect the Azure Gateway
-
-After deploying the Azure gateway (see [AZURE_GATEWAY.md](AZURE_GATEWAY.md)), point it to the backend WebSocket URL:
-
-```
-BACKEND_URL=wss://appcontrol-api-<project>.apps.<cluster>/ws/gateway
-```
-
-The deploy script prints this URL at the end.
-
-## Environment Variables Reference
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `POSTGRES_DB` | `appcontrol` | Database name |
-| `POSTGRES_USER` | `appcontrol` | Database user |
-| `POSTGRES_PASSWORD` | auto-generated | Database password |
-| `JWT_SECRET` | auto-generated | JWT signing key |
-| `IMAGE_TAG` | `latest` | Docker image tag |
-| `IMAGE_REGISTRY` | `ghcr.io/xcomponent` | Image registry |
-| `SEED_ADMIN_EMAIL` | `admin@localhost` | Initial admin email |
-| `SEED_ADMIN_DISPLAY_NAME` | `Admin` | Initial admin name |
-| `SEED_ORG_NAME` | `Default Organization` | Organization name |
-| `SEED_ORG_SLUG` | `default` | Organization slug |
-| `ROUTE_HOST` | auto-derived | Frontend hostname |
-| `BACKEND_ROUTE_HOST` | auto-derived | Backend hostname |
-
-## Operations
-
-### Check pod status
+Retrieve the generated Route:
 
 ```bash
-oc get pods
-oc get routes
+oc get route appcontrol -o jsonpath='https://{.spec.host}{"\n"}'
 ```
 
-### View logs
+## Security model
+
+The chart is designed for `restricted-v2` and `restricted-v3`:
+
+- no fixed `runAsUser`, `runAsGroup`, or `fsGroup`;
+- `runAsNonRoot: true`;
+- `seccompProfile: RuntimeDefault`;
+- privilege escalation disabled;
+- all Linux capabilities dropped;
+- application images permit an arbitrary OpenShift UID to access only the
+  files and writable directories it needs.
+
+The frontend proxies `/api`, `/ws`, `/health`, and `/ready` internally. Only
+one edge-terminated Route is required for the browser application.
+
+## Diagnostics
 
 ```bash
-oc logs deployment/appcontrol-backend --tail=50 -f
-oc logs deployment/appcontrol-frontend --tail=50 -f
-oc logs deployment/appcontrol-postgres --tail=50 -f
+oc get pods,route,pvc
+oc get events --sort-by=.lastTimestamp
+oc logs deployment/appcontrol-backend --tail=200
+oc logs deployment/appcontrol-gateway --tail=200
+oc describe pod POD_NAME
 ```
 
-### Restart a component
-
-```bash
-oc rollout restart deployment/appcontrol-backend
-```
-
-### Open a psql shell
-
-```bash
-oc exec deployment/appcontrol-postgres -- psql -U appcontrol -d appcontrol
-```
-
-### Update to a new version
-
-```bash
-IMAGE_TAG=v4.1.0 ./deploy.sh
-```
-
-### Delete everything
-
-```bash
-./deploy.sh --delete
-```
-
-## Sandbox Limitations
-
-| Constraint | Limit |
-|------------|-------|
-| CPU | 7 cores total |
-| Memory | 15 GiB total |
-| Storage | 15 GiB total |
-| Projects | 2 |
-| Idle timeout | Pods sleep after 12h inactivity |
-| Lifetime | 30 days, then auto-deleted |
-
-After 12 hours of inactivity, OpenShift scales pods to zero. The first request wakes them up (~30s delay). This is normal behavior for the sandbox.
-
-## Troubleshooting
-
-### Pods stuck in `Pending`
-
-Resource quota exceeded. Check:
-```bash
-oc describe resourcequota
-```
-
-Reduce replicas to 1 in the deployment files (already the default for sandbox).
-
-### Backend CrashLoopBackOff
-
-Usually a database connection issue. Check:
-```bash
-oc logs deployment/appcontrol-backend
-oc get pods   # verify postgres is Running
-```
-
-### Route not accessible
-
-Verify routes exist and check TLS:
-```bash
-oc get routes
-curl -I https://<route-host>/health
-```
-
-### Image pull errors
-
-If using private GHCR images, create a pull secret:
-```bash
-oc create secret docker-registry ghcr-pull \
-  --docker-server=ghcr.io \
-  --docker-username=<github-user> \
-  --docker-password=<github-token>
-oc secrets link default ghcr-pull --for=pull
-```
-
-### PostgreSQL image: why RHEL instead of Alpine?
-
-The OpenShift sandbox uses the `restricted` SecurityContextConstraint (SCC),
-which runs containers with a random UID. The Red Hat PostgreSQL image
-(`registry.redhat.io/rhel9/postgresql-16`) handles arbitrary UIDs correctly,
-while the upstream `postgres:16-alpine` image requires running as the `postgres`
-user (UID 999). If you prefer the Alpine image, you can switch it after
-verifying it works with your SCC.
+For CI failures, download the `openshift-diagnostics` artifact from the failed
+GitHub Actions run.

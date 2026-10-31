@@ -1,0 +1,11 @@
+{
+  "name": "Windows application events",
+  "source_type": "event_log",
+  "description": "Read warning and error events from the Windows Application log.",
+  "event_log_name": "Application",
+  "event_log_source": "MyApplication",
+  "event_log_level": "Warning,Error",
+  "max_lines": 500,
+  "max_age_hours": 24,
+  "is_sensitive": false
+}

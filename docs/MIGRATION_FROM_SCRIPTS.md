@@ -186,7 +186,7 @@ If you have an XL Release template or script that defines a restart order, valid
 # 1. PostgreSQL  2. Redis  3. API Server  4. Web Frontend
 
 curl -X POST https://appcontrol.example.com/api/v1/apps/$APP_ID/validate-sequence \
-  -H "X-API-Key: $AC_API_KEY" \
+  -H "Authorization: ApiKey $AC_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "sequence": ["PostgreSQL", "Redis", "API Server", "Web Frontend"],
@@ -219,7 +219,7 @@ Fix the conflict in AppControl's DAG (or in your script, if the script was actua
 
 ```bash
 curl -s https://appcontrol.example.com/api/v1/apps/$APP_ID/plan?operation=start \
-  -H "X-API-Key: $AC_API_KEY" | jq '.plan.levels'
+  -H "Authorization: ApiKey $AC_API_KEY" | jq '.plan.levels'
 ```
 
 This shows exactly what AppControl would do, level by level.
@@ -259,9 +259,9 @@ appctl start billing-prod --wait --timeout 300
 **After (AppControl API from another tool):**
 ```bash
 curl -X POST https://appcontrol.example.com/api/v1/orchestration/apps/$APP_ID/start \
-  -H "X-API-Key: $AC_API_KEY"
+  -H "Authorization: ApiKey $AC_API_KEY"
 curl -s https://appcontrol.example.com/api/v1/orchestration/apps/$APP_ID/wait-running?timeout=300 \
-  -H "X-API-Key: $AC_API_KEY"
+  -H "Authorization: ApiKey $AC_API_KEY"
 ```
 
 ### Step 4.2: Replace XL Release Templates

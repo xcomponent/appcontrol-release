@@ -35,10 +35,13 @@ services:
     restart: unless-stopped
 
   backend:
-    image: ghcr.io/xcomponent/appcontrol-release-backend:${APPCONTROL_VERSION:-latest}
+    image: ghcr.io/xcomponent/appcontrol-backend:${APPCONTROL_VERSION:-latest}
     expose:
       - "3000"
     environment:
+      # Optional native knowledge extraction. Empty values keep model extraction unavailable.
+      KNOWLEDGE_ANTHROPIC_API_KEY: ${KNOWLEDGE_ANTHROPIC_API_KEY:-}
+      KNOWLEDGE_ANTHROPIC_MODEL: ${KNOWLEDGE_ANTHROPIC_MODEL:-}
       DATABASE_URL: postgres://${POSTGRES_USER:-appcontrol}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-appcontrol}
       PORT: "3000"
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required (use: openssl rand -base64 48)}
@@ -70,7 +73,7 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:3000/health || exit 1"]
+      test: ["CMD", "/usr/local/bin/appcontrol-backend", "--health-check-url", "http://localhost:3000/health"]
       interval: 5s
       timeout: 5s
       retries: 30
@@ -78,7 +81,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    image: ghcr.io/xcomponent/appcontrol-release-frontend:${APPCONTROL_VERSION:-latest}
+    image: ghcr.io/xcomponent/appcontrol-frontend:${APPCONTROL_VERSION:-latest}
     expose:
       - "8080"
     depends_on:
@@ -86,7 +89,7 @@ services:
     restart: unless-stopped
 
   gateway:
-    image: ghcr.io/xcomponent/appcontrol-release-gateway:${APPCONTROL_VERSION:-latest}
+    image: ghcr.io/xcomponent/appcontrol-gateway:${APPCONTROL_VERSION:-latest}
     ports:
       - "${GATEWAY_PORT:-4443}:4443"  # Exposed directly for agent connections
     environment:
@@ -102,7 +105,7 @@ services:
 
   # Certificate initialization container
   init-certs:
-    image: ghcr.io/xcomponent/appcontrol-release-init-certs:${APPCONTROL_VERSION:-latest}
+    image: ghcr.io/xcomponent/appcontrol-init-certs:${APPCONTROL_VERSION:-latest}
     environment:
       CERT_DIR: /certs
       BACKEND_URL: http://backend:3000

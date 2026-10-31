@@ -66,18 +66,20 @@ pg_ranges_for_file() {
 # Check if a line number falls in any PG-only range for a file.
 # Usage: is_pg_only <file> <lineno>
 # Returns 0 (true) if line is in PG-only code, 1 otherwise.
-declare -A PG_RANGES_CACHE
+# Cache the most recently inspected file. Search results are grouped by file,
+# and scalar variables keep this compatible with macOS' bundled Bash 3.2.
+PG_RANGES_FILE=""
+PG_RANGES_VALUE=""
 
 is_pg_only() {
     local file="$1"
     local lineno="$2"
-
-    # Cache ranges per file
-    if [ -z "${PG_RANGES_CACHE[$file]+x}" ]; then
-        PG_RANGES_CACHE[$file]=$(pg_ranges_for_file "$file")
+    local ranges
+    if [ "$file" != "$PG_RANGES_FILE" ]; then
+        PG_RANGES_FILE="$file"
+        PG_RANGES_VALUE=$(pg_ranges_for_file "$file")
     fi
-
-    local ranges="${PG_RANGES_CACHE[$file]}"
+    ranges="$PG_RANGES_VALUE"
     if [ -z "$ranges" ]; then
         return 1  # No PG ranges → shared code
     fi
@@ -107,9 +109,9 @@ if [ -d "$MIGRATIONS_SQLITE" ]; then
         prev_table=""
         while IFS= read -r line; do
             # Check for CREATE TABLE
-            if table_name=$(echo "$line" | grep -oP 'CREATE TABLE\s+\K[a-z_]+'); then
+            if table_name=$(echo "$line" | sed -nE 's/.*CREATE TABLE[[:space:]]+([a-z_]+).*/\1/p') && [ -n "$table_name" ]; then
                 prev_table="$table_name"
-            elif [ -n "$prev_table" ] && echo "$line" | grep -qP '^\s+id TEXT PRIMARY KEY'; then
+            elif [ -n "$prev_table" ] && echo "$line" | grep -Eq '^[[:space:]]+id TEXT PRIMARY KEY'; then
                 TABLES_WITH_ID+=("$prev_table")
                 prev_table=""
             elif [ -n "$prev_table" ] && echo "$line" | grep -qE '^\s*[a-z]'; then

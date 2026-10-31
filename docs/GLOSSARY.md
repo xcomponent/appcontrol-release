@@ -56,7 +56,7 @@ Deployment mode in which the backend generates a per-organization CA on first st
 
 ### Bastion
 <a id="bastion"></a>
-A privileged agent used to execute `rebuild_infra_cmd` against another host. Configured via `components.rebuild_agent_id`. The bastion is typically the only host with the credentials and network reach to reinstall an OS or restore a filesystem on the target. See [Backend CLAUDE.md — Rebuild Engine](https://github.com/xcomponent/appcontrol-release/blob/main/crates/backend/CLAUDE.md).
+A privileged control-plane agent used to execute both `infra_check_cmd` and `rebuild_infra_cmd` against another host. Configured via `components.rebuild_agent_id`. It is intentionally separate from the runtime agent: the bastion remains available when the target VM has failed and is typically the only host with the credentials and network reach to query the cloud inventory or invoke the approved XL Release/Ansible workflow. If none is configured, AppControl falls back to the runtime agent for backward compatibility. See [Backend CLAUDE.md — Rebuild Engine](https://github.com/xcomponent/appcontrol-release/blob/main/crates/backend/CLAUDE.md).
 
 ### Binding profile
 <a id="binding-profile"></a>
@@ -219,7 +219,7 @@ A logical grouping of sites by physical datacenter or cloud region. Example: hos
 
 ### Infrastructure check
 <a id="infrastructure-check"></a>
-Level-3 diagnostic probe (`infra_check_cmd`). On-demand only; informational. Verifies that the underlying OS, filesystem, listener ports, and prereqs are in order before a rebuild. See [Diagnostic levels](#diagnostic-levels).
+Level-3 diagnostic probe (`infra_check_cmd`). On-demand only; informational. Verifies from the configured [bastion](#bastion) that the target VM, OS, filesystem and infrastructure prerequisites exist. Runtime connectivity and required network flows remain separate evidence: a reachable VM does not prove that an application port is open. See [Diagnostic levels](#diagnostic-levels).
 
 ### Integrity check
 <a id="integrity-check"></a>

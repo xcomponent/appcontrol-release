@@ -66,7 +66,7 @@ Created all 31 SQLite migrations in `migrations/sqlite/`:
 | V014 | Command executions tracking |
 | V015 | Enrollment tokens, CA storage |
 | V016 | FSM state cache, webhook notifications |
-| V017 | Token revocation, rate limiting (Redis removal) |
+| V017 | Token revocation and database rate limiting |
 | V018 | Local authentication support |
 | V019 | Typed parameters, output streaming |
 | V020 | Gateway/agent status management |

@@ -9,9 +9,28 @@ Le projet est né d'un constat simple : depuis vingt ans, chaque famille d'outil
 ![map-overview](docs/screenshots/map-overview.png)
 
 [![CI](https://github.com/xcomponent/appcontrol-release/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/xcomponent/appcontrol-release/actions/workflows/ci.yaml)
+[![Documentation](https://img.shields.io/badge/documentation-en%20ligne-blue.svg)](https://xcomponent.github.io/appcontrol-release/)
 [![codecov](https://codecov.io/gh/xcomponent/appcontrol-release/graph/badge.svg)](https://codecov.io/gh/xcomponent/appcontrol-release)
 [![Release](https://img.shields.io/github/v/release/xcomponent/appcontrol-release?display_name=tag&sort=semver)](https://github.com/xcomponent/appcontrol-release/releases/latest)
 [![License: Proprietary](https://img.shields.io/badge/license-Proprietary-red.svg)](#license)
+
+## Installer AppControl
+
+**[Choisir le bon mode d'installation](docs/DEPLOYMENT.md)** avant de
+télécharger quoi que ce soit :
+
+| Besoin | Installation recommandée |
+|---|---|
+| Essai rapide sur Windows, sans base à administrer | [Standalone PowerShell + SQLite](docs/WINDOWS_DEPLOYMENT.md) |
+| Service durable sur Windows Server | [Services Windows + PostgreSQL](docs/WINDOWS_PRODUCTION.md) |
+| Serveur Linux unique | [Docker Compose + PostgreSQL](docs/COMPOSE.md) |
+| Plateforme Kubernetes | [Helm + PostgreSQL externe](docs/PRODUCTION_DEPLOYMENT.md) |
+| Plateforme OpenShift | [Helm/OpenShift + PostgreSQL externe](docs/OPENSHIFT.md) |
+
+Les commandes et toutes les options des scripts sont regroupées dans la
+**[référence PowerShell](docs/POWERSHELL_COMMANDS.md)**. La documentation
+complète est publiée sur
+**[fredericcarre.github.io/appcontrol](https://xcomponent.github.io/appcontrol-release/)**.
 
 ---
 

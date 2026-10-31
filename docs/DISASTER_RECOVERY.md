@@ -2,6 +2,9 @@
 
 This page documents how to recover AppControl itself from infrastructure-level failures, and how to recover **applications managed by AppControl** when their primary site is lost.
 
+!!! warning "Current reconstruction boundary — 12 September 2026"
+    Use one backend, with autoscaling disabled and planned interruption for updates. Persistent records survive a backend restart when the database survives; executing operations do not automatically resume. Reconcile commands and external jobs before retrying. Site reconstruction does not itself restore application data or change traffic. See [High Availability](HIGH_AVAILABILITY.md) and the [reconstruction improvement plan](../demo-rebuild/AMELIORATIONS-PRODUIT.fr.md).
+
 For ongoing-incident triage (a single agent down, slow API), see [Troubleshooting](TROUBLESHOOTING.md) and [Runbooks](RUNBOOKS.md). For backup procedures referenced below, see [Backup & Restore](BACKUP_RESTORE.md).
 
 !!! danger "Definitions"
@@ -20,11 +23,11 @@ For ongoing-incident triage (a single agent down, slow API), see [Troubleshootin
 | 5 | [Network partition between site A and site B](#5-network-partition-between-sites) | varies | varies |
 | 6 | [Database corruption](#6-database-corruption) | 1–4 h | depends on PITR |
 | 7 | [Mass agent disconnection (>50% offline)](#7-mass-agent-disconnection-50-offline) | 1 h | 0 |
-| 8 | [Site loss requiring full DR switchover](#8-site-loss-requiring-full-dr-switchover) | per-app RTO | 0 (state only) |
+| 8 | [Site loss requiring full DR switchover](#8-site-loss-requiring-full-dr-switchover) | measure end-to-end | application data recovery contract |
 | 9 | [Doomsday — primary + DR simultaneously lost](#9-doomsday-primary--dr-simultaneously-lost) | days | last backup |
 
 !!! note "Honest disclaimer"
-    AppControl has **no built-in point-in-time recovery for `action_log`** unless you have configured PostgreSQL WAL archiving. Typical RPO is 5–15 min with WAL archiving and continuous backup; 1–24 h with cron-based logical backups. Plan accordingly: see [Backup & Restore](BACKUP_RESTORE.md).
+    The table contains planning targets, not measured guarantees. AppControl has no independent point-in-time recovery engine for `action_log`; PostgreSQL PITR requires configured and tested base backups/WAL archiving. Measure the actual recovery point and event gaps, including bounded agent buffers. The control-plane backup does not restore the managed application's data. See [Backup & Restore](BACKUP_RESTORE.md).
 
 ---
 
@@ -54,6 +57,7 @@ The backend pods are gone; the PostgreSQL instance is healthy and reachable.
    ```bash
    helm upgrade --install appcontrol ./helm/appcontrol \
      --namespace appcontrol --values production-values.yaml \
+     --set backend.replicaCount=1 --set backend.strategy.type=Recreate \
      --set backend.image.tag=$(yq '.backend.image.tag' production-values.yaml)
    ```
 4. **Wait for `/ready`.**
@@ -62,15 +66,15 @@ The backend pods are gone; the PostgreSQL instance is healthy and reachable.
      -l app.kubernetes.io/component=backend --timeout=120s
    kubectl exec -n appcontrol deploy/appcontrol-backend -- curl -s localhost:3000/ready
    ```
-5. **State is auto-recovered from PostgreSQL.** The backend reads `components.current_state`, replays agent heartbeats, and re-publishes WebSocket events.
-6. **Verify.**
+5. **Recover records, then collect fresh evidence.** Database records are retained, but cached component state is not proof of current health. Wait for agent registration and fresh checks. Consult affected reconstruction records (`GET /api/v1/apps/<app>/rebuilds/<operation>`); the current implementation marks a recorded running operation without a live owner as interrupted when inspected. There is no durable worker resuming its steps. An external command/job may still be running or may have completed without its result reaching AppControl: reconcile it before a fresh diagnosis, reviewed plan and retry.
+6. **Verify connectivity and operation outcomes.** The query below is a connectivity check, not proof that reconstruction completed.
    ```sql
    -- No agents in UNREACHABLE > 5 min
    SELECT count(*) FROM agents
    WHERE last_heartbeat_at < now() - interval '5 minutes' AND is_active = true;
    ```
 
-**RTO:** typically 5–15 min for the redeploy, 30 min total including verification. **RPO: 0** — no data loss because the DB was intact.
+**RTO:** measure through fresh checks and reconciliation, not only backend readiness. An intact database preserves the records already persisted there; commands/results in flight still require investigation.
 
 ---
 
@@ -99,7 +103,7 @@ The entire control plane is gone: backend pods and the PostgreSQL instance.
      --from-literal=database-url="postgres://appcontrol:PASSWORD@new-pg-host:5432/appcontrol?sslmode=require" \
      --dry-run=client -o yaml | kubectl apply -f -
    ```
-4. **Deploy the backend.** Migrations run automatically.
+4. **Deploy one backend.** Migrations run automatically. Keep backend autoscaling disabled; use the planned-update topology in [Production Deployment](PRODUCTION_DEPLOYMENT.md).
 5. **Re-enroll agents whose certificates expired during the outage.** Most agents will reconnect using their stored cert. Agents whose cert expired during the outage need re-enrollment:
    ```bash
    appctl pki create-token --name "post-dr" --max-uses 1000 --scope agent
@@ -109,12 +113,7 @@ The entire control plane is gone: backend pods and the PostgreSQL instance.
    ```bash
    sudo journalctl -u appcontrol-agent | grep "buffer replay" | tail
    ```
-7. **Re-establish baseline.**
-   ```sql
-   -- Force a fresh check on every component
-   UPDATE components SET current_state = 'UNKNOWN';
-   ```
-   The next agent heartbeat populates accurate state.
+7. **Re-establish baseline.** Obtain fresh component checks through the normal agent/API workflow; a direct SQL state change is not a new observation. Compare their timestamps with the restore time. Reconcile operations and external jobs whose latest records may have been lost before issuing new actions.
 
 **Time window without audit:** the gap between your last backup and the current time **cannot** be recovered for `action_log`, `state_transitions`, and `check_events`. Agents replay their local buffer, but the buffer only contains messages the agent itself produced. Operator actions performed via the UI during the outage are **lost**.
 
@@ -204,7 +203,7 @@ The link between site A (primary control plane) and site B (DR site) is severed.
 
 ### Split-brain prevention
 
-The backend has a **single source of truth** for state. There is no leader election on the control plane — the backend cluster shares a single PostgreSQL DB. As a result, AppControl **cannot fail over the control plane across the partition** automatically.
+The current reconstruction deployment has one backend and one authoritative database endpoint. It cannot fail over the control plane across the partition automatically. Database operation ownership does not fence an already dispatched command or prevent an isolated application from continuing to write; external neutralization/fencing needs its own verified contract.
 
 Two things to verify during a partition:
 
@@ -221,16 +220,10 @@ Two things to verify during a partition:
 ### Manual reconcile after partition heals
 
 1. Agents in site B reconnect; the offline buffer replays.
-2. Backend computes the difference between `components.current_state` and the latest replayed `CheckResult`.
-3. Any divergence triggers a `state_transitions` row with `trigger='reconciliation'`.
-4. Inspect:
-   ```sql
-   SELECT * FROM state_transitions
-   WHERE trigger = 'reconciliation' AND created_at > '<partition_start>'
-   ORDER BY created_at;
-   ```
+2. Obtain fresh checks and compare them with the last recorded state; distinguish buffered observations from new evidence.
+3. Inspect affected operation/command histories and the external provider's current job/resource state. Record the reconciliation before retrying an action with an unknown effect. Do not infer an automatic reconciliation workflow or task resume from event replay.
 
-**RTO:** seconds after the partition heals. **RPO: 0 for agent-side events** (buffered); operator-side actions performed via the UI during the partition cannot be replayed in site B if site B held the partition wall.
+**RTO/RPO:** measure reconnection, new checks, reconciled operations and missing events. A bounded offline buffer cannot guarantee zero loss for an arbitrary partition. Database records and external effects have separate recovery boundaries.
 
 ---
 
@@ -303,7 +296,7 @@ WHERE u.id IS NULL LIMIT 5;
 ### Bring the system back up
 
 ```bash
-kubectl scale -n appcontrol deployment/appcontrol-backend --replicas=3
+kubectl scale -n appcontrol deployment/appcontrol-backend --replicas=1
 kubectl exec -n appcontrol deploy/appcontrol-backend -- curl -s localhost:3000/ready
 ```
 
@@ -375,20 +368,22 @@ GROUP BY trigger;
 
 The primary site is completely unavailable for one or more applications. The DR site is healthy.
 
-This is **the** scenario the switchover engine was built for. See [User Guide — DR Switchover](USER_GUIDE.md#dr-site-switchover) for the operator workflow.
+The engine can sequence configured source/target procedures and collect their results. A real site-loss procedure also needs recoverable data, target capacity, a safe source-stop/neutralization contract and an explicit traffic step. If the required evidence cannot be obtained, do not proceed merely because the source agent is unreachable. The local simulation does not qualify those infrastructure/data guarantees. See [User Guide — DR Switchover](USER_GUIDE.md#dr-site-switchover).
 
 ### The 6 phases and rollback semantics
 
-| Phase | Description | Rollback option |
-|------:|-------------|-----------------|
-| 1 | Prepare — verify DR agents and resources | Always safe |
-| 2 | Validate — pre-flight health checks on target | Always safe |
-| 3 | StopSource — stop components on PRD | Restart on PRD if data is intact |
-| 4 | Sync — verify data replication | Wait for replication, then re-attempt |
-| 5 | StartTarget — start components on DR | Re-attempt; manual cleanup if partial |
-| 6 | Commit — flip `active_site_id` | **Point of no return** |
+| Phase | Current behavior | Cancellation / return |
+|------:|------------------|-----------------------|
+| 1 | PREPARE — record the selected source/target and intent | Cancellation before operational changes |
+| 2 | VALIDATE — check target mapping, agents and required recovery contract | Cancellation before operational changes |
+| 3 | STOP_SOURCE — execute source stop and positive stop checks | Automatic rollback is refused from this phase onward |
+| 4 | SYNC — currently returns `skipped`; no data replication or restore is performed | Verify the external data-recovery procedure before advancing |
+| 5 | START_TARGET — execute verified target restart, then activate its component/site contract | Reconcile partial changes; a source return needs an explicit verified procedure |
+| 6 | COMMIT — recheck target infrastructure, integrity, network, health and post-start evidence | No automatic traffic switch or reverse recovery |
 
-Up to phase 5, you can cancel the switchover and roll back. After phase 6, you must switch back via a reverse switchover (`source_site = DR, target_site = PRD`).
+The site/component contract becomes active after verified START_TARGET; COMMIT supplies another set of fresh checks. Neither step changes the client's load balancer/DNS. A completed AppControl switchover is therefore distinct from confirmed client traffic on the target.
+
+Cancellation is supported only while the recorded phase is PREPARE or VALIDATE. It journals `ROLLBACK/completed` for the same UUID with `operational_changes=false` and `source_restored=false`: the source was left unchanged, not restored. After operational changes, verify/reconstruct the source and use an explicit reverse switchover and traffic procedure. Automatic data synchronization, external fencing and post-change rollback remain integration/implementation work.
 
 ### Step-by-step from a site-loss event
 
@@ -397,32 +392,28 @@ Up to phase 5, you can cancel the switchover and roll back. After phase 6, you m
    ```sql
    SELECT count(*) FROM agents WHERE is_active = true AND labels->>'site' = 'dr';
    ```
-3. **Run a dry-run switchover.**
-   ```bash
-   appctl switchover <app> --target-site dr --dry-run
-   ```
+3. **Review the target recovery contract.** Verify the profile/site mappings and preview the target recovery plan before starting the switchover. Confirm all required checks, source-stop evidence, the external data procedure and traffic/return procedures with their owners. SYNC does not enforce a data-recovery gate today; do not treat an unimplemented check as passed.
 4. **Launch the switchover with explicit mode.**
    - `FULL` for total migration.
    - `SELECTIVE` if only a subset of components is recoverable on DR.
-   - `PROGRESSIVE` for staged DAG-level rollout (recommended for very large applications).
+   The current API accepts `FULL` or a nonempty `SELECTIVE` scope. `PROGRESSIVE` is not supported by this path. Nested applications, `fan_out` and manual-task components are blocked by the recovery contract.
 5. **Monitor each phase in the UI or via API.**
    ```bash
    curl -s https://appcontrol.example.com/api/v1/apps/<id>/switchover/status \
      -H "Authorization: Bearer $TOKEN" | jq
    ```
-6. **Commit when validated.** Once phase 5 succeeds and you have run business-level smoke tests, click **Commit** (phase 6).
+6. **Commit when validated.** Once START_TARGET succeeds, COMMIT collects fresh target checks. Verify the terminal `COMMIT/completed` history and the associated recovery operation outcomes.
+7. **Route and verify traffic explicitly.** Execute the client's authorized network step, observe the target from the actual client entry point, and validate the business transaction and recovered data. Record its result separately; a failed route change is not successful service recovery.
 
 ### Roll back at each step
 
-| If you are stopped at | Roll back command |
-|-----------------------|-------------------|
-| Phase 1–2 | `POST /api/v1/apps/<id>/switchover/cancel` — no side effects |
-| Phase 3 | Cancel; PRD components may be partially stopped — restart them |
-| Phase 4 | Cancel; if data sync was destructive, restore from backup |
-| Phase 5 | Cancel; DR components may be partially started — stop them |
-| Phase 6 | No automatic rollback — perform a reverse switchover |
+| Recorded phase | Available action |
+|----------------|------------------|
+| PREPARE / VALIDATE | `POST /api/v1/apps/<id>/switchover/rollback` cancels before operational changes; source/traffic stay unchanged |
+| STOP_SOURCE / SYNC / START_TARGET | Automatic rollback is refused; reconcile changes and follow the verified source recovery/return procedure |
+| COMMIT / completed | Verify the source and perform an explicit reverse switchover plus the separate traffic/data procedure |
 
-**RTO:** depends on the application's per-component start times, typically 5–60 min. **RPO: 0** for state, but underlying data RPO depends on your replication tooling (which is out of scope for AppControl).
+**RTO/RPO:** measure from the incident through accepted client traffic and recovered data. The phase count or completion record does not establish a production RTO/RPO; application-data loss depends on the actual backup/replication procedure and its measured recovery point.
 
 ---
 
@@ -464,7 +455,9 @@ Practicing recovery is the only way to verify your RTO/RPO claims. Run this dril
 - [ ] **§4 — HA gateway failover.** Kill one of two gateways; measure agent reconnect time.
 - [ ] **§7 — Mass disconnection.** Block egress from a subnet for 10 min; verify agents recover from offline buffer.
 - [ ] **§8 — Full switchover.** Run a `FULL` switchover on a non-prod app; measure RTO end-to-end.
-- [ ] **§8 — Switchover rollback.** Cancel at phase 3; verify PRD components return to `RUNNING`.
+- [ ] **§8 — Cancellation before changes.** Cancel in PREPARE and VALIDATE; verify the same UUID has terminal cancellation evidence, source/route remain unchanged and advancing is refused.
+- [ ] **§8 — Return after changes.** Verify automatic rollback is refused after STOP_SOURCE; rehearse the explicit source recovery, reverse switchover and traffic procedure.
+- [ ] **§1 — Backend interruption.** Stop the backend during an isolated recovery exercise; reconcile the external job and recorded operation before any retry. Do not expect automatic task resume.
 - [ ] **§2 — Backend + DB recovery.** Restore a backup into a staging cluster; verify row counts, FK integrity, and agent reconnection.
 - [ ] **§6 — PITR drill.** Restore PostgreSQL to T-1h on a sandbox; run the validation queries.
 - [ ] **Document RTO/RPO achieved.** Compare to last quarter; investigate regressions.

@@ -91,13 +91,23 @@ Each application picks its autonomy level (observation → diagnostics → opera
 
 <div class="grid cards" markdown>
 
--   :material-rocket-launch:{ .lg .middle } **Get started in 5 minutes**
+-   :material-download:{ .lg .middle } **Choose an installation**
 
     ---
 
-    Three deployment paths: standalone (no Docker), Docker Compose, or local dev with hot-reload.
+    Compare standalone, native Windows/PostgreSQL, Compose, Kubernetes and
+    OpenShift before downloading anything.
 
-    [:octicons-arrow-right-24: Quickstart](QUICKSTART.md)
+    [:octicons-arrow-right-24: Installation chooser](DEPLOYMENT.md)
+
+-   :material-rocket-launch:{ .lg .middle } **Evaluate in 5 minutes**
+
+    ---
+
+    Install the standalone SQLite package on Windows without Docker or a
+    separate database.
+
+    [:octicons-arrow-right-24: Evaluation quickstart](QUICKSTART.md)
 
 -   :material-book-open-variant:{ .lg .middle } **Use the product**
 
@@ -107,13 +117,14 @@ Each application picks its autonomy level (observation → diagnostics → opera
 
     [:octicons-arrow-right-24: User Guide](USER_GUIDE.md)
 
--   :material-server-network:{ .lg .middle } **Deploy to production**
+-   :material-microsoft-windows:{ .lg .middle } **Production on Windows Server**
 
     ---
 
-    Helm, OpenShift, Azure gateway, Windows agents, air-gapped installs.
+    Install PostgreSQL and AppControl as native Windows services, or connect
+    AppControl to an existing PostgreSQL instance.
 
-    [:octicons-arrow-right-24: Production deployment](PRODUCTION_DEPLOYMENT.md)
+    [:octicons-arrow-right-24: Windows production guide](WINDOWS_PRODUCTION.md)
 
 -   :material-shield-lock:{ .lg .middle } **Understand the architecture**
 

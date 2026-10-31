@@ -1,427 +1,138 @@
-# Windows & Linux Standalone Deployment Guide
+# Windows Server: standalone evaluation
 
-## Quick Start (Recommended)
+This is the recommended way to evaluate AppControl on an internal Windows
+Server. It installs the web interface, backend, gateway and agent without
+Docker and without a separate database server. Data is stored in an embedded
+SQLite database.
 
-The unified `appcontrol.ps1` script handles everything: install, start, stop, upgrade, and site management. Works on Windows (PowerShell 5.1+) and Linux/macOS (PowerShell Core `pwsh`).
+!!! info "When to use this mode"
 
-```powershell
-mkdir AppControl
-cd AppControl
-Invoke-WebRequest -Uri "https://github.com/xcomponent/appcontrol-release/releases/latest/download/appcontrol.ps1" -OutFile appcontrol.ps1
-.\appcontrol.ps1 install       # Download binaries + frontend
-.\appcontrol.ps1 start         # Start backend
-.\appcontrol.ps1 add-site Prod # Create site + gateway + agent
-.\appcontrol.ps1 status        # Check everything is running
-```
+    Use it for a customer evaluation, a proof of concept, a demo, or a small
+    single-server installation. For a durable shared production service, use
+    [Docker Compose on Linux](COMPOSE.md)
+    or [OpenShift](OPENSHIFT.md) with PostgreSQL.
 
-See the [full command reference](#standalone-commands) below.
+## What you need
 
----
+- Windows Server 2019 or later, x64
+- Windows PowerShell 5.1 or later
+- an account allowed to download release assets from GitHub
+- administrator rights only if you enable startup at boot or open firewall
+  ports
 
-## Production Deployment (Windows Services)
+Docker, Rust, Node.js and PostgreSQL are **not** required.
 
-For production Windows Server deployments, run AppControl components
-as native Windows services.
+## Install in a few minutes
 
-## Architecture
-
-```
-  Windows Server (backend + DB)         Windows Servers (agents)
-  +---------------------------------+    +-------------------------+
-  | PostgreSQL 16 (Windows/Docker)  |    | AppControlAgent service |
-  | AppControlBackend service      |    |   -> gateway:4443 (mTLS)|
-  | AppControlBackend service      |    +-------------------------+
-  |   -> :3000 (API)               |    +-------------------------+
-  | AppControlGateway service      |    | AppControlAgent service |
-  |   -> :4443 (WSS)               |    |   -> gateway:4443 (mTLS)|
-  +---------------------------------+    +-------------------------+
-```
-
-All three components (backend, gateway, agent) are single `.exe` files with
-built-in Windows service support. No external service wrappers needed.
-
----
-
-## 1. Prerequisites
-
-| Requirement | Notes |
-|-------------|-------|
-| Windows Server 2019+ or Windows 10/11 | Any 64-bit edition |
-| PostgreSQL 16 | [EDB installer](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) or Docker |
-| Administrator access | Required for service installation |
-
----
-
-## 2. Download binaries
+Open PowerShell in the directory where AppControl should keep its data:
 
 ```powershell
-# Create directories
-New-Item -ItemType Directory -Force -Path "$env:ProgramFiles\AppControl"
-New-Item -ItemType Directory -Force -Path "$env:ProgramData\AppControl\config"
+New-Item -ItemType Directory -Force C:\AppControl | Out-Null
+Set-Location C:\AppControl
 
-# Download from GitHub release
-$version = "latest"
-foreach ($bin in @("appcontrol-backend", "appcontrol-gateway", "appcontrol-agent", "appctl")) {
-    gh release download $version --repo xcomponent/appcontrol-release `
-        --pattern "${bin}-windows-amd64.exe" `
-        --dir "$env:ProgramFiles\AppControl"
-    Rename-Item "$env:ProgramFiles\AppControl\${bin}-windows-amd64.exe" "${bin}.exe" -Force
-}
+Invoke-WebRequest `
+  -Uri "https://github.com/xcomponent/appcontrol-release/releases/latest/download/appcontrol.ps1" `
+  -OutFile appcontrol.ps1
 
-# Add to system PATH
-[Environment]::SetEnvironmentVariable(
-    "PATH",
-    "$env:PATH;$env:ProgramFiles\AppControl",
-    "Machine"
-)
+.\appcontrol.ps1 install -Email "admin@my-company.example" -Password "replace-this-password"
+.\appcontrol.ps1 start
+.\appcontrol.ps1 add-site "Evaluation"
 ```
 
----
+Open [http://localhost:3000](http://localhost:3000), then sign in with the
+email and password passed to `install`.
 
-## 3. Database setup
-
-### Option A: PostgreSQL on Windows
+From another workstation, use `http://SERVER_NAME:3000` and open the port once
+in Windows Firewall:
 
 ```powershell
-# After installing PostgreSQL via EDB installer:
-& "C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "CREATE DATABASE appcontrol;"
-& "C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "CREATE USER appcontrol WITH PASSWORD 'your_secure_password';"
-& "C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE appcontrol TO appcontrol;"
+New-NetFirewallRule -DisplayName "AppControl Web" `
+  -Direction Inbound -Protocol TCP -LocalPort 3000 -Action Allow
 ```
 
-### Option B: PostgreSQL in Docker
+The gateway listens on port `4443` by default. Open that port only when agents
+on other servers must connect to this gateway:
 
 ```powershell
-docker run -d --name postgres `
-    -e POSTGRES_DB=appcontrol `
-    -e POSTGRES_USER=appcontrol `
-    -e POSTGRES_PASSWORD=your_secure_password `
-    -p 5432:5432 `
-    postgres:16
+New-NetFirewallRule -DisplayName "AppControl Gateway" `
+  -Direction Inbound -Protocol TCP -LocalPort 4443 -Action Allow
 ```
 
----
+## Start automatically after reboot
 
-## 4. Configure and install the backend
-
-The backend reads all configuration from **environment variables**. Set them
-as system-level variables so the Windows service can access them:
+Run PowerShell as Administrator:
 
 ```powershell
-# Required
-[Environment]::SetEnvironmentVariable("DATABASE_URL", "postgres://appcontrol:your_secure_password@localhost:5432/appcontrol", "Machine")
-[Environment]::SetEnvironmentVariable("JWT_SECRET", "$(New-Guid)-$(New-Guid)", "Machine")
-
-# Optional
-[Environment]::SetEnvironmentVariable("PORT", "3000", "Machine")
-[Environment]::SetEnvironmentVariable("LOG_FORMAT", "json", "Machine")
-[Environment]::SetEnvironmentVariable("CORS_ORIGINS", "http://localhost:8080", "Machine")
+Set-Location C:\AppControl
+.\appcontrol.ps1 enable-autostart
 ```
 
-Install and start the service:
+This creates a Windows scheduled task running under `SYSTEM`. To remove it:
 
 ```powershell
-# Install (run as Administrator)
-appcontrol-backend.exe service install
-
-# Start
-sc.exe start AppControlBackend
-
-# Verify
-sc.exe query AppControlBackend
-curl http://localhost:3000/healthz
+.\appcontrol.ps1 disable-autostart
 ```
 
----
+## Daily operations
 
-## 5. Configure and install the gateway
+| Action | Command |
+|---|---|
+| Check all processes | `.\appcontrol.ps1 status` |
+| Start | `.\appcontrol.ps1 start` |
+| Stop | `.\appcontrol.ps1 stop` |
+| Read recent logs | `.\appcontrol.ps1 logs` |
+| Add a site | `.\appcontrol.ps1 add-site "Site name" [gateway-port]` |
+| Upgrade | `.\appcontrol.ps1 upgrade` |
 
-Create the gateway configuration:
+An upgrade replaces only binaries and the web interface. The database,
+configuration and site definitions are preserved.
+
+User, team, site, hosting, map and catalog commands are documented once in the
+[PowerShell command reference](POWERSHELL_COMMANDS.md).
+
+## Backup and uninstall
+
+Stop AppControl before copying its data:
 
 ```powershell
-@"
-gateway:
-  id: "gateway-01"
-  zone: "default"
-  listen_addr: "0.0.0.0"
-  listen_port: 4443
-
-backend:
-  url: "ws://localhost:3000/ws/gateway"
-  reconnect_interval_secs: 5
-
-# TLS configuration (after PKI init and enrollment)
-# Use forward slashes - they work on Windows and avoid YAML escape issues
-# tls:
-#   enabled: true
-#   cert_file: "C:/ProgramData/AppControl/config/tls/gateway.crt"
-#   key_file: "C:/ProgramData/AppControl/config/tls/gateway.key"
-#   ca_file: "C:/ProgramData/AppControl/config/tls/ca.crt"
-"@ | Out-File -Encoding UTF8 "$env:ProgramData\AppControl\config\gateway.yaml"
+.\appcontrol.ps1 stop
+Copy-Item C:\AppControl\data C:\Backup\AppControl\data -Recurse -Force
+Copy-Item C:\AppControl\config C:\Backup\AppControl\config -Recurse -Force
 ```
 
-Install and start:
+To uninstall, stop AppControl, disable automatic startup, then archive or
+remove `C:\AppControl`. No system-wide database or container runtime remains.
+
+## Directory layout
+
+```text
+C:\AppControl\
+  appcontrol.ps1
+  bin\          downloaded executables
+  config\       configuration and sites (preserved by upgrade)
+  data\         SQLite database and agent state (preserved by upgrade)
+  frontend\     web interface
+  logs\         component logs
+```
+
+## Security boundary
+
+The quick install serves HTTP directly. It is suitable on a protected internal
+network for evaluation. Do not expose port 3000 to the Internet. For a
+production deployment, put it behind the company HTTPS reverse proxy, change
+the initial password, restrict firewall access, and follow the
+[hardening checklist](HARDENING.md).
+
+## Troubleshooting
 
 ```powershell
-appcontrol-gateway.exe service install --config "$env:ProgramData\AppControl\config\gateway.yaml"
-sc.exe start AppControlGateway
-
-# Verify
-curl http://localhost:4443/health
+.\appcontrol.ps1 status
+.\appcontrol.ps1 logs
+Get-Content .\logs\backend.err.log -Tail 100
 ```
 
----
-
-## 6. Initialize PKI and enroll agents
-
-### 6.1 Initialize PKI (once)
+If PowerShell blocks the script for the current process:
 
 ```powershell
-appctl.exe pki init --org-name "My Company"
+Set-ExecutionPolicy -Scope Process Bypass
 ```
-
-### 6.2 Create enrollment tokens
-
-```powershell
-# For agents
-appctl.exe pki create-token --name "windows-servers" --max-uses 50 --scope agent
-
-# For the gateway (if using mTLS)
-appctl.exe pki create-token --name "gateway" --max-uses 1 --scope gateway
-```
-
-### 6.3 Enroll agents
-
-On each Windows server where you want to deploy an agent:
-
-```powershell
-# Enroll (run as Administrator)
-appcontrol-agent.exe --enroll https://gateway-host:4443 --token ac_enroll_...
-
-# Install as service
-appcontrol-agent.exe service install --config "$env:ProgramData\AppControl\config\agent.yaml"
-
-# Start
-sc.exe start AppControlAgent
-```
-
----
-
-## 7. Service management cheat sheet
-
-| Action | Backend | Gateway | Agent |
-|--------|---------|---------|-------|
-| Install | `appcontrol-backend.exe service install` | `appcontrol-gateway.exe service install -c ...` | `appcontrol-agent.exe service install -c ...` |
-| Start | `sc start AppControlBackend` | `sc start AppControlGateway` | `sc start AppControlAgent` |
-| Stop | `sc stop AppControlBackend` | `sc stop AppControlGateway` | `sc stop AppControlAgent` |
-| Status | `sc query AppControlBackend` | `sc query AppControlGateway` | `sc query AppControlAgent` |
-| Uninstall | `appcontrol-backend.exe service uninstall` | `appcontrol-gateway.exe service uninstall` | `appcontrol-agent.exe service uninstall` |
-| Restart | `Restart-Service AppControlBackend` | `Restart-Service AppControlGateway` | `Restart-Service AppControlAgent` |
-
-All services are set to **AutoStart** by default (they start on boot).
-
----
-
-## 8. Firewall rules
-
-```powershell
-# Backend API (internal, or expose to UI clients)
-New-NetFirewallRule -DisplayName "AppControl Backend" -Direction Inbound -LocalPort 3000 -Protocol TCP -Action Allow
-
-# Gateway (agents connect here)
-New-NetFirewallRule -DisplayName "AppControl Gateway" -Direction Inbound -LocalPort 4443 -Protocol TCP -Action Allow
-```
-
----
-
-## 9. Logs and monitoring
-
-### Event Viewer
-
-All services log to the Windows Application event log:
-
-```powershell
-# View recent backend logs
-Get-WinEvent -FilterHashtable @{LogName='Application'; ProviderName='AppControlBackend'} -MaxEvents 50
-
-# View agent logs
-Get-WinEvent -FilterHashtable @{LogName='Application'; ProviderName='AppControlAgent'} -MaxEvents 50
-```
-
-### Prometheus metrics
-
-The backend exposes metrics at `http://localhost:3000/metrics` (Prometheus format).
-
-### Health checks
-
-```powershell
-# Backend
-curl http://localhost:3000/healthz
-
-# Gateway
-curl http://localhost:4443/health
-```
-
----
-
-## 10. Important: Windows path handling
-
-### YAML paths
-
-In YAML configuration files, **always use forward slashes** (`/`) instead of
-backslashes (`\`). Backslashes are escape characters in YAML:
-
-```yaml
-# WRONG - \t is interpreted as tab, \a as bell character
-cert_file: "C:\ProgramData\AppControl\tls\agent.crt"
-
-# CORRECT - forward slashes work on Windows
-cert_file: "C:/ProgramData/AppControl/tls/agent.crt"
-```
-
-### Absolute vs relative paths
-
-Windows services start with `C:\Windows\System32` as the working directory,
-not the directory containing the executable. **Always use absolute paths** in
-configuration files:
-
-```yaml
-# WRONG - relative path won't work when running as a service
-cert_file: "./tls/agent.crt"
-
-# CORRECT - absolute path works regardless of working directory
-cert_file: "C:/ProgramData/AppControl/config/tls/agent.crt"
-```
-
-The enrollment command (`--enroll`) automatically generates absolute paths
-since v1.2.10.
-
-### Self-signed certificates
-
-If the gateway uses a self-signed certificate (common in dev/test), add
-`tls_insecure: true` under the `gateway` section (not `tls`):
-
-```yaml
-gateway:
-  url: "wss://gateway:4443/ws"
-  tls_insecure: true   # Accept self-signed gateway certificate
-```
-
----
-
-## 11. Troubleshooting
-
-### Service won't start
-
-```powershell
-# Check service status
-sc.exe query AppControlBackend
-sc.exe query AppControlGateway
-
-# Check event log for errors
-Get-WinEvent -FilterHashtable @{LogName='System'; Level=2} -MaxEvents 20
-
-# Run in foreground to see errors directly
-appcontrol-backend.exe
-appcontrol-gateway.exe --config "$env:ProgramData\AppControl\config\gateway.yaml"
-appcontrol-agent.exe --config "$env:ProgramData\AppControl\config\agent.yaml"
-```
-
-### Database connection fails
-
-```powershell
-# Verify PostgreSQL is running
-sc.exe query postgresql-x64-16
-
-# Test connection
-& "C:\Program Files\PostgreSQL\16\bin\psql.exe" -U appcontrol -d appcontrol -c "SELECT 1;"
-
-# Check DATABASE_URL is set as system variable
-[Environment]::GetEnvironmentVariable("DATABASE_URL", "Machine")
-```
-
-### Agent can't reach gateway
-
-```powershell
-# Test connectivity
-Test-NetConnection -ComputerName gateway-host -Port 4443
-
-# Check Windows Firewall
-Get-NetFirewallRule | Where-Object { $_.LocalPort -eq 4443 }
-```
-
----
-
-## 12. Directory structure (Windows)
-
-```
-C:\Program Files\AppControl\
-    appcontrol-backend.exe
-    appcontrol-gateway.exe
-    appcontrol-agent.exe
-    appctl.exe
-
-C:\ProgramData\AppControl\
-    config\
-        gateway.yaml
-        agent.yaml          (auto-generated by enrollment)
-        tls\
-            agent.crt
-            agent.key
-            gateway.crt
-            gateway.key
-            ca.crt
-    buffer-<agent-id>\      (offline buffer, sled DB)
-```
-
----
-
-## Standalone Commands
-
-The unified `appcontrol.ps1` script (for dev/demo use with SQLite):
-
-| Command | Description |
-|---------|-------------|
-| `.\appcontrol.ps1 install` | Download binaries and create directory structure |
-| `.\appcontrol.ps1 start` | Start backend + all configured gateways + agents |
-| `.\appcontrol.ps1 stop` | Stop all processes |
-| `.\appcontrol.ps1 status` | Show status of all components with PIDs |
-| `.\appcontrol.ps1 add-site <name> [port]` | Add a site (default gateway port: 4443) |
-| `.\appcontrol.ps1 upgrade` | Stop, update binaries+frontend, restart (preserves data + config) |
-| `.\appcontrol.ps1 logs [file]` | Show last 50 lines of log (default: backend) |
-
-### Standalone directory layout
-
-```
-AppControl/
-  appcontrol.ps1          # Unified script
-  start.bat               # Windows shortcut (calls appcontrol.ps1 start)
-  bin/                    # Binaries (overwritten by upgrade)
-    appcontrol-backend-sqlite.exe
-    appcontrol-gateway.exe
-    appcontrol-agent.exe
-  data/                   # NEVER touched by upgrade
-    appcontrol.db          # SQLite database
-    pids.json              # Running process IDs
-  config/                 # NEVER touched by upgrade
-    settings.json          # JWT secret, admin credentials
-    sites.json             # Configured sites
-  logs/                   # Log files
-    backend.log
-    gateway-Production.log
-    agent-Production.log
-  frontend/               # Web UI (overwritten by upgrade)
-```
-
-### Upgrade workflow
-
-```powershell
-.\appcontrol.ps1 upgrade
-```
-
-1. Stops all processes (agents, gateways, backend)
-2. Downloads latest binaries (overwrites `bin/`)
-3. Downloads latest frontend (overwrites `frontend/`)
-4. Restarts everything
-
-Your database and configuration are preserved. SQL migrations run automatically on backend start.

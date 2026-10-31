@@ -8,7 +8,7 @@ set -e
 
 RESOURCE_GROUP="RG-APPCONTROL-CONTAINERS"
 LOCATION="francecentral"
-IMAGE="ghcr.io/xcomponent/appcontrol-release-azure-gateway:latest"
+IMAGE="ghcr.io/xcomponent/appcontrol-azure-gateway:latest"
 SUBNET_ID="/subscriptions/06f79b51-9743-40e3-a2a7-65815c0583f8/resourceGroups/RG-APPCONTROL-CONTAINERS/providers/Microsoft.Network/virtualNetworks/APPCONTROL-CONTAINERS-VNET/subnets/APPCONTROL-CONTAINERS-SUBNET"
 BACKEND_LOCAL_PORT=443
 CLOUDFLARED_PID_FILE="/tmp/cloudflared-gateway.pid"

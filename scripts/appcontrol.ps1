@@ -10,7 +10,8 @@ param(
     [string]$Arg2,
     [string]$Email = "admin@localhost",
     [string]$Password = "admin",
-    [string]$BackendPort = "3000"
+    [string]$BackendPort = "3000",
+    [string]$ReleasesBase = "https://github.com/xcomponent/appcontrol-release/releases/latest/download"
 )
 
 $ErrorActionPreference = "Stop"
@@ -30,6 +31,7 @@ if ($script:IsWin) { $script:PlatformSuffix = "windows-amd64" }
 
 # --- Directories ---
 $script:ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$script:ScriptPath = $MyInvocation.MyCommand.Definition
 $script:BinDir = Join-Path $script:ScriptDir "bin"
 $script:DataDir = Join-Path $script:ScriptDir "data"
 $script:ConfigDir = Join-Path $script:ScriptDir "config"
@@ -40,7 +42,7 @@ $script:SettingsFile = Join-Path $script:ConfigDir "settings.json"
 $script:SitesFile = Join-Path $script:ConfigDir "sites.json"
 $script:PidsFile = Join-Path $script:DataDir "pids.json"
 
-$script:ReleasesBase = "https://github.com/xcomponent/appcontrol-release/releases/latest/download"
+$script:ReleasesBase = $ReleasesBase.TrimEnd("/")
 
 # ---------------------------------------------------------------------------
 # Utility functions
@@ -50,6 +52,24 @@ function Write-Info { param([string]$Msg) Write-Host ("[INFO] " + $Msg) -Foregro
 function Write-Ok   { param([string]$Msg) Write-Host ("[OK]   " + $Msg) -ForegroundColor Green }
 function Write-Warn { param([string]$Msg) Write-Host ("[WARN] " + $Msg) -ForegroundColor Yellow }
 function Write-Err  { param([string]$Msg) Write-Host ("[ERR]  " + $Msg) -ForegroundColor Red }
+
+function Start-AppControlProcess {
+    param(
+        [string]$FilePath,
+        [object[]]$ArgumentList,
+        [string]$StandardOutput,
+        [string]$StandardError
+    )
+    $startParams = @{
+        FilePath = $FilePath
+        PassThru = $true
+        RedirectStandardOutput = $StandardOutput
+        RedirectStandardError = $StandardError
+    }
+    if ($ArgumentList) { $startParams.ArgumentList = $ArgumentList }
+    if ($script:IsWin) { $startParams.WindowStyle = "Hidden" }
+    return Start-Process @startParams
+}
 
 function Ensure-Dir {
     param([string]$Path)
@@ -311,8 +331,8 @@ function Do-Start {
     # Start backend
     $backendLog = Join-Path $script:LogDir "backend.log"
     $backendErr = Join-Path $script:LogDir "backend.err.log"
-    $backendProc = Start-Process -FilePath $backendBin -PassThru -WindowStyle Hidden `
-        -RedirectStandardOutput $backendLog -RedirectStandardError $backendErr
+    $backendProc = Start-AppControlProcess -FilePath $backendBin `
+        -StandardOutput $backendLog -StandardError $backendErr
     Write-Info ("Backend started with PID " + $backendProc.Id)
 
     # Poll health
@@ -367,10 +387,22 @@ function Do-Start {
             # a token, so this is safe for local setups.
             $env:GATEWAY_ENROLLMENT_TOKEN = ""
 
+            $gwTlsDir = Join-Path $script:DataDir ("gateway-" + $siteName + "-tls")
+            if (Test-Path (Join-Path $gwTlsDir "gateway.crt")) {
+                $env:TLS_ENABLED = "true"
+                $env:TLS_CERT_FILE = Join-Path $gwTlsDir "gateway.crt"
+                $env:TLS_KEY_FILE = Join-Path $gwTlsDir "gateway.key"
+                $env:TLS_CA_FILE = Join-Path $gwTlsDir "ca.crt"
+            } else {
+                foreach ($setting in @("TLS_ENABLED", "TLS_CERT_FILE", "TLS_KEY_FILE", "TLS_CA_FILE")) {
+                    Remove-Item ("Env:" + $setting) -ErrorAction SilentlyContinue
+                }
+            }
+            $env:GATEWAY_ENROLLMENT_TOKEN = $site.gw_enroll_token
             $gwLog = Join-Path $script:LogDir ("gateway-" + $siteName + ".log")
             $gwErr = Join-Path $script:LogDir ("gateway-" + $siteName + ".err.log")
-            $gwProc = Start-Process -FilePath $gwBin -PassThru -WindowStyle Hidden `
-                -RedirectStandardOutput $gwLog -RedirectStandardError $gwErr
+            $gwProc = Start-AppControlProcess -FilePath $gwBin `
+                -StandardOutput $gwLog -StandardError $gwErr
             $pids.gateways[$siteName] = $gwProc.Id
             Write-Info ("Gateway '" + $siteName + "' started with PID " + $gwProc.Id + " on port " + $gwPort)
 
@@ -393,16 +425,16 @@ function Do-Start {
             if (Test-Path $agConfigFile) {
                 # Enrolled agent -- use its config file
                 $agArgList = @("--config", "`"$agConfigFile`"")
-                $agProc = Start-Process -FilePath $agBin -ArgumentList $agArgList -PassThru -WindowStyle Hidden `
-                    -RedirectStandardOutput $agLog -RedirectStandardError $agErr
+                $agProc = Start-AppControlProcess -FilePath $agBin -ArgumentList $agArgList `
+                    -StandardOutput $agLog -StandardError $agErr
             } else {
                 # Fallback: no enrollment yet -- connect directly
                 Write-Warn ("Agent for '" + $siteName + "' not enrolled. Run add-site again to enroll.")
                 $env:GATEWAY_URL = "wss://localhost:" + $gwPort
                 Ensure-Dir $agDataDir
                 $env:DATA_DIR = $agDataDir
-                $agProc = Start-Process -FilePath $agBin -PassThru -WindowStyle Hidden `
-                    -RedirectStandardOutput $agLog -RedirectStandardError $agErr
+                $agProc = Start-AppControlProcess -FilePath $agBin `
+                    -StandardOutput $agLog -StandardError $agErr
             }
             $pids.agents[$siteName] = $agProc.Id
             Write-Info ("Agent '" + $siteName + "' started with PID " + $agProc.Id)
@@ -510,6 +542,42 @@ function Do-StopFallback {
                 Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
             }
         }
+    }
+}
+
+# ---------------------------------------------------------------------------
+# WINDOWS AUTO-START
+# ---------------------------------------------------------------------------
+function Do-EnableAutostart {
+    if (-not $script:IsWin) {
+        Write-Err "enable-autostart is available on Windows only."
+        return
+    }
+
+    $taskName = "AppControl Standalone"
+    $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
+    $arguments = '-NoProfile -ExecutionPolicy Bypass -File "' + $script:ScriptPath + '" start'
+    $action = New-ScheduledTaskAction -Execute $powershell -Argument $arguments
+    $trigger = New-ScheduledTaskTrigger -AtStartup
+    $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1)
+
+    Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger `
+        -Settings $settings -User "SYSTEM" -RunLevel Highest -Force | Out-Null
+    Write-Ok "Automatic startup enabled (Windows scheduled task: AppControl Standalone)"
+}
+
+function Do-DisableAutostart {
+    if (-not $script:IsWin) {
+        Write-Err "disable-autostart is available on Windows only."
+        return
+    }
+
+    $taskName = "AppControl Standalone"
+    if (Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue) {
+        Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+        Write-Ok "Automatic startup disabled"
+    } else {
+        Write-Warn "Automatic startup was not configured"
     }
 }
 
@@ -666,13 +734,13 @@ function Do-AddSite {
     Write-Info "Checking PKI..."
     $caResult = $null
     try {
-        $caResult = Invoke-Api -Method "GET" -Uri ($baseUrl + "/enrollment/pki/ca") -Token $token
+        $caResult = Invoke-Api -Method "GET" -Uri ($baseUrl + "/pki/ca") -Token $token
     } catch {}
     if (-not $caResult -or -not $caResult.ca_cert_pem) {
         Write-Info "Initializing PKI (Certificate Authority)..."
         $pkiBody = @{ org_name = "AppControl"; validity_days = 3650 }
         try {
-            Invoke-Api -Method "POST" -Uri ($baseUrl + "/enrollment/pki/init") -Body $pkiBody -Token $token | Out-Null
+            Invoke-Api -Method "POST" -Uri ($baseUrl + "/pki/init") -Body $pkiBody -Token $token | Out-Null
             Write-Ok "PKI initialized"
         } catch {
             Write-Warn "PKI init failed (may already exist) - continuing"
@@ -686,7 +754,6 @@ function Do-AddSite {
     $gwTokenBody = @{
         name       = ("gw-enroll-" + $siteName)
         scope      = "gateway"
-        max_uses   = 10
         valid_hours = 8760
     }
     $gwTokenResult = Invoke-Api -Method "POST" -Uri ($baseUrl + "/enrollment/tokens") -Body $gwTokenBody -Token $token
@@ -759,12 +826,28 @@ function Do-AddSite {
             $env:GATEWAY_NAME = ("gw-" + $siteName)
             $env:GATEWAY_SITE_ID = $siteId
             $env:GATEWAY_ENROLLMENT_TOKEN = $gwEnrollToken
+            $gwTlsDir = Join-Path $script:DataDir ("gateway-" + $siteName + "-tls")
+            Ensure-Dir $gwTlsDir
+            $serverCert = Invoke-Api -Method "POST" -Uri ($baseUrl + "/pki/server-cert") -Token $token -Body @{
+                common_name = "localhost"; san_dns = @("localhost"); san_ips = @("127.0.0.1"); validity_days = 90
+            }
+            if (-not $serverCert.cert_pem -or -not $serverCert.key_pem -or -not $serverCert.ca_pem) {
+                throw "Gateway certificate issuance failed"
+            }
+            [System.IO.File]::WriteAllText((Join-Path $gwTlsDir "gateway.crt"), $serverCert.cert_pem)
+            [System.IO.File]::WriteAllText((Join-Path $gwTlsDir "gateway.key"), $serverCert.key_pem)
+            [System.IO.File]::WriteAllText((Join-Path $gwTlsDir "ca.crt"), $serverCert.ca_pem)
+            $env:TLS_ENABLED = "true"
+            $env:TLS_CERT_FILE = Join-Path $gwTlsDir "gateway.crt"
+            $env:TLS_KEY_FILE = Join-Path $gwTlsDir "gateway.key"
+            $env:TLS_CA_FILE = Join-Path $gwTlsDir "ca.crt"
+            $env:ENROLLMENT_CA_FILE = $env:TLS_CA_FILE
 
             $gwBin = Join-Path $script:BinDir ("appcontrol-gateway" + $script:BinExt)
             $gwLog = Join-Path $script:LogDir ("gateway-" + $siteName + ".log")
             $gwErr = Join-Path $script:LogDir ("gateway-" + $siteName + ".err.log")
-            $gwProc = Start-Process -FilePath $gwBin -PassThru -WindowStyle Hidden `
-                -RedirectStandardOutput $gwLog -RedirectStandardError $gwErr
+            $gwProc = Start-AppControlProcess -FilePath $gwBin `
+                -StandardOutput $gwLog -StandardError $gwErr
             Write-Info ("Gateway started with PID " + $gwProc.Id + " on port " + $gwPort)
 
             # Wait for gateway to be ready
@@ -782,7 +865,7 @@ function Do-AddSite {
             $enrollArgList = @("--enroll", $agEnrollUrl, "--token", $agEnrollToken, "--enroll-dir", "`"$agDataDir`"")
             $agEnrollLog = Join-Path $script:LogDir ("agent-enroll-" + $siteName + ".log")
             $agEnrollErr = Join-Path $script:LogDir ("agent-enroll-" + $siteName + ".err.log")
-            Write-Info ("Enroll command: " + $agBin + " " + ($enrollArgList -join " "))
+            Write-Info ("Enrolling with " + $agBin + " (token omitted from logs)")
             $enrollProc = Start-Process -FilePath $agBin -ArgumentList $enrollArgList -PassThru -NoNewWindow `
                 -RedirectStandardOutput $agEnrollLog -RedirectStandardError $agEnrollErr
             $enrollProc.WaitForExit(30000) | Out-Null
@@ -806,14 +889,14 @@ function Do-AddSite {
                 $env:DATA_DIR = $agDataDir
                 $agLog = Join-Path $script:LogDir ("agent-" + $siteName + ".log")
                 $agErr = Join-Path $script:LogDir ("agent-" + $siteName + ".err.log")
-                $agProc = Start-Process -FilePath $agBin -PassThru -WindowStyle Hidden `
-                    -RedirectStandardOutput $agLog -RedirectStandardError $agErr
+                $agProc = Start-AppControlProcess -FilePath $agBin `
+                    -StandardOutput $agLog -StandardError $agErr
             } else {
                 $agArgList = @("--config", "`"$agConfigFile`"")
                 $agLog = Join-Path $script:LogDir ("agent-" + $siteName + ".log")
                 $agErr = Join-Path $script:LogDir ("agent-" + $siteName + ".err.log")
-                $agProc = Start-Process -FilePath $agBin -ArgumentList $agArgList -PassThru -WindowStyle Hidden `
-                    -RedirectStandardOutput $agLog -RedirectStandardError $agErr
+                $agProc = Start-AppControlProcess -FilePath $agBin -ArgumentList $agArgList `
+                    -StandardOutput $agLog -StandardError $agErr
             }
             Write-Info ("Agent started with PID " + $agProc.Id)
 
@@ -1726,7 +1809,7 @@ function Do-ListTeams {
 }
 
 # ---------------------------------------------------------------------------
-# CATALOG — manage the per-org component catalog (type_key templates for
+# CATALOG - manage the per-org component catalog (type_key templates for
 # check/start/stop commands used when creating components in the UI).
 # Backed by /api/v1/catalog/component-types (see crates/backend/src/api/catalog.rs).
 # Names and semantics mirror `scripts/appcontrol.sh`.
@@ -1830,6 +1913,8 @@ function Do-Help {
     Write-Host "  start                   Start backend, gateways, and agents"
     Write-Host "  stop                    Stop all running processes"
     Write-Host "  status                  Show status of all components"
+    Write-Host "  enable-autostart        Start AppControl automatically at Windows boot"
+    Write-Host "  disable-autostart       Remove automatic startup"
     Write-Host "  add-site <name> [port]  Add a new site (default gateway port: 4443)"
     Write-Host "  add-hosting <name> [desc]  Add a hosting (group of sites)"
     Write-Host "  assign-site-hosting <site> <hosting>  Assign a site to a hosting"
@@ -1861,6 +1946,7 @@ function Do-Help {
     Write-Host "  -Email <email>          Admin email (default: admin@localhost)"
     Write-Host "  -Password <pass>        Admin password (default: admin)"
     Write-Host "  -BackendPort <port>     Backend port (default: 3000)"
+    Write-Host "  -ReleasesBase <url>     Override the release download URL (CI/offline mirror)"
     Write-Host ""
     Write-Host "Examples:" -ForegroundColor Yellow
     Write-Host "  .\appcontrol.ps1 install"
@@ -2180,6 +2266,8 @@ switch ($cmd) {
     "start"    { Do-Start }
     "stop"     { Do-Stop }
     "status"   { Do-Status }
+    "enable-autostart"  { Do-EnableAutostart }
+    "disable-autostart" { Do-DisableAutostart }
     "add-site"       { Do-AddSite }
     "add-hosting"    { Do-AddHosting }
     "assign-site-hosting" { Do-AssignSiteHosting }

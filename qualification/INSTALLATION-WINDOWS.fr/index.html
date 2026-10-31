@@ -868,11 +868,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-lancer-avec-la-connexion-oc-deja-utilisee-au-client" class="md-nav__link">
+  <a href="#5-lancer-et-choisir-le-projet-et-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Lancer avec la connexion oc déjà utilisée au client
+      5. Lancer et choisir le projet et PostgreSQL
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="5. Lancer et choisir le projet et PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choix-1-postgresql-integre" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choix 1 : PostgreSQL intégré
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choix-2-postgresql-externe-fourni-par-la-banque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choix 2 : PostgreSQL externe fourni par la banque
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-fait-le-deploiement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ce que fait le déploiement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2125,11 +2158,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-lancer-avec-la-connexion-oc-deja-utilisee-au-client" class="md-nav__link">
+  <a href="#5-lancer-et-choisir-le-projet-et-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Lancer avec la connexion oc déjà utilisée au client
+      5. Lancer et choisir le projet et PostgreSQL
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="5. Lancer et choisir le projet et PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choix-1-postgresql-integre" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choix 1 : PostgreSQL intégré
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choix-2-postgresql-externe-fourni-par-la-banque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choix 2 : PostgreSQL externe fourni par la banque
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-fait-le-deploiement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ce que fait le déploiement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2190,56 +2256,69 @@ paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.<
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.20.4</strong>. Paquet : <strong>Windows léger 1.20.4-1</strong>.</p>
+<p>Produit : <strong>AppControl 1.20.4</strong>. Paquet : <strong>Windows léger 1.20.4-2</strong>.</p>
 <h2 id="1-ce-qui-sera-deploye">1. Ce qui sera déployé<a class="headerlink" href="#1-ce-qui-sera-deploye" title="Permanent link">&para;</a></h2>
-<p><strong>PostgreSQL est inclus. Aucune base externe ni chaîne de connexion n’est à
-préparer pour cette première évaluation.</strong> Le script génère les identifiants,
-les certificats et la configuration de connexion, puis applique les objets
-OpenShift fournis. PostgreSQL utilise un volume persistant de 2 Gio.</p>
+<p><strong>Le script vous demande quel projet/namespace utiliser, puis quel mode PostgreSQL installer.</strong> Les deux options utilisent les mêmes images AppControl et les mêmes scripts PowerShell.</p>
 <table>
 <thead>
 <tr>
-<th>Dans le projet OpenShift dédié</th>
-<th>Rôle</th>
+<th>Choix au lancement</th>
+<th>PostgreSQL intégré</th>
+<th>PostgreSQL externe</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Interface web — 1 pod</td>
-<td>Le navigateur affiche les applications et les maps.</td>
+<td>Usage</td>
+<td>Essai rapide dans un projet dédié</td>
+<td>Base dédiée fournie et gérée par la banque</td>
 </tr>
 <tr>
-<td>Backend — 1 pod</td>
-<td>Gère les utilisateurs, les droits, les maps et les opérations.</td>
+<td>Base à préparer</td>
+<td>Aucune : identifiants et connexion générés</td>
+<td>Une base AppControl, un compte applicatif et sa chaîne de connexion</td>
 </tr>
 <tr>
-<td>Gateway — 1 pod</td>
-<td>Relie les agents à AppControl et transmet les commandes. Elle est incluse.</td>
+<td>Dans OpenShift</td>
+<td>Un pod PostgreSQL et un volume persistant de 2 Gio</td>
+<td>Aucun pod, Service, volume ni image PostgreSQL déployé par l’installateur</td>
 </tr>
 <tr>
-<td>PostgreSQL — 1 pod + volume de 2 Gio</td>
-<td>Conserve les données AppControl. Accessible uniquement à l’intérieur du cluster.</td>
+<td>Services AppControl</td>
+<td>Interface web, backend, gateway</td>
+<td>Interface web, backend, gateway</td>
 </tr>
 <tr>
-<td>Agent de démonstration — 1 pod</td>
-<td>Exécute les commandes synthétiques de la map de test. Inclus par défaut dans ce parcours.</td>
+<td>Démonstration</td>
+<td>Agent et map synthétique inclus</td>
+<td>Agent et map synthétique inclus</td>
+</tr>
+<tr>
+<td>Nombre de pods AppControl avec démonstration</td>
+<td><strong>5</strong></td>
+<td><strong>4</strong>, la base externe est gérée séparément</td>
+</tr>
+<tr>
+<td>Recette</td>
+<td>Redémarre aussi le PostgreSQL de cette installation</td>
+<td>Ne redémarre jamais la base externe</td>
 </tr>
 </tbody>
 </table>
+<p>L’interface présente les applications et les maps, le backend gère les droits et les opérations, la gateway relie les agents, et l’agent exécute les commandes fictives de la démonstration. PostgreSQL conserve les données AppControl.</p>
 <pre class="mermaid"><code>flowchart LR
-  W["Poste Windows : PowerShell + oc existant"] --&gt;|"appliquer les YAML"| O["API OpenShift"]
-  R["Registre autorisé : Artifactory ou GHCR"] --&gt;|"images téléchargées par les nœuds"| P
-  subgraph P["Projet appcontrol-evaluation"]
+  W["Windows : PowerShell + oc existant"] --&gt;|"appliquer les YAML"| O["API OpenShift — projet choisi"]
+  R["Registre autorisé : Artifactory ou GHCR"] --&gt;|"images tirées par les nœuds"| O
+  subgraph P["Projet AppControl"]
     UI["Interface web"] --&gt; B["Backend"]
-    B --&gt; DB["PostgreSQL + stockage 2 Gio"]
     G["Gateway"] --&gt; B
-    A["Agent de démonstration"] --&gt;|"WSS via la Route gateway"| G
+    A["Agent de démonstration"] --&gt; G
+    PG["PostgreSQL intégré — option 1"]
   end
+  B --&gt;|"option 1 : TLS"| PG
+  B --&gt;|"option 2 : TLS vérifié"| EXT["PostgreSQL dédié de la banque"]
   N["Navigateur"] --&gt;|"HTTPS"| UI</code></pre>
-<p>Cinq pods et cinq conteneurs en régime stable. Aucun Redis, fournisseur IA,
-serveur MCP ou service métier de la banque n’est requis. Une base PostgreSQL
-gérée par la banque est possible avec un autre profil du chart, mais <strong>ce
-parcours léger configure la base incluse</strong>.</p>
+<p>Une seule des deux bases est utilisée. Le script ne bascule pas une installation existante d’un mode à l’autre : une migration des données se prépare séparément. Aucun Redis, fournisseur IA ou serveur MCP n’est requis pour cette installation.</p>
 <h2 id="2-les-prerequis-a-obtenir-une-fois">2. Les prérequis à obtenir une fois<a class="headerlink" href="#2-les-prerequis-a-obtenir-une-fois" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2258,20 +2337,20 @@ parcours léger configure la base incluse</strong>.</p>
 <td>Une connexion <code>oc</code> fonctionnelle au cluster du client, selon sa procédure habituelle.</td>
 </tr>
 <tr>
-<td>Projet</td>
-<td>Un projet dédié existant, par exemple <code>appcontrol-evaluation</code>, avec les droits de déploiement.</td>
+<td>Projet / namespace</td>
+<td>Un projet dédié existant, par exemple <code>appcontrol-evaluation</code>, avec les droits de déploiement. Il sera sélectionné dans le script ou fourni avec <code>-Projet</code> / <code>-Namespace</code>.</td>
 </tr>
 <tr>
 <td>Stockage</td>
-<td>Une StorageClass utilisable, par défaut ou nommée ; volume <code>ReadWriteOnce</code> de 2 Gio.</td>
+<td>Uniquement pour PostgreSQL intégré : StorageClass utilisable et volume <code>ReadWriteOnce</code> de 2 Gio. En mode externe, aucun volume PostgreSQL n’est demandé.</td>
 </tr>
 <tr>
 <td>Quotas</td>
-<td>Nœuds Linux AMD64. Pour les cinq pods : réservations totales de 1,15 vCPU et 992 Mio. Accepter aussi les limites des YAML et une marge pour les redémarrages.</td>
+<td>Nœuds Linux AMD64. Avec la démonstration : 1,15 vCPU et 992 Mio réservés en mode intégré ; 0,90 vCPU et 736 Mio côté AppControl en mode externe, hors base bancaire. Accepter aussi les limites des YAML et une marge pour les redémarrages.</td>
 </tr>
 <tr>
 <td>Registre</td>
-<td>Les cinq images accessibles par les nœuds, via Artifactory ou GHCR ; secret de lecture dans le projet si le registre est privé.</td>
+<td>Images accessibles par les nœuds, via Artifactory ou GHCR ; secret de lecture dans le projet si nécessaire. Cinq images avec PostgreSQL intégré ; quatre avec la base externe et la démonstration.</td>
 </tr>
 <tr>
 <td>Réseau et certificats</td>
@@ -2321,15 +2400,15 @@ Ce n’est pas l’adresse de l’interface web Artifactory.</p>
 </ul>
 <p>Le poste Windows ne télécharge ni ne pousse les images. Il n’a pas besoin d’un
 compte d’import dans Artifactory. Le cache Artifactory se remplit à la demande ;
-il faut donc autoriser son accès amont ou faire précharger les cinq images par
+il faut donc autoriser son accès amont ou faire précharger les images nécessaires par
 la plateforme. Un miroir interne alimenté par l’équipe plateforme convient
 également, à condition de conserver les digests.</p>
 <p>Références : <a href="https://docs.jfrog.com/artifactory/docs/docker-repositories">dépôts Docker JFrog</a>,
 <a href="https://docs.jfrog.com/artifactory/docs/remote-repositories">cache distant JFrog</a>,
 <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry">authentification GHCR</a>.</p>
 <p><strong>À obtenir de la plateforme :</strong> le préfixe Docker de lecture des images, le nom
-éventuel du secret de lecture dans le projet et la confirmation que les cinq
-images sont récupérables avec leurs empreintes. Exemple fictif :
+éventuel du secret de lecture dans le projet et la confirmation que les images
+nécessaires sont récupérables avec leurs empreintes. Exemple fictif :
 <code>registry.banque.example/ghcr/xcomponent</code>. Le script y ajoute
 <code>/appcontrol-backend@sha256:…</code>, et de même pour les quatre autres images.
 Si la plateforme utilise une autre organisation des chemins, préparer un
@@ -2341,12 +2420,12 @@ dans le script, les YAML ni l’historique PowerShell. Aucun mot de passe n’es
 inclus dans le livrable.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-1.zip">Paquet Windows léger — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-1.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-2.zip">Paquet Windows léger — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-2.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.20.4-1.zip&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.20.4-2.zip&#39;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Empreinte incorrecte : ne pas utiliser cette archive.&#39;</span>
@@ -2357,35 +2436,52 @@ Après téléchargement ou transfert approuvé, vérifier l’archive dans Power
 Le dossier <code>manifests</code> contient le YAML OpenShift consultable avant installation.
 Les autres fichiers PowerShell sont les fonctions utilisées par le script ;
 ce ne sont pas des logiciels supplémentaires à installer.</p>
-<h2 id="5-lancer-avec-la-connexion-oc-deja-utilisee-au-client">5. Lancer avec la connexion oc déjà utilisée au client<a class="headerlink" href="#5-lancer-avec-la-connexion-oc-deja-utilisee-au-client" title="Permanent link">&para;</a></h2>
+<h2 id="5-lancer-et-choisir-le-projet-et-postgresql">5. Lancer et choisir le projet et PostgreSQL<a class="headerlink" href="#5-lancer-et-choisir-le-projet-et-postgresql" title="Permanent link">&para;</a></h2>
 <p>Vérifier la connexion habituelle :</p>
 <div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">oc</span> <span class="n">whoami</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">oc</span> <span class="n">project</span> <span class="n">appcontrol-evaluation</span>
 </span></code></pre></div>
-<p>Si le projet n’existe pas encore et que la plateforme autorise sa création,
-le créer d’abord avec <code>oc new-project appcontrol-evaluation</code>.</p>
-<p><strong>Avec Artifactory</strong>, remplacer les deux valeurs d’exemple par celles fournies
-par la plateforme :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+<p>Le projet doit déjà exister. Si sa création vous est autorisée, vous pouvez d’abord utiliser <code>oc new-project appcontrol-evaluation</code> selon la procédure de la plateforme.</p>
+<p><strong>Avec Artifactory</strong>, renseigner seulement l’adresse Docker et le secret de lecture fournis par la plateforme, puis laisser le script guider les choix :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="p">`</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
-<p>Si le registre interne autorise la lecture sans authentification, omettre
-<code>-SecretImages</code>. Avec un accès <strong>direct à GHCR XComponent</strong> :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-ghcr&#39;</span>
+<p>Ces deux valeurs sont des exemples à remplacer. Si le registre interne permet une lecture sans authentification, omettre <code>-SecretImages</code>. Pour un accès direct à GHCR XComponent, omettre <code>-Registre</code> et indiquer le secret GHCR autorisé.</p>
+<p>Le script présente successivement :</p>
+<ol>
+<li>Le <strong>serveur OpenShift</strong> de votre connexion et les projets accessibles. Saisir un numéro ou le nom du projet cible. Si la liste n’est pas autorisée, saisir le nom fourni par la plateforme.</li>
+<li>Le choix <strong>1 — PostgreSQL intégré</strong> ou <strong>2 — PostgreSQL externe</strong>.</li>
+<li>Les informations de la base externe si ce mode est choisi.</li>
+<li>Un récapitulatif du serveur, du contexte, du <strong>projet/namespace cible</strong>, du registre et du mode de base. Taper <strong>OUI</strong> pour autoriser le déploiement dans ce projet.</li>
+</ol>
+<p>Le namespace n’est jamais déduit silencieusement du projet courant. Le script utilise <code>-n</code> pour cibler les objets et une copie privée de la connexion ; il ne change pas le projet par défaut de votre configuration <code>oc</code>. Il ne crée pas implicitement de projet et refuse les conflits avec une installation existante.</p>
+<h3 id="choix-1-postgresql-integre">Choix 1 : PostgreSQL intégré<a class="headerlink" href="#choix-1-postgresql-integre" title="Permanent link">&para;</a></h3>
+<p>Aucune chaîne de connexion à fournir. Le script prépare la base, les identifiants, les certificats et le stockage. Pour prédéfinir ces deux choix :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
-<p>Ajouter <code>-ClasseStockage 'nom-fourni-par-la-plateforme'</code> uniquement si la classe
-par défaut ne convient pas. L’assistant affiche le serveur, le projet et les
-images ciblés avant confirmation. Il utilise une copie privée de la connexion ;
-il ne remplace pas le <code>oc</code> ni les paramètres de connexion habituels du poste.</p>
-<p>Le script effectue dans l’ordre : vérification des droits et des fichiers,
-préparation des secrets et certificats, traitement local du Template YAML avec
-<code>oc process</code>, application avec <code>oc apply</code>, attente des services, enrôlement de
-la gateway, puis création de l’agent et recette de la map de démonstration.
-<strong>Les nœuds OpenShift téléchargent les images.</strong></p>
-<p>La recette redémarre la gateway, le backend et PostgreSQL pour vérifier les
-reconnexions et la conservation des données. <strong>Utiliser un projet d’évaluation
-isolé.</strong> Pour installer uniquement les quatre services, ajouter <code>-SansDemo</code>.</p>
+<p>Ajouter <code>-ClasseStockage 'nom-fourni-par-la-plateforme'</code> uniquement si la classe par défaut ne convient pas. Cette option concerne uniquement la base intégrée.</p>
+<h3 id="choix-2-postgresql-externe-fourni-par-la-banque">Choix 2 : PostgreSQL externe fourni par la banque<a class="headerlink" href="#choix-2-postgresql-externe-fourni-par-la-banque" title="Permanent link">&para;</a></h3>
+<p>Avant le créneau, demander à l’équipe base de données et à la plateforme :</p>
+<ul>
+<li><strong>Une base dédiée à cette évaluation</strong>, préparée à l’avance, et un utilisateur applicatif autorisé à créer et mettre à jour les tables et index AppControl. Le backend applique ses migrations au démarrage ; le script ne crée ni instance ni base sur le serveur bancaire. Ne pas utiliser une base métier existante.</li>
+<li><strong>La chaîne de connexion PostgreSQL au format URI</strong>, par exemple <code>postgresql://utilisateur:mot-de-passe@postgres.banque.example:5432/appcontrol?sslmode=verify-full</code>. Ce n’est pas une chaîne ADO.NET <code>Host=...;Username=...</code>. Les caractères réservés du nom d’utilisateur et du mot de passe doivent être encodés dans l’URI.</li>
+<li><strong>Le certificat public de l’autorité de certification de PostgreSQL, au format PEM</strong>. Le nom DNS de l’URI doit correspondre au certificat du serveur. La connexion exige TLS avec vérification du certificat et du nom (<code>verify-full</code>).</li>
+<li><strong>Les adresses ou plages CIDR approuvées de la base</strong>, par exemple <code>10.20.30.40/32</code>, ainsi que son port. Elles limitent la sortie réseau du backend. Les ouvertures générales <code>0.0.0.0/0</code> et <code>::/0</code> sont refusées. Une règle réseau ou un pare-feu bancaire peut aussi nécessiter une autorisation par la plateforme.</li>
+</ul>
+<p>PostgreSQL 16 est la version de référence de cette livraison. Le compte applicatif n’a pas besoin d’être superutilisateur ; il doit disposer des droits sur sa base dédiée et sur le schéma utilisé par les migrations.</p>
+<p>Lancer le script avec le mode externe ; il demandera les informations manquantes :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+</span></code></pre></div>
+<p>La saisie de la chaîne de connexion est <strong>masquée</strong>. Elle n’apparaît ni dans l’historique PowerShell, ni dans les YAML livrés, ni dans le récapitulatif. Elle est conservée dans le dossier privé de reprise, puis transmise à un Secret OpenShift. Ce dossier contient des secrets lisibles par votre compte Windows et le système : ne pas le partager. Les administrateurs autorisés du cluster peuvent accéder aux Secrets selon les droits de la banque.</p>
+<p>On peut préparer les valeurs non secrètes avec <code>-CertificatPostgreSQL 'C:\Certificats\ca-postgres.pem'</code> et <code>-CidrPostgreSQL @('10.20.30.40/32','10.20.30.41/32')</code>. Pour une automatisation, <code>-ChaineConnexion</code> attend un objet <code>SecureString</code>, obtenu par exemple avec <code>Read-Host -AsSecureString</code> ; ne pas écrire un mot de passe en clair dans la commande. <code>-NonInteractif</code> exige le projet et le mode explicites à la première installation.</p>
+<p>Une fois connecté, AppControl gère son schéma et ses données. <strong>Il ne déploie pas d’image PostgreSQL, ne crée aucun volume de base et ne redémarre pas le serveur externe.</strong> La sauvegarde, l’exploitation et la disponibilité de cette base restent gérées selon la procédure de la banque.</p>
+<h3 id="ce-que-fait-le-deploiement">Ce que fait le déploiement<a class="headerlink" href="#ce-que-fait-le-deploiement" title="Permanent link">&para;</a></h3>
+<p>Le script vérifie les droits et les fichiers, prépare les secrets et les certificats, traite le Template YAML avec <code>oc process</code>, puis applique les objets avec <code>oc apply</code>. Le profil externe retire les objets PostgreSQL et adapte la sortie réseau du backend avant application. Les nœuds OpenShift téléchargent les seules images nécessaires depuis le registre autorisé.</p>
+<p>Le script attend ensuite les services, enregistre la gateway, puis crée l’agent et la map synthétique. La recette redémarre les services AppControl pour vérifier la reconnexion et la conservation des données. PostgreSQL est redémarré uniquement en mode intégré, dans le projet d’évaluation. Ajouter <code>-SansDemo</code> pour installer les services seuls : quatre pods en mode intégré, trois en mode externe.</p>
 <h2 id="6-ouvrir-et-tester-appcontrol">6. Ouvrir et tester AppControl<a class="headerlink" href="#6-ouvrir-et-tester-appcontrol" title="Permanent link">&para;</a></h2>
 <p>Le script affiche l’URL de l’interface et le chemin privé des identifiants
 administrateur. Le dossier d’état se trouve par défaut sous
@@ -2419,7 +2515,7 @@ indiquée par la recette. Elle comporte deux composants synthétiques :</p>
 du pod agent. Le démarrage de <code>api-probe</code> vérifie le marqueur de <code>database-probe</code>.
 <strong>Ce ne sont ni la vraie base PostgreSQL d’AppControl ni des services de la banque.</strong>
 Aucune commande métier n’est exécutée sur le poste Windows.</p>
-<p>Les cinq pods et la map restent disponibles après fermeture de PowerShell.
+<p>Les pods AppControl et la map restent disponibles après fermeture de PowerShell.
 L’agent de qualification est temporaire : son identité est conservée tant que
 son pod existe. Après remplacement de ce pod, relancer la recette crée un
 nouvel agent et une nouvelle map ; utiliser la nouvelle map indiquée. Un agent
@@ -2428,7 +2524,7 @@ durable doit conserver son dossier d’identité sur un stockage persistant.</p>
 <p>Conserver le dossier privé et reprendre avec les mêmes projet, nom et options
 indiqués par le script. Pour reprendre les services en conservant la map et
 l’agent existants, ajouter <code>-SansDemo</code>. Sans cette option, la recette crée une
-nouvelle démonstration. Le script refuse d’écraser une installation Helm ou des
+nouvelle démonstration. Le mode de base, la chaîne de connexion, le certificat et les destinations réseau sont conservés. Changer de base ou de mode exige une procédure de migration ; le script refuse cette bascule implicite. Le script refuse d’écraser une installation Helm ou des
 objets qui ne lui appartiennent pas.</p>
 <table>
 <thead>
@@ -2455,8 +2551,12 @@ objets qui ne lui appartiennent pas.</p>
 <td>Chemin exact de l’image, droits OpenShift → registre, droits Artifactory → GHCR et confiance TLS des nœuds.</td>
 </tr>
 <tr>
-<td>Volume <code>Pending</code></td>
+<td>Volume <code>Pending</code> en mode intégré</td>
 <td>StorageClass, capacité et quota du projet.</td>
+</tr>
+<tr>
+<td>Backend indisponible en mode externe</td>
+<td>URI et droits applicatifs, correspondance DNS/certificat, CA PEM, destinations CIDR et autorisations réseau de la banque. Ne pas désactiver TLS pour contourner une erreur.</td>
 </tr>
 <tr>
 <td>Tunnel d’installation refusé</td>
@@ -2469,6 +2569,7 @@ objets qui ne lui appartiennent pas.</p>
 </tbody>
 </table>
 <h2 id="qualification-et-suite-du-poc">Qualification et suite du POC<a class="headerlink" href="#qualification-et-suite-du-poc" title="Permanent link">&para;</a></h2>
+<p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-WINDOWS-OC-v1.20.4-2.fr.md">rapport des deux profils du paquet 1.20.4-2</a> décrit les tests avec PostgreSQL intégré et avec une base PostgreSQL TLS séparée, ainsi que leurs limites.</p>
 <p>Les preuves de la release précisent le paquet exact exécuté, Windows/PowerShell,
 les références d’images et les contrôles réalisés. Les images de ce parcours ont
 les mêmes digests que celles de la release 1.20.4. Le test du parcours léger doit
@@ -2478,7 +2579,7 @@ récupérées par le cluster et aucun Helm n’est appelé sur le poste client.<
 restent à valider dans son environnement. La préparation de ces accès conditionne
 le délai ; on ne peut pas promettre quelques minutes avant leur validation.</p>
 <p>Ce profil est mono-instance. Le SSO, la PKI bancaire, la sauvegarde/restauration,
-la base externe et la haute disponibilité se cadrent ensuite. Les certificats
+la rotation des accès à la base et la haute disponibilité se cadrent ensuite. Les certificats
 de service générés durent 90 jours et le jeton de gateway 30 jours ; le
 renouvellement reste explicite.</p>
 <p>La gateway incluse permet aussi de raccorder un agent extérieur via sa connexion
@@ -2508,7 +2609,7 @@ option distincte. Ce n’est pas le parcours recommandé ci-dessus.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-31T11:19:36+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-31T11:57:30+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-31</span>
   </span>
 
     

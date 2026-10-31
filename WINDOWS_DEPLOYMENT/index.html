@@ -12,13 +12,13 @@
         <meta name="author" content="AppControl">
       
       
-        <link rel="canonical" href="https://docs.appcontrol.io/WINDOWS_DEPLOYMENT/">
+        <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/WINDOWS_DEPLOYMENT/">
       
       
-        <link rel="prev" href="../OPENSHIFT/">
+        <link rel="prev" href="../POWERSHELL_COMMANDS/">
       
       
-        <link rel="next" href="../HARDENING/">
+        <link rel="next" href="../WINDOWS_PRODUCTION/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Windows deployment - AppControl</title>
+        <title>Windows standalone (SQLite) - AppControl</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#windows-linux-standalone-deployment-guide" class="md-skip">
+        <a href="#windows-server-standalone-evaluation" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Windows deployment
+              Windows standalone (SQLite)
             
           </span>
         </div>
@@ -255,12 +255,34 @@
     
     
       <li class="md-tabs__item">
-        <a href="../QUICKSTART/" class="md-tabs__link">
+        <a href="../DEPLOYMENT/" class="md-tabs__link">
           
   
     
   
-  Getting Started
+  Start
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+    
+  
+  Deploy
 
         </a>
       </li>
@@ -280,49 +302,7 @@
   
     
   
-  User Guide
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../INTEGRATION_COOKBOOK/" class="md-tabs__link">
-          
-  
-    
-  
-  Operations
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-    
-  
-  
-    
-    
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../PRODUCTION_DEPLOYMENT/" class="md-tabs__link">
-          
-  
-    
-  
-  Deployment
+  Use
 
         </a>
       </li>
@@ -342,7 +322,27 @@
   
     
   
-  Configuration
+  Administer
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../SECURITY_ARCHITECTURE/" class="md-tabs__link">
+          
+  
+    
+  
+  Security
 
         </a>
       </li>
@@ -377,52 +377,12 @@
     
     
       <li class="md-tabs__item">
-        <a href="../architecture/" class="md-tabs__link">
+        <a href="../POSITIONING/" class="md-tabs__link">
           
   
     
   
-  Architecture
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../COMPLIANCE_DORA_NIS2/" class="md-tabs__link">
-          
-  
-    
-  
-  Compliance
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../CHANGELOG/" class="md-tabs__link">
-          
-  
-    
-  
-  Release
+  About
 
         </a>
       </li>
@@ -516,8 +476,6 @@
       
         
       
-        
-      
     
     
       
@@ -539,7 +497,7 @@
             
   
   <span class="md-ellipsis">
-    Getting Started
+    Start
   </span>
   
 
@@ -549,9 +507,30 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
-            Getting Started
+            Start
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install — choose a deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -564,7 +543,596 @@
         
   
   <span class="md-ellipsis">
-    Quickstart
+    Evaluation quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../POWERSHELL_COMMANDS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell options and commands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Deploy
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Deploy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Windows standalone (SQLite)
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Windows standalone (SQLite)
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      What you need
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-in-a-few-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install in a few minutes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-automatically-after-reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start automatically after reboot
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daily-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Daily operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-and-uninstall" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup and uninstall
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#directory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Directory layout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security boundary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_PRODUCTION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows production (PostgreSQL)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPOSE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker Compose (Linux)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PRODUCTION_DEPLOYMENT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes / Helm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OPENSHIFT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qualification/INSTALLATION-EVALUATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift evaluation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qualification/AUDIT-BANQUE-2026-10-08.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bank deployment audit (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qualification/OPENSHIFT-RESULTATS-2026-10-08.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift qualification results (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AZURE_GATEWAY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENT_INSTALLATION/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Use
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Use
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../USER_GUIDE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PERMISSIONS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Permissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOGS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component logs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAN_OUT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fan-out clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RUNBOOKS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Runbooks
   </span>
   
 
@@ -602,11 +1170,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../POSITIONING/" class="md-nav__link">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Where it fits (positioning)
+    Troubleshooting
   </span>
   
 
@@ -661,141 +1229,6 @@
       
         
       
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    User Guide
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            User Guide
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../USER_GUIDE/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Overview
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PERMISSIONS/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Permissions
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../RUNBOOKS/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Runbooks
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../TROUBLESHOOTING/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Troubleshooting
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
         
       
         
@@ -822,24 +1255,24 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Operations
+    Administer
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
-            Operations
+            Administer
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -850,53 +1283,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../INTEGRATION_COOKBOOK/" class="md-nav__link">
+      <a href="../CONFIGURATION/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Integration cookbook
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../METRICS/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Check metrics
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MIGRATION_FROM_SCRIPTS/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Migration from scripts
+    Configuration
   </span>
   
 
@@ -969,78 +1360,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-      
-        
-        
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    Deployment
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            Deployment
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -1048,11 +1367,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../PRODUCTION_DEPLOYMENT/" class="md-nav__link">
+      <a href="../INTEGRATION_COOKBOOK/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Production deployment
+    Integration cookbook
   </span>
   
 
@@ -1069,11 +1388,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../HIGH_AVAILABILITY/" class="md-nav__link">
+      <a href="../METRICS/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    High availability
+    Check metrics
   </span>
   
 
@@ -1090,459 +1409,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../AGENT_INSTALLATION/" class="md-nav__link">
+      <a href="../MIGRATION_FROM_SCRIPTS/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Agent installation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../AZURE_GATEWAY/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Azure gateway
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../OPENSHIFT/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    OpenShift
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Windows deployment
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Windows deployment
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Start (Recommended)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-deployment-windows-services" class="md-nav__link">
-    <span class="md-ellipsis">
-      Production Deployment (Windows Services)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      Architecture
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#1-prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Prerequisites
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-download-binaries" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Download binaries
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-database-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Database setup
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Database setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-postgresql-on-windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option A: PostgreSQL on Windows
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-postgresql-in-docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option B: PostgreSQL in Docker
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-configure-and-install-the-backend" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Configure and install the backend
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-configure-and-install-the-gateway" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Configure and install the gateway
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-initialize-pki-and-enroll-agents" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Initialize PKI and enroll agents
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Initialize PKI and enroll agents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#61-initialize-pki-once" class="md-nav__link">
-    <span class="md-ellipsis">
-      6.1 Initialize PKI (once)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#62-create-enrollment-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      6.2 Create enrollment tokens
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#63-enroll-agents" class="md-nav__link">
-    <span class="md-ellipsis">
-      6.3 Enroll agents
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-service-management-cheat-sheet" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Service management cheat sheet
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-firewall-rules" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Firewall rules
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-logs-and-monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Logs and monitoring
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Logs and monitoring">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#event-viewer" class="md-nav__link">
-    <span class="md-ellipsis">
-      Event Viewer
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prometheus-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prometheus metrics
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#health-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Health checks
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-important-windows-path-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Important: Windows path handling
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Important: Windows path handling">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#yaml-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      YAML paths
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#absolute-vs-relative-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      Absolute vs relative paths
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#self-signed-certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      Self-signed certificates
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11-troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      11. Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11. Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#service-wont-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      Service won't start
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#database-connection-fails" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database connection fails
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#agent-cant-reach-gateway" class="md-nav__link">
-    <span class="md-ellipsis">
-      Agent can't reach gateway
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-directory-structure-windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      12. Directory structure (Windows)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#standalone-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone Commands
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Standalone Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standalone-directory-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone directory layout
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upgrade-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrade workflow
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HARDENING/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Hardening checklist
+    Migration from scripts
   </span>
   
 
@@ -1564,6 +1435,27 @@
   
   <span class="md-ellipsis">
     Capacity planning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HIGH_AVAILABILITY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High availability
   </span>
   
 
@@ -1614,6 +1506,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1635,7 +1531,7 @@
             
   
   <span class="md-ellipsis">
-    Configuration
+    Security
   </span>
   
 
@@ -1645,7 +1541,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
-            Configuration
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -1656,11 +1552,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../CONFIGURATION/" class="md-nav__link">
+      <a href="../SECURITY_ARCHITECTURE/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Configuration overview
+    Security architecture
   </span>
   
 
@@ -1677,11 +1573,53 @@
   
   
     <li class="md-nav__item">
-      <a href="../SQLITE_IMPLEMENTATION/" class="md-nav__link">
+      <a href="../HARDENING/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    SQLite implementation
+    Hardening checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMPLIANCE_DORA_NIS2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DORA & NIS2 mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture overview
   </span>
   
 
@@ -1990,7 +1928,7 @@
             
   
   <span class="md-ellipsis">
-    Architecture
+    About
   </span>
   
 
@@ -2000,7 +1938,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
-            Architecture
+            About
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -2011,11 +1949,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../POSITIONING/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Architecture overview
+    Product positioning
   </span>
   
 
@@ -2024,156 +1962,6 @@
   
 
               
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../SECURITY_ARCHITECTURE/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Security architecture
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
-        
-          
-          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Compliance
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_9">
-            <span class="md-nav__icon md-icon"></span>
-            Compliance
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../COMPLIANCE_DORA_NIS2/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    DORA & NIS2 mapping
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
-        
-          
-          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Release
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_10">
-            <span class="md-nav__icon md-icon"></span>
-            Release
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
@@ -2187,27 +1975,6 @@
   
   <span class="md-ellipsis">
     Changelog
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../RELEASE/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Release process
   </span>
   
 
@@ -2251,326 +2018,74 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quick-start-recommended" class="md-nav__link">
+  <a href="#what-you-need" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Start (Recommended)
+      What you need
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#production-deployment-windows-services" class="md-nav__link">
+  <a href="#install-in-a-few-minutes" class="md-nav__link">
     <span class="md-ellipsis">
-      Production Deployment (Windows Services)
+      Install in a few minutes
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#start-automatically-after-reboot" class="md-nav__link">
     <span class="md-ellipsis">
-      Architecture
+      Start automatically after reboot
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-prerequisites" class="md-nav__link">
+  <a href="#daily-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Prerequisites
+      Daily operations
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-download-binaries" class="md-nav__link">
+  <a href="#backup-and-uninstall" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Download binaries
+      Backup and uninstall
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-database-setup" class="md-nav__link">
+  <a href="#directory-layout" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Database setup
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Database setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-postgresql-on-windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option A: PostgreSQL on Windows
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-postgresql-in-docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      Option B: PostgreSQL in Docker
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-configure-and-install-the-backend" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Configure and install the backend
+      Directory layout
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-configure-and-install-the-gateway" class="md-nav__link">
+  <a href="#security-boundary" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Configure and install the gateway
+      Security boundary
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-initialize-pki-and-enroll-agents" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Initialize PKI and enroll agents
+      Troubleshooting
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="6. Initialize PKI and enroll agents">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#61-initialize-pki-once" class="md-nav__link">
-    <span class="md-ellipsis">
-      6.1 Initialize PKI (once)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#62-create-enrollment-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      6.2 Create enrollment tokens
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#63-enroll-agents" class="md-nav__link">
-    <span class="md-ellipsis">
-      6.3 Enroll agents
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-service-management-cheat-sheet" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Service management cheat sheet
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-firewall-rules" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Firewall rules
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-logs-and-monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Logs and monitoring
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Logs and monitoring">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#event-viewer" class="md-nav__link">
-    <span class="md-ellipsis">
-      Event Viewer
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prometheus-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prometheus metrics
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#health-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Health checks
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-important-windows-path-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Important: Windows path handling
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Important: Windows path handling">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#yaml-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      YAML paths
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#absolute-vs-relative-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      Absolute vs relative paths
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#self-signed-certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      Self-signed certificates
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11-troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      11. Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11. Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#service-wont-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      Service won't start
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#database-connection-fails" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database connection fails
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#agent-cant-reach-gateway" class="md-nav__link">
-    <span class="md-ellipsis">
-      Agent can't reach gateway
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-directory-structure-windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      12. Directory structure (Windows)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#standalone-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone Commands
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Standalone Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standalone-directory-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      Standalone directory layout
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upgrade-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrade workflow
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2597,405 +2112,130 @@
   
 
 
-<h1 id="windows-linux-standalone-deployment-guide">Windows &amp; Linux Standalone Deployment Guide<a class="headerlink" href="#windows-linux-standalone-deployment-guide" title="Permanent link">&para;</a></h1>
-<h2 id="quick-start-recommended">Quick Start (Recommended)<a class="headerlink" href="#quick-start-recommended" title="Permanent link">&para;</a></h2>
-<p>The unified <code>appcontrol.ps1</code> script handles everything: install, start, stop, upgrade, and site management. Works on Windows (PowerShell 5.1+) and Linux/macOS (PowerShell Core <code>pwsh</code>).</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">mkdir</span> <span class="n">AppControl</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd </span><span class="n">AppControl</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">Invoke-WebRequest</span> <span class="n">-Uri</span> <span class="s2">&quot;https://github.com/fredericcarre/appcontrol/releases/latest/download/appcontrol.ps1&quot;</span> <span class="n">-OutFile</span> <span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="n">install</span>       <span class="c"># Download binaries + frontend</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="nb">start </span>        <span class="c"># Start backend</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="nb">add-site</span> <span class="n">Prod</span> <span class="c"># Create site + gateway + agent</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="n">status</span>        <span class="c"># Check everything is running</span>
+<h1 id="windows-server-standalone-evaluation">Windows Server: standalone evaluation<a class="headerlink" href="#windows-server-standalone-evaluation" title="Permanent link">&para;</a></h1>
+<p>This is the recommended way to evaluate AppControl on an internal Windows
+Server. It installs the web interface, backend, gateway and agent without
+Docker and without a separate database server. Data is stored in an embedded
+SQLite database.</p>
+<div class="admonition info">
+<p class="admonition-title">When to use this mode</p>
+<p>Use it for a customer evaluation, a proof of concept, a demo, or a small
+single-server installation. For a durable shared production service, use
+<a href="../COMPOSE/">Docker Compose on Linux</a>
+or <a href="../OPENSHIFT/">OpenShift</a> with PostgreSQL.</p>
+</div>
+<h2 id="what-you-need">What you need<a class="headerlink" href="#what-you-need" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Windows Server 2019 or later, x64</li>
+<li>Windows PowerShell 5.1 or later</li>
+<li>an account allowed to download release assets from GitHub</li>
+<li>administrator rights only if you enable startup at boot or open firewall
+  ports</li>
+</ul>
+<p>Docker, Rust, Node.js and PostgreSQL are <strong>not</strong> required.</p>
+<h2 id="install-in-a-few-minutes">Install in a few minutes<a class="headerlink" href="#install-in-a-few-minutes" title="Permanent link">&para;</a></h2>
+<p>Open PowerShell in the directory where AppControl should keep its data:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">C</span><span class="p">:\</span><span class="n">AppControl</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">AppControl</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">Invoke-WebRequest</span> <span class="p">`</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  <span class="n">-Uri</span> <span class="s2">&quot;https://github.com/xcomponent/appcontrol-release/releases/latest/download/appcontrol.ps1&quot;</span> <span class="p">`</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  <span class="n">-OutFile</span> <span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="n">install</span> <span class="n">-Email</span> <span class="s2">&quot;admin@my-company.example&quot;</span> <span class="n">-Password</span> <span class="s2">&quot;replace-this-password&quot;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="nb">start</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="nb">add-site</span> <span class="s2">&quot;Evaluation&quot;</span>
 </span></code></pre></div>
-<p>See the <a href="#standalone-commands">full command reference</a> below.</p>
-<hr />
-<h2 id="production-deployment-windows-services">Production Deployment (Windows Services)<a class="headerlink" href="#production-deployment-windows-services" title="Permanent link">&para;</a></h2>
-<p>For production Windows Server deployments, run AppControl components
-as native Windows services.</p>
-<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>  Windows Server (backend + DB)         Windows Servers (agents)
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  +---------------------------------+    +-------------------------+
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  | PostgreSQL 16 (Windows/Docker)  |    | AppControlAgent service |
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  | AppControlBackend service      |    |   -&gt; gateway:4443 (mTLS)|
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  | AppControlBackend service      |    +-------------------------+
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  |   -&gt; :3000 (API)               |    +-------------------------+
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  | AppControlGateway service      |    | AppControlAgent service |
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  |   -&gt; :4443 (WSS)               |    |   -&gt; gateway:4443 (mTLS)|
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  +---------------------------------+    +-------------------------+
+<p>Open <a href="http://localhost:3000">http://localhost:3000</a>, then sign in with the
+email and password passed to <code>install</code>.</p>
+<p>From another workstation, use <code>http://SERVER_NAME:3000</code> and open the port once
+in Windows Firewall:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">New-NetFirewallRule</span> <span class="n">-DisplayName</span> <span class="s2">&quot;AppControl Web&quot;</span> <span class="p">`</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  <span class="n">-Direction</span> <span class="n">Inbound</span> <span class="n">-Protocol</span> <span class="n">TCP</span> <span class="n">-LocalPort</span> <span class="n">3000</span> <span class="n">-Action</span> <span class="n">Allow</span>
 </span></code></pre></div>
-<p>All three components (backend, gateway, agent) are single <code>.exe</code> files with
-built-in Windows service support. No external service wrappers needed.</p>
-<hr />
-<h2 id="1-prerequisites">1. Prerequisites<a class="headerlink" href="#1-prerequisites" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Requirement</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Windows Server 2019+ or Windows 10/11</td>
-<td>Any 64-bit edition</td>
-</tr>
-<tr>
-<td>PostgreSQL 16</td>
-<td><a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">EDB installer</a> or Docker</td>
-</tr>
-<tr>
-<td>Administrator access</td>
-<td>Required for service installation</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="2-download-binaries">2. Download binaries<a class="headerlink" href="#2-download-binaries" title="Permanent link">&para;</a></h2>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c"># Create directories</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="s2">&quot;$env:ProgramFiles\AppControl&quot;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="s2">&quot;$env:ProgramData\AppControl\config&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c"># Download from GitHub release</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nv">$version</span> <span class="p">=</span> <span class="s2">&quot;latest&quot;</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">foreach</span> <span class="p">(</span><span class="nv">$bin</span> <span class="k">in</span> <span class="p">@(</span><span class="s2">&quot;appcontrol-backend&quot;</span><span class="p">,</span> <span class="s2">&quot;appcontrol-gateway&quot;</span><span class="p">,</span> <span class="s2">&quot;appcontrol-agent&quot;</span><span class="p">,</span> <span class="s2">&quot;appctl&quot;</span><span class="p">))</span> <span class="p">{</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">gh</span> <span class="n">release</span> <span class="n">download</span> <span class="nv">$version</span> <span class="p">-</span><span class="n">-repo</span> <span class="n">fredericcarre</span><span class="p">/</span><span class="n">appcontrol</span> <span class="p">`</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="p">-</span><span class="n">-pattern</span> <span class="s2">&quot;${bin}-windows-amd64.exe&quot;</span> <span class="p">`</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="p">-</span><span class="n">-dir</span> <span class="s2">&quot;$env:ProgramFiles\AppControl&quot;</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="nb">Rename-Item</span> <span class="s2">&quot;$env:ProgramFiles\AppControl\${bin}-windows-amd64.exe&quot;</span> <span class="s2">&quot;${bin}.exe&quot;</span> <span class="n">-Force</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="p">}</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c"># Add to system PATH</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="s2">&quot;PATH&quot;</span><span class="p">,</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="s2">&quot;$env:PATH;$env:ProgramFiles\AppControl&quot;</span><span class="p">,</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="s2">&quot;Machine&quot;</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="p">)</span>
+<p>The gateway listens on port <code>4443</code> by default. Open that port only when agents
+on other servers must connect to this gateway:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">New-NetFirewallRule</span> <span class="n">-DisplayName</span> <span class="s2">&quot;AppControl Gateway&quot;</span> <span class="p">`</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  <span class="n">-Direction</span> <span class="n">Inbound</span> <span class="n">-Protocol</span> <span class="n">TCP</span> <span class="n">-LocalPort</span> <span class="n">4443</span> <span class="n">-Action</span> <span class="n">Allow</span>
 </span></code></pre></div>
-<hr />
-<h2 id="3-database-setup">3. Database setup<a class="headerlink" href="#3-database-setup" title="Permanent link">&para;</a></h2>
-<h3 id="option-a-postgresql-on-windows">Option A: PostgreSQL on Windows<a class="headerlink" href="#option-a-postgresql-on-windows" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># After installing PostgreSQL via EDB installer:</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\Program Files\PostgreSQL\16\bin\psql.exe&quot;</span> <span class="n">-U</span> <span class="n">postgres</span> <span class="n">-c</span> <span class="s2">&quot;CREATE DATABASE appcontrol;&quot;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\Program Files\PostgreSQL\16\bin\psql.exe&quot;</span> <span class="n">-U</span> <span class="n">postgres</span> <span class="n">-c</span> <span class="s2">&quot;CREATE USER appcontrol WITH PASSWORD &#39;your_secure_password&#39;;&quot;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\Program Files\PostgreSQL\16\bin\psql.exe&quot;</span> <span class="n">-U</span> <span class="n">postgres</span> <span class="n">-c</span> <span class="s2">&quot;GRANT ALL PRIVILEGES ON DATABASE appcontrol TO appcontrol;&quot;</span>
+<h2 id="start-automatically-after-reboot">Start automatically after reboot<a class="headerlink" href="#start-automatically-after-reboot" title="Permanent link">&para;</a></h2>
+<p>Run PowerShell as Administrator:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">AppControl</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="nb">enable-autostart</span>
 </span></code></pre></div>
-<h3 id="option-b-postgresql-in-docker">Option B: PostgreSQL in Docker<a class="headerlink" href="#option-b-postgresql-in-docker" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">docker</span> <span class="n">run</span> <span class="n">-d</span> <span class="p">-</span><span class="n">-name</span> <span class="n">postgres</span> <span class="p">`</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">-e</span> <span class="n">POSTGRES_DB</span><span class="p">=</span><span class="n">appcontrol</span> <span class="p">`</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">-e</span> <span class="n">POSTGRES_USER</span><span class="p">=</span><span class="n">appcontrol</span> <span class="p">`</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">-e</span> <span class="n">POSTGRES_PASSWORD</span><span class="p">=</span><span class="n">your_secure_password</span> <span class="p">`</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">-p</span> <span class="n">5432</span><span class="p">:</span><span class="n">5432</span> <span class="p">`</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">postgres</span><span class="p">:</span><span class="n">16</span>
+<p>This creates a Windows scheduled task running under <code>SYSTEM</code>. To remove it:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="nb">disable-autostart</span>
 </span></code></pre></div>
-<hr />
-<h2 id="4-configure-and-install-the-backend">4. Configure and install the backend<a class="headerlink" href="#4-configure-and-install-the-backend" title="Permanent link">&para;</a></h2>
-<p>The backend reads all configuration from <strong>environment variables</strong>. Set them
-as system-level variables so the Windows service can access them:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c"># Required</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;DATABASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;postgres://appcontrol:your_secure_password@localhost:5432/appcontrol&quot;</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;JWT_SECRET&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="p">$(</span><span class="nb">New-Guid</span><span class="p">)</span><span class="s2">-</span><span class="p">$(</span><span class="nb">New-Guid</span><span class="p">)</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c"># Optional</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="s2">&quot;3000&quot;</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;LOG_FORMAT&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;CORS_ORIGINS&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8080&quot;</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<p>Install and start the service:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c"># Install (run as Administrator)</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">appcontrol-backend</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">install</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c"># Start</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">sc</span><span class="p">.</span><span class="n">exe</span> <span class="nb">start </span><span class="n">AppControlBackend</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c"># Verify</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">sc</span><span class="p">.</span><span class="n">exe</span> <span class="n">query</span> <span class="n">AppControlBackend</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nb">curl </span><span class="n">http</span><span class="p">://</span><span class="n">localhost</span><span class="p">:</span><span class="n">3000</span><span class="p">/</span><span class="n">healthz</span>
-</span></code></pre></div>
-<hr />
-<h2 id="5-configure-and-install-the-gateway">5. Configure and install the gateway<a class="headerlink" href="#5-configure-and-install-the-gateway" title="Permanent link">&para;</a></h2>
-<p>Create the gateway configuration:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="sh">@&quot;</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="sh">gateway:</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="sh">  id: &quot;gateway-01&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="sh">  zone: &quot;default&quot;</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="sh">  listen_addr: &quot;0.0.0.0&quot;</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="sh">  listen_port: 4443</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="sh">backend:</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="sh">  url: &quot;ws://localhost:3000/ws/gateway&quot;</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="sh">  reconnect_interval_secs: 5</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="sh"># TLS configuration (after PKI init and enrollment)</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="sh"># Use forward slashes - they work on Windows and avoid YAML escape issues</span>
-</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="sh"># tls:</span>
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="sh">#   enabled: true</span>
-</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="sh">#   cert_file: &quot;C:/ProgramData/AppControl/config/tls/gateway.crt&quot;</span>
-</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="sh">#   key_file: &quot;C:/ProgramData/AppControl/config/tls/gateway.key&quot;</span>
-</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="sh">#   ca_file: &quot;C:/ProgramData/AppControl/config/tls/ca.crt&quot;</span>
-</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="sh">&quot;@</span> <span class="p">|</span> <span class="nb">Out-File</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="s2">&quot;$env:ProgramData\AppControl\config\gateway.yaml&quot;</span>
-</span></code></pre></div>
-<p>Install and start:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">appcontrol-gateway</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">install</span> <span class="p">-</span><span class="n">-config</span> <span class="s2">&quot;$env:ProgramData\AppControl\config\gateway.yaml&quot;</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">sc</span><span class="p">.</span><span class="n">exe</span> <span class="nb">start </span><span class="n">AppControlGateway</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c"># Verify</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nb">curl </span><span class="n">http</span><span class="p">://</span><span class="n">localhost</span><span class="p">:</span><span class="n">4443</span><span class="p">/</span><span class="n">health</span>
-</span></code></pre></div>
-<hr />
-<h2 id="6-initialize-pki-and-enroll-agents">6. Initialize PKI and enroll agents<a class="headerlink" href="#6-initialize-pki-and-enroll-agents" title="Permanent link">&para;</a></h2>
-<h3 id="61-initialize-pki-once">6.1 Initialize PKI (once)<a class="headerlink" href="#61-initialize-pki-once" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">appctl</span><span class="p">.</span><span class="n">exe</span> <span class="n">pki</span> <span class="n">init</span> <span class="p">-</span><span class="n">-org-name</span> <span class="s2">&quot;My Company&quot;</span>
-</span></code></pre></div>
-<h3 id="62-create-enrollment-tokens">6.2 Create enrollment tokens<a class="headerlink" href="#62-create-enrollment-tokens" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c"># For agents</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">appctl</span><span class="p">.</span><span class="n">exe</span> <span class="n">pki</span> <span class="n">create-token</span> <span class="p">-</span><span class="n">-name</span> <span class="s2">&quot;windows-servers&quot;</span> <span class="p">-</span><span class="n">-max-uses</span> <span class="n">50</span> <span class="p">-</span><span class="n">-scope</span> <span class="n">agent</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c"># For the gateway (if using mTLS)</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">appctl</span><span class="p">.</span><span class="n">exe</span> <span class="n">pki</span> <span class="n">create-token</span> <span class="p">-</span><span class="n">-name</span> <span class="s2">&quot;gateway&quot;</span> <span class="p">-</span><span class="n">-max-uses</span> <span class="n">1</span> <span class="p">-</span><span class="n">-scope</span> <span class="n">gateway</span>
-</span></code></pre></div>
-<h3 id="63-enroll-agents">6.3 Enroll agents<a class="headerlink" href="#63-enroll-agents" title="Permanent link">&para;</a></h3>
-<p>On each Windows server where you want to deploy an agent:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c"># Enroll (run as Administrator)</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">appcontrol-agent</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-enroll</span> <span class="n">https</span><span class="p">://</span><span class="n">gateway-host</span><span class="p">:</span><span class="n">4443</span> <span class="p">-</span><span class="n">-token</span> <span class="n">ac_enroll_</span><span class="p">...</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c"># Install as service</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">appcontrol-agent</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">install</span> <span class="p">-</span><span class="n">-config</span> <span class="s2">&quot;$env:ProgramData\AppControl\config\agent.yaml&quot;</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c"># Start</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="n">sc</span><span class="p">.</span><span class="n">exe</span> <span class="nb">start </span><span class="n">AppControlAgent</span>
-</span></code></pre></div>
-<hr />
-<h2 id="7-service-management-cheat-sheet">7. Service management cheat sheet<a class="headerlink" href="#7-service-management-cheat-sheet" title="Permanent link">&para;</a></h2>
+<h2 id="daily-operations">Daily operations<a class="headerlink" href="#daily-operations" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Action</th>
-<th>Backend</th>
-<th>Gateway</th>
-<th>Agent</th>
+<th>Command</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Install</td>
-<td><code>appcontrol-backend.exe service install</code></td>
-<td><code>appcontrol-gateway.exe service install -c ...</code></td>
-<td><code>appcontrol-agent.exe service install -c ...</code></td>
+<td>Check all processes</td>
+<td><code>.\appcontrol.ps1 status</code></td>
 </tr>
 <tr>
 <td>Start</td>
-<td><code>sc start AppControlBackend</code></td>
-<td><code>sc start AppControlGateway</code></td>
-<td><code>sc start AppControlAgent</code></td>
+<td><code>.\appcontrol.ps1 start</code></td>
 </tr>
 <tr>
 <td>Stop</td>
-<td><code>sc stop AppControlBackend</code></td>
-<td><code>sc stop AppControlGateway</code></td>
-<td><code>sc stop AppControlAgent</code></td>
-</tr>
-<tr>
-<td>Status</td>
-<td><code>sc query AppControlBackend</code></td>
-<td><code>sc query AppControlGateway</code></td>
-<td><code>sc query AppControlAgent</code></td>
-</tr>
-<tr>
-<td>Uninstall</td>
-<td><code>appcontrol-backend.exe service uninstall</code></td>
-<td><code>appcontrol-gateway.exe service uninstall</code></td>
-<td><code>appcontrol-agent.exe service uninstall</code></td>
-</tr>
-<tr>
-<td>Restart</td>
-<td><code>Restart-Service AppControlBackend</code></td>
-<td><code>Restart-Service AppControlGateway</code></td>
-<td><code>Restart-Service AppControlAgent</code></td>
-</tr>
-</tbody>
-</table>
-<p>All services are set to <strong>AutoStart</strong> by default (they start on boot).</p>
-<hr />
-<h2 id="8-firewall-rules">8. Firewall rules<a class="headerlink" href="#8-firewall-rules" title="Permanent link">&para;</a></h2>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c"># Backend API (internal, or expose to UI clients)</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nb">New-NetFirewallRule</span> <span class="n">-DisplayName</span> <span class="s2">&quot;AppControl Backend&quot;</span> <span class="n">-Direction</span> <span class="n">Inbound</span> <span class="n">-LocalPort</span> <span class="n">3000</span> <span class="n">-Protocol</span> <span class="n">TCP</span> <span class="n">-Action</span> <span class="n">Allow</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c"># Gateway (agents connect here)</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">New-NetFirewallRule</span> <span class="n">-DisplayName</span> <span class="s2">&quot;AppControl Gateway&quot;</span> <span class="n">-Direction</span> <span class="n">Inbound</span> <span class="n">-LocalPort</span> <span class="n">4443</span> <span class="n">-Protocol</span> <span class="n">TCP</span> <span class="n">-Action</span> <span class="n">Allow</span>
-</span></code></pre></div>
-<hr />
-<h2 id="9-logs-and-monitoring">9. Logs and monitoring<a class="headerlink" href="#9-logs-and-monitoring" title="Permanent link">&para;</a></h2>
-<h3 id="event-viewer">Event Viewer<a class="headerlink" href="#event-viewer" title="Permanent link">&para;</a></h3>
-<p>All services log to the Windows Application event log:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c"># View recent backend logs</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">Get-WinEvent</span> <span class="n">-FilterHashtable</span> <span class="p">@{</span><span class="n">LogName</span><span class="p">=</span><span class="s1">&#39;Application&#39;</span><span class="p">;</span> <span class="n">ProviderName</span><span class="p">=</span><span class="s1">&#39;AppControlBackend&#39;</span><span class="p">}</span> <span class="n">-MaxEvents</span> <span class="n">50</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c"># View agent logs</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nb">Get-WinEvent</span> <span class="n">-FilterHashtable</span> <span class="p">@{</span><span class="n">LogName</span><span class="p">=</span><span class="s1">&#39;Application&#39;</span><span class="p">;</span> <span class="n">ProviderName</span><span class="p">=</span><span class="s1">&#39;AppControlAgent&#39;</span><span class="p">}</span> <span class="n">-MaxEvents</span> <span class="n">50</span>
-</span></code></pre></div>
-<h3 id="prometheus-metrics">Prometheus metrics<a class="headerlink" href="#prometheus-metrics" title="Permanent link">&para;</a></h3>
-<p>The backend exposes metrics at <code>http://localhost:3000/metrics</code> (Prometheus format).</p>
-<h3 id="health-checks">Health checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c"># Backend</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">curl </span><span class="n">http</span><span class="p">://</span><span class="n">localhost</span><span class="p">:</span><span class="n">3000</span><span class="p">/</span><span class="n">healthz</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c"># Gateway</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nb">curl </span><span class="n">http</span><span class="p">://</span><span class="n">localhost</span><span class="p">:</span><span class="n">4443</span><span class="p">/</span><span class="n">health</span>
-</span></code></pre></div>
-<hr />
-<h2 id="10-important-windows-path-handling">10. Important: Windows path handling<a class="headerlink" href="#10-important-windows-path-handling" title="Permanent link">&para;</a></h2>
-<h3 id="yaml-paths">YAML paths<a class="headerlink" href="#yaml-paths" title="Permanent link">&para;</a></h3>
-<p>In YAML configuration files, <strong>always use forward slashes</strong> (<code>/</code>) instead of
-backslashes (<code>\</code>). Backslashes are escape characters in YAML:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># WRONG - \t is interpreted as tab, \a as bell character</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;C:\ProgramData</span><span class="err">\</span><span class="s">AppControl\tls\agent.crt&quot;</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># CORRECT - forward slashes work on Windows</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;C:/ProgramData/AppControl/tls/agent.crt&quot;</span>
-</span></code></pre></div>
-<h3 id="absolute-vs-relative-paths">Absolute vs relative paths<a class="headerlink" href="#absolute-vs-relative-paths" title="Permanent link">&para;</a></h3>
-<p>Windows services start with <code>C:\Windows\System32</code> as the working directory,
-not the directory containing the executable. <strong>Always use absolute paths</strong> in
-configuration files:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># WRONG - relative path won&#39;t work when running as a service</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./tls/agent.crt&quot;</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># CORRECT - absolute path works regardless of working directory</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;C:/ProgramData/AppControl/config/tls/agent.crt&quot;</span>
-</span></code></pre></div>
-<p>The enrollment command (<code>--enroll</code>) automatically generates absolute paths
-since v1.2.10.</p>
-<h3 id="self-signed-certificates">Self-signed certificates<a class="headerlink" href="#self-signed-certificates" title="Permanent link">&para;</a></h3>
-<p>If the gateway uses a self-signed certificate (common in dev/test), add
-<code>tls_insecure: true</code> under the <code>gateway</code> section (not <code>tls</code>):</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">gateway</span><span class="p">:</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wss://gateway:4443/ws&quot;</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="nt">tls_insecure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">   </span><span class="c1"># Accept self-signed gateway certificate</span>
-</span></code></pre></div>
-<hr />
-<h2 id="11-troubleshooting">11. Troubleshooting<a class="headerlink" href="#11-troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="service-wont-start">Service won't start<a class="headerlink" href="#service-wont-start" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c"># Check service status</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">sc</span><span class="p">.</span><span class="n">exe</span> <span class="n">query</span> <span class="n">AppControlBackend</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">sc</span><span class="p">.</span><span class="n">exe</span> <span class="n">query</span> <span class="n">AppControlGateway</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c"># Check event log for errors</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="nb">Get-WinEvent</span> <span class="n">-FilterHashtable</span> <span class="p">@{</span><span class="n">LogName</span><span class="p">=</span><span class="s1">&#39;System&#39;</span><span class="p">;</span> <span class="n">Level</span><span class="p">=</span><span class="n">2</span><span class="p">}</span> <span class="n">-MaxEvents</span> <span class="n">20</span>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c"># Run in foreground to see errors directly</span>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="n">appcontrol-backend</span><span class="p">.</span><span class="n">exe</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="n">appcontrol-gateway</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-config</span> <span class="s2">&quot;$env:ProgramData\AppControl\config\gateway.yaml&quot;</span>
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="n">appcontrol-agent</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-config</span> <span class="s2">&quot;$env:ProgramData\AppControl\config\agent.yaml&quot;</span>
-</span></code></pre></div>
-<h3 id="database-connection-fails">Database connection fails<a class="headerlink" href="#database-connection-fails" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c"># Verify PostgreSQL is running</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">sc</span><span class="p">.</span><span class="n">exe</span> <span class="n">query</span> <span class="n">postgresql-x64</span><span class="p">-</span><span class="n">16</span>
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c"># Test connection</span>
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\Program Files\PostgreSQL\16\bin\psql.exe&quot;</span> <span class="n">-U</span> <span class="n">appcontrol</span> <span class="n">-d</span> <span class="n">appcontrol</span> <span class="n">-c</span> <span class="s2">&quot;SELECT 1;&quot;</span>
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c"># Check DATABASE_URL is set as system variable</span>
-</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;DATABASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="agent-cant-reach-gateway">Agent can't reach gateway<a class="headerlink" href="#agent-cant-reach-gateway" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c"># Test connectivity</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="nb">Test-NetConnection</span> <span class="n">-ComputerName</span> <span class="n">gateway-host</span> <span class="n">-Port</span> <span class="n">4443</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c"># Check Windows Firewall</span>
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="nb">Get-NetFirewallRule</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">.</span><span class="n">LocalPort</span> <span class="o">-eq</span> <span class="n">4443</span> <span class="p">}</span>
-</span></code></pre></div>
-<hr />
-<h2 id="12-directory-structure-windows">12. Directory structure (Windows)<a class="headerlink" href="#12-directory-structure-windows" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>C:\Program Files\AppControl\
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    appcontrol-backend.exe
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    appcontrol-gateway.exe
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    appcontrol-agent.exe
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    appctl.exe
-</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
-</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>C:\ProgramData\AppControl\
-</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>    config\
-</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>        gateway.yaml
-</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>        agent.yaml          (auto-generated by enrollment)
-</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>        tls\
-</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>            agent.crt
-</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>            agent.key
-</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>            gateway.crt
-</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>            gateway.key
-</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>            ca.crt
-</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>    buffer-&lt;agent-id&gt;\      (offline buffer, sled DB)
-</span></code></pre></div>
-<hr />
-<h2 id="standalone-commands">Standalone Commands<a class="headerlink" href="#standalone-commands" title="Permanent link">&para;</a></h2>
-<p>The unified <code>appcontrol.ps1</code> script (for dev/demo use with SQLite):</p>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>.\appcontrol.ps1 install</code></td>
-<td>Download binaries and create directory structure</td>
-</tr>
-<tr>
-<td><code>.\appcontrol.ps1 start</code></td>
-<td>Start backend + all configured gateways + agents</td>
-</tr>
-<tr>
 <td><code>.\appcontrol.ps1 stop</code></td>
-<td>Stop all processes</td>
 </tr>
 <tr>
-<td><code>.\appcontrol.ps1 status</code></td>
-<td>Show status of all components with PIDs</td>
+<td>Read recent logs</td>
+<td><code>.\appcontrol.ps1 logs</code></td>
 </tr>
 <tr>
-<td><code>.\appcontrol.ps1 add-site &lt;name&gt; [port]</code></td>
-<td>Add a site (default gateway port: 4443)</td>
+<td>Add a site</td>
+<td><code>.\appcontrol.ps1 add-site "Site name" [gateway-port]</code></td>
 </tr>
 <tr>
+<td>Upgrade</td>
 <td><code>.\appcontrol.ps1 upgrade</code></td>
-<td>Stop, update binaries+frontend, restart (preserves data + config)</td>
-</tr>
-<tr>
-<td><code>.\appcontrol.ps1 logs [file]</code></td>
-<td>Show last 50 lines of log (default: backend)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="standalone-directory-layout">Standalone directory layout<a class="headerlink" href="#standalone-directory-layout" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>AppControl/
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>  appcontrol.ps1          # Unified script
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  start.bat               # Windows shortcut (calls appcontrol.ps1 start)
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>  bin/                    # Binaries (overwritten by upgrade)
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>    appcontrol-backend-sqlite.exe
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>    appcontrol-gateway.exe
-</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>    appcontrol-agent.exe
-</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>  data/                   # NEVER touched by upgrade
-</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    appcontrol.db          # SQLite database
-</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    pids.json              # Running process IDs
-</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>  config/                 # NEVER touched by upgrade
-</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    settings.json          # JWT secret, admin credentials
-</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>    sites.json             # Configured sites
-</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>  logs/                   # Log files
-</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>    backend.log
-</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>    gateway-Production.log
-</span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>    agent-Production.log
-</span><span id="__span-22-18"><a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>  frontend/               # Web UI (overwritten by upgrade)
+<p>An upgrade replaces only binaries and the web interface. The database,
+configuration and site definitions are preserved.</p>
+<p>User, team, site, hosting, map and catalog commands are documented once in the
+<a href="../POWERSHELL_COMMANDS/">PowerShell command reference</a>.</p>
+<h2 id="backup-and-uninstall">Backup and uninstall<a class="headerlink" href="#backup-and-uninstall" title="Permanent link">&para;</a></h2>
+<p>Stop AppControl before copying its data:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="n">stop</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">Copy-Item</span> <span class="n">C</span><span class="p">:\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">data</span> <span class="n">C</span><span class="p">:\</span><span class="n">Backup</span><span class="p">\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">data</span> <span class="n">-Recurse</span> <span class="n">-Force</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">Copy-Item</span> <span class="n">C</span><span class="p">:\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">config</span> <span class="n">C</span><span class="p">:\</span><span class="n">Backup</span><span class="p">\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">config</span> <span class="n">-Recurse</span> <span class="n">-Force</span>
 </span></code></pre></div>
-<h3 id="upgrade-workflow">Upgrade workflow<a class="headerlink" href="#upgrade-workflow" title="Permanent link">&para;</a></h3>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="n">upgrade</span>
+<p>To uninstall, stop AppControl, disable automatic startup, then archive or
+remove <code>C:\AppControl</code>. No system-wide database or container runtime remains.</p>
+<h2 id="directory-layout">Directory layout<a class="headerlink" href="#directory-layout" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>C:\AppControl\
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  appcontrol.ps1
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  bin\          downloaded executables
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  config\       configuration and sites (preserved by upgrade)
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  data\         SQLite database and agent state (preserved by upgrade)
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  frontend\     web interface
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>  logs\         component logs
 </span></code></pre></div>
-<ol>
-<li>Stops all processes (agents, gateways, backend)</li>
-<li>Downloads latest binaries (overwrites <code>bin/</code>)</li>
-<li>Downloads latest frontend (overwrites <code>frontend/</code>)</li>
-<li>Restarts everything</li>
-</ol>
-<p>Your database and configuration are preserved. SQL migrations run automatically on backend start.</p>
+<h2 id="security-boundary">Security boundary<a class="headerlink" href="#security-boundary" title="Permanent link">&para;</a></h2>
+<p>The quick install serves HTTP directly. It is suitable on a protected internal
+network for evaluation. Do not expose port 3000 to the Internet. For a
+production deployment, put it behind the company HTTPS reverse proxy, change
+the initial password, restrict firewall access, and follow the
+<a href="../HARDENING/">hardening checklist</a>.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="n">status</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p">.\</span><span class="n">appcontrol</span><span class="p">.</span><span class="n">ps1</span> <span class="n">logs</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">logs</span><span class="p">\</span><span class="n">backend</span><span class="p">.</span><span class="n">err</span><span class="p">.</span><span class="n">log</span> <span class="n">-Tail</span> <span class="n">100</span>
+</span></code></pre></div>
+<p>If PowerShell blocks the script for the current process:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">Set-ExecutionPolicy</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">Bypass</span>
+</span></code></pre></div>
 
 
 
@@ -3018,7 +2258,7 @@ since v1.2.10.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-04-04T15:51:11+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-04-04</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-07-24T08:45:41+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-07-24</span>
   </span>
 
     
@@ -3065,7 +2305,7 @@ since v1.2.10.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../OPENSHIFT/" class="md-footer__link md-footer__link--prev" aria-label="Previous: OpenShift">
+          <a href="../POWERSHELL_COMMANDS/" class="md-footer__link md-footer__link--prev" aria-label="Previous: PowerShell options and commands">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3075,20 +2315,20 @@ since v1.2.10.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                OpenShift
+                PowerShell options and commands
               </div>
             </div>
           </a>
         
         
           
-          <a href="../HARDENING/" class="md-footer__link md-footer__link--next" aria-label="Next: Hardening checklist">
+          <a href="../WINDOWS_PRODUCTION/" class="md-footer__link md-footer__link--next" aria-label="Next: Windows production (PostgreSQL)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Hardening checklist
+                Windows production (PostgreSQL)
               </div>
             </div>
             <div class="md-footer__button md-icon">

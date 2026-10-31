@@ -1,0 +1,17 @@
+{
+  "source_commit": "2268728478f117b2b578109eb9a2652794b74485",
+  "run_id": 40669149665,
+  "runtime_sha256": {
+    "appcontrol-backend": "7d92015a1452f312c106dbd3319cc1460b402826e17eb908c4916b55f245b87c",
+    "appcontrol-gateway": "d32ac32f76ead2beb45a9d115c70a496e43d1cd2396ba338eb836e105f8a7bb6",
+    "appcontrol-agent": "e18de00180ae77259bd2cd8bc66faaddab03ff3c75f9a597a006a19078eb30fa"
+  },
+  "frontend_files": {
+    "appcontrol.svg": "a41c23708de94ad05cd479cd95791956df4e52270cbb3a6c59547a720e4d1e28",
+    "assets/index-CCdJKDDd.js": "79d4777755431828e1006cdf68bcfabe50f6f2aeffd3fc1189b58cc78a5cfabd",
+    "assets/index-DdoEe4kq.css": "ccecb3c386d1991b12aa18805ad78049a1056f57eca5a252ea7457054288235a",
+    "index.html": "b5ffcad9b6bd6456ce8c8b4c6c3fcf228ef5e92b66e17b9db2dd81fcacd56ee6"
+  },
+  "ci_compilation_commit": "0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265",
+  "source_equivalence": "CI merge commit matches requested source 2268728478f117b2b578109eb9a2652794b74485 in product/build paths; see source-equivalence.json."
+}

@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "checks": [
+    "External Linux container enrolled over public gateway Route TCP 443 with verified TLS",
+    "AppControl executes a command outside Kubernetes and sees RUNNING",
+    "AppControl stops the external component and sees STOPPED",
+    "External agent restarts using stored certificates, without a new token"
+  ],
+  "application_id": "388ec325-3014-4f68-92a6-9df0be5a9983",
+  "container": "external-linux-7135e3"
+}

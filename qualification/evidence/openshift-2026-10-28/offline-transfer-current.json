@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-10-28T10:38:44.056713+00:00",
+  "result": "PASS",
+  "scope": "Five current AppControl OCI archives imported using the unchanged customer transfer-images.py into an isolated TLS registry; no customer registry was available",
+  "source_images": {
+    "backend": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-backend@sha256:f4707c96de3dadc44d40e8a96c2b7d711e5927c593dd7635e135b76093e81675",
+    "frontend": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-frontend@sha256:b4bb7660ef6512cad83876380b987a1d15bdab9dcecc46b5c8b752f9f8cff91f",
+    "gateway": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-gateway@sha256:782e86e414337f2d773c28f849101c7bd9ddf9d43f6a55fe490fa76e15fba7d5",
+    "postgresql": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-postgresql@sha256:f647cb2073a95a464c1a01175ca5293013fd87779ff9ffd35b46d952b481baca",
+    "agent": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-agent@sha256:ff0ba3c4bd4e42c4ad23a88c0c48e0ace693249b6f085b30fd672bcdbf0bfd40"
+  },
+  "archives": {
+    "agent": {
+      "sha256": "e70253929757aa5d363891ded4a4dfa2558c67495066c5d6a939f86c16c4cdcf",
+      "bytes": 39075840
+    },
+    "backend": {
+      "sha256": "d2087b726a4b688cca75d48f926413cd48219387a5f433c67f216386c8ce668a",
+      "bytes": 48076800
+    },
+    "frontend": {
+      "sha256": "d875bedf4fb900c341b060da5d492cab02eeeb5ef6f9d0aead6ad2430a2592cb",
+      "bytes": 31662080
+    },
+    "gateway": {
+      "sha256": "88db502bf8c975afecb809d8dbe86421be5e82320aad19f204b5ad7ae4a6e7df",
+      "bytes": 38737920
+    },
+    "postgresql": {
+      "sha256": "2073419fd39bc59d5056ac61dd1b4d3f22074a91d6075cfee93b88d1bd71f486",
+      "bytes": 119203840
+    }
+  },
+  "script_sha256": "b5677d694313779f1b0974f4692d2a7568d35dc79817a863bb48b167afd0da9a",
+  "source_lock_sha256": "2471a3dc0dd4b6252e44d149b3cb226b619cd2f549616ad108ab2f7cf59f7117",
+  "tls_verification": true,
+  "network_internal": true,
+  "host_ports_published": false,
+  "tool_version": "skopeo version 1.20.0",
+  "untrusted_certificate_rejected": true,
+  "destination_images": {
+    "backend": "registry:5000/appcontrol/backend@sha256:f4707c96de3dadc44d40e8a96c2b7d711e5927c593dd7635e135b76093e81675",
+    "frontend": "registry:5000/appcontrol/frontend@sha256:b4bb7660ef6512cad83876380b987a1d15bdab9dcecc46b5c8b752f9f8cff91f",
+    "gateway": "registry:5000/appcontrol/gateway@sha256:782e86e414337f2d773c28f849101c7bd9ddf9d43f6a55fe490fa76e15fba7d5",
+    "postgresql": "registry:5000/appcontrol/postgresql@sha256:f647cb2073a95a464c1a01175ca5293013fd87779ff9ffd35b46d952b481baca",
+    "agent": "registry:5000/appcontrol/agent@sha256:ff0ba3c4bd4e42c4ad23a88c0c48e0ace693249b6f085b30fd672bcdbf0bfd40"
+  },
+  "digest_preservation": true,
+  "test_resources_removed": true
+}

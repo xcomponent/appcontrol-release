@@ -1,0 +1,83 @@
+{
+  "checked_at": "2026-10-28T10:18:58.709190+00:00",
+  "source_before": "ed757bac1b84468063fead91b3c778c65753346e",
+  "source_after": "2268728478f117b2b578109eb9a2652794b74485",
+  "scanner": "Trivy 0.76.1",
+  "database": {
+    "Version": 2,
+    "NextUpdate": "2026-10-29T07:10:42.861393507Z",
+    "UpdatedAt": "2026-10-28T07:10:42.861393948Z",
+    "DownloadedAt": "2026-10-28T09:49:17.849193Z"
+  },
+  "reports": {
+    "backend": {
+      "count": 0,
+      "severity": {},
+      "sha256": "76ff8011f140ed866672845bf5e5216f1e456f5b4b49f38ebfe7bcd00fe686f6"
+    },
+    "frontend": {
+      "count": 59,
+      "severity": {
+        "HIGH": 6,
+        "MEDIUM": 7,
+        "LOW": 44,
+        "UNKNOWN": 2
+      },
+      "sha256": "9bd8ac9d747adbb87b259a5624ae06c056b2ea1c238b1eedfb759eb5d7c78919"
+    },
+    "gateway": {
+      "count": 0,
+      "severity": {},
+      "sha256": "5066419a1a99fbd3a7898332fd6aba81f789fe1c8a90d7ebb07ea648ba2a6335"
+    },
+    "agent": {
+      "count": 0,
+      "severity": {},
+      "sha256": "7d502cd7142113ae590f96ceb53fadb6501393c7e998d753f36ed86583868793"
+    },
+    "postgresql": {
+      "count": 2,
+      "severity": {
+        "UNKNOWN": 2
+      },
+      "sha256": "d52ce90c23e206029332164db49a81323ee6f91f625ca4806944c4a2b62e36d8"
+    },
+    "dependencies-production": {
+      "count": 4,
+      "severity": {
+        "MEDIUM": 1,
+        "LOW": 3
+      },
+      "sha256": "5a284000115526c4f00e8f2dafafe041786a1bc8b355915670d7d67ec252cc22"
+    },
+    "dependencies-all": {
+      "count": 8,
+      "severity": {
+        "MEDIUM": 4,
+        "LOW": 3,
+        "HIGH": 1
+      },
+      "sha256": "50627dad53872b13b67d130c2a8abe5103de0572e404738d06b693c273dc7550"
+    },
+    "updated-dependencies-production": {
+      "count": 0,
+      "severity": {},
+      "sha256": "2ee0fc8d2ca2c36755eeec2320fb97b86c8823119babb642d1416ceae9c2bbc5"
+    },
+    "updated-dependencies-all": {
+      "count": 0,
+      "severity": {},
+      "sha256": "6ac392b1d5baa1ff4876082831d1bbb91000cbd8cc272bf3e9cfb7a1beee3c3c"
+    }
+  },
+  "local_tests": {
+    "backend": 162,
+    "agent": 85,
+    "common": 92,
+    "gateway": 18,
+    "frontend": 310,
+    "qualification_python": 17,
+    "helm_lint": "PASS"
+  },
+  "status": "Image rebuild and fresh OpenShift qualification in progress; old kit not approved for new delivery."
+}

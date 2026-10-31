@@ -1,0 +1,556 @@
+{
+  "run_id": 40669149665,
+  "job_id": 122759287249,
+  "job_url": "https://github.com/fredericcarre/appcontrol/actions/runs/40669149665/job/122759287249",
+  "head_sha": "2268728478f117b2b578109eb9a2652794b74485",
+  "job_result": "failure",
+  "failed_step": {
+    "number": 11,
+    "name": "Scan evaluation images and record their SBOMs",
+    "exit_code": 1
+  },
+  "classification": "Security findings in OS base packages of the CI-built backend, gateway and agent images; not a functional E2E failure and not an observed scanner infrastructure failure.",
+  "functional_e2e": {
+    "timestamp": "2026-10-28T10:24:16.580022+00:00",
+    "platform": "Kubernetes (OpenShift SCC/Route not validated)",
+    "checks": [
+      "Verified HTTPS login",
+      "Anonymous application access denied",
+      "Agent enrollment through verified TLS gateway and backend mTLS",
+      "Read-only application key can read but cannot execute start",
+      "Real commands: dependency starts before its consumer",
+      "Real commands: consumer stops before its dependency",
+      "Gateway restart reconnects and still executes commands",
+      "Map persists after backend restart",
+      "Map persists and backend reconnects after PostgreSQL restart"
+    ],
+    "application_id": "44761755-6c02-43c3-8248-9f79cc8d047a",
+    "result": "PASS"
+  },
+  "scanner": "Trivy 0.75.0",
+  "scan_policy": "--scanners vuln --exit-code 1; all severities count, no ignore-unfixed flag",
+  "scans": {
+    "agent": {
+      "finding_count": 17,
+      "severity_counts": {
+        "HIGH": 1,
+        "MEDIUM": 16
+      },
+      "unique_cves": [
+        "CVE-2026-111943",
+        "CVE-2026-8674",
+        "CVE-2026-86805",
+        "CVE-2026-89092",
+        "CVE-2026-95818"
+      ],
+      "image_os": {
+        "Family": "wolfi",
+        "Name": "20230201"
+      },
+      "findings": [
+        {
+          "id": "CVE-2026-111943",
+          "package": "ca-certificates-bundle",
+          "installed_version": "20260909-r2",
+          "fixed_version": "20260909-r3",
+          "severity": "HIGH",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "libcrypt1-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "libcrypt1-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "libcrypt1-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "libcrypt1-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/agent:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        }
+      ]
+    },
+    "backend": {
+      "finding_count": 13,
+      "severity_counts": {
+        "HIGH": 1,
+        "MEDIUM": 12
+      },
+      "unique_cves": [
+        "CVE-2026-111943",
+        "CVE-2026-8674",
+        "CVE-2026-86805",
+        "CVE-2026-89092",
+        "CVE-2026-95818"
+      ],
+      "image_os": {
+        "Family": "wolfi",
+        "Name": "20230201"
+      },
+      "findings": [
+        {
+          "id": "CVE-2026-111943",
+          "package": "ca-certificates-bundle",
+          "installed_version": "20260909-r2",
+          "fixed_version": "20260909-r3",
+          "severity": "HIGH",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/backend:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        }
+      ]
+    },
+    "dependency": {
+      "finding_count": 0,
+      "severity_counts": {},
+      "unique_cves": [],
+      "image_os": null,
+      "findings": []
+    },
+    "frontend": {
+      "finding_count": 0,
+      "severity_counts": {},
+      "unique_cves": [],
+      "image_os": {
+        "Family": "alpine",
+        "Name": "3.24.3"
+      },
+      "findings": []
+    },
+    "gateway": {
+      "finding_count": 13,
+      "severity_counts": {
+        "HIGH": 1,
+        "MEDIUM": 12
+      },
+      "unique_cves": [
+        "CVE-2026-111943",
+        "CVE-2026-8674",
+        "CVE-2026-86805",
+        "CVE-2026-89092",
+        "CVE-2026-95818"
+      ],
+      "image_os": {
+        "Family": "wolfi",
+        "Name": "20230201"
+      },
+      "findings": [
+        {
+          "id": "CVE-2026-111943",
+          "package": "ca-certificates-bundle",
+          "installed_version": "20260909-r2",
+          "fixed_version": "20260909-r3",
+          "severity": "HIGH",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "glibc-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "glibc-2.44-locale-posix",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-8674",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-86805",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-89092",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        },
+        {
+          "id": "CVE-2026-95818",
+          "package": "ld-linux-2.44",
+          "installed_version": "2.44-r7",
+          "fixed_version": "2.44-r8",
+          "severity": "MEDIUM",
+          "target": "appcontrol-qualification/gateway:0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265 (wolfi 20230201)",
+          "type": "wolfi",
+          "class": "os-pkgs"
+        }
+      ]
+    },
+    "postgresql": {
+      "finding_count": 0,
+      "severity_counts": {},
+      "unique_cves": [],
+      "image_os": {
+        "Family": "alpine",
+        "Name": "3.24.2"
+      },
+      "findings": []
+    }
+  },
+  "conclusion": "All nine runtime checks passed. The security gate correctly fails on five distinct CVE IDs found in pinned Wolfi base OS packages across three images. Frontend, PostgreSQL and source dependency scans have no reported findings. The scan does not qualify newly assembled UBI images: those need their own digest-bound scan and functional evidence.",
+  "recommended_action": "Refresh or replace affected base images, rescan each final digest and rerun appropriate live qualification. Do not call the entire CI run green.",
+  "source_artifact_id": 12808926586,
+  "source_artifact": "restricted-kubernetes-evidence",
+  "source_logs": "/private/tmp/appcontrol-release-20261028/new-evidence/ci-restricted-job.log"
+}

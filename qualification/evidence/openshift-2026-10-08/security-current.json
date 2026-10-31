@@ -1,0 +1,45 @@
+{
+  "images": {
+    "backend": {
+      "reference": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/appcontrol-bank-backend@sha256:ecb685fc6f1acc8ae1f1119973c6d3d80e7fb659b16ac85ec07096fc6d511cf6",
+      "scan_created_at": "2026-10-08T07:11:23.08265127Z",
+      "findings": 0
+    },
+    "frontend": {
+      "reference": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/frontend@sha256:5c31fd1c891ebb44b04d6a51f6c9dd50f429dd967f008431c0a8d686a407ac5d",
+      "scan_created_at": "2026-10-08T07:11:26.390550371Z",
+      "findings": 0
+    },
+    "gateway": {
+      "reference": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/gateway@sha256:7c565b2f98479e1da4483fdd66efad4a670ed0eb665ae3d8557727dab9d7907d",
+      "scan_created_at": "2026-10-08T07:11:28.875566305Z",
+      "findings": 0
+    },
+    "postgresql": {
+      "reference": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/postgresql@sha256:7e7ea71ced4675de7e1096e537d1c69798525b886fbd73648188c1bb4ee5f9ea",
+      "scan_created_at": "2026-10-08T07:11:32.503048846Z",
+      "findings": 0
+    },
+    "agent": {
+      "reference": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/agent@sha256:93c1386a33fc09e5c0bf1a71975b625fa1e9fca3f5a429c2de68f1bf110af3af",
+      "scan_created_at": "2026-10-08T07:11:35.555267141Z",
+      "findings": 0
+    }
+  },
+  "production_dependencies": 0,
+  "development_findings": [
+    {
+      "package": "braces",
+      "version": "3.0.3",
+      "id": "CVE-2026-93687",
+      "severity": "HIGH"
+    },
+    {
+      "package": "postcss-selector-parser",
+      "version": "6.1.4",
+      "id": "CVE-2026-104844",
+      "severity": "MEDIUM"
+    }
+  ],
+  "scanner": "Trivy 0.75.0"
+}

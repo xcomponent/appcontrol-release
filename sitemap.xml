@@ -1,259 +1,235 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://docs.appcontrol.io/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/AGENT_INSTALLATION/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/AGENT_INSTALLATION/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/AZURE_GATEWAY/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/AZURE_GATEWAY/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/BACKUP_RESTORE/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/BACKUP_RESTORE/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/CAPACITY_PLANNING/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/CAPACITY_PLANNING/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/CHANGELOG/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/CHANGELOG/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/COMPLIANCE_DORA_NIS2/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/COMPLIANCE_DORA_NIS2/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/CONFIGURATION/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/COMPOSE/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/DEMO_SCENARIOS/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/CONFIGURATION/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/DISASTER_RECOVERY/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/DEMO_SCENARIOS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/DYNAMIC_CONFIG_PLAN/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/DEPLOYMENT/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/GLOSSARY/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/DISASTER_RECOVERY/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/HARDENING/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/DYNAMIC_CONFIG_PLAN/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/HIGH_AVAILABILITY/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/FAN_OUT/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/INTEGRATION_COOKBOOK/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/GLOSSARY/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/LIMITS/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/HARDENING/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/METRICS/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/HIGH_AVAILABILITY/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/MIGRATION_FROM_SCRIPTS/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/INTEGRATION_COOKBOOK/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/OPENSHIFT/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/LIMITS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/PERMISSIONS/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/LOGS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/POSITIONING/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/METRICS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/PRODUCTION_DEPLOYMENT/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/MIGRATION_FROM_SCRIPTS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/QUICKSTART/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/OPENSHIFT/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/RELEASE/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/PERMISSIONS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/RUNBOOKS/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/POSITIONING/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/SECURITY_ARCHITECTURE/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/POWERSHELL_COMMANDS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/SQLITE_IMPLEMENTATION/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/PRODUCTION_DEPLOYMENT/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/TROUBLESHOOTING/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/QUICKSTART/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/UPGRADE/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/RELEASE/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/USER_GUIDE/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/RUNBOOKS/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/WINDOWS_DEPLOYMENT/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/SECURITY_ARCHITECTURE/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/architecture/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/SQLITE_IMPLEMENTATION/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.10.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/TROUBLESHOOTING/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.10.1/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/UPGRADE/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.10.2/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/USER_GUIDE/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.11.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/WINDOWS_DEPLOYMENT/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.12.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/WINDOWS_PRODUCTION/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.12.2/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/architecture/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.12.3/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/AUDIT-BANQUE-2026-10-08.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.12.4/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/AVANT-LIVRAISON.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.12.5/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/DEMARRER-ICI.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.12.6/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-EVALUATION.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.13.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/LIVRABLE.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.14.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/OPENSHIFT-RESULTATS-2026-10-08.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.15.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/OPENSHIFT-RESULTATS-2026-10-28.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.16.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/OPENSHIFT-REVIEW-2026-10-06/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.17.0/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/RESEAU-IMAGES-AGENTS.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.17.1/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/SECURITE-DEPENDANCES-2026-10-08.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.17.2/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/qualification/SECURITE-DEPENDANCES-2026-10-28.fr/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.17.3/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/api/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.17.4/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/cli/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.18.13/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/configuration/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.9.10/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/database/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.9.11/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/enums/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/quality-reports/QUALITY-REPORT-v1.9.9/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/errors/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/reference/api/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/fsm/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/reference/cli/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/mcp/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
     <url>
-         <loc>https://docs.appcontrol.io/reference/configuration/</loc>
-         <lastmod>2026-05-13</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.appcontrol.io/reference/database/</loc>
-         <lastmod>2026-05-13</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.appcontrol.io/reference/enums/</loc>
-         <lastmod>2026-05-13</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.appcontrol.io/reference/errors/</loc>
-         <lastmod>2026-05-13</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.appcontrol.io/reference/fsm/</loc>
-         <lastmod>2026-05-13</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.appcontrol.io/reference/mcp/</loc>
-         <lastmod>2026-05-13</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.appcontrol.io/reference/metrics/</loc>
-         <lastmod>2026-05-13</lastmod>
+         <loc>https://xcomponent.github.io/appcontrol-release/reference/metrics/</loc>
+         <lastmod>2026-10-31</lastmod>
     </url>
 </urlset>

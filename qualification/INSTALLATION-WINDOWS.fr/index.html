@@ -853,6 +853,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cas-c-deux-depots-artifactory-distincts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cas C — deux dépôts Artifactory distincts
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2161,6 +2170,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cas-c-deux-depots-artifactory-distincts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cas C — deux dépôts Artifactory distincts
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2292,9 +2310,9 @@ paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.<
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.20.4</strong>. Paquet : <strong>Windows léger 1.20.4-4</strong>.</p>
+<p>Produit : <strong>AppControl 1.20.4</strong>. Paquet : <strong>Windows léger 1.20.4-5</strong>.</p>
 <blockquote>
-<p>La révision 1.20.4-4 ajoute le canal public d’évaluation et la mise à jour explicite. La chaîne de livraison publie le kit uniquement après vérification du téléchargement anonyme et qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, <code>PUBLICATION-EVALUATION-1.20.4-4.json</code> et <code>QUALIFICATION-EVALUATION-1.20.4-4.zip</code>, jointes aux assets de la release lors de la livraison du kit. Les résultats historiques du paquet 1.20.4-3 ne valident pas cette nouvelle révision.</p>
+<p>La révision 1.20.4-5 corrige la protection des fichiers locaux pour un compte Windows non administrateur et permet un dépôt Artifactory séparé pour PostgreSQL. La chaîne de livraison publie le kit uniquement après vérification du téléchargement anonyme et qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, <code>PUBLICATION-EVALUATION-1.20.4-5.json</code> et <code>QUALIFICATION-EVALUATION-1.20.4-5.zip</code>, jointes aux assets de la release lors de la livraison du kit. Les résultats des révisions précédentes ne valident pas cette nouvelle révision.</p>
 </blockquote>
 <h2 id="1-ce-qui-sera-deploye">1. Ce qui sera déployé<a class="headerlink" href="#1-ce-qui-sera-deploye" title="Permanent link">&para;</a></h2>
 <p><strong>Le script vous demande quel projet/namespace utiliser, puis quel mode PostgreSQL installer.</strong> Les deux options utilisent les mêmes images AppControl et les mêmes scripts PowerShell.</p>
@@ -2415,6 +2433,12 @@ utilise cinq packages dédiés dans GitHub Container Registry, <strong>GHCR</str
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>ghcr.io/xcomponent/appcontrol-eval-postgresql
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ghcr.io/xcomponent/appcontrol-eval-agent
 </span></code></pre></div>
+<p><strong>PostgreSQL est également publié sur GHCR</strong> :
+<a href="https://github.com/orgs/xcomponent/packages/container/package/appcontrol-eval-postgresql">package public <code>appcontrol-eval-postgresql</code></a>.
+Les images se trouvent dans la rubrique <strong>Packages</strong>, tandis que les scripts
+et les rapports se trouvent dans <strong>Releases</strong>. Le kit utilise cette image
+PostgreSQL XComponent préparée pour OpenShift ; une image <code>postgres</code> standard
+ou une image bancaire différente ne la remplace pas automatiquement.</p>
 <p>Ces images d’évaluation sont destinées au <strong>téléchargement anonyme</strong> : aucun
 compte GitHub, mot de passe ou jeton GHCR à fournir sur le poste client, dans
 OpenShift ou dans la connexion amont d’Artifactory. Les packages historiques
@@ -2478,8 +2502,8 @@ Si l’accès Artifactory est déjà assuré par la plateforme ou si la lecture 
 anonyme, <strong>omettre <code>-SecretImages</code></strong> après confirmation de l’équipe plateforme.
 L’accès amont public à GHCR ne rend pas automatiquement Artifactory public.</p>
 <p>Une seule demande de préparation suffit : <strong>projet cible, préfixe exact des
-images <code>appcontrol-eval-*</code> dans Artifactory, nom éventuel du secret de lecture,
-et confirmation que les nœuds peuvent tirer ces images par digest.</strong> Les mêmes
+images <code>appcontrol-eval-*</code> dans Artifactory (et celui de PostgreSQL s’il est
+différent), nom éventuel du secret de lecture, et confirmation que les nœuds peuvent tirer ces images par digest.</strong> Les mêmes
 paramètres sont réutilisés pour les versions suivantes. La banque peut garder
 une étape d’approbation et de scan pour chaque nouvelle version.</p>
 <p>Le cache Artifactory se remplit à la demande. La plateforme peut aussi précharger
@@ -2489,18 +2513,45 @@ installer sur le poste Windows.</p>
 <p>Références : <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry">accès anonyme aux images publiques GHCR</a>,
 <a href="https://docs.jfrog.com/artifactory/docs/docker-repositories">dépôts Docker JFrog</a>,
 <a href="https://docs.jfrog.com/artifactory/docs/remote-repositories">cache distant JFrog</a>.</p>
+<h3 id="cas-c-deux-depots-artifactory-distincts">Cas C — deux dépôts Artifactory distincts<a class="headerlink" href="#cas-c-deux-depots-artifactory-distincts" title="Permanent link">&para;</a></h3>
+<p>Si les quatre images AppControl et l’image PostgreSQL XComponent sont exposées
+par deux dépôts différents, fournir les deux préfixes Docker :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;artifactory.banque.example/appcontrol/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  <span class="n">-RegistrePostgreSQL</span> <span class="s1">&#39;artifactory.banque.example/bases/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+</span></code></pre></div>
+<p>Ces adresses sont <strong>des exemples à remplacer par les chemins fournis par la
+plateforme</strong>, sans <code>https://</code> ni nom d’image. Le script construira notamment :</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>artifactory.banque.example/appcontrol/xcomponent/appcontrol-eval-backend@sha256:…
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>artifactory.banque.example/bases/xcomponent/appcontrol-eval-postgresql@sha256:…
+</span></code></pre></div>
+<p><code>-RegistrePostgreSQL</code> ne change que le chemin d’accès de PostgreSQL. Il conserve
+le nom <code>appcontrol-eval-postgresql</code> et l’empreinte de l’image qualifiée. Les
+autres images utilisent <code>-Registre</code>. <strong>Ne pas modifier <code>images.lock.json</code>.</strong>
+Sans ce paramètre, PostgreSQL utilise le même préfixe que les autres images.</p>
+<p>Le secret éventuel doit permettre la lecture des <strong>deux dépôts</strong>. Si la
+plateforme assure déjà cet accès, omettre <code>-SecretImages</code>. Les deux préfixes
+sont enregistrés pour les relances. Pour les modifier après installation,
+utiliser le parcours <code>-MettreAJour</code>, après sauvegarde, en précisant le préfixe
+à changer.</p>
+<p>Cette option concerne uniquement <strong>PostgreSQL intégré</strong>. Elle est refusée en
+mode externe, qui ne déploie aucune image de base. Si le second dépôt contient
+une image PostgreSQL standard ou propre à la banque, faire qualifier sa
+compatibilité séparément, ou utiliser une base déjà exploitée par la banque
+avec <code>-ModePostgreSQL Externe</code> et sa chaîne de connexion.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-4.zip">Paquet Windows léger — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-4.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-5.zip">Paquet Windows léger — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-5.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.20.4-4.zip&#39;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Empreinte incorrecte : ne pas utiliser cette archive.&#39;</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.20.4-5.zip&#39;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Empreinte incorrecte : ne pas utiliser cette archive.&#39;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Utiliser <strong>Extraire tout</strong> dans l’Explorateur. Ouvrir le dossier contenant
 <code>Deployer-AppControl.ps1</code>, taper <code>powershell</code> dans la barre d’adresse, puis Entrée.
@@ -2509,16 +2560,16 @@ Les autres fichiers PowerShell sont les fonctions utilisées par le script ;
 ce ne sont pas des logiciels supplémentaires à installer.</p>
 <h2 id="5-lancer-et-choisir-le-projet-et-postgresql">5. Lancer et choisir le projet et PostgreSQL<a class="headerlink" href="#5-lancer-et-choisir-le-projet-et-postgresql" title="Permanent link">&para;</a></h2>
 <p>Vérifier la connexion habituelle :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">oc</span> <span class="n">whoami</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">oc</span> <span class="n">whoami</span>
 </span></code></pre></div>
 <p>Le projet doit déjà exister. Si sa création vous est autorisée, vous pouvez d’abord utiliser <code>oc new-project appcontrol-evaluation</code> selon la procédure de la plateforme.</p>
 <p><strong>Avec un accès direct à GHCR autorisé</strong>, lancer simplement :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span>
 </span></code></pre></div>
 <p><strong>Avec Artifactory</strong>, renseigner seulement l’adresse Docker et le secret de lecture fournis par la plateforme, puis laisser le script guider les choix :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="p">`</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="p">`</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
 <p>Ces deux valeurs sont des exemples à remplacer. Si la plateforme confirme que l’accès au registre interne est déjà assuré, omettre <code>-SecretImages</code>. Le canal public GHCR par défaut ne demande aucun secret GitHub.</p>
 <p>Le script présente successivement :</p>
@@ -2531,9 +2582,9 @@ ce ne sont pas des logiciels supplémentaires à installer.</p>
 <p>Le namespace n’est jamais déduit silencieusement du projet courant. Le script utilise <code>-n</code> pour cibler les objets et une copie privée de la connexion ; il ne change pas le projet par défaut de votre configuration <code>oc</code>. Il ne crée pas implicitement de projet et refuse les conflits avec une installation existante.</p>
 <h3 id="choix-1-postgresql-integre">Choix 1 : PostgreSQL intégré<a class="headerlink" href="#choix-1-postgresql-integre" title="Permanent link">&para;</a></h3>
 <p>Aucune chaîne de connexion à fournir. Le script prépare la base, les identifiants, les certificats et le stockage. Pour prédéfinir ces deux choix :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
 <p>Ajouter <code>-ClasseStockage 'nom-fourni-par-la-plateforme'</code> uniquement si la classe par défaut ne convient pas. Cette option concerne uniquement la base intégrée.</p>
 <h3 id="choix-2-postgresql-externe-fourni-par-la-banque">Choix 2 : PostgreSQL externe fourni par la banque<a class="headerlink" href="#choix-2-postgresql-externe-fourni-par-la-banque" title="Permanent link">&para;</a></h3>
@@ -2546,19 +2597,19 @@ ce ne sont pas des logiciels supplémentaires à installer.</p>
 </ul>
 <p>PostgreSQL 16 est la version de référence de cette livraison. Le compte applicatif n’a pas besoin d’être superutilisateur ; il doit disposer des droits sur sa base dédiée et sur le schéma utilisé par les migrations.</p>
 <p>Lancer le script avec le mode externe ; il demandera les informations manquantes :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
 <p>La saisie de la chaîne de connexion est <strong>masquée</strong>. Elle n’apparaît ni dans l’historique PowerShell, ni dans les YAML livrés, ni dans le récapitulatif. Elle est conservée dans le dossier privé de reprise, puis transmise à un Secret OpenShift. Ce dossier contient des secrets lisibles par votre compte Windows et le système : ne pas le partager. Les administrateurs autorisés du cluster peuvent accéder aux Secrets selon les droits de la banque.</p>
 <p>On peut préparer les valeurs non secrètes avec <code>-CertificatPostgreSQL 'C:\Certificats\ca-postgres.pem'</code> et <code>-CidrPostgreSQL @('10.20.30.40/32','10.20.30.41/32')</code>. Pour une automatisation, <code>-ChaineConnexion</code> attend un objet <code>SecureString</code>, obtenu par exemple avec <code>Read-Host -AsSecureString</code> ; ne pas écrire un mot de passe en clair dans la commande. <code>-NonInteractif</code> exige le projet et le mode explicites à la première installation.</p>
 <h3 id="option-ignorer-la-validation-du-certificat-postgresql">Option : ignorer la validation du certificat PostgreSQL<a class="headerlink" href="#option-ignorer-la-validation-du-certificat-postgresql" title="Permanent link">&para;</a></h3>
 <p><strong>Disponible depuis le paquet léger 1.20.4-3.</strong> C’est l’équivalent d’une option HTTPS qui accepte un certificat non reconnu. Elle est désactivée par défaut et concerne uniquement la connexion du backend à <strong>PostgreSQL externe</strong>.</p>
 <p>Ajouter <code>-IgnorerCertificatPostgreSQL</code> dès la première installation :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span> <span class="p">`</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  <span class="n">-IgnorerCertificatPostgreSQL</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span> <span class="p">`</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  <span class="n">-IgnorerCertificatPostgreSQL</span>
 </span></code></pre></div>
 <p>Remplacer les deux valeurs de registre et de secret par celles de la plateforme. Sans option en ligne de commande, l’assistant interactif propose aussi ce choix lors d’une nouvelle installation externe si aucun fichier CA n’a été fourni. Entrée conserve le mode avec vérification.</p>
 <p>Dans ce mode :</p>
@@ -2623,25 +2674,26 @@ il n’y a ni image à transporter sur le poste, ni compte GitHub à créer.</p>
 <li><strong>Sauvegarder PostgreSQL avant la mise à jour</strong> et disposer d’une procédure de restauration. Pour une base externe, obtenir la confirmation de l’équipe base de données. Pour la base intégrée, appliquer la procédure de sauvegarde retenue pour le POC. Le script ne crée pas cette sauvegarde et un PVC n’en tient pas lieu.</li>
 <li>Réserver une interruption des services AppControl, puis lancer depuis le nouveau kit :</li>
 </ol>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-MettreAJour</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-MettreAJour</span>
 </span></code></pre></div>
 <p>Reprendre le même <code>-Nom</code> si l’installation initiale utilisait un nom personnalisé,
 et le même <code>-DossierEtat</code> si vous aviez choisi un autre emplacement. Le script
-retrouve les paramètres enregistrés : registre, éventuel secret d’images,
+retrouve les paramètres enregistrés : registre AppControl, éventuel registre
+PostgreSQL distinct, éventuel secret d’images,
 mode PostgreSQL, connexion et politique TLS. L’assistant demande confirmation
 que la sauvegarde a été réalisée avant d’appliquer la mise à jour.</p>
 <p>Pour passer d’une ancienne installation utilisant directement le miroir privé
 à la distribution publique XComponent, préciser le nouveau registre :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-Registre</span> <span class="s1">&#39;ghcr.io/xcomponent&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-Registre</span> <span class="s1">&#39;ghcr.io/xcomponent&#39;</span>
 </span></code></pre></div>
 <p>Avec Artifactory, conserver le préfixe interne approuvé et faire autoriser les
 nouveaux noms <code>appcontrol-eval-*</code>. Un ancien secret de lecture est conservé :
 l’agent déjà installé peut encore utiliser son image privée. Le passage au
 canal public ne révoque pas automatiquement ces accès existants.</p>
 <p>Pour un lancement non interactif, après avoir réellement effectué la sauvegarde :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-SauvegardeConfirmee</span> <span class="n">-NonInteractif</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-SauvegardeConfirmee</span> <span class="n">-NonInteractif</span>
 </span></code></pre></div>
 <p><code>-SauvegardeConfirmee</code> est une <strong>attestation de l’opérateur</strong>, pas une commande de
 sauvegarde. L’installation garde son projet, son stockage, ses identifiants et
@@ -2678,6 +2730,13 @@ services en conservant la démonstration existante, ajouter <code>-SansDemo</cod
 cette option, la recette peut créer une nouvelle démonstration.</p>
 <p>Le script refuse d’écraser une installation Helm ou des objets qui ne lui
 appartiennent pas. Ne pas supprimer le dossier privé pour contourner un refus.</p>
+<p>Si une première installation a été bloquée par <code>SeSecurityPrivilege</code>, extraire
+le nouveau kit dans un autre dossier et y relancer la même commande, avec le
+même projet, le même nom et, si vous en aviez fourni un, le même <code>-DossierEtat</code>.
+Le correctif protège les fichiers locaux et reprend la préparation avec les
+paramètres conservés. <strong>Ne pas ajouter <code>-MettreAJour</code> pour débloquer cette
+première installation</strong> ; cette option sert à changer une installation déjà
+déployée. Ne pas supprimer son dossier d’état.</p>
 <table>
 <thead>
 <tr>
@@ -2695,12 +2754,16 @@ appartiennent pas. Ne pas supprimer le dossier privé pour contourner un refus.<
 <td>Faire approuver les fichiers par l’équipe poste de travail ; ne pas désactiver la politique d’exécution.</td>
 </tr>
 <tr>
+<td><code>SeSecurityPrivilege</code> dans <code>Windows-Common.ps1</code> / <code>Set-Acl</code></td>
+<td>Utiliser le kit léger 1.20.4-5 ou ultérieur. Ce correctif protège les fichiers locaux sans demander le privilège d’audit Windows. Conserver le dossier d’état et les paramètres de l’installation ; ne pas relancer en administrateur ni retirer la protection des fichiers pour contourner cette erreur.</td>
+</tr>
+<tr>
 <td>Secret d’images absent</td>
 <td>Pour Artifactory privé, faire créer le secret dans le bon projet. Le canal public GHCR <code>appcontrol-eval-*</code> n’en demande pas.</td>
 </tr>
 <tr>
 <td><code>ImagePullBackOff</code></td>
-<td>Chemin <code>appcontrol-eval-*</code>, droits OpenShift → registre interne, accès amont Artifactory → GHCR et confiance TLS des nœuds.</td>
+<td>Chemin <code>appcontrol-eval-*</code>, droits OpenShift → registre interne, accès amont Artifactory → GHCR et confiance TLS des nœuds. Si PostgreSQL utilise un dépôt distinct, vérifier aussi <code>-RegistrePostgreSQL</code> et les droits sur ce dépôt.</td>
 </tr>
 <tr>
 <td>Changement d’images refusé en reprise</td>
@@ -2730,6 +2793,11 @@ appartiennent pas. Ne pas supprimer le dossier privé pour contourner un refus.<
 </table>
 <h2 id="qualification-et-suite-du-poc">Qualification et suite du POC<a class="headerlink" href="#qualification-et-suite-du-poc" title="Permanent link">&para;</a></h2>
 <p><strong>Historique :</strong> le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-WINDOWS-OC-v1.20.4-3.fr.md">rapport des trois parcours du paquet 1.20.4-3</a> décrit les tests avec PostgreSQL intégré, PostgreSQL externe avec vérification du certificat, et PostgreSQL externe chiffré avec validation du certificat désactivée. Il précise aussi le refus d’un serveur sans TLS et les limites de la qualification.</p>
+<p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-EVALUATION-1.20.4-4.fr.md">rapport du paquet 1.20.4-4</a>
+décrit la publication anonyme, les trois profils d’installation et la mise à
+jour avec PostgreSQL intégré depuis le kit 1.20.4-3. Il ne couvre pas le
+correctif de droits Windows ni l’option de dépôt PostgreSQL séparé introduits
+dans la révision courante : ceux-ci doivent figurer dans ses propres preuves.</p>
 <p>Les preuves applicables au canal public doivent identifier le kit exact,
 Windows/PowerShell, les cinq références <code>appcontrol-eval-*</code>, le téléchargement
 sans identifiants GHCR et la conservation des données lors d’une mise à jour.
@@ -2774,7 +2842,7 @@ option distincte. Ce n’est pas le parcours recommandé ci-dessus.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T06:55:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T16:46:10+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
   </span>
 
     

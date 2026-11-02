@@ -1944,6 +1944,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="D'où viennent les images ?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parcours-windows-leger-telechargement-par-le-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parcours Windows léger : téléchargement par le cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variante-hors-ligne-et-reconditionnement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variante hors ligne et reconditionnement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2006,6 +2030,9 @@
 
 
 <h1 id="installer-sans-ambiguite-registre-reseau-gateway-et-agents">Installer sans ambiguïté : registre, réseau, gateway et agents<a class="headerlink" href="#installer-sans-ambiguite-registre-reseau-gateway-et-agents" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Parcours Windows recommandé :</strong> <a href="../INSTALLATION-WINDOWS.fr/">PowerShell + oc</a>, avec téléchargement des images publiques d’évaluation par le cluster. Les commandes Python/Skopeo plus bas concernent les variantes Linux/macOS et hors ligne.</p>
+</blockquote>
 <h2 id="le-schema-de-base">Le schéma de base<a class="headerlink" href="#le-schema-de-base" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Navigateur ── HTTPS 443 ── Route web (réencryptée) ── interface:8080 ── backend:3000
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                                                            │
@@ -2037,7 +2064,7 @@ si la segmentation réseau du client l'impose.</p>
 <td>Poste d'administration</td>
 <td>API OpenShift</td>
 <td>Port de leur API, généralement 6443</td>
-<td>Installation et recette avec oc/kubectl/Helm</td>
+<td>Windows : PowerShell + oc ; variante Linux/macOS : kubectl/Helm</td>
 </tr>
 <tr>
 <td>Nœuds OpenShift</td>
@@ -2111,29 +2138,34 @@ inspection intermédiaire qui supprime le certificat client. Vérifier que le
 réseau autorise WebSocket et une connexion longue. Un proxy authentifié imposé
 aux agents nécessite une qualification spécifique ; il n'est pas couvert par ce test.</p>
 <h2 id="dou-viennent-les-images">D'où viennent les images ?<a class="headerlink" href="#dou-viennent-les-images" title="Permanent link">&para;</a></h2>
-<p>Le kit officiel 1.20.4 fournit les archives OCI des cinq images exactes et leurs
-références dans <code>images.source.lock.json</code>. Les importer dans le registre interne
-du client ne nécessite aucun accès au Sandbox ni au registre source. Consulter
-<code>provenance.json</code> et les preuves datées du kit pour les digests qualifiés.
-Les observations de visibilité des registres et le candidat ed757ba du
-8 octobre sont des historiques ; ils ne décrivent pas la livraison 1.20.4.</p>
-<p>Le kit utilise le chemin hors ligne ci-dessous. Les autres options restent possibles :</p>
+<p>Le canal public d’évaluation fournit cinq images <code>ghcr.io/xcomponent/appcontrol-eval-*</code>
+(backend, frontend, gateway, PostgreSQL et agent), accessibles sans identifiants
+GHCR. Le fichier <code>images.lock.json</code> du kit Windows fixe les empreintes à utiliser.
+Les anciens packages <code>appcontrol-*</code> restent privés ; la qualification d’un ancien
+miroir privé ne prouve pas l’accès au nouveau canal. Consulter le rapport du kit
+livré pour les références et parcours effectivement testés.</p>
+<h3 id="parcours-windows-leger-telechargement-par-le-cluster">Parcours Windows léger : téléchargement par le cluster<a class="headerlink" href="#parcours-windows-leger-telechargement-par-le-cluster" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Registre éditeur autorisé :</strong> remettre les cinq références par digest et les
-   modalités d'authentification. Un <code>imagePullSecret</code> déjà créé dans le projet
-   peut être passé avec <code>--image-pull-secret NOM</code>. Ne pas changer la visibilité
-   d'un dépôt pour résoudre une difficulté d'installation.</li>
-<li><strong>Registre interne, recommandé :</strong> copier une fois les images approuvées, puis
-   installer uniquement depuis le registre bancaire. Le script
-   <code>transfer-images.py</code> conserve les digests et génère le lock de l'installateur.</li>
-<li><strong>Réseau fermé :</strong> exporter des archives OCI depuis un poste autorisé, les
-   transférer par le canal convenu puis les importer dans le registre interne.</li>
-<li><strong>Base bancaire imposée :</strong> copier nos artefacts compilés sur cette base avec
-   <code>docker/corporate/</code>. Scanner les nouvelles images et produire leurs nouveaux
-   digests ; les anciens scans ne s'y appliquent plus.</li>
+<li><strong>Artifactory de la banque :</strong> la plateforme configure le dépôt Docker distant vers GHCR et autorise les noms <code>appcontrol-eval-*</code>. Le téléchargement amont est anonyme ; la lecture d’Artifactory par OpenShift peut conserver l’authentification interne de la banque.</li>
+<li><strong>Accès direct à GHCR, si autorisé :</strong> conserver les références par défaut, sans compte GitHub ni Secret d’images GHCR.</li>
+<li><strong>Poste Windows :</strong> fournir le préfixe de registre et le nom du secret interne éventuel au script. Aucun <code>docker login</code>, Skopeo ou téléchargement d’images sur le poste n’est demandé.</li>
 </ol>
-<p>Les cinq images incluent l'agent de recette ; seules les quatre images de services
-sont requises par l'installateur. Les agents sur VM peuvent utiliser le binaire.</p>
+<p>Pour les versions suivantes, la chaîne de livraison réutilise ces mêmes noms
+avec de nouvelles versions et empreintes ; le kit choisit des digests précis.
+La banque peut continuer d’approuver et scanner chaque version. Une mise à jour
+de l’installation demande une sauvegarde PostgreSQL puis l’option
+<code>-MettreAJour</code> du <a href="../INSTALLATION-WINDOWS.fr/#mettre-a-jour-le-poc">script Windows</a>.</p>
+<h3 id="variante-hors-ligne-et-reconditionnement">Variante hors ligne et reconditionnement<a class="headerlink" href="#variante-hors-ligne-et-reconditionnement" title="Permanent link">&para;</a></h3>
+<p>Le kit Linux/macOS original 1.20.4 contient les cinq archives OCI et
+<code>images.source.lock.json</code>. Son import dans le registre interne ne nécessite
+aucun accès au registre source ou au Sandbox. Ces archives, les commandes
+Python/Skopeo ci-dessous et le <a href="../LIVRABLE.fr/">guide de livraison</a> concernent
+ce chemin distinct ; ils ne sont pas nécessaires au parcours Windows léger.</p>
+<p>Si la banque impose ses propres bases, les artefacts compilés peuvent être
+reconditionnés avec <code>docker/corporate/</code>. Scanner les nouvelles images et produire
+leurs nouveaux digests : les anciens scans ne s’y appliquent plus.</p>
+<p>Les cinq images incluent l’agent de recette. PostgreSQL intégré est facultatif
+dans le parcours Windows ; les agents sur VM peuvent utiliser le binaire.</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Prérequis : Skopeo et accès aux registres via skopeo login (mot de passe hors argv).</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># source.lock.json : quatre services + éventuellement agent, tous par digest.</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Sans --execute, ces commandes affichent seulement le plan.</span>
@@ -2155,7 +2187,10 @@ configuration de confiance de Skopeo et des nœuds, selon la procédure platefor
 Les commandes d'import doivent être validées sur le registre cible ; aucun
 registre client n'était accessible lors de cette qualification.</p>
 <h2 id="la-commande-a-derouler-chez-le-client">La commande à dérouler chez le client<a class="headerlink" href="#la-commande-a-derouler-chez-le-client" title="Permanent link">&para;</a></h2>
-<p>Copier <code>scripts/qualification/client.example.json</code> en <code>client.json</code> et renseigner
+<p><strong>Sur Windows :</strong> suivre le <a href="../INSTALLATION-WINDOWS.fr/">guide PowerShell + oc</a>.
+Lancer <code>Deployer-AppControl.ps1</code> et choisir le projet et la base ; utiliser
+<code>-Registre</code> et éventuellement <code>-SecretImages</code> pour le registre bancaire.</p>
+<p><strong>Variante Linux/macOS originale uniquement :</strong> copier <code>scripts/qualification/client.example.json</code> en <code>client.json</code> et renseigner
 les noms de projet, de contexte, les deux Routes et les chemins. Ce fichier ne
 contient aucun mot de passe. Les chemins relatifs sont résolus depuis son dossier.</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python3<span class="w"> </span>scripts/qualification/install.py<span class="w"> </span>--config<span class="w"> </span>client.json<span class="w"> </span>--preflight-only
@@ -2241,7 +2276,7 @@ Ils ne remplacent pas les tests des nouveaux artefacts ni ceux du réseau client
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-31T08:43:56+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T06:55:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
   </span>
 
     

@@ -22,7 +22,7 @@
     
     
       
-        <title>AppControl sur OpenShift — première évaluation client - AppControl</title>
+        <title>AppControl sur OpenShift — démarrer le POC - AppControl</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#appcontrol-sur-openshift-premiere-evaluation-client" class="md-skip">
+        <a href="#appcontrol-sur-openshift-demarrer-le-poc" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AppControl sur OpenShift — première évaluation client
+              AppControl sur OpenShift — démarrer le POC
             
           </span>
         </div>
@@ -1920,60 +1920,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#decision-darchitecture" class="md-nav__link">
+  <a href="#avant-le-premier-creneau" class="md-nav__link">
     <span class="md-ellipsis">
-      Décision d'architecture
+      Avant le premier créneau
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ce-que-recoit-lequipe-plateforme" class="md-nav__link">
+  <a href="#installer-demontrer-faire-evoluer" class="md-nav__link">
     <span class="md-ellipsis">
-      Ce que reçoit l'équipe plateforme
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Ce que reçoit l'équipe plateforme">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#formulation-a-proposer-au-client" class="md-nav__link">
-    <span class="md-ellipsis">
-      Formulation à proposer au client
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parcours-court-installer-constater-decider" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parcours court : installer, constater, décider
+      Installer, démontrer, faire évoluer
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ressources-de-depart-sans-surpromesse" class="md-nav__link">
+  <a href="#ce-qui-tourne-dans-le-projet" class="md-nav__link">
     <span class="md-ellipsis">
-      Ressources de départ, sans surpromesse
+      Ce qui tourne dans le projet
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#securite-et-frontieres-de-la-premiere-installation" class="md-nav__link">
+  <a href="#images-et-politique-bancaire" class="md-nav__link">
     <span class="md-ellipsis">
-      Sécurité et frontières de la première installation
+      Images et politique bancaire
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ressources-de-depart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ressources de départ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securite-et-perimetre-de-levaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sécurité et périmètre de l’évaluation
     </span>
   </a>
   
@@ -2002,139 +1996,151 @@
   
 
 
-<h1 id="appcontrol-sur-openshift-premiere-evaluation-client">AppControl sur OpenShift — première évaluation client<a class="headerlink" href="#appcontrol-sur-openshift-premiere-evaluation-client" title="Permanent link">&para;</a></h1>
+<h1 id="appcontrol-sur-openshift-demarrer-le-poc">AppControl sur OpenShift — démarrer le POC<a class="headerlink" href="#appcontrol-sur-openshift-demarrer-le-poc" title="Permanent link">&para;</a></h1>
+<p><strong>Depuis un poste Windows, suivre le <a href="../INSTALLATION-WINDOWS.fr/">guide PowerShell + oc</a>.</strong>
+Le petit ZIP contient uniquement les scripts et les YAML. Il utilise la commande
+<code>oc</code> déjà approuvée sur le poste ; aucun Docker, Python, Helm ou outil de transfert
+d’images n’est à installer. Les nœuds OpenShift téléchargent les images.</p>
+<p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases">dépôt public de livraison XComponent</a>
+centralise les kits versionnés, les procédures et les rapports. Le canal public
+d’évaluation emploie les images <strong><code>ghcr.io/xcomponent/appcontrol-eval-*</code></strong>, sans
+compte GitHub ni mot de passe de téléchargement. Il peut être relayé par
+Artifactory selon les règles de la banque. Les anciens packages <code>appcontrol-*</code>
+restent privés ; le dépôt source n’est pas rendu public.</p>
 <blockquote>
-<p><strong>Installation depuis un poste Windows :</strong> commencer par le <a href="../INSTALLATION-WINDOWS.fr/">guide Windows en trois étapes</a>, avec le ZIP complet et l’assistant PowerShell sans Python. Les commandes Python ci-dessous concernent le kit Linux/macOS.</p>
+<p>La livraison du kit Windows léger est conditionnée au téléchargement anonyme
+des images et à la qualification du ZIP exact depuis Windows sur OpenShift.
+Choisir le kit et les preuves de la même révision dans les assets de la release :
+<code>PUBLICATION-EVALUATION-1.20.4-4.json</code> et <code>QUALIFICATION-EVALUATION-1.20.4-4.zip</code>
+pour le kit 1.20.4-4. Les rapports de la release 1.20.4 et du kit 1.20.4-3
+restent des preuves de leurs parcours respectifs ; ils ne valident pas à eux
+seuls la nouvelle mise à jour ni le téléchargement public.</p>
 </blockquote>
-<p><strong>Version à remettre : release officielle 1.20.4</strong>, avec son kit OpenShift et
-son checksum. Lire <code>VALIDATION.fr.md</code> et <code>provenance.json</code> dans le kit pour les
-preuves de cette version. Les candidats d'octobre restent des historiques.</p>
-<h2 id="decision-darchitecture">Décision d'architecture<a class="headerlink" href="#decision-darchitecture" title="Permanent link">&para;</a></h2>
-<p><strong>Conserver quatre pods pour l'évaluation autonome : interface web, backend,
-gateway et PostgreSQL.</strong> Un cinquième pod héberge seulement l'agent de la recette.
-L'agent réel s'installe sur les machines à piloter ; il ne faut pas un pod par application.
-Le connecteur MCP est optionnel et exécuté par le client IA ; cette recette n'en dépend pas.</p>
+<h2 id="avant-le-premier-creneau">Avant le premier créneau<a class="headerlink" href="#avant-le-premier-creneau" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Option</th>
-<th>Avantage</th>
-<th>Coût / limite</th>
-<th>Décision</th>
+<th>À obtenir</th>
+<th>Pourquoi</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>4 pods, base embarquée</td>
-<td>Installation autonome, chemin testé</td>
-<td>Base à sauvegarder ; mise à jour avec interruption</td>
-<td>Recommandé pour découvrir le produit</td>
+<td>Un projet OpenShift dédié et les droits de déploiement</td>
+<td>Isoler les objets du POC, sans demander <code>cluster-admin</code></td>
 </tr>
 <tr>
-<td>3 pods + PostgreSQL client</td>
-<td>Réutilise leur exploitation de base</td>
-<td>Intégration TLS, comptes, réseau et sauvegarde à qualifier</td>
-<td>Cible du POC si ce service est disponible</td>
+<td>Une connexion <code>oc</code> depuis le poste Windows</td>
+<td>Appliquer les YAML et ouvrir le tunnel d’installation</td>
 </tr>
 <tr>
-<td>1 pod avec plusieurs conteneurs</td>
-<td>Un seul objet à compter</td>
-<td>Toujours plusieurs images à scanner ; redémarrages couplés et réseau partagé</td>
-<td>Pas de gain suffisant</td>
+<td>Les images approuvées et accessibles aux nœuds</td>
+<td>Via Artifactory, ou directement depuis GHCR si la banque l’autorise</td>
 </tr>
 <tr>
-<td>1 conteneur regroupant tous les processus</td>
-<td>Une seule image</td>
-<td>Supervision des processus, signaux et health checks plus complexes ; dépendances réunies</td>
-<td>Non recommandé</td>
+<td>Le choix de PostgreSQL</td>
+<td>Base intégrée pour découvrir, ou base dédiée fournie par la banque</td>
+</tr>
+<tr>
+<td>Les accès réseau et certificats</td>
+<td>Routes web/gateway, registre et éventuelle base externe</td>
 </tr>
 </tbody>
 </table>
-<p>Le produit se déploie avec <strong>une commande et une release Helm</strong>, même avec quatre
-pods. Fusionner les processus n'enlèverait ni le stockage, ni les certificats,
-ni les flux à faire approuver. Aucun opérateur spécifique ou privilège cluster-admin
-n'est nécessaire aux pods. Le compte d'installation doit avoir les droits sur son projet.
-Le backend reste mono-instance, avec stratégie Recreate ; ce livrable ne promet pas de HA.</p>
-<h2 id="ce-que-recoit-lequipe-plateforme">Ce que reçoit l'équipe plateforme<a class="headerlink" href="#ce-que-recoit-lequipe-plateforme" title="Permanent link">&para;</a></h2>
-<p>Un paquet versionné contenant les cinq images OCI identifiées par digest,
-les binaires Linux AMD64, l'interface compilée,
-les migrations, le chart Helm, l'installateur, la recette fonctionnelle,
-les recettes d'images, les empreintes SHA-256 et les rapports/SBOM datés.
-Le répertoire privé d'installation, les mots de passe et les clés privées ne font
-pas partie du paquet partageable. L'import des archives dans le registre interne
-ne demande ni compilation ni accès du cluster à GitHub. La release officielle inclut un parcours d'évaluation ;
-elle ne certifie pas l'environnement de production du client. Consulter les <a href="../AVANT-LIVRAISON.fr/">points avant livraison</a>, qui distinguent les validations acquises des intégrations et développements encore nécessaires.</p>
-<h3 id="formulation-a-proposer-au-client">Formulation à proposer au client<a class="headerlink" href="#formulation-a-proposer-au-client" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>Nous livrons les exécutables AppControl déjà compilés et leurs empreintes,
-ainsi que les recettes d'empaquetage. Nous proposons une base minimale approuvée
-ensemble, ou votre base interne compatible. Construire l'image consiste à y
-copier ces artefacts : aucune compilation du produit ni téléchargement de
-dépendances applicatives n'est nécessaire chez vous. Vos scans, votre signature
-et votre registre restent applicables aux images finales.</p>
-</blockquote>
-<p>Deux chemins sont possibles : accepter les images éditeur par digest, ou
-reconditionner les binaires dans leurs bases. La release Linux est construite
-avec MUSL ; l'interface nécessite nginx et l'agent les outils de ses procédures.
-Une base <code>scratch</code> n'est donc pas un remplacement automatique des images du kit.
-Si leur politique impose la compilation depuis les sources, cet impératif doit être
-négocié explicitement ; le packaging seul ne permet pas de prétendre le satisfaire.
-Voir les <a href="../../docker/corporate/README.fr.md">recettes et contrats de compatibilité</a>.</p>
-<h2 id="parcours-court-installer-constater-decider">Parcours court : installer, constater, décider<a class="headerlink" href="#parcours-court-installer-constater-decider" title="Permanent link">&para;</a></h2>
+<p>Avec Artifactory, demander <strong>le préfixe Docker exact des images
+<code>appcontrol-eval-*</code></strong> et le <strong>nom éventuel du Secret OpenShift de lecture</strong>. Les
+packages publics ne demandent aucun identifiant GitHub amont ; les droits
+OpenShift → Artifactory restent ceux de la banque.</p>
+<h2 id="installer-demontrer-faire-evoluer">Installer, démontrer, faire évoluer<a class="headerlink" href="#installer-demontrer-faire-evoluer" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Avant le créneau :</strong> obtenir un projet dédié, les droits d'installation,
-   un registre accessible, les images approuvées, une classe de stockage et deux
-   noms de Route. Réserver 2 Gio de stockage pour cette évaluation. Préparer
-   Python 3.9+, <strong>kubectl</strong>, Helm 3 et OpenSSL sur le poste d'installation,
-   ainsi que Skopeo pour l'import des images. <strong><code>oc</code> seul ne suffit pas : les
-   scripts appellent <code>kubectl</code>.</strong> Vérifier les empreintes et importer les archives
-   OCI depuis la racine du kit selon le <a href="../LIVRABLE.fr/">guide de livraison</a>.</li>
-<li><strong>Précontrôle :</strong> exécuter l'installateur avec <code>--preflight-only</code>. Il vérifie
-   outils et droits ; l'accès aux images et les SCC seront prouvés au déploiement.</li>
-<li><strong>Installer :</strong> relancer la même commande sans cette option, avec le fichier
-   <code>images.lock.json</code> contenant les quatre digests et un dossier privé hors Git.</li>
-<li><strong>Recette :</strong> connexion HTTPS, agent enrôlé, map de deux composants, départ
-   dans l'ordre des dépendances, arrêt dans l'ordre inverse, refus d'exécution
-   avec une clé lecture seule, puis tests de reconnexion et persistance.
-   Utiliser <code>--openshift</code> et l'image agent issue de l'import. Cette recette
-   redémarre les services : uniquement dans le projet d'évaluation isolé.</li>
-<li><strong>Démontrer dans le navigateur :</strong> ouvrir la map créée par la recette, observer
-   ses deux composants, démarrer/arrêter et consulter les événements. Aucun appel
-   à une IA ni à un service client n'est requis.</li>
-<li><strong>Décider du POC :</strong> choisir une vraie application non critique, ses procédures
-   validées, ses comptes techniques et ses critères de succès. Raccorder ensuite
-   SSO, PKI et base gérée selon les règles de la banque.</li>
+<li>Télécharger le kit Windows léger et vérifier son empreinte SHA-256.</li>
+<li>Lancer <code>Deployer-AppControl.ps1</code>. Le script demande le projet et le mode PostgreSQL ; pour Artifactory, fournir les valeurs de la plateforme avec <code>-Registre</code> et éventuellement <code>-SecretImages</code>.</li>
+<li>Ouvrir l’URL affichée. La recette crée un agent et une map synthétique pour vérifier les dépendances, le démarrage, l’arrêt, les droits et la persistance.</li>
+<li>Choisir une vraie application non critique pour le POC : procédures, droits des agents et critères de succès restent définis avec son équipe d’exploitation.</li>
+<li>Pour une nouvelle version, récupérer son kit, sauvegarder PostgreSQL puis relancer <strong>le même script avec <code>-MettreAJour</code></strong>. Le dossier privé de l’installation, ses paramètres et ses données sont conservés ; prévoir une interruption des services. Voir la <a href="../INSTALLATION-WINDOWS.fr/#mettre-a-jour-le-poc">procédure de mise à jour</a>.</li>
 </ol>
-<p>Le <a href="../LIVRABLE.fr/">guide de livraison</a> fournit le parcours depuis le kit extrait ;
-la <a href="../INSTALLATION-EVALUATION.fr/">procédure détaillée</a> précise les options.
-Les durées d'approbation plateforme ne doivent pas être confondues avec le temps
-technique de déploiement. Aucun engagement « installé en dix minutes » sans ces prérequis.</p>
-<h2 id="ressources-de-depart-sans-surpromesse">Ressources de départ, sans surpromesse<a class="headerlink" href="#ressources-de-depart-sans-surpromesse" title="Permanent link">&para;</a></h2>
-<p>Les quatre services réservent au total <strong>1,1 vCPU et 960 Mio de mémoire</strong> dans le
-chart testé. L'agent de recette ajoute 0,05 vCPU et 32 Mio. Les limites maximales
-sont supérieures aux réservations. Une observation ponctuelle du 8 octobre donne
-29 millicœurs et 73 Mio utilisés par les quatre services ; ce n'est ni un test
-de charge ni une base suffisante pour diminuer les réservations.</p>
-<h2 id="securite-et-frontieres-de-la-premiere-installation">Sécurité et frontières de la première installation<a class="headerlink" href="#securite-et-frontieres-de-la-premiere-installation" title="Permanent link">&para;</a></h2>
-<p>Les tests vérifient TLS/mTLS, accès anonyme refusé, clé lecture seule refusée en
-exécution, SCC restricted-v2, UID arbitraire, racines en lecture seule et absence
-de privilèges additionnels. Les scans des cinq images exactes et des dépendances applicatives, outils de
-développement inclus, accompagnent le kit. La publication exige zéro
-vulnérabilité signalée. Les avertissements de maintenance RustSec restent
-visibles dans le rapport brut et ne doivent pas être présentés comme des
-vulnérabilités ni comme absents. La date et le périmètre des scans figurent dans les preuves de release ;
-cela ne remplace pas un pentest et ne signifie pas absence de faille.
-Rescanner après tout changement de base.</p>
-<p>La PKI générée est destinée à l'évaluation : certificats de service de 90 jours,
-jeton gateway de 30 jours. Leur renouvellement est explicite. Garder la démonstration
-isolée, avec uniquement des commandes synthétiques. La recette utilise des fichiers
-marqueurs pour vérifier l'ordre réel d'exécution ; elle ne simule pas la charge
-ou la restauration des données d'une application bancaire.</p>
-<p>Avant exploitation réelle : qualifier la restauration, les identités et la rotation,
-les flux, les droits OS des agents, la reprise d'une opération interrompue et les
-procédures de maintenance. Les agents exécutent les commandes autorisées avec leurs
-droits système : limiter ces droits reste indispensable.</p>
-<p>Pour les étapes concrètes de transfert et d’enrôlement, lire <a href="../RESEAU-IMAGES-AGENTS.fr/">Réseau, images et agents</a>.</p>
+<p>La mise à jour conserve les maps et ne rejoue pas la démonstration. Elle met à
+jour les services AppControl et, en mode intégré, l’image PostgreSQL. Les agents
+existants gardent leur version et leur identité ; leur mise à jour est une
+opération distincte.</p>
+<p>La publication des versions suivantes réutilise la chaîne existante. Les images
+validées sont copiées vers le même canal public avec un numéro de version,
+sans nouvelle compilation ni copie manuelle chez le client. L’installation
+reste fixée aux digests du kit choisi ; elle ne suit pas automatiquement
+<code>latest</code>.</p>
+<h2 id="ce-qui-tourne-dans-le-projet">Ce qui tourne dans le projet<a class="headerlink" href="#ce-qui-tourne-dans-le-projet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Choix</th>
+<th>Services AppControl</th>
+<th>Démonstration</th>
+<th>Base à préparer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL intégré</td>
+<td>Interface web, backend, gateway, PostgreSQL : <strong>4 pods</strong></td>
+<td>Agent supplémentaire : <strong>5 pods au total</strong></td>
+<td>Aucune ; volume persistant de 2 Gio</td>
+</tr>
+<tr>
+<td>PostgreSQL externe</td>
+<td>Interface web, backend, gateway : <strong>3 pods</strong></td>
+<td>Agent supplémentaire : <strong>4 pods au total</strong></td>
+<td>Base dédiée, connexion, réseau et politique TLS fournis par la banque</td>
+</tr>
+</tbody>
+</table>
+<p>La gateway est incluse. L’agent réel s’installe sur les machines à piloter ; il
+ne faut pas un pod par application. Le connecteur MCP est optionnel et cette
+recette ne dépend ni d’un fournisseur IA ni de Redis.</p>
+<p>Fusionner tous les processus dans un conteneur ne supprimerait ni le stockage,
+ni les certificats, ni les flux à faire approuver. Les services distincts gardent
+leurs responsabilités et leurs redémarrages propres. Le backend de ce profil
+reste mono-instance : la livraison d’évaluation ne promet pas de haute disponibilité.</p>
+<h2 id="images-et-politique-bancaire">Images et politique bancaire<a class="headerlink" href="#images-et-politique-bancaire" title="Permanent link">&para;</a></h2>
+<p>Le parcours recommandé utilise les images éditeur validées, identifiées par
+digest. Si la banque impose ses bases, les exécutables déjà compilés peuvent être
+reconditionnés avec les <a href="../../docker/corporate/README.fr.md">recettes et contrats de compatibilité</a>.
+L’image obtenue doit être scannée et testée à nouveau. La release Linux utilise
+MUSL ; l’interface nécessite nginx et l’agent les outils de ses procédures. Une
+base <code>scratch</code> n’est pas un remplacement automatique de ce contrat.</p>
+<p>Si leur politique impose la compilation depuis les sources, ce point doit être
+convenu explicitement : reconditionner les binaires ne signifie pas recompiler
+le produit.</p>
+<p>Pour un réseau fermé où les images doivent être transférées par un canal dédié,
+le <a href="../INSTALLATION-WINDOWS-HORS-LIGNE.fr/">kit hors ligne</a> et le
+<a href="../LIVRABLE.fr/">kit Linux/macOS original</a> restent disponibles. Ces variantes
+n’ajoutent aucun outil au parcours Windows léger ci-dessus.</p>
+<h2 id="ressources-de-depart">Ressources de départ<a class="headerlink" href="#ressources-de-depart" title="Permanent link">&para;</a></h2>
+<p>En mode intégré avec démonstration : <strong>1,15 vCPU et 992 Mio réservés</strong>, plus un
+volume PostgreSQL de 2 Gio. Avec PostgreSQL externe : <strong>0,90 vCPU et 736 Mio côté
+AppControl</strong>, hors base bancaire. Les limites des YAML sont supérieures aux
+réservations ; conserver une marge de quota pour les redémarrages.</p>
+<p>Le temps technique d’installation ne comprend pas les délais d’approbation du
+registre, du réseau et du projet. Ces prérequis conditionnent le premier créneau.</p>
+<h2 id="securite-et-perimetre-de-levaluation">Sécurité et périmètre de l’évaluation<a class="headerlink" href="#securite-et-perimetre-de-levaluation" title="Permanent link">&para;</a></h2>
+<p>Le caractère public concerne <strong>le téléchargement des images</strong>, pas l’accès à
+AppControl ni l’exposition de ses Routes sur Internet. Les droits utilisateurs,
+les clés d’API, le TLS et le mTLS des agents restent nécessaires.</p>
+<p>Les rapports de chaque livraison identifient les images exactes, la date et le
+périmètre des scans/SBOM et des tests OpenShift. Un rapport sans vulnérabilité
+signalée ne remplace pas un pentest et ne signifie pas absence de faille. Le
+registre Artifactory, les certificats et les règles réseau du client restent à
+qualifier sur place. Consulter les <a href="../AVANT-LIVRAISON.fr/">points avant livraison</a>.</p>
+<p>La PKI générée est destinée à l’évaluation : certificats de service de 90 jours
+et jeton gateway de 30 jours, avec renouvellement explicite. La map synthétique
+utilise des marqueurs dans le pod agent ; elle ne restaure pas une application
+bancaire et n’exécute aucune commande métier du client.</p>
+<p>Avant de dépendre des données du POC, qualifier leur sauvegarde et leur
+restauration. Une mise à jour peut appliquer des migrations de base ; le script
+ne promet pas de retour arrière automatique. Les droits OS des agents, les
+procédures, la rotation des accès, le SSO et la haute disponibilité se cadrent
+avec l’exploitation.</p>
+<p>Pour les flux et l’enrôlement d’agents extérieurs, lire
+<a href="../RESEAU-IMAGES-AGENTS.fr/">Réseau, images et agents</a>.</p>
 
 
 
@@ -2157,7 +2163,7 @@ droits système : limiter ces droits reste indispensable.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-31T10:33:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T06:55:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
   </span>
 
     

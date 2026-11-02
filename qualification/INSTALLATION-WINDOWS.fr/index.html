@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installer-et-mettre-a-jour-appcontrol-sur-openshift-avec-powershell-et-oc" class="md-skip">
+        <a href="#installer-mettre-a-jour-et-retirer-appcontrol-sur-openshift-avec-powershell-et-oc" class="md-skip">
           Skip to content
         </a>
       
@@ -942,6 +942,30 @@
       Mettre à jour le POC
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retirer-appcontrol-sans-supprimer-le-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retirer AppControl sans supprimer le projet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retirer AppControl sans supprimer le projet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supprimer-aussi-les-donnees-de-levaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supprimer aussi les données de l’évaluation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2263,6 +2287,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#retirer-appcontrol-sans-supprimer-le-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retirer AppControl sans supprimer le projet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retirer AppControl sans supprimer le projet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supprimer-aussi-les-donnees-de-levaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supprimer aussi les données de l’évaluation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reprendre-et-diagnostiquer" class="md-nav__link">
     <span class="md-ellipsis">
       Reprendre et diagnostiquer
@@ -2303,16 +2351,16 @@
   
 
 
-<h1 id="installer-et-mettre-a-jour-appcontrol-sur-openshift-avec-powershell-et-oc">Installer et mettre à jour AppControl sur OpenShift avec PowerShell et oc<a class="headerlink" href="#installer-et-mettre-a-jour-appcontrol-sur-openshift-avec-powershell-et-oc" title="Permanent link">&para;</a></h1>
+<h1 id="installer-mettre-a-jour-et-retirer-appcontrol-sur-openshift-avec-powershell-et-oc">Installer, mettre à jour et retirer AppControl sur OpenShift avec PowerShell et oc<a class="headerlink" href="#installer-mettre-a-jour-et-retirer-appcontrol-sur-openshift-avec-powershell-et-oc" title="Permanent link">&para;</a></h1>
 <p><strong>Le parcours Windows recommandé : la commande <code>oc</code> déjà installée, un petit
 paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.</strong></p>
 <p>OpenShift télécharge lui-même les images depuis le registre autorisé. Le paquet
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.20.4</strong>. Paquet : <strong>Windows léger 1.20.4-5</strong>.</p>
+<p>Produit : <strong>AppControl 1.20.4</strong>. Paquet : <strong>Windows léger 1.20.4-6</strong>.</p>
 <blockquote>
-<p>La révision 1.20.4-5 corrige la protection des fichiers locaux pour un compte Windows non administrateur et permet un dépôt Artifactory séparé pour PostgreSQL. La chaîne de livraison publie le kit uniquement après vérification du téléchargement anonyme et qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, <code>PUBLICATION-EVALUATION-1.20.4-5.json</code> et <code>QUALIFICATION-EVALUATION-1.20.4-5.zip</code>, jointes aux assets de la release lors de la livraison du kit. Les résultats des révisions précédentes ne valident pas cette nouvelle révision.</p>
+<p>La révision 1.20.4-6 ajoute la désinstallation ciblée, sans supprimer le projet OpenShift. Elle conserve les améliorations de la révision 1.20.4-5 : protection des fichiers locaux pour un compte Windows non administrateur et dépôt Artifactory séparé pour PostgreSQL. La chaîne de livraison publie le kit uniquement après vérification du téléchargement anonyme et qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, <code>PUBLICATION-EVALUATION-1.20.4-6.json</code> et <code>QUALIFICATION-EVALUATION-1.20.4-6.zip</code>, jointes aux assets de la release lors de la livraison du kit. Les résultats des révisions précédentes ne valident pas cette nouvelle révision.</p>
 </blockquote>
 <h2 id="1-ce-qui-sera-deploye">1. Ce qui sera déployé<a class="headerlink" href="#1-ce-qui-sera-deploye" title="Permanent link">&para;</a></h2>
 <p><strong>Le script vous demande quel projet/namespace utiliser, puis quel mode PostgreSQL installer.</strong> Les deux options utilisent les mêmes images AppControl et les mêmes scripts PowerShell.</p>
@@ -2395,7 +2443,7 @@ de transfert d’images n’est nécessaire sur le poste client.</p>
 </tr>
 <tr>
 <td>Projet / namespace</td>
-<td>Un projet dédié existant, par exemple <code>appcontrol-evaluation</code>, avec les droits de déploiement. Il sera sélectionné dans le script ou fourni avec <code>-Projet</code> / <code>-Namespace</code>.</td>
+<td>Un projet existant fourni par la banque, de préférence dédié, avec les droits de déploiement. Il sera sélectionné dans le script ou fourni avec <code>-Projet</code> / <code>-Namespace</code>. Il n’est pas nécessaire d’avoir le droit de créer ou supprimer un projet.</td>
 </tr>
 <tr>
 <td>Stockage</td>
@@ -2423,6 +2471,11 @@ de transfert d’images n’est nécessaire sur le poste client.</p>
 compte administrateur Windows, de droit <code>cluster-admin</code> ni de SCC <code>anyuid</code>.
 Un projet dédié sépare les objets et les données ; il ne réserve pas à lui seul
 des nœuds physiques.</p>
+<p>Si la banque fournit un projet partagé, choisir un nom d’installation distinct
+avec <code>-Nom</code>, par exemple <code>-Nom appcontrol-poc</code>. Le désinstallateur décrit plus
+bas retire les ressources de cette installation sans supprimer le projet ni
+les autres applications. Il faut disposer des droits de suppression sur ces
+ressources dans le projet ; aucun droit de suppression du projet n’est demandé.</p>
 <h2 id="3-ou-sont-les-images-et-comment-passe-t-on-par-artifactory">3. Où sont les images et comment passe-t-on par Artifactory ?<a class="headerlink" href="#3-ou-sont-les-images-et-comment-passe-t-on-par-artifactory" title="Permanent link">&para;</a></h2>
 <p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases">dépôt public de livraison XComponent</a>
 fournit les scripts, les YAML et les rapports. Le <strong>canal public d’évaluation</strong>
@@ -2542,12 +2595,12 @@ compatibilité séparément, ou utiliser une base déjà exploitée par la banqu
 avec <code>-ModePostgreSQL Externe</code> et sa chaîne de connexion.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-5.zip">Paquet Windows léger — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-5.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-6.zip">Paquet Windows léger — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-6.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.20.4-5.zip&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.20.4-6.zip&#39;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Empreinte incorrecte : ne pas utiliser cette archive.&#39;</span>
@@ -2722,6 +2775,94 @@ diagnostic ; cela <strong>ne signifie pas que les anciens pods ou l’ancienne b
 été restaurés</strong>. Le script bloque la reprise normale et demande de relancer
 <strong>le même kit cible avec <code>-MettreAJour</code></strong> pour terminer. Garder le dossier privé
 et la sauvegarde PostgreSQL ; ne pas modifier les verrous à la main.</p>
+<h2 id="retirer-appcontrol-sans-supprimer-le-projet">Retirer AppControl sans supprimer le projet<a class="headerlink" href="#retirer-appcontrol-sans-supprimer-le-projet" title="Permanent link">&para;</a></h2>
+<p><strong>Ce parcours convient au projet fourni par la banque : il ne nécessite ni
+création ni suppression de projet.</strong> Ne pas utiliser <code>oc delete project</code> pour
+retirer AppControl d’un projet partagé.</p>
+<p>Depuis le kit, commencer par afficher les ressources concernées, sans rien
+modifier :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Verifier</span>
+</span></code></pre></div>
+<p>Puis lancer la désinstallation avec confirmation du récapitulatif :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span>
+</span></code></pre></div>
+<p>L’assistant affiche le plan puis demande de saisir le <strong>nom exact de
+l’installation</strong> pour confirmer. <code>-Verifier</code> ne modifie ni le cluster ni les
+fichiers locaux.</p>
+<p>Remplacer <code>projet-fourni</code> par le namespace utilisé à l’installation. Reprendre
+le même <code>-Nom</code> si vous aviez choisi un nom personnalisé, ainsi que le même
+<code>-DossierEtat</code> si vous aviez changé son emplacement. Le dossier privé d’origine
+permet de vérifier que la commande vise la bonne installation et le bon cluster.</p>
+<table>
+<thead>
+<tr>
+<th>Avec la commande par défaut</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Services AppControl et agent de démonstration du cluster</td>
+<td>Arrêtés et retirés, avec leurs Routes, Services et règles réseau propres à cette installation</td>
+</tr>
+<tr>
+<td>PostgreSQL intégré</td>
+<td>Pod retiré ; volume de données conservé</td>
+</tr>
+<tr>
+<td>Secrets et ConfigMaps de cette installation</td>
+<td>Conservés pour garder identifiants, certificats et configuration</td>
+</tr>
+<tr>
+<td>PostgreSQL externe</td>
+<td>Base et données inchangées</td>
+</tr>
+<tr>
+<td>Projet, autres applications, secret de lecture Artifactory fourni par la plateforme</td>
+<td>Inchangés</td>
+</tr>
+<tr>
+<td>Dossier privé sur Windows</td>
+<td>Conservé</td>
+</tr>
+</tbody>
+</table>
+<p>La commande cible les objets identifiés comme appartenant à l’installation
+native AppControl. Elle ne supprime pas les autres objets du projet, les agents
+installés sur des machines externes, ni une installation Helm. En cas de conflit
+de propriétaire ou de droit manquant, elle s’arrête avec un diagnostic.</p>
+<p>Pour remettre les services après ce retrait avec conservation des données,
+relancer <code>Deployer-AppControl.ps1</code> avec le même kit, le même projet, le même nom
+et le dossier privé conservé. Les données et maps restent dans PostgreSQL.
+L’agent de démonstration, en revanche, perd son identité temporaire avec son
+pod : une nouvelle recette crée un nouvel agent et une nouvelle map. Ajouter
+<code>-SansDemo</code> si vous souhaitez seulement remettre les services, sans créer une
+nouvelle démonstration.</p>
+<h3 id="supprimer-aussi-les-donnees-de-levaluation">Supprimer aussi les données de l’évaluation<a class="headerlink" href="#supprimer-aussi-les-donnees-de-levaluation" title="Permanent link">&para;</a></h3>
+<p><strong>Cette option peut détruire les données PostgreSQL intégrées.</strong> Faire une
+sauvegarde avant de l’utiliser si les maps ou les configurations doivent être
+conservées. Un volume persistant n’est pas une sauvegarde.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-SupprimerDonnees</span>
+</span></code></pre></div>
+<p>L’assistant demande de saisir <code>SAUVEGARDE</code> pour attester la sauvegarde ou
+l’acceptation de la perte des données, puis le nom exact de l’installation.
+Pour une exécution non interactive, ces confirmations doivent être explicites :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="p">`</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  <span class="n">-SupprimerDonnees</span> <span class="n">-SauvegardeConfirmee</span> <span class="n">-NonInteractif</span>
+</span></code></pre></div>
+<p><code>-SauvegardeConfirmee</code> ne réalise aucune sauvegarde.</p>
+<p>L’option ajoute à la suppression les volumes, Secrets et ConfigMaps appartenant
+à cette installation AppControl. Le projet et le secret d’images de la
+plateforme restent conservés. <strong>Elle ne supprime jamais une base PostgreSQL
+externe</strong> : son nettoyage relève de l’équipe base de données. Le dossier privé
+sur Windows n’est pas effacé automatiquement.</p>
+<p>Après cette suppression complète, le dossier privé est marqué comme
+désinstallé pour éviter de réutiliser par erreur ses anciens identifiants.
+L’archiver dans un emplacement protégé. Pour une nouvelle installation,
+choisir un <strong>nouveau</strong> <code>-DossierEtat</code> ; le même nom d’installation peut être
+repris une fois les anciennes ressources effectivement retirées. Avec une
+base externe, prévoir aussi une nouvelle base dédiée ou un nettoyage validé
+par son administrateur : le désinstallateur ne l’a pas vidée.</p>
 <h2 id="reprendre-et-diagnostiquer">Reprendre et diagnostiquer<a class="headerlink" href="#reprendre-et-diagnostiquer" title="Permanent link">&para;</a></h2>
 <p><strong>Reprendre la même version, hors mise à jour incomplète</strong>, ne nécessite pas
 <code>-MettreAJour</code>. Conserver le dossier privé, le même kit, les mêmes projet et nom
@@ -2797,7 +2938,18 @@ déployée. Ne pas supprimer son dossier d’état.</p>
 décrit la publication anonyme, les trois profils d’installation et la mise à
 jour avec PostgreSQL intégré depuis le kit 1.20.4-3. Il ne couvre pas le
 correctif de droits Windows ni l’option de dépôt PostgreSQL séparé introduits
-dans la révision courante : ceux-ci doivent figurer dans ses propres preuves.</p>
+dans la révision 1.20.4-5.</p>
+<p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-EVALUATION-1.20.4-5.fr.md">rapport du paquet 1.20.4-5</a>
+documente ces améliorations et les installations depuis Windows sur OpenShift.</p>
+<p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-EVALUATION-1.20.4-6.fr.md">rapport du paquet 1.20.4-6</a>
+et ses <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-EVALUATION-1.20.4-6.zip">preuves Windows/OpenShift</a>
+valident le désinstallateur sur les trois profils PostgreSQL et après une mise
+à jour depuis le kit 1.20.4-3. Le compte de test ne pouvait ni créer ni supprimer
+de projet. Le projet existant, les ressources d'une autre application et le
+secret d'images référencé sont conservés. Le parcours intégré vérifie aussi
+la réinstallation avec les mêmes données et le même volume ; les parcours
+externes vérifient que PostgreSQL reste intact. Les limites et la première
+tentative interrompue avant ces vérifications sont consignées dans le rapport.</p>
 <p>Les preuves applicables au canal public doivent identifier le kit exact,
 Windows/PowerShell, les cinq références <code>appcontrol-eval-*</code>, le téléchargement
 sans identifiants GHCR et la conservation des données lors d’une mise à jour.
@@ -2842,7 +2994,7 @@ option distincte. Ce n’est pas le parcours recommandé ci-dessus.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T16:46:10+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:41:55+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
   </span>
 
     

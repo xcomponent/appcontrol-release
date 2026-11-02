@@ -16,6 +16,28 @@ Le projet est né d'un constat simple : depuis vingt ans, chaque famille d'outil
 
 ## Installer AppControl
 
+**POC OpenShift depuis un poste Windows :**
+[Télécharger le kit léger 1.20.4-4](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-4.zip)
+· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-4.zip.sha256)
+· [Guide d’installation et de mise à jour](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/).
+
+**PowerShell + votre `oc` existant uniquement.** Le ZIP contient les scripts et
+les YAML ; OpenShift télécharge les images publiques d’évaluation, directement
+ou via Artifactory selon la politique de la banque. Aucun Docker, Python ou Helm
+à installer sur le poste.
+
+Après vérification et extraction du ZIP, dans le dossier du script :
+
+```powershell
+.\Deployer-AppControl.ps1
+```
+
+L’assistant fait choisir le **projet/namespace dédié** et **PostgreSQL intégré
+ou externe**. Pour les versions suivantes, télécharger le kit choisi puis
+relancer le même script avec **`-MettreAJour`**, après sauvegarde PostgreSQL.
+Les paramètres Artifactory et la conservation des données sont détaillés dans
+le guide. Les autres modes de déploiement restent disponibles ci-dessous.
+
 **[Choisir le bon mode d'installation](docs/DEPLOYMENT.md)** avant de
 télécharger quoi que ce soit :
 
@@ -25,6 +47,7 @@ télécharger quoi que ce soit :
 | Service durable sur Windows Server | [Services Windows + PostgreSQL](docs/WINDOWS_PRODUCTION.md) |
 | Serveur Linux unique | [Docker Compose + PostgreSQL](docs/COMPOSE.md) |
 | Plateforme Kubernetes | [Helm + PostgreSQL externe](docs/PRODUCTION_DEPLOYMENT.md) |
+| POC OpenShift depuis Windows | [Kit léger PowerShell + oc](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/) |
 | Plateforme OpenShift | [Helm/OpenShift + PostgreSQL externe](docs/OPENSHIFT.md) |
 
 Les commandes et toutes les options des scripts sont regroupées dans la
@@ -248,9 +271,29 @@ appctl switchover core-banking --target-site lyon --mode FULL --wait
 
 Variantes : `appctl-darwin-arm64`, `appctl-windows-amd64.exe`. Toutes disponibles dans les release assets.
 
-### Images Docker
+### Images publiques d’évaluation
 
-Toutes les images sont publiées sur GitHub Container Registry :
+Le [parcours OpenShift depuis Windows](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/)
+utilise les cinq packages `ghcr.io/xcomponent/appcontrol-eval-*`, accessibles
+sans compte GitHub. Le kit fixe leurs empreintes ; chaque nouvelle version du
+POC utilise le même canal avec un numéro de version distinct.
+
+Exemples pour un poste disposant déjà de Docker — **Docker n’est pas requis
+pour installer depuis Windows** :
+
+```bash
+docker pull ghcr.io/xcomponent/appcontrol-eval-backend:1.20.4
+docker pull ghcr.io/xcomponent/appcontrol-eval-frontend:1.20.4
+docker pull ghcr.io/xcomponent/appcontrol-eval-gateway:1.20.4
+docker pull ghcr.io/xcomponent/appcontrol-eval-postgresql:1.20.4
+docker pull ghcr.io/xcomponent/appcontrol-eval-agent:1.20.4
+```
+
+### Images privées — autres parcours Docker/Helm
+
+Les références historiques `appcontrol-*` ci-dessous restent **privées** et
+nécessitent un accès GHCR autorisé. Elles concernent les autres parcours ;
+le kit Windows d’évaluation utilise les packages publics `appcontrol-eval-*`.
 
 ```bash
 docker pull ghcr.io/xcomponent/appcontrol-backend:latest

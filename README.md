@@ -17,14 +17,19 @@ Le projet est né d'un constat simple : depuis vingt ans, chaque famille d'outil
 ## Installer AppControl
 
 **POC OpenShift depuis un poste Windows :**
-[Télécharger le kit léger 1.20.4-4](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-4.zip)
-· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-4.zip.sha256)
+[Télécharger le kit léger 1.20.4-5](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-5.zip)
+· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-5.zip.sha256)
 · [Guide d’installation et de mise à jour](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/).
 
 **PowerShell + votre `oc` existant uniquement.** Le ZIP contient les scripts et
 les YAML ; OpenShift télécharge les images publiques d’évaluation, directement
 ou via Artifactory selon la politique de la banque. Aucun Docker, Python ou Helm
 à installer sur le poste.
+
+La révision **1.20.4-5** corrige le blocage Windows `SeSecurityPrivilege` et
+accepte un dépôt Artifactory séparé pour PostgreSQL avec `-RegistrePostgreSQL`.
+Le guide décrit la reprise d’une installation interrompue sans droits
+administrateur ni modification de `images.lock.json`.
 
 Après vérification et extraction du ZIP, dans le dossier du script :
 
@@ -277,6 +282,18 @@ Le [parcours OpenShift depuis Windows](https://xcomponent.github.io/appcontrol-r
 utilise les cinq packages `ghcr.io/xcomponent/appcontrol-eval-*`, accessibles
 sans compte GitHub. Le kit fixe leurs empreintes ; chaque nouvelle version du
 POC utilise le même canal avec un numéro de version distinct.
+
+Le [kit Windows léger 1.20.4-5](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-5.zip)
+corrige le blocage `SeSecurityPrivilege` sur les comptes Windows ordinaires.
+Avec deux dépôts Artifactory, fournir `-Registre` pour les images AppControl
+et `-RegistrePostgreSQL` pour l’image PostgreSQL XComponent. Le script conserve
+les noms et les empreintes qualifiés ; ne pas modifier `images.lock.json`.
+Le secret de lecture éventuel doit autoriser les deux dépôts.
+
+L’image [appcontrol-eval-postgresql](https://github.com/orgs/xcomponent/packages/container/package/appcontrol-eval-postgresql)
+est publique, comme les quatre autres. Une image PostgreSQL standard ou propre
+à la banque nécessite une validation distincte ; elle ne remplace pas
+implicitement l’image XComponent.
 
 Exemples pour un poste disposant déjà de Docker — **Docker n’est pas requis
 pour installer depuis Windows** :

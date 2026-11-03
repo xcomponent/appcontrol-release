@@ -357,7 +357,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../cli/" class="md-tabs__link">
+        <a href="../../SWAGGER.fr/" class="md-tabs__link">
           
   
     
@@ -1149,6 +1149,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1280,6 +1284,48 @@
   
   <span class="md-ellipsis">
     Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MAP_GENERATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SIMULATION_MAPS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-based simulation workflow (FR)
   </span>
   
 
@@ -1573,6 +1619,8 @@
       
         
       
+        
+      
     
     
       
@@ -1608,6 +1656,27 @@
             Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SWAGGER.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2356,6 +2425,15 @@
   <a href="#scheduled_snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       scheduled_snapshots
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#site_mock_agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      site_mock_agents
     </span>
   </a>
   
@@ -3299,6 +3377,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#site_mock_agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      site_mock_agents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#site_overrides" class="md-nav__link">
     <span class="md-ellipsis">
       site_overrides
@@ -3465,7 +3552,7 @@
 <blockquote>
 <p>Auto-generated from <code>migrations/V*.sql</code>. Run <code>scripts/docs/regen.py</code> to refresh.</p>
 </blockquote>
-<p>The schema is defined by <strong>58 versioned migrations</strong> applied in order at backend startup. PostgreSQL 16 is the production target; SQLite is supported for development and small-scale deployments. Schema parity between the two backends is mandatory — see <a href="../../SQLITE_IMPLEMENTATION/">SQLite implementation notes</a>.</p>
+<p>The schema is defined by <strong>59 versioned migrations</strong> applied in order at backend startup. PostgreSQL 16 is the production target; SQLite is supported for development and small-scale deployments. Schema parity between the two backends is mandatory — see <a href="../../SQLITE_IMPLEMENTATION/">SQLite implementation notes</a>.</p>
 <p><strong>Append-only tables</strong> (no <code>UPDATE</code>, no <code>DELETE</code>, ever — they are the audit substrate):</p>
 <ul>
 <li><code>action_log</code></li>
@@ -3593,6 +3680,9 @@
     saved_views ||--o{ applications : "application_id"
     scheduled_snapshots ||--o{ snapshot_schedules : "schedule_id"
     scheduled_snapshots ||--o{ organizations : "organization_id"
+    site_mock_agents ||--o{ sites : "site_id"
+    site_mock_agents ||--o{ agents : "agent_id"
+    site_mock_agents ||--o{ users : "updated_by"
     site_overrides ||--o{ components : "component_id"
     site_overrides ||--o{ sites : "site_id"
     site_overrides ||--o{ agents : "agent_id_override"
@@ -3615,7 +3705,7 @@
     workspace_sites ||--o{ sites : "site_id"
     workspaces ||--o{ organizations : "organization_id"</code></pre>
 <h2 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link">&para;</a></h2>
-<p>Total: <strong>78</strong> tables.</p>
+<p>Total: <strong>79</strong> tables.</p>
 <h3 id="action_log"><code>action_log</code><a class="headerlink" href="#action_log" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Append-only</p>
@@ -7719,6 +7809,53 @@
 </table>
 <p><strong>Indexes:</strong> <code>idx_scheduled_snapshots_schedule</code>, <code>idx_scheduled_snapshots_org</code>, <code>idx_scheduled_snapshots_captured</code>, <code>idx_scheduled_snapshots_expires</code></p>
 <p>Defined in: <code>migrations/V033__snapshot_schedules.sql</code></p>
+<h3 id="site_mock_agents"><code>site_mock_agents</code><a class="headerlink" href="#site_mock_agents" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(site_id, profile)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(site_id)</code> → <code>sites(id)</code></li>
+<li><code>(agent_id)</code> → <code>agents(id)</code></li>
+<li><code>(updated_by)</code> → <code>users(id)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>site_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, FK→<code>sites</code></td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td><code>V</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>agent_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, UNIQUE, FK→<code>agents</code></td>
+</tr>
+<tr>
+<td><code>updated_by</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, FK→<code>users</code></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>T</code></td>
+<td>NOT NULL, default NOW()</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Indexes:</strong> <code>idx_site_mock_agents_updated_by</code></p>
+<p>Defined in: <code>migrations/V061__site_mock_agents.sql</code></p>
 <h3 id="site_overrides"><code>site_overrides</code><a class="headerlink" href="#site_overrides" title="Permanent link">&para;</a></h3>
 <p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
 <p><strong>Primary key:</strong> <code>(id)</code></p>
@@ -8586,7 +8723,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:25+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     
@@ -8596,7 +8733,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:25+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

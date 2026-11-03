@@ -357,7 +357,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference/cli/" class="md-tabs__link">
+        <a href="../../SWAGGER.fr/" class="md-tabs__link">
           
   
     
@@ -987,6 +987,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#apres-linstallation-publier-les-applications-du-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Après l'installation : publier les applications du client
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Après l'installation : publier les applications du client">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-distincte-preparer-des-sites-de-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option distincte : préparer des sites de démonstration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1372,6 +1396,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1503,6 +1531,48 @@
   
   <span class="md-ellipsis">
     Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MAP_GENERATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SIMULATION_MAPS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-based simulation workflow (FR)
   </span>
   
 
@@ -1794,6 +1864,8 @@
       
         
       
+        
+      
     
     
       
@@ -1828,6 +1900,27 @@
             Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SWAGGER.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2328,6 +2421,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#apres-linstallation-publier-les-applications-du-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Après l'installation : publier les applications du client
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Après l'installation : publier les applications du client">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-distincte-preparer-des-sites-de-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option distincte : préparer des sites de démonstration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2358,9 +2475,15 @@ paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.<
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.20.4</strong>. Paquet : <strong>Windows léger 1.20.4-6</strong>.</p>
+<p>Produit : <strong>AppControl 1.21.1</strong>. Paquet : <strong>Windows léger 1.21.1-1</strong>.</p>
+<p>La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
+publication de maps réparties sur plusieurs sites et l'attribution
+d'applications aux équipes. Le choix mock dans le prompt produit une map
+ordinaire, importée sur les agents choisis sans préparation de simulation
+obligatoire. Le kit conserve l'installation, la mise à jour et le retrait
+ciblés, la protection des fichiers locaux et les dépôts Artifactory séparés.</p>
 <blockquote>
-<p>La révision 1.20.4-6 ajoute la désinstallation ciblée, sans supprimer le projet OpenShift. Elle conserve les améliorations de la révision 1.20.4-5 : protection des fichiers locaux pour un compte Windows non administrateur et dépôt Artifactory séparé pour PostgreSQL. La chaîne de livraison publie le kit uniquement après vérification du téléchargement anonyme et qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, <code>PUBLICATION-EVALUATION-1.20.4-6.json</code> et <code>QUALIFICATION-EVALUATION-1.20.4-6.zip</code>, jointes aux assets de la release lors de la livraison du kit. Les résultats des révisions précédentes ne valident pas cette nouvelle révision.</p>
+<p>La publication du kit est conditionnée au téléchargement anonyme des images et à la qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, <code>PUBLICATION-EVALUATION-1.21.1-1.json</code> et <code>QUALIFICATION-EVALUATION-1.21.1-1.zip</code>, lorsqu'elles sont jointes à la release. Ce guide ne constitue pas un résultat de qualification ; les rapports 1.20.4 restent des historiques et ne valident pas la livraison 1.21.1.</p>
 </blockquote>
 <h2 id="1-ce-qui-sera-deploye">1. Ce qui sera déployé<a class="headerlink" href="#1-ce-qui-sera-deploye" title="Permanent link">&para;</a></h2>
 <p><strong>Le script vous demande quel projet/namespace utiliser, puis quel mode PostgreSQL installer.</strong> Les deux options utilisent les mêmes images AppControl et les mêmes scripts PowerShell.</p>
@@ -2381,7 +2504,7 @@ de transfert d’images n’est nécessaire sur le poste client.</p>
 <tr>
 <td>Base à préparer</td>
 <td>Aucune : identifiants et connexion générés</td>
-<td>Une base AppControl, un compte applicatif et sa chaîne de connexion</td>
+<td>Base dédiée et compte applicatif préparés par l'administrateur PostgreSQL ; seule la connexion applicative est fournie au script</td>
 </tr>
 <tr>
 <td>Dans OpenShift</td>
@@ -2595,12 +2718,12 @@ compatibilité séparément, ou utiliser une base déjà exploitée par la banqu
 avec <code>-ModePostgreSQL Externe</code> et sa chaîne de connexion.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-6.zip">Paquet Windows léger — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-6.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip">Paquet Windows léger 1.21.1-1 — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.20.4-6.zip&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.21.1-1.zip&#39;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Empreinte incorrecte : ne pas utiliser cette archive.&#39;</span>
@@ -2643,12 +2766,23 @@ ce ne sont pas des logiciels supplémentaires à installer.</p>
 <h3 id="choix-2-postgresql-externe-fourni-par-la-banque">Choix 2 : PostgreSQL externe fourni par la banque<a class="headerlink" href="#choix-2-postgresql-externe-fourni-par-la-banque" title="Permanent link">&para;</a></h3>
 <p>Avant le créneau, demander à l’équipe base de données et à la plateforme :</p>
 <ul>
-<li><strong>Une base dédiée à cette évaluation</strong>, préparée à l’avance, et un utilisateur applicatif autorisé à créer et mettre à jour les tables et index AppControl. Le backend applique ses migrations au démarrage ; le script ne crée ni instance ni base sur le serveur bancaire. Ne pas utiliser une base métier existante.</li>
-<li><strong>La chaîne de connexion PostgreSQL au format URI</strong>, par exemple <code>postgresql://utilisateur:mot-de-passe@postgres.banque.example:5432/appcontrol?sslmode=verify-full</code>. Ce n’est pas une chaîne ADO.NET <code>Host=...;Username=...</code>. Les caractères réservés du nom d’utilisateur et du mot de passe doivent être encodés dans l’URI.</li>
+<li><strong>Une base dédiée et un compte applicatif préparés à l'avance par l'administrateur PostgreSQL.</strong> Le compte doit pouvoir créer et modifier les objets du schéma AppControl. Le script ne crée ni instance, ni base, ni comptes PostgreSQL sur le serveur bancaire. Ne pas utiliser une base métier existante.</li>
+<li><strong>La chaîne de connexion du seul compte applicatif au format URI</strong>, par exemple <code>postgresql://utilisateur:mot-de-passe@postgres.banque.example:5432/appcontrol?sslmode=verify-full</code>. Ce n’est pas une chaîne ADO.NET <code>Host=...;Username=...</code>. Les caractères réservés du nom d’utilisateur et du mot de passe doivent être encodés dans l’URI. Ne pas fournir les identifiants de l'administrateur PostgreSQL au script.</li>
 <li><strong>Pour le mode TLS par défaut, le certificat public de l’autorité de certification de PostgreSQL, au format PEM</strong>. Une autorité interne autosignée convient. Le nom DNS de l’URI doit correspondre au certificat du serveur. Le mode par défaut utilise <code>verify-full</code>. Le mode de compatibilité ci-dessous ne demande pas de fichier CA.</li>
 <li><strong>Les adresses ou plages CIDR approuvées de la base</strong>, par exemple <code>10.20.30.40/32</code>, ainsi que son port. Elles limitent la sortie réseau du backend. Les ouvertures générales <code>0.0.0.0/0</code> et <code>::/0</code> sont refusées. Une règle réseau ou un pare-feu bancaire peut aussi nécessiter une autorisation par la plateforme.</li>
 </ul>
-<p>PostgreSQL 16 est la version de référence de cette livraison. Le compte applicatif n’a pas besoin d’être superutilisateur ; il doit disposer des droits sur sa base dédiée et sur le schéma utilisé par les migrations.</p>
+<p>PostgreSQL 16 est la version de référence de cette livraison. Il y a deux
+rôles distincts dans la préparation : l'administrateur de la base crée les
+objets d'accueil, puis AppControl se connecte avec le compte applicatif.
+L'installateur ne gère pas deux comptes automatiquement et ne reçoit qu'une
+chaîne de connexion.</p>
+<p>Le même compte applicatif sert au fonctionnement et aux migrations exécutées
+par le backend au démarrage, y compris lors des mises à jour. Il lui faut des
+droits DDL pour créer et modifier les objets du schéma ; de simples droits
+lecture/écriture ne suffisent pas. Le profil de référence utilise le compte
+applicatif propriétaire de sa base dédiée, sans <code>SUPERUSER</code>, <code>CREATEDB</code> ni
+<code>CREATEROLE</code>. L'administrateur PostgreSQL doit valider les droits équivalents
+si la banque impose une autre organisation des rôles ou des schémas.</p>
 <p>Lancer le script avec le mode externe ; il demandera les informations manquantes :</p>
 <div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
@@ -2677,7 +2811,7 @@ ce ne sont pas des logiciels supplémentaires à installer.</p>
 <p>Le choix est enregistré pour la reprise ; la commande de reprise affichée rappelle l’option lorsqu’elle est active. Comme pour la base et la CA, une installation existante ne change pas implicitement de politique TLS : un choix différent est refusé et demande une procédure de modification préparée. Les dossiers issus du paquet 1.20.4-2 restent interprétés comme <code>verify-full</code>.</p>
 <p>Une fois connecté, AppControl gère son schéma et ses données. <strong>Il ne déploie pas d’image PostgreSQL, ne crée aucun volume de base et ne redémarre pas le serveur externe.</strong> La sauvegarde, l’exploitation et la disponibilité de cette base restent gérées selon la procédure de la banque.</p>
 <h3 id="ce-que-fait-le-deploiement">Ce que fait le déploiement<a class="headerlink" href="#ce-que-fait-le-deploiement" title="Permanent link">&para;</a></h3>
-<p>Le script vérifie les droits et les fichiers, prépare les secrets et les certificats, traite le Template YAML avec <code>oc process</code>, puis applique les objets avec <code>oc apply</code>. Le profil externe retire les objets PostgreSQL et adapte la sortie réseau du backend avant application. Les nœuds OpenShift téléchargent les seules images nécessaires depuis le registre autorisé.</p>
+<p>Le script vérifie les droits OpenShift et les fichiers, prépare les secrets et les certificats, traite le Template YAML avec <code>oc process</code>, puis applique les objets avec <code>oc apply</code>. Le profil externe retire les objets PostgreSQL et adapte la sortie réseau du backend avant application. Les nœuds OpenShift téléchargent les seules images nécessaires depuis le registre autorisé. La validation préalable de l'URI ne teste pas la connexion PostgreSQL ni les droits DDL : ceux-ci sont exercés au démarrage du backend et lors de ses migrations.</p>
 <p>Le script attend ensuite les services, enregistre la gateway, puis crée l’agent et la map synthétique. La recette redémarre les services AppControl pour vérifier la reconnexion et la conservation des données. PostgreSQL est redémarré uniquement en mode intégré, dans le projet d’évaluation. Ajouter <code>-SansDemo</code> pour installer les services seuls : quatre pods en mode intégré, trois en mode externe.</p>
 <h2 id="6-ouvrir-et-tester-appcontrol">6. Ouvrir et tester AppControl<a class="headerlink" href="#6-ouvrir-et-tester-appcontrol" title="Permanent link">&para;</a></h2>
 <p>Le script affiche l’URL de l’interface et le chemin privé des identifiants
@@ -2933,6 +3067,11 @@ déployée. Ne pas supprimer son dossier d’état.</p>
 </tbody>
 </table>
 <h2 id="qualification-et-suite-du-poc">Qualification et suite du POC<a class="headerlink" href="#qualification-et-suite-du-poc" title="Permanent link">&para;</a></h2>
+<p>Pour 1.21.1, consulter les preuves portant exactement la version du kit
+<code>1.21.1-1</code>, ses empreintes d'images et son commit de livraison. Leur publication
+intervient après les contrôles de la chaîne de release. Les rapports ci-dessous
+décrivent les versions précédentes ; ils ne qualifient pas les nouveautés de
+1.21.1.</p>
 <p><strong>Historique :</strong> le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-WINDOWS-OC-v1.20.4-3.fr.md">rapport des trois parcours du paquet 1.20.4-3</a> décrit les tests avec PostgreSQL intégré, PostgreSQL externe avec vérification du certificat, et PostgreSQL externe chiffré avec validation du certificat désactivée. Il précise aussi le refus d’un serveur sans TLS et les limites de la qualification.</p>
 <p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-EVALUATION-1.20.4-4.fr.md">rapport du paquet 1.20.4-4</a>
 décrit la publication anonyme, les trois profils d’installation et la mise à
@@ -2953,10 +3092,11 @@ tentative interrompue avant ces vérifications sont consignées dans le rapport.
 <p>Les preuves applicables au canal public doivent identifier le kit exact,
 Windows/PowerShell, les cinq références <code>appcontrol-eval-*</code>, le téléchargement
 sans identifiants GHCR et la conservation des données lors d’une mise à jour.
-Le rapport 1.20.4-3 ne valide pas ces nouveaux parcours : il utilisait le miroir
-privé et un jeton temporaire de CI. Les images initiales du canal public doivent
-conserver les digests de la release 1.20.4 ; une publication par copie n’est pas
-une nouvelle compilation.</p>
+Le rapport 1.20.4-3 utilisait le miroir privé et un jeton temporaire de CI. Pour
+chaque nouvelle version, les images du canal public doivent conserver les
+digests qualifiés de cette même release ; une publication par copie n'est pas
+une nouvelle compilation. Ne pas associer les scripts 1.21.1 au verrou d'images
+1.20.4 : le serveur ancien n'expose pas les nouvelles routes.</p>
 <p>Le test du parcours léger reste distinct de celui du kit hors ligne : les
 images sont téléchargées par le cluster et aucun Helm n’est appelé sur le poste
 client.</p>
@@ -2968,10 +3108,45 @@ la rotation des accès à la base et la haute disponibilité se cadrent ensuite.
 de service générés durent 90 jours et le jeton de gateway 30 jours ; le
 renouvellement reste explicite.</p>
 <p>La gateway incluse permet aussi de raccorder un agent extérieur via sa connexion
-sortante WSS 443 : suivre la <a href="../INSTALLATION-CLIENT-v1.20.4.fr/#5-ajouter-un-agent-exterieur-au-cluster">procédure d’enrôlement</a>.</p>
+sortante WSS 443. La <a href="https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-CLIENT-v1.20.4.fr/#5-ajouter-un-agent-exterieur-au-cluster">procédure historique d'enrôlement</a>
+explique le principe ; utiliser les binaires ou images et la CA de l'instance
+1.21.1 effectivement installée.</p>
 <p>Pour un environnement qui impose de transporter les images sans accès à un
-registre amont, le <a href="../INSTALLATION-WINDOWS-HORS-LIGNE.fr/">kit hors ligne</a> reste une
+registre amont, le <a href="https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS-HORS-LIGNE.fr/">kit hors ligne</a> reste une
 option distincte. Ce n’est pas le parcours recommandé ci-dessus.</p>
+<h2 id="apres-linstallation-publier-les-applications-du-client">Après l'installation : publier les applications du client<a class="headerlink" href="#apres-linstallation-publier-les-applications-du-client" title="Permanent link">&para;</a></h2>
+<p>À partir d'AppControl <strong>1.21.1</strong>, récupérer le contrat de génération, transmettre
+ses instructions et les documents au moteur d'IA du client, puis vérifier la
+map retournée. Les documents restent côté client et AppControl n'appelle aucun
+modèle dans ce parcours. Le <a href="../../MAP_GENERATION.fr/">guide général</a> et le
+<a href="../../SWAGGER.fr/">parcours Swagger</a> décrivent la validation, les placements
+par composant, les droits d'équipe et l'import. Le kit contient aussi le helper
+<code>map-publication-client.ps1</code> pour préparer et publier des lots depuis PowerShell.</p>
+<p>Le prompt <code>standard</code> conserve les procédures réelles fournies. Un prompt
+<code>mock-linux</code> ou <code>mock-windows</code> produit des commandes de fichiers témoins ; la
+map suit ensuite <strong>le même import normal</strong>, sans champ <code>profile</code> dans
+l'enveloppe de publication, sur les agents ordinaires explicitement choisis.
+Aucun agent spécial, registre mock ou script de préparation dédié n'est requis.
+Applications réelles et simulées peuvent coexister, et une application peut
+fonctionner sur plusieurs sites en même temps. Dans <strong>Teams → Applications</strong>,
+attribuer les applications aux équipes avec les droits voulus.</p>
+<p>Le <a href="../../SIMULATION_MAPS.fr/">guide de simulation</a> détaille ce choix de prompt.
+Dans le ZIP, ces documents sont <code>MAP_GENERATION.fr.md</code>, <code>SWAGGER.fr.md</code> et
+<code>SIMULATION-MAPS.fr.md</code>.</p>
+<h3 id="option-distincte-preparer-des-sites-de-demonstration">Option distincte : préparer des sites de démonstration<a class="headerlink" href="#option-distincte-preparer-des-sites-de-demonstration" title="Permanent link">&para;</a></h3>
+<p>Le complément facultatif <code>Configurer-Simulation.ps1</code> prépare des sites,
+gateways et un agent Linux persistant par site pour l'outil historique de
+transformation serveur. Il enregistre des défauts mock utilisés uniquement par
+ce parcours explicite. Il n'est pas une étape préalable à l'import normal.
+Pour choisir cette option, adapter <code>simulation.example.json</code>, puis lancer :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">.\</span><span class="n">Configurer-Simulation</span><span class="p">.</span><span class="n">ps1</span> <span class="p">`</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>  <span class="n">-DossierEtat</span> <span class="s1">&#39;C:\AppControl\etat-installation&#39;</span> <span class="p">`</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>  <span class="n">-Configuration</span> <span class="s1">&#39;.\simulation.example.json&#39;</span>
+</span></code></pre></div>
+<p>Le dossier d'état est celui conservé par l'installation principale. Le script
+vérifie les capacités du serveur avant de créer ses ressources. Le guide de
+simulation décrit séparément la transformation serveur et ses métriques
+simulées. Le poste conserve les mêmes prérequis : PowerShell et <code>oc</code> uniquement.</p>
 
 
 
@@ -2994,7 +3169,7 @@ option distincte. Ce n’est pas le parcours recommandé ci-dessus.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:41:55+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T10:50:41+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

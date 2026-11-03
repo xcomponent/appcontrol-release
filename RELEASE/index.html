@@ -351,7 +351,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../reference/cli/" class="md-tabs__link">
+        <a href="../SWAGGER.fr/" class="md-tabs__link">
           
   
     
@@ -1143,6 +1143,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1274,6 +1278,48 @@
   
   <span class="md-ellipsis">
     Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MAP_GENERATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SIMULATION_MAPS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-based simulation workflow (FR)
   </span>
   
 
@@ -1565,6 +1611,8 @@
       
         
       
+        
+      
     
     
       
@@ -1599,6 +1647,27 @@
             Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SWAGGER.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1975,6 +2044,11 @@ images immuables, le chart, les migrations et un kit d'installation OpenShift.
 Les démonstrations restent versionnées dans le dépôt et dans les archives de
 release. Le candidat <code>openshift-evaluation-2026.10.28-rc1</code> est un historique
 d'évaluation distinct ; il n'est pas promu par simple changement d'étiquette.</p>
+<p>La version produit <strong>1.21.1</strong> correspond au tag <code>v1.21.1</code>. Sa première révision
+du kit Windows léger est <strong>1.21.1-1</strong> : le numéro du kit distingue les fichiers
+client du numéro des images produit. Ces versions ne constituent pas une preuve
+de publication ou de qualification ; les résultats sont ceux de la chaîne de
+release et des artefacts effectivement livrés.</p>
 <h2 id="preparer-et-integrer">Préparer et intégrer<a class="headerlink" href="#preparer-et-integrer" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Corriger les défauts bloquants et obtenir les validations de la branche.</li>
@@ -2006,13 +2080,39 @@ calcule le checksum de l'archive et joint le kit à la release.</p>
 ces contrôles, y compris la validation Windows. Les liens de release et les
 rapports doivent désigner le commit effectivement livré, sans substituer les
 preuves d'un ancien candidat.</p>
+<p>Le canal public d'évaluation copie les cinq images qualifiées de cette release
+en conservant leurs digests. Il assemble ensuite le kit Windows léger avec ce
+nouveau verrou et les versions explicites, vérifie le téléchargement anonyme et
+qualifie le ZIP exact sur OpenShift avant de le livrer. Ne pas réutiliser un
+verrou 1.20.4 pour distribuer les fonctionnalités 1.21.1. Les locks historiques
+restent des références d'ancienne livraison, notamment pour la recette de mise
+à jour.</p>
+<p>Pour les nouveautés 1.21.1, conserver aussi la preuve de publication ordinaire
+d'une map issue du prompt mock : aucun profil mock envoyé à l'import, aucun
+défaut mock enregistré requis, commandes inchangées, agents explicitement
+choisis, coexistence avec une application réelle et droits d'équipe vérifiés.
+L'outil de transformation serveur facultatif se qualifie séparément. Les
+recettes de branche ne remplacent pas la qualification des digests et du ZIP
+de release.</p>
 <h2 id="remettre-au-client">Remettre au client<a class="headerlink" href="#remettre-au-client" title="Permanent link">&para;</a></h2>
-<p>Remettre <code>appcontrol-openshift-VERSION.tar.gz</code>, son <code>.sha256</code> et l'accès aux notes
-et preuves de release. Le kit contient <code>LISEZ-MOI.md</code> et <code>VALIDATION.fr.md</code> ;
-commencer par la vérification d'intégrité puis l'import dans le registre interne.
-Le cluster client n'a besoin ni de GitHub ni d'une compilation du produit.
-Les registres privés requièrent les droits de téléchargement du destinataire
-ou un transfert du kit par le canal approuvé.</p>
+<p><strong>Pour Windows/OpenShift, recommander le kit léger PowerShell + oc</strong> :
+<code>appcontrol-openshift-windows-light-1.21.1-1.zip</code>, son <code>.sha256</code>, le guide
+<code>COMMENCER-ICI.fr.md</code> et les preuves de même révision
+<code>PUBLICATION-EVALUATION-1.21.1-1.json</code> et
+<code>QUALIFICATION-EVALUATION-1.21.1-1.zip</code>, lorsqu'ils sont publiés par la chaîne.
+Le client utilise son <code>oc</code> existant ; aucun Python, Helm, Docker ni outil de
+transfert d'images n'est requis sur le poste. Les nœuds téléchargent les images
+publiques d'évaluation, directement ou via Artifactory autorisé.</p>
+<p>Le kit <code>appcontrol-openshift-VERSION.tar.gz</code> avec ses OCI, <code>LISEZ-MOI.md</code> et
+<code>VALIDATION.fr.md</code> reste une autre option pour Linux/macOS et les transferts
+hors ligne. Remettre alors son <code>.sha256</code>, les notes et les preuves correspondantes.
+Les accès au registre ou le transfert des archives se préparent avec le client.</p>
+<p>Pour PostgreSQL externe, l'administrateur prépare la base dédiée et le rôle
+applicatif avant l'installation. Seule la connexion applicative est fournie
+au script ; il ne crée pas automatiquement deux comptes et ne demande pas
+les identifiants de l'administrateur PostgreSQL. Le même compte applicatif doit
+disposer des droits DDL nécessaires aux migrations de démarrage et de mise à
+jour, en plus de ses droits de fonctionnement.</p>
 <p>La publication stable du logiciel n'est pas une certification de production
 bancaire. Le profil initial reste mono-instance, avec PKI d'évaluation et une
 recette synthétique. Les intégrations client et scénarios destructifs nécessitent
@@ -2042,7 +2142,7 @@ sauvegarde restaurable et un essai sur les données existantes sont nécessaires
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     
@@ -2052,7 +2152,7 @@ sauvegarde restaurable et un essai sur les données existantes sont nécessaires
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

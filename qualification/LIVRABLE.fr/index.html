@@ -351,7 +351,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference/cli/" class="md-tabs__link">
+        <a href="../../SWAGGER.fr/" class="md-tabs__link">
           
   
     
@@ -1143,6 +1143,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1274,6 +1278,48 @@
   
   <span class="md-ellipsis">
     Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MAP_GENERATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SIMULATION_MAPS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-based simulation workflow (FR)
   </span>
   
 
@@ -1565,6 +1611,8 @@
       
         
       
+        
+      
     
     
       
@@ -1599,6 +1647,27 @@
             Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SWAGGER.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2000,7 +2069,7 @@
 <blockquote>
 <p><strong>Depuis Windows, commencer par le <a href="../INSTALLATION-WINDOWS.fr/">parcours léger PowerShell + oc</a>.</strong> Cette page concerne le kit Linux/macOS avec archives OCI. Le parcours Windows léger utilise les images publiques d’évaluation téléchargées par le cluster, via le registre autorisé ; il n’exige aucun import d’images depuis le poste.</p>
 </blockquote>
-<p>Version officielle <strong>1.20.4</strong>. Consulter <code>VALIDATION.fr.md</code> et
+<p>Version produit <strong>1.21.1</strong>. Consulter <code>VALIDATION.fr.md</code> et
 <code>provenance.json</code> pour le commit, les digests, la date et les contrôles réellement
 exécutés par la CI de cette release. Les rapports bruts sont dans <code>evidence/</code>.</p>
 <p>Ce kit Linux AMD64 contient les cinq images OCI, les exécutables déjà compilés,
@@ -2040,7 +2109,7 @@ Remplacer le préfixe de registre ci-dessous ; le tag d’import doit être rés
 à cette livraison et ne pas être réutilisé pour d’autres images.</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>scripts/qualification/transfer-images.py<span class="w"> </span>import<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--lock<span class="w"> </span>images.source.lock.json<span class="w"> </span>--archive-dir<span class="w"> </span>images-oci<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--target-prefix<span class="w"> </span>registre.banque/appcontrol<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.20.4<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--target-prefix<span class="w"> </span>registre.banque/appcontrol<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.21.1<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--output-lock<span class="w"> </span>images.lock.json<span class="w"> </span>--execute
 </span></code></pre></div>
 <p>Sans <code>--execute</code>, le script affiche le plan. Le mode import lit les archives
@@ -2150,7 +2219,7 @@ une livraison ultérieure et après toute modification d'image.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T06:55:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T10:50:41+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

@@ -353,7 +353,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../reference/cli/" class="md-tabs__link">
+        <a href="../SWAGGER.fr/" class="md-tabs__link">
           
   
     
@@ -1147,6 +1147,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1278,6 +1282,48 @@
   
   <span class="md-ellipsis">
     Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MAP_GENERATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SIMULATION_MAPS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-based simulation workflow (FR)
   </span>
   
 
@@ -1569,6 +1615,8 @@
       
         
       
+        
+      
     
     
       
@@ -1603,6 +1651,27 @@
             Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SWAGGER.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1934,6 +2003,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#1211-2026-11-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      [1.21.1] - 2026-11-03
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[1.21.1] - 2026-11-03">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai-assisted-map-generation-and-publication" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI-assisted map generation and publication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teams-and-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Teams and access control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-and-openshift-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows and OpenShift delivery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1204-2026-10-28" class="md-nav__link">
     <span class="md-ellipsis">
       [1.20.4] - 2026-10-28
@@ -2096,6 +2216,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#1211-2026-11-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      [1.21.1] - 2026-11-03
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[1.21.1] - 2026-11-03">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai-assisted-map-generation-and-publication" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI-assisted map generation and publication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teams-and-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Teams and access control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-and-openshift-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows and OpenShift delivery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1204-2026-10-28" class="md-nav__link">
     <span class="md-ellipsis">
       [1.20.4] - 2026-10-28
@@ -2234,6 +2405,57 @@
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h2 id="unreleased">[Unreleased]<a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="1211-2026-11-03">[1.21.1] - 2026-11-03<a class="headerlink" href="#1211-2026-11-03" title="Permanent link">&para;</a></h2>
+<p>The immutable 1.21.0 tag remained unpublished after the release dependency gate
+identified CVE-2026-118764 in development tooling. This delivery updates the
+ESLint toolchain and pins its compatible glob consumers to minimatch 11.0.1,
+without weakening the all-severity production/development release scan. It also
+updates benchmark fixtures for organization-scoped permission evaluation; runtime
+permission rules are unchanged. The release includes all features below.</p>
+<h3 id="ai-assisted-map-generation-and-publication">AI-assisted map generation and publication<a class="headerlink" href="#ai-assisted-map-generation-and-publication" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Provide a versioned generation contract with the map ontology, JSON Schema,
+  catalogue selection, examples, Linux/Windows mock command templates and ETag
+  caching. The customer's AI generates the JSON; AppControl makes no model call.</li>
+<li>Add scoped publication context, prepare and import APIs with explicit placements
+  by site, enrolled host or agent ID, and team grants. A single active application
+  can span several sites. Existing map commands are preserved by default.</li>
+<li>Treat simulated commands as a generation-prompt choice: the resulting maps use
+  ordinary agents and the ordinary import workflow alongside real applications.
+  Server-side mock materialization remains an explicit optional helper.</li>
+<li>Add Swagger UI/OpenAPI documentation, PowerShell integration examples and a
+  replayable multi-site demonstration with file-based start/check/stop commands.</li>
+</ul>
+<h3 id="teams-and-access-control">Teams and access control<a class="headerlink" href="#teams-and-access-control" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Manage application assignments and permissions from Teams in the UI.</li>
+<li>Enforce organization, site, workspace, expiry and permission-ceiling checks;
+  permission revocations take effect without requiring a new user session.</li>
+<li>Validate destination bindings before profile activation and switchover, and
+  prevent an import update from silently granting its editor Owner access.</li>
+<li>Preserve organization-scoped 404 responses and reject expired share links.</li>
+</ul>
+<h3 id="windows-and-openshift-delivery">Windows and OpenShift delivery<a class="headerlink" href="#windows-and-openshift-delivery" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Include publication helpers and optional post-install site/agent provisioning
+  in the lightweight PowerShell/oc kit, without bundled images or executables.</li>
+<li>Retain targeted uninstall, explicit upgrades, Artifactory image rewriting and
+  integrated/external PostgreSQL choices. External PostgreSQL still requires a
+  pre-created dedicated database and an application account with schema rights;
+  the installer does not accept a separate database administrator account.</li>
+<li>Require an explicit image lock when assembling a new product version so the
+  lightweight kit cannot silently reuse historical images.</li>
+<li>Preserve demo scenarios in both source and corporate release assets. Release
+  scans and runtime qualification refer to the actual delivered image digests.</li>
+</ul>
+<h3 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Map publication is create-only; it is not an automatic update or an idempotent
+  batch transaction. Review generated commands before import, because periodic
+  checks may run as soon as components are bound to agents.</li>
+<li>The OpenShift evaluation remains a single-instance deployment with evaluation
+  PKI. Synthetic command tests do not qualify a customer's production procedures.</li>
+</ul>
 <h2 id="1204-2026-10-28">[1.20.4] - 2026-10-28<a class="headerlink" href="#1204-2026-10-28" title="Permanent link">&para;</a></h2>
 <p>The 1.20.0 tag did not produce a release because GitHub rejected workflow
 permissions before any build. The 1.20.1 release gates then caught two cold-start
@@ -2425,7 +2647,7 @@ validated public-registry substitutions and all changes below.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:18+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     
@@ -2435,7 +2657,7 @@ validated public-registry substitutions and all changes below.</p>
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:18+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

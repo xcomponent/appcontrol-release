@@ -357,7 +357,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../cli/" class="md-tabs__link">
+        <a href="../../SWAGGER.fr/" class="md-tabs__link">
           
   
     
@@ -1149,6 +1149,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1280,6 +1284,48 @@
   
   <span class="md-ellipsis">
     Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MAP_GENERATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SIMULATION_MAPS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-based simulation workflow (FR)
   </span>
   
 
@@ -1573,6 +1619,8 @@
       
         
       
+        
+      
     
     
       
@@ -1608,6 +1656,27 @@
             Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SWAGGER.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1702,6 +1771,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#applications" class="md-nav__link">
     <span class="md-ellipsis">
       Applications
@@ -1711,9 +1789,63 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#knowledge" class="md-nav__link">
     <span class="md-ellipsis">
       Knowledge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map imports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      Teams
     </span>
   </a>
   
@@ -1733,6 +1865,24 @@
   
     <nav class="md-nav" aria-label="Endpoint detail">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tag-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Agents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /agents
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#tag-applications" class="md-nav__link">
@@ -1870,6 +2020,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tag-gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tag-knowledge" class="md-nav__link">
     <span class="md-ellipsis">
       Tag — Knowledge
@@ -1927,6 +2095,321 @@
   <a href="#post-appsidknowledgeproposalsproposalpublish" class="md-nav__link">
     <span class="md-ellipsis">
       POST /apps/{id}/knowledge/proposals/{proposal}/publish
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-map-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Map generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-map-generationcontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /map-generation/context
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-map-generationcontract" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /map-generation/contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationimport" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/import
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationmockimport" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/mock/import
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationmockprepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/mock/prepare
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationprepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/prepare
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-mapsvalidate" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /maps/validate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sitessite_idmock-agentsprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /sites/{site_id}/mock-agents/{profile}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put-sitessite_idmock-agentsprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      PUT /sites/{site_id}/mock-agents/{profile}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-map-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Map imports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-importexecute" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /import/execute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-importjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /import/json
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-importpreview" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /import/preview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissionseffective" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions/effective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissionsteams" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions/teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-appsapp_idpermissionsteams" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /apps/{app_id}/permissions/teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissionsusers" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions/users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-appsapp_idpermissionsusers" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /apps/{app_id}/permissions/users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-appsapp_idpermissionsperm_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /apps/{app_id}/permissions/{perm_id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamssearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-teamsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /teams/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put-teamsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      PUT /teams/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamsidmembers" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/{id}/members
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-teamsidmembers" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /teams/{id}/members
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamsteam_idapps" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/{team_id}/apps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-teamsteam_idmembersuser_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /teams/{team_id}/members/{user_id}
     </span>
   </a>
   
@@ -2261,6 +2744,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#applications" class="md-nav__link">
     <span class="md-ellipsis">
       Applications
@@ -2270,9 +2762,63 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#knowledge" class="md-nav__link">
     <span class="md-ellipsis">
       Knowledge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map imports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      Teams
     </span>
   </a>
   
@@ -2292,6 +2838,24 @@
   
     <nav class="md-nav" aria-label="Endpoint detail">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tag-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Agents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /agents
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#tag-applications" class="md-nav__link">
@@ -2429,6 +2993,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tag-gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-gateways" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /gateways
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tag-knowledge" class="md-nav__link">
     <span class="md-ellipsis">
       Tag — Knowledge
@@ -2491,6 +3073,321 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tag-map-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Map generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-map-generationcontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /map-generation/context
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-map-generationcontract" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /map-generation/contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationimport" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/import
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationmockimport" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/mock/import
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationmockprepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/mock/prepare
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-map-generationprepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /map-generation/prepare
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-mapsvalidate" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /maps/validate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sitessite_idmock-agentsprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /sites/{site_id}/mock-agents/{profile}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put-sitessite_idmock-agentsprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      PUT /sites/{site_id}/mock-agents/{profile}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-map-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Map imports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-importexecute" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /import/execute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-importjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /import/json
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-importpreview" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /import/preview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissionseffective" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions/effective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissionsteams" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions/teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-appsapp_idpermissionsteams" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /apps/{app_id}/permissions/teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-appsapp_idpermissionsusers" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /apps/{app_id}/permissions/users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-appsapp_idpermissionsusers" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /apps/{app_id}/permissions/users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-appsapp_idpermissionsperm_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /apps/{app_id}/permissions/{perm_id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /sites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag — Teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /teams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamssearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-teamsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /teams/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put-teamsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      PUT /teams/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamsidmembers" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/{id}/members
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-teamsidmembers" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /teams/{id}/members
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-teamsteam_idapps" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /teams/{team_id}/apps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-teamsteam_idmembersuser_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      DELETE /teams/{team_id}/members/{user_id}
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2539,20 +3436,25 @@
 
 <h1 id="rest-api-reference">REST API reference<a class="headerlink" href="#rest-api-reference" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>Auto-generated from the backend's code-derived OpenAPI spec (utoipa annotations on each handler). Run <code>scripts/docs/regen.py</code> to refresh — CI does this on every push. The same spec is served at <code>GET /api/v1/openapi.json</code> from a running backend, or exported offline with <code>appcontrol-backend --export-openapi &lt;path&gt;</code>. Load either into Postman, Insomnia, Redoc, or Swagger UI for an interactive view.</p>
+<p>Auto-generated from the backend's code-derived OpenAPI spec (utoipa annotations on each handler). Run <code>scripts/docs/regen.py</code> to refresh — CI does this on every push. Open <code>/api-docs</code> on your AppControl instance for the bundled Swagger UI and see the <a href="../../SWAGGER.fr/">guided walkthrough (FR)</a>. The same spec is served at <code>GET /api/v1/openapi.json</code>, or exported offline with <code>appcontrol-backend --export-openapi &lt;path&gt;</code>.</p>
 </blockquote>
-<p><strong>API version:</strong> <code>1.20.4</code></p>
+<p><strong>API version:</strong> <code>1.21.1</code></p>
 <p><strong>Base URL:</strong> <code>/api/v1</code> (relative to the backend host)</p>
 <p>Enterprise platform for operational mastery and IT system resilience. Maps applications as dependency graphs (DAGs), monitors component health, orchestrates sequenced start/stop/restart operations, and manages DR site failover. </p>
-<p>This document is generated from the handler source — never hand-edited.</p>
+<p>This document is generated from the handler source — never hand-edited. Coverage is incremental: absence from this document does not mean an endpoint is unavailable. The external-AI map generation, validation and import workflow is documented here. In same-origin Swagger UI, the current AppControl login is used automatically. For another identity, authorize with either an AppControl JWT or <code>ApiKey &lt;key&gt;</code>; import permissions are separate from validation access.</p>
 <h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
-<p>Every endpoint (except <code>/health</code> and <code>/ready</code>) requires authentication. Two schemes are supported:</p>
+<p>Protected operations use the following alternatives. Authentication does not override application/site permissions or the limits of a restricted API key.</p>
 <ul>
-<li><strong>JWT bearer</strong> — for browser sessions. Obtained from <code>/api/v1/auth/login</code> (local), the OIDC callback, or the SAML assertion consumer. Pass it as <code>Authorization: Bearer &lt;jwt&gt;</code>.</li>
-<li><strong>API key</strong> — for schedulers, CI, and the <code>appctl</code> CLI. Created in the UI under <em>Settings → API Keys</em>. Pass it as <code>Authorization: Bearer &lt;key&gt;</code> (same header; the backend tries both schemes).</li>
+<li><strong>apiKeyAuth</strong> — Enter <code>ApiKey &lt;key&gt;</code> for a personal or service API key. The Authorization header (not X-API-Key) is accepted by the authentication middleware.</li>
+<li><strong>bearerAuth</strong> — AppControl session JWT. Pass as <code>Authorization: Bearer &lt;token&gt;</code>. An identity-provider token is not accepted directly as an AppControl session.</li>
+<li><strong>sessionCookie</strong> — Existing AppControl browser session (HttpOnly cookie, sent automatically for same-origin requests). Sign in through AppControl; do not paste the cookie into Swagger UI.</li>
 </ul>
 <p>All API key activity is recorded in <code>action_log</code> with <code>actor_type='api_key'</code>.</p>
 <h2 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h2>
+<h3 id="agents">Agents<a class="headerlink" href="#agents" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#get-agents"><code>GET /agents</code></a></li>
+</ul>
 <h3 id="applications">Applications<a class="headerlink" href="#applications" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="#get-apps"><code>GET /apps</code></a></li>
@@ -2570,6 +3472,10 @@
 <li><a href="#post-appsidstop"><code>POST /apps/{id}/stop</code></a></li>
 <li><a href="#put-appsidsuspend"><code>PUT /apps/{id}/suspend</code></a></li>
 </ul>
+<h3 id="gateways">Gateways<a class="headerlink" href="#gateways" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#get-gateways"><code>GET /gateways</code></a></li>
+</ul>
 <h3 id="knowledge">Knowledge<a class="headerlink" href="#knowledge" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="#get-appsidknowledge"><code>GET /apps/{id}/knowledge</code></a></li>
@@ -2579,7 +3485,61 @@
 <li><a href="#post-appsidknowledgeproposalsproposalapprove"><code>POST /apps/{id}/knowledge/proposals/{proposal}/approve</code></a></li>
 <li><a href="#post-appsidknowledgeproposalsproposalpublish"><code>POST /apps/{id}/knowledge/proposals/{proposal}/publish</code></a></li>
 </ul>
+<h3 id="map-generation">Map generation<a class="headerlink" href="#map-generation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#get-map-generationcontext"><code>GET /map-generation/context</code></a></li>
+<li><a href="#get-map-generationcontract"><code>GET /map-generation/contract</code></a></li>
+<li><a href="#post-map-generationimport"><code>POST /map-generation/import</code></a></li>
+<li><a href="#post-map-generationmockimport"><code>POST /map-generation/mock/import</code></a></li>
+<li><a href="#post-map-generationmockprepare"><code>POST /map-generation/mock/prepare</code></a></li>
+<li><a href="#post-map-generationprepare"><code>POST /map-generation/prepare</code></a></li>
+<li><a href="#post-mapsvalidate"><code>POST /maps/validate</code></a></li>
+<li><a href="#delete-sitessite_idmock-agentsprofile"><code>DELETE /sites/{site_id}/mock-agents/{profile}</code></a></li>
+<li><a href="#put-sitessite_idmock-agentsprofile"><code>PUT /sites/{site_id}/mock-agents/{profile}</code></a></li>
+</ul>
+<h3 id="map-imports">Map imports<a class="headerlink" href="#map-imports" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#post-importexecute"><code>POST /import/execute</code></a></li>
+<li><a href="#post-importjson"><code>POST /import/json</code></a></li>
+<li><a href="#post-importpreview"><code>POST /import/preview</code></a></li>
+</ul>
+<h3 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#get-appsapp_idpermissions"><code>GET /apps/{app_id}/permissions</code></a></li>
+<li><a href="#get-appsapp_idpermissionseffective"><code>GET /apps/{app_id}/permissions/effective</code></a></li>
+<li><a href="#get-appsapp_idpermissionsteams"><code>GET /apps/{app_id}/permissions/teams</code></a></li>
+<li><a href="#post-appsapp_idpermissionsteams"><code>POST /apps/{app_id}/permissions/teams</code></a></li>
+<li><a href="#get-appsapp_idpermissionsusers"><code>GET /apps/{app_id}/permissions/users</code></a></li>
+<li><a href="#post-appsapp_idpermissionsusers"><code>POST /apps/{app_id}/permissions/users</code></a></li>
+<li><a href="#delete-appsapp_idpermissionsperm_id"><code>DELETE /apps/{app_id}/permissions/{perm_id}</code></a></li>
+</ul>
+<h3 id="sites">Sites<a class="headerlink" href="#sites" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#get-sites"><code>GET /sites</code></a></li>
+</ul>
+<h3 id="teams">Teams<a class="headerlink" href="#teams" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#get-teams"><code>GET /teams</code></a></li>
+<li><a href="#post-teams"><code>POST /teams</code></a></li>
+<li><a href="#get-teamssearch"><code>GET /teams/search</code></a></li>
+<li><a href="#delete-teamsid"><code>DELETE /teams/{id}</code></a></li>
+<li><a href="#get-teamsid"><code>GET /teams/{id}</code></a></li>
+<li><a href="#put-teamsid"><code>PUT /teams/{id}</code></a></li>
+<li><a href="#get-teamsidmembers"><code>GET /teams/{id}/members</code></a></li>
+<li><a href="#post-teamsidmembers"><code>POST /teams/{id}/members</code></a></li>
+<li><a href="#get-teamsteam_idapps"><code>GET /teams/{team_id}/apps</code></a></li>
+<li><a href="#delete-teamsteam_idmembersuser_id"><code>DELETE /teams/{team_id}/members/{user_id}</code></a></li>
+</ul>
 <h2 id="endpoint-detail">Endpoint detail<a class="headerlink" href="#endpoint-detail" title="Permanent link">&para;</a></h2>
+<h3 id="tag-agents">Tag — Agents<a class="headerlink" href="#tag-agents" title="Permanent link">&para;</a></h3>
+<h3 id="get-agents"><code>GET /agents</code><a class="headerlink" href="#get-agents" title="Permanent link">&para;</a></h3>
+<p>Lists enrolled agents in the caller organization. The response object contains agents[]. Use agents[].id for import profile mappings and agents[].gateway_id to choose the gateway scope. connected is live connection status; is_active is administrative status. An arbitrary hostname does not enroll an agent.</p>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Object with agents array; includes id, hostname, gateway_id, gateway_name, connected, is_active, OS/version and heartbeat metadata</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>403</strong> — Insufficient API scope</li>
+</ul>
 <h3 id="tag-applications">Tag — Applications<a class="headerlink" href="#tag-applications" title="Permanent link">&para;</a></h3>
 <h3 id="get-apps"><code>GET /apps</code><a class="headerlink" href="#get-apps" title="Permanent link">&para;</a></h3>
 <p><strong>Parameters</strong></p>
@@ -2792,6 +3752,15 @@ in this application until it is resumed.</p>
 <li><strong>403</strong> — Forbidden (requires Manage permission)</li>
 <li><strong>409</strong> — Already suspended</li>
 </ul>
+<h3 id="tag-gateways">Tag — Gateways<a class="headerlink" href="#tag-gateways" title="Permanent link">&para;</a></h3>
+<h3 id="get-gateways"><code>GET /gateways</code><a class="headerlink" href="#get-gateways" title="Permanent link">&para;</a></h3>
+<p>Lists gateways grouped by site in the caller organization. The response is {sites: [...]}, not a flat gateway array. Select sites[].gateways[].id for import preview/profile gateway_ids and inspect connected before an operational demo.</p>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Object with sites array; each site contains site_id, site_name and gateways with id, name, connected, role and agent_count</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>403</strong> — Insufficient API scope</li>
+</ul>
 <h3 id="tag-knowledge">Tag — Knowledge<a class="headerlink" href="#tag-knowledge" title="Permanent link">&para;</a></h3>
 <h3 id="get-appsidknowledge"><code>GET /apps/{id}/knowledge</code><a class="headerlink" href="#get-appsidknowledge" title="Permanent link">&para;</a></h3>
 <p><strong>Parameters</strong></p>
@@ -2885,9 +3854,416 @@ in this application until it is resumed.</p>
 <li><strong>403</strong> — Insufficient scope or application/site rights</li>
 <li><strong>409</strong> — Revision, review or publication conflict</li>
 </ul>
+<h3 id="tag-map-generation">Tag — Map generation<a class="headerlink" href="#tag-map-generation" title="Permanent link">&para;</a></h3>
+<h3 id="get-map-generationcontext"><code>GET /map-generation/context</code><a class="headerlink" href="#get-map-generationcontext" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>profile</code> <em>(query, string, optional)</em> — standard (default), mock-linux or mock-windows; standard requires maps:import for API keys</li>
+<li><code>site_code</code> <em>(query, string, optional)</em> — </li>
+<li><code>hosting_name</code> <em>(query, string, optional)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Only issuer-accessible sites and enrolled agents</li>
+<li><strong>403</strong> — Insufficient scope or site access</li>
+</ul>
+<h3 id="get-map-generationcontract"><code>GET /map-generation/contract</code><a class="headerlink" href="#get-map-generationcontract" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>profile</code> <em>(query, any, optional)</em> — standard (default), mock-linux, mock-windows</li>
+<li><code>include_catalog</code> <em>(query, boolean, optional)</em> — Include the caller organization's catalog; requires global read/design for scoped API keys</li>
+<li><code>catalog_types</code> <em>(query, string, optional)</em> — Optional comma-separated catalog type keys; requires include_catalog=true. Maximum 100 entries and 256 KiB of catalog data.</li>
+<li><code>If-None-Match</code> <em>(header, ['string', 'null'], optional)</em> — ETag from a prior identical request, including quotes. A matching digest returns 304 without a body.</li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Versioned prompt, JSON Schema, examples and selected profile. Does not call an AI or change applications.</li>
+<li><strong>304</strong> — If-None-Match matches; empty body, reuse the cached contract</li>
+<li><strong>400</strong> — Invalid profile or catalog selection</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>403</strong> — Insufficient catalog access</li>
+</ul>
+<h3 id="post-map-generationimport"><code>POST /map-generation/import</code><a class="headerlink" href="#post-map-generationimport" title="Permanent link">&para;</a></h3>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/MapPlacementRequest&quot;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — New application with simultaneous per-component placements</li>
+<li><strong>400</strong> — Unresolved placement or invalid grants</li>
+<li><strong>403</strong> — Site access or maps:import scope denied</li>
+<li><strong>409</strong> — Application already exists; no overwrite supported</li>
+</ul>
+<h3 id="post-map-generationmockimport"><code>POST /map-generation/mock/import</code><a class="headerlink" href="#post-map-generationmockimport" title="Permanent link">&para;</a></h3>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/MockMapRequest&quot;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — New simulation application and explicit site profiles created</li>
+<li><strong>400</strong> — Invalid map, ambiguous site or unavailable mock agent</li>
+<li><strong>403</strong> — Site or mock:import scope denied</li>
+<li><strong>409</strong> — Application name exists; no update or overwrite is supported</li>
+</ul>
+<h3 id="post-map-generationmockprepare"><code>POST /map-generation/mock/prepare</code><a class="headerlink" href="#post-map-generationmockprepare" title="Permanent link">&para;</a></h3>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/MockMapRequest&quot;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Read-only materialized simulation and resolved site bindings</li>
+<li><strong>400</strong> — Invalid map, ambiguous site or unavailable mock agent</li>
+<li><strong>403</strong> — Site or mock:import scope denied</li>
+</ul>
+<h3 id="post-map-generationprepare"><code>POST /map-generation/prepare</code><a class="headerlink" href="#post-map-generationprepare" title="Permanent link">&para;</a></h3>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/MapPlacementRequest&quot;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Read-only placement report for real or simulated execution</li>
+<li><strong>400</strong> — Invalid map, site, placement or team grants</li>
+<li><strong>403</strong> — Site access or maps:import scope denied</li>
+</ul>
+<h3 id="post-mapsvalidate"><code>POST /maps/validate</code><a class="headerlink" href="#post-mapsvalidate" title="Permanent link">&para;</a></h3>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/ValidateMapRequest&quot;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Inspect valid even for HTTP 200. No application writes or command execution. Does not verify agents, source fidelity or command safety.</li>
+<li><strong>400</strong> — Malformed JSON request</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>409</strong> — Contract version differs from the installed version</li>
+<li><strong>422</strong> — Invalid request envelope, missing fields or wrong types</li>
+</ul>
+<h3 id="delete-sitessite_idmock-agentsprofile"><code>DELETE /sites/{site_id}/mock-agents/{profile}</code><a class="headerlink" href="#delete-sitessite_idmock-agentsprofile" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>site_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+<li><code>profile</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>204</strong> — Default removed; agent retained</li>
+<li><strong>403</strong> — Administrator required</li>
+</ul>
+<h3 id="put-sitessite_idmock-agentsprofile"><code>PUT /sites/{site_id}/mock-agents/{profile}</code><a class="headerlink" href="#put-sitessite_idmock-agentsprofile" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>site_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+<li><code>profile</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/SetMockAgentRequest&quot;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Administrator assigned a connected compatible agent to its own site</li>
+<li><strong>400</strong> — Target is ineligible</li>
+<li><strong>403</strong> — Administrator required</li>
+</ul>
+<h3 id="tag-map-imports">Tag — Map imports<a class="headerlink" href="#tag-map-imports" title="Permanent link">&para;</a></h3>
+<h3 id="post-importexecute"><code>POST /import/execute</code><a class="headerlink" href="#post-importexecute" title="Permanent link">&para;</a></h3>
+<p><em>POST /api/v1/import/execute</em></p>
+<p>Publishes a reviewed map with explicit component-to-agent UUID mappings supplied outside content. Strict generated maps must not also contain binding_profiles; use /import/json for that alternative. conflict_action defaults to fail; update replaces the imported configuration of the application with the same name after authorization and binding checks. Periodic checks may begin immediately on bound agents. Not a global transaction: after a timeout/server error inspect the application before retrying. Sample UUIDs must be replaced with your enrolled resources.</p>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/ImportExecuteRequest&quot;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — Application created or updated, including active binding profile</li>
+<li><strong>400</strong> — Invalid map, profile, agent/site binding, or unsupported embedded profiles</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>403</strong> — Insufficient scope, application permission or target-site access</li>
+<li><strong>409</strong> — Application-name conflict or incompatible generation contract</li>
+<li><strong>422</strong> — Malformed request envelope</li>
+</ul>
+<h3 id="post-importjson"><code>POST /import/json</code><a class="headerlink" href="#post-importjson" title="Permanent link">&para;</a></h3>
+<p><em>POST /api/v1/import/json
+Import a v4 native JSON map into the database.</em></p>
+<p>Creates a new application; not an idempotent upsert. Agent bindings are resolved from hosts/binding_profiles inside the map. generation_contract_version enables strict validation before writes. Review commands first: periodic checks may execute as soon as configuration reaches a bound agent. Import does not itself start or stop the application. After a timeout or server error, inspect the application list before retrying; the import is not a global transaction.</p>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/JsonImportRequest&quot;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — Application created; retain application_id and review warnings</li>
+<li><strong>400</strong> — Invalid map, unresolved/ambiguous explicit target, unsupported merge_into_app_id, or invalid site</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>403</strong> — Insufficient import scope or target-site access</li>
+<li><strong>409</strong> — Incompatible generation contract version</li>
+<li><strong>422</strong> — Malformed request envelope</li>
+</ul>
+<h3 id="post-importpreview"><code>POST /import/preview</code><a class="headerlink" href="#post-importpreview" title="Permanent link">&para;</a></h3>
+<p><em>POST /api/v1/import/preview</em></p>
+<p>Read-only import preview: lists available agents, host resolutions and an existing application with the same name. Does not create a map or execute commands. First call /maps/validate for a strict generated map; preview does not accept generation_contract_version. Replace sample gateway UUIDs with values from GET /gateways.</p>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/ImportPreviewRequest&quot;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Resolution report; inspect warnings and each component's resolution.status</li>
+<li><strong>400</strong> — Unsupported format or invalid map</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>403</strong> — Insufficient API scope</li>
+<li><strong>422</strong> — Malformed request envelope</li>
+</ul>
+<h3 id="tag-permissions">Tag — Permissions<a class="headerlink" href="#tag-permissions" title="Permanent link">&para;</a></h3>
+<h3 id="get-appsapp_idpermissions"><code>GET /apps/{app_id}/permissions</code><a class="headerlink" href="#get-appsapp_idpermissions" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>app_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Application permission operation within actor rights</li>
+<li><strong>403</strong> — Manage permission and execution-site access required</li>
+<li><strong>404</strong> — Application or recipient not in this organization</li>
+</ul>
+<h3 id="get-appsapp_idpermissionseffective"><code>GET /apps/{app_id}/permissions/effective</code><a class="headerlink" href="#get-appsapp_idpermissionseffective" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>app_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Application permission operation within actor rights</li>
+<li><strong>403</strong> — Manage permission and execution-site access required</li>
+<li><strong>404</strong> — Application or recipient not in this organization</li>
+</ul>
+<h3 id="get-appsapp_idpermissionsteams"><code>GET /apps/{app_id}/permissions/teams</code><a class="headerlink" href="#get-appsapp_idpermissionsteams" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>app_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Application permission operation within actor rights</li>
+<li><strong>403</strong> — Manage permission and execution-site access required</li>
+<li><strong>404</strong> — Application or recipient not in this organization</li>
+</ul>
+<h3 id="post-appsapp_idpermissionsteams"><code>POST /apps/{app_id}/permissions/teams</code><a class="headerlink" href="#post-appsapp_idpermissionsteams" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>app_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/GrantTeamPermissionRequest&quot;</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — Application permission operation within actor rights</li>
+<li><strong>403</strong> — Manage permission and execution-site access required</li>
+<li><strong>404</strong> — Application or recipient not in this organization</li>
+</ul>
+<h3 id="get-appsapp_idpermissionsusers"><code>GET /apps/{app_id}/permissions/users</code><a class="headerlink" href="#get-appsapp_idpermissionsusers" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>app_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Application permission operation within actor rights</li>
+<li><strong>403</strong> — Manage permission and execution-site access required</li>
+<li><strong>404</strong> — Application or recipient not in this organization</li>
+</ul>
+<h3 id="post-appsapp_idpermissionsusers"><code>POST /apps/{app_id}/permissions/users</code><a class="headerlink" href="#post-appsapp_idpermissionsusers" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>app_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/GrantUserPermissionRequest&quot;</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — Application permission operation within actor rights</li>
+<li><strong>403</strong> — Manage permission and execution-site access required</li>
+<li><strong>404</strong> — Application or recipient not in this organization</li>
+</ul>
+<h3 id="delete-appsapp_idpermissionsperm_id"><code>DELETE /apps/{app_id}/permissions/{perm_id}</code><a class="headerlink" href="#delete-appsapp_idpermissionsperm_id" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>app_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+<li><code>perm_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>204</strong> — Application permission operation within actor rights</li>
+<li><strong>403</strong> — Manage permission and execution-site access required</li>
+<li><strong>404</strong> — Application or recipient not in this organization</li>
+</ul>
+<h3 id="tag-sites">Tag — Sites<a class="headerlink" href="#tag-sites" title="Permanent link">&para;</a></h3>
+<h3 id="get-sites"><code>GET /sites</code><a class="headerlink" href="#get-sites" title="Permanent link">&para;</a></h3>
+<p>Lists the caller organization's sites. Select sites[].id as the import site_id. A site is a logical/physical execution location; it is distinct from an OpenShift namespace. Import also checks the caller's permission on the selected site.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>site_type</code> <em>(query, string, optional)</em> — Optional site type filter</li>
+<li><code>is_active</code> <em>(query, boolean, optional)</em> — Optional active-state filter</li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Object with sites array; includes id, name, code, site_type, is_active and hosting information</li>
+<li><strong>401</strong> — Authentication required</li>
+<li><strong>403</strong> — Insufficient API scope</li>
+</ul>
+<h3 id="tag-teams">Tag — Teams<a class="headerlink" href="#tag-teams" title="Permanent link">&para;</a></h3>
+<h3 id="get-teams"><code>GET /teams</code><a class="headerlink" href="#get-teams" title="Permanent link">&para;</a></h3>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="post-teams"><code>POST /teams</code><a class="headerlink" href="#post-teams" title="Permanent link">&para;</a></h3>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">{</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/CreateTeamRequest&quot;</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="get-teamssearch"><code>GET /teams/search</code><a class="headerlink" href="#get-teamssearch" title="Permanent link">&para;</a></h3>
+<p><em>Search teams by name (for pickers/autocomplete).</em></p>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="delete-teamsid"><code>DELETE /teams/{id}</code><a class="headerlink" href="#delete-teamsid" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>204</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="get-teamsid"><code>GET /teams/{id}</code><a class="headerlink" href="#get-teamsid" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="put-teamsid"><code>PUT /teams/{id}</code><a class="headerlink" href="#put-teamsid" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">{</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/UpdateTeamRequest&quot;</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="get-teamsidmembers"><code>GET /teams/{id}/members</code><a class="headerlink" href="#get-teamsidmembers" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="post-teamsidmembers"><code>POST /teams/{id}/members</code><a class="headerlink" href="#post-teamsidmembers" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/AddMemberRequest&quot;</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>201</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="get-teamsteam_idapps"><code>GET /teams/{team_id}/apps</code><a class="headerlink" href="#get-teamsteam_idapps" title="Permanent link">&para;</a></h3>
+<p><em>List applications that a team has been granted access to.</em></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>team_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
+<h3 id="delete-teamsteam_idmembersuser_id"><code>DELETE /teams/{team_id}/members/{user_id}</code><a class="headerlink" href="#delete-teamsteam_idmembersuser_id" title="Permanent link">&para;</a></h3>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>team_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+<li><code>user_id</code> <em>(path, string, <strong>required</strong>)</em> — </li>
+</ul>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>204</strong> — Organization-scoped team operation</li>
+<li><strong>403</strong> — Team lead or organization administrator required for modifications</li>
+<li><strong>404</strong> — Team or user not in this organization</li>
+</ul>
 <h2 id="error-responses">Error responses<a class="headerlink" href="#error-responses" title="Permanent link">&para;</a></h2>
-<p>Every error response shares this body shape:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;machine-readable code&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;human-readable&gt;&quot;</span><span class="w"> </span><span class="p">}</span>
+<p>Application errors use the following body shape. Malformed requests rejected by the HTTP framework, authentication middleware, or a reverse proxy may use a different response format:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;machine-readable code&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;human-readable&gt;&quot;</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
 <p>The full mapping of <code>error</code> codes to HTTP statuses is in the <a href="../errors/">error reference</a>.</p>
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
@@ -2918,7 +4294,7 @@ in this application until it is resumed.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     
@@ -2928,7 +4304,7 @@ in this application until it is resumed.</p>
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T18:46:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T13:22:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

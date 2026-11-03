@@ -351,7 +351,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../reference/cli/" class="md-tabs__link">
+        <a href="../../SWAGGER.fr/" class="md-tabs__link">
           
   
     
@@ -1143,6 +1143,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1274,6 +1278,48 @@
   
   <span class="md-ellipsis">
     Integration cookbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MAP_GENERATION.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SIMULATION_MAPS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-based simulation workflow (FR)
   </span>
   
 
@@ -1565,6 +1611,8 @@
       
         
       
+        
+      
     
     
       
@@ -1599,6 +1647,27 @@
             Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SWAGGER.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1938,6 +2007,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#publier-les-applications-du-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publier les applications du client
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ce-qui-tourne-dans-le-projet" class="md-nav__link">
     <span class="md-ellipsis">
       Ce qui tourne dans le projet
@@ -1997,8 +2075,9 @@
 
 
 <h1 id="appcontrol-sur-openshift-demarrer-le-poc">AppControl sur OpenShift — démarrer le POC<a class="headerlink" href="#appcontrol-sur-openshift-demarrer-le-poc" title="Permanent link">&para;</a></h1>
-<p><strong>Depuis un poste Windows, suivre le <a href="../INSTALLATION-WINDOWS.fr/">guide PowerShell + oc</a>.</strong>
-Le petit ZIP contient uniquement les scripts et les YAML. Il utilise la commande
+<p><strong>Parcours recommandé depuis Windows : le <a href="../INSTALLATION-WINDOWS.fr/">guide PowerShell + oc</a>,
+pour AppControl 1.21.1 et le kit léger 1.21.1-1.</strong>
+Le ZIP contient les scripts, les YAML et leurs guides. Il utilise la commande
 <code>oc</code> déjà approuvée sur le poste ; aucun Docker, Python, Helm ou outil de transfert
 d’images n’est à installer. Les nœuds OpenShift téléchargent les images.</p>
 <p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases">dépôt public de livraison XComponent</a>
@@ -2010,12 +2089,17 @@ restent privés ; le dépôt source n’est pas rendu public.</p>
 <blockquote>
 <p>La livraison du kit Windows léger est conditionnée au téléchargement anonyme
 des images et à la qualification du ZIP exact depuis Windows sur OpenShift.
-Choisir le kit et les preuves de la même révision dans les assets de la release :
-<code>PUBLICATION-EVALUATION-1.20.4-4.json</code> et <code>QUALIFICATION-EVALUATION-1.20.4-4.zip</code>
-pour le kit 1.20.4-4. Les rapports de la release 1.20.4 et du kit 1.20.4-3
-restent des preuves de leurs parcours respectifs ; ils ne valident pas à eux
-seuls la nouvelle mise à jour ni le téléchargement public.</p>
+Les preuves attendues pour le kit 1.21.1-1 sont
+<code>PUBLICATION-EVALUATION-1.21.1-1.json</code> et <code>QUALIFICATION-EVALUATION-1.21.1-1.zip</code>,
+jointes à la même release lorsque les contrôles ont abouti. Ce guide ne vaut
+pas résultat de qualification. Les rapports de la release 1.20.4 et de ses
+kits restent des preuves historiques ; ils ne valident pas la livraison 1.21.1.</p>
 </blockquote>
+<p>Après publication :
+<a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip">kit léger 1.21.1-1</a>
+et <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256">empreinte SHA-256</a>.
+Les images de cette version utilisent les tags <code>appcontrol-eval-*:1.21.1</code> ;
+l’installation fixe leurs empreintes dans le verrou d’images du kit.</p>
 <h2 id="avant-le-premier-creneau">Avant le premier créneau<a class="headerlink" href="#avant-le-premier-creneau" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2056,7 +2140,7 @@ OpenShift → Artifactory restent ceux de la banque.</p>
 <li>Télécharger le kit Windows léger et vérifier son empreinte SHA-256.</li>
 <li>Lancer <code>Deployer-AppControl.ps1</code>. Le script demande le projet et le mode PostgreSQL ; pour Artifactory, fournir les valeurs de la plateforme avec <code>-Registre</code> et éventuellement <code>-SecretImages</code>.</li>
 <li>Ouvrir l’URL affichée. La recette crée un agent et une map synthétique pour vérifier les dépendances, le démarrage, l’arrêt, les droits et la persistance.</li>
-<li>Choisir une vraie application non critique pour le POC : procédures, droits des agents et critères de succès restent définis avec son équipe d’exploitation.</li>
+<li>Choisir une application pour le POC, préparer sa map avec l’IA du client et les guides ci-dessous, puis vérifier les commandes, les agents choisis et les droits avec son équipe d’exploitation. Commencer par des commandes simulées ou une application non critique selon le périmètre convenu.</li>
 <li>Pour une nouvelle version, récupérer son kit, sauvegarder PostgreSQL puis relancer <strong>le même script avec <code>-MettreAJour</code></strong>. Le dossier privé de l’installation, ses paramètres et ses données sont conservés ; prévoir une interruption des services. Voir la <a href="../INSTALLATION-WINDOWS.fr/#mettre-a-jour-le-poc">procédure de mise à jour</a>.</li>
 </ol>
 <p>La mise à jour conserve les maps et ne rejoue pas la démonstration. Elle met à
@@ -2068,6 +2152,27 @@ validées sont copiées vers le même canal public avec un numéro de version,
 sans nouvelle compilation ni copie manuelle chez le client. L’installation
 reste fixée aux digests du kit choisi ; elle ne suit pas automatiquement
 <code>latest</code>.</p>
+<h2 id="publier-les-applications-du-client">Publier les applications du client<a class="headerlink" href="#publier-les-applications-du-client" title="Permanent link">&para;</a></h2>
+<p>La version 1.21.1 fournit un contrat de génération à transmettre, avec les
+documents de l’application, au <strong>moteur d’IA du client</strong>. AppControl n’appelle
+aucun modèle dans ce parcours. Relire la map produite, la valider, choisir
+les agents et préparer l’import avant de la publier. Le
+<a href="../../MAP_GENERATION.fr/">guide de génération et publication</a> et le
+<a href="../../SWAGGER.fr/">parcours Swagger</a> détaillent ces étapes ; le kit fournit
+aussi <code>map-publication-client.ps1</code> pour les lots PowerShell.</p>
+<p>Une application peut répartir ses composants sur <strong>plusieurs sites en même
+temps</strong>, avec des placements explicites. Dans <strong>Teams → Applications</strong>,
+attribuer les applications aux équipes et choisir leurs niveaux de droits.</p>
+<p>La simulation est un <strong>choix de prompt</strong> : <code>mock-linux</code> ou <code>mock-windows</code>
+demande à l’IA de générer des commandes qui manipulent des fichiers témoins.
+La map suit ensuite <strong>le même import normal</strong>, sur les agents ordinaires
+choisis, sans préparation de simulation ni agent spécial obligatoires.
+Applications réelles et simulées peuvent coexister. Voir le
+<a href="../../SIMULATION_MAPS.fr/">guide de simulation</a>.</p>
+<p>Dans le ZIP, les guides portent les noms <code>MAP_GENERATION.fr.md</code>,
+<code>SWAGGER.fr.md</code> et <code>SIMULATION-MAPS.fr.md</code>. Le complément facultatif
+<code>Configurer-Simulation.ps1</code> prépare des sites de démonstration pour l’outil
+historique de transformation serveur ; il n’est pas requis pour ce parcours.</p>
 <h2 id="ce-qui-tourne-dans-le-projet">Ce qui tourne dans le projet<a class="headerlink" href="#ce-qui-tourne-dans-le-projet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2163,7 +2268,7 @@ avec l’exploitation.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-02T06:55:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T10:50:41+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

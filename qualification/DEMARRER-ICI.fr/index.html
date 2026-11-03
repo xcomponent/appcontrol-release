@@ -2007,6 +2007,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#nettoyer-ou-recommencer-sans-supprimer-le-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nettoyer ou recommencer sans supprimer le projet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#publier-les-applications-du-client" class="md-nav__link">
     <span class="md-ellipsis">
       Publier les applications du client
@@ -2076,7 +2085,7 @@
 
 <h1 id="appcontrol-sur-openshift-demarrer-le-poc">AppControl sur OpenShift — démarrer le POC<a class="headerlink" href="#appcontrol-sur-openshift-demarrer-le-poc" title="Permanent link">&para;</a></h1>
 <p><strong>Parcours recommandé depuis Windows : le <a href="../INSTALLATION-WINDOWS.fr/">guide PowerShell + oc</a>,
-pour AppControl 1.21.1 et le kit léger 1.21.1-1.</strong>
+pour AppControl 1.21.1 et le kit léger 1.21.1-2.</strong>
 Le ZIP contient les scripts, les YAML et leurs guides. Il utilise la commande
 <code>oc</code> déjà approuvée sur le poste ; aucun Docker, Python, Helm ou outil de transfert
 d’images n’est à installer. Les nœuds OpenShift téléchargent les images.</p>
@@ -2089,17 +2098,20 @@ restent privés ; le dépôt source n’est pas rendu public.</p>
 <blockquote>
 <p>La livraison du kit Windows léger est conditionnée au téléchargement anonyme
 des images et à la qualification du ZIP exact depuis Windows sur OpenShift.
-Les preuves attendues pour le kit 1.21.1-1 sont
-<code>PUBLICATION-EVALUATION-1.21.1-1.json</code> et <code>QUALIFICATION-EVALUATION-1.21.1-1.zip</code>,
+Les preuves attendues pour le kit 1.21.1-2 sont
+<code>PUBLICATION-EVALUATION-1.21.1-2.json</code> et <code>QUALIFICATION-EVALUATION-1.21.1-2.zip</code>,
 jointes à la même release lorsque les contrôles ont abouti. Ce guide ne vaut
 pas résultat de qualification. Les rapports de la release 1.20.4 et de ses
 kits restent des preuves historiques ; ils ne valident pas la livraison 1.21.1.</p>
 </blockquote>
 <p>Après publication :
-<a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip">kit léger 1.21.1-1</a>
-et <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256">empreinte SHA-256</a>.
+<a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip">kit léger 1.21.1-2</a>
+et <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip.sha256">empreinte SHA-256</a>.
 Les images de cette version utilisent les tags <code>appcontrol-eval-*:1.21.1</code> ;
-l’installation fixe leurs empreintes dans le verrou d’images du kit.</p>
+l’installation fixe leurs empreintes dans le verrou d’images du kit.
+La révision <strong>1.21.1-2</strong> modifie les scripts de déploiement, nettoyage et reprise,
+sans changer le produit 1.21.1 ni ses images. Les messages et confirmations sont
+en anglais ; les paramètres français des commandes existantes restent acceptés.</p>
 <h2 id="avant-le-premier-creneau">Avant le premier créneau<a class="headerlink" href="#avant-le-premier-creneau" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2135,6 +2147,15 @@ l’installation fixe leurs empreintes dans le verrou d’images du kit.</p>
 <code>appcontrol-eval-*</code></strong> et le <strong>nom éventuel du Secret OpenShift de lecture</strong>. Les
 packages publics ne demandent aucun identifiant GitHub amont ; les droits
 OpenShift → Artifactory restent ceux de la banque.</p>
+<p>Le token Artifactory se renseigne dans ce <strong>Secret OpenShift de type Image pull
+secret</strong>, avec son identifiant, dans le projet cible. <code>-SecretImages</code> reçoit
+uniquement le nom du secret. Pour un miroir GHCR exposé à
+<code>artifactory.intra.example/docker-ghcr</code>, utiliser cette valeur dans <code>-Registre</code> :
+le script conserve <strong><code>xcomponent</code></strong> et construit
+<code>artifactory.intra.example/docker-ghcr/xcomponent/appcontrol-eval-…</code>.
+Si le chemin fourni comporte déjà <code>xcomponent</code>, il n’est pas ajouté une seconde
+fois. Pour un miroir volontairement aplati, le guide décrit
+<code>-CheminRegistreExact</code>.</p>
 <h2 id="installer-demontrer-faire-evoluer">Installer, démontrer, faire évoluer<a class="headerlink" href="#installer-demontrer-faire-evoluer" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Télécharger le kit Windows léger et vérifier son empreinte SHA-256.</li>
@@ -2147,11 +2168,46 @@ OpenShift → Artifactory restent ceux de la banque.</p>
 jour les services AppControl et, en mode intégré, l’image PostgreSQL. Les agents
 existants gardent leur version et leur identité ; leur mise à jour est une
 opération distincte.</p>
+<p>Si l’interface ou le backend a été supprimé à la main, remettre d’abord les
+services avec <strong>le kit de la version déjà installée</strong>, le dossier privé d’origine
+et <code>-SansDemo</code>. Ensuite, revenir au nouveau kit pour lancer <code>-MettreAJour</code>.
+La procédure détaillée fournit la commande de réparation ; une ancienne version
+ne doit pas être redéployée si une vraie mise à jour était déjà en cours.</p>
+<p>L’agent de démonstration conservé garde également ses anciennes références de
+secret Artifactory. Le script signale une différence sans redémarrer son pod,
+car son identité est temporaire. Une nouvelle recette applique le nouveau secret
+mais crée une nouvelle identité d’agent et une nouvelle map ; <code>-SansDemo</code>
+préserve l’agent et la démonstration existants.</p>
 <p>La publication des versions suivantes réutilise la chaîne existante. Les images
 validées sont copiées vers le même canal public avec un numéro de version,
 sans nouvelle compilation ni copie manuelle chez le client. L’installation
 reste fixée aux digests du kit choisi ; elle ne suit pas automatiquement
 <code>latest</code>.</p>
+<h2 id="nettoyer-ou-recommencer-sans-supprimer-le-projet">Nettoyer ou recommencer sans supprimer le projet<a class="headerlink" href="#nettoyer-ou-recommencer-sans-supprimer-le-projet" title="Permanent link">&para;</a></h2>
+<p>Depuis le kit 1.21.1-2, afficher d’abord la cible :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="n">-Preview</span>
+</span></code></pre></div>
+<p>Retirer <code>-Preview</code> pour enlever les services tout en conservant la base et la
+configuration. Pour une <strong>suppression complète des données de l’évaluation</strong>,
+ajouter <code>-RemoveAll</code> ; sauvegarder auparavant si les données doivent être
+conservées. Le script traite les objets restants même si certains ont déjà été
+supprimés ; un bilan identifie ce qui a été retiré ou reste à corriger. Le projet
+et la base PostgreSQL externe ne sont jamais supprimés. Un secret Artifactory
+référencé peut être supprimé avec <code>-RemoveAll</code> uniquement s’il n’est pas partagé.</p>
+<p>Si le dossier privé est perdu ou illisible, le parcours <code>-WithoutState</code> exige
+le projet et le nom explicites et contrôle les marqueurs de propriété des
+ressources. Après nettoyage complet, utiliser :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="n">-Reinstaller</span>
+</span></code></pre></div>
+<p>Le script vérifie que les anciennes ressources ont été retirées, archive
+l’ancien état local et prépare une installation neuve. Fournir à nouveau les
+paramètres Artifactory, puis recréer le secret de lecture s’il a été supprimé.
+Avec PostgreSQL externe, une nouvelle base dédiée vide ou un nettoyage validé
+par son administrateur est requis ; <code>-BaseExterneVideConfirmee</code> atteste cette
+préparation sans effacer la base. Pour conserver les maps, reprendre l’état
+d’origine au lieu de réinstaller à vide.</p>
+<p>Voir les <a href="../INSTALLATION-WINDOWS.fr/#retirer-appcontrol-sans-supprimer-le-projet">commandes de nettoyage et de reprise</a>,
+notamment le choix du dossier privé personnalisé et les confirmations.</p>
 <h2 id="publier-les-applications-du-client">Publier les applications du client<a class="headerlink" href="#publier-les-applications-du-client" title="Permanent link">&para;</a></h2>
 <p>La version 1.21.1 fournit un contrat de génération à transmettre, avec les
 documents de l’application, au <strong>moteur d’IA du client</strong>. AppControl n’appelle
@@ -2268,7 +2324,7 @@ avec l’exploitation.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T10:50:41+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T16:28:16+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
   </span>
 
     

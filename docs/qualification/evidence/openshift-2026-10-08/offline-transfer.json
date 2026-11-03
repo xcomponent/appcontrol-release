@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "tool": "Skopeo 1.20.0",
+  "scope": "Transfer mechanism only; five aliases of public BusyBox 1.37.0, not AppControl image qualification",
+  "checks": [
+    "Five OCI archives exported with all manifests and unchanged digests",
+    "Five archives imported into isolated TLS registry",
+    "Four-service installation lock generated plus separate agent reference",
+    "Digests identical before and after export/import"
+  ],
+  "registry": "Temporary Docker network, no host port published"
+}

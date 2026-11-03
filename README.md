@@ -17,8 +17,8 @@ Le projet est né d'un constat simple : depuis vingt ans, chaque famille d'outil
 ## Installer AppControl
 
 **POC OpenShift depuis un poste Windows :**
-[Télécharger le kit léger 1.20.4-6](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-6.zip)
-· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-6.zip.sha256)
+[Kit léger 1.21.1-1 — téléchargement après publication](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip)
+· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256)
 · [Guide d’installation, de mise à jour et de désinstallation](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/).
 
 **PowerShell + votre `oc` existant uniquement.** Le ZIP contient les scripts et
@@ -26,10 +26,25 @@ les YAML ; OpenShift télécharge les images publiques d’évaluation, directem
 ou via Artifactory selon la politique de la banque. Aucun Docker, Python ou Helm
 à installer sur le poste.
 
-La révision **1.20.4-6** ajoute le retrait d’AppControl sans supprimer le projet.
-Elle conserve le correctif Windows `SeSecurityPrivilege` et le dépôt Artifactory
-séparé pour PostgreSQL avec `-RegistrePostgreSQL`, introduits dans la révision
-1.20.4-5. Aucun droit administrateur ni modification de `images.lock.json`.
+Le kit **1.21.1-1** accompagne AppControl **1.21.1**. Sa publication est
+conditionnée au téléchargement anonyme des images et à la qualification du ZIP
+exact depuis Windows sur OpenShift. Les preuves attendues dans les assets de
+la release sont `PUBLICATION-EVALUATION-1.21.1-1.json` et
+`QUALIFICATION-EVALUATION-1.21.1-1.zip`. Les rapports 1.20.4 restent des preuves
+historiques ; ils ne valident pas cette nouvelle livraison.
+
+La version 1.21.1 permet de générer des maps avec **l’IA du client**, de choisir
+les agents de chaque composant sur plusieurs sites et d’attribuer les
+applications dans **Teams → Applications**. La simulation se choisit dans le
+prompt : `mock-linux` ou `mock-windows` produit des commandes de fichiers témoins,
+puis la map suit l’import normal sur les agents ordinaires choisis. Voir le
+[parcours de génération et de publication](docs/MAP_GENERATION.fr.md) et le
+[guide de simulation](docs/SIMULATION_MAPS.fr.md).
+
+Le kit conserve la désinstallation ciblée introduite avec 1.20.4-6, le correctif
+Windows `SeSecurityPrivilege` et le dépôt Artifactory séparé pour PostgreSQL
+avec `-RegistrePostgreSQL`, introduits dans 1.20.4-5. Il fonctionne avec un
+compte Windows ordinaire ; ne pas modifier `images.lock.json`.
 
 Après vérification et extraction du ZIP, dans le dossier du script :
 
@@ -248,7 +263,27 @@ with the dev repo and is not duplicated here.
 
 ## Installation
 
-### Option 1 — Docker Compose (Linux / macOS)
+### Parcours recommandé pour un POC OpenShift depuis Windows
+
+Utiliser le **kit léger 1.21.1-1 pour AppControl 1.21.1**, avec PowerShell et le
+CLI `oc` déjà approuvé sur le poste. Les scripts et les YAML sont dans le ZIP ;
+les nœuds OpenShift téléchargent les images directement ou via Artifactory.
+Aucun Docker, Python ou Helm n’est à installer sur le poste.
+
+Après publication, télécharger le
+[kit léger](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip)
+et son [empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256),
+vérifier puis extraire le ZIP et lancer `Deployer-AppControl.ps1`.
+Le [guide Windows](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/)
+détaille le choix du projet, de PostgreSQL et du registre.
+
+La publication est conditionnée au téléchargement anonyme des images et à la
+qualification du ZIP exact depuis Windows sur OpenShift. Les preuves attendues
+sont `PUBLICATION-EVALUATION-1.21.1-1.json` et
+`QUALIFICATION-EVALUATION-1.21.1-1.zip`, jointes à la même release. Les résultats
+historiques 1.20.4 ne qualifient pas la livraison 1.21.1.
+
+### Autre option — Docker Compose (Linux / macOS)
 
 ```bash
 gh release download --repo xcomponent/appcontrol-release --pattern 'docker-compose.release.yaml'
@@ -258,7 +293,7 @@ open http://localhost:8080
 
 Connexion : `admin@localhost` / `admin`.
 
-### Option 2 — Standalone PowerShell (Windows / Linux, sans Docker)
+### Autre option — Standalone PowerShell (Windows / Linux, sans Docker)
 
 Aucune base à installer, aucun Docker requis. Un seul script gère tout.
 
@@ -274,7 +309,7 @@ Invoke-WebRequest -Uri "https://github.com/xcomponent/appcontrol-release/raw/mai
 
 Autres commandes : `stop`, `status`, `upgrade`, `logs [file]`, `help`. Compatible Windows PowerShell 5.1+ et PowerShell Core 6+.
 
-### Option 3 — CLI uniquement (`appctl`)
+### Autre option — CLI uniquement (`appctl`)
 
 ```bash
 gh release download --repo xcomponent/appcontrol-release --pattern 'appctl-linux-amd64' --dir /usr/local/bin
@@ -296,8 +331,8 @@ utilise les cinq packages `ghcr.io/xcomponent/appcontrol-eval-*`, accessibles
 sans compte GitHub. Le kit fixe leurs empreintes ; chaque nouvelle version du
 POC utilise le même canal avec un numéro de version distinct.
 
-Le [kit Windows léger 1.20.4-6](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/appcontrol-openshift-windows-light-1.20.4-6.zip)
-ajoute `Desinstaller-AppControl.ps1 -Projet 'projet-fourni'` pour retirer
+Le kit Windows léger 1.21.1-1 conserve
+`Desinstaller-AppControl.ps1 -Projet 'projet-fourni'`, introduit avec 1.20.4-6, pour retirer
 AppControl sans supprimer le projet. `-Verifier` affiche le plan ; les données
 et la configuration sont conservées par défaut. L’option destructive
 `-SupprimerDonnees` exige une confirmation et ne touche jamais la base externe.
@@ -313,15 +348,15 @@ est publique, comme les quatre autres. Une image PostgreSQL standard ou propre
 à la banque nécessite une validation distincte ; elle ne remplace pas
 implicitement l’image XComponent.
 
-Exemples pour un poste disposant déjà de Docker — **Docker n’est pas requis
-pour installer depuis Windows** :
+Références 1.21.1 à utiliser après publication, pour un poste disposant déjà de
+Docker — **Docker n’est pas requis pour installer depuis Windows** :
 
 ```bash
-docker pull ghcr.io/xcomponent/appcontrol-eval-backend:1.20.4
-docker pull ghcr.io/xcomponent/appcontrol-eval-frontend:1.20.4
-docker pull ghcr.io/xcomponent/appcontrol-eval-gateway:1.20.4
-docker pull ghcr.io/xcomponent/appcontrol-eval-postgresql:1.20.4
-docker pull ghcr.io/xcomponent/appcontrol-eval-agent:1.20.4
+docker pull ghcr.io/xcomponent/appcontrol-eval-backend:1.21.1
+docker pull ghcr.io/xcomponent/appcontrol-eval-frontend:1.21.1
+docker pull ghcr.io/xcomponent/appcontrol-eval-gateway:1.21.1
+docker pull ghcr.io/xcomponent/appcontrol-eval-postgresql:1.21.1
+docker pull ghcr.io/xcomponent/appcontrol-eval-agent:1.21.1
 ```
 
 ### Images privées — autres parcours Docker/Helm
@@ -348,6 +383,20 @@ helm install appcontrol appcontrol-*.tgz --namespace appcontrol --create-namespa
 ---
 
 ## Cartes d'application prêtes à l'emploi
+
+Avec AppControl 1.21.1, transmettre le contrat de génération et les documents
+de l’application à **l’IA du client**, puis relire, valider et importer la map
+produite. AppControl n’appelle aucun modèle dans ce parcours. Les placements
+choisis permettent aux composants d’une même application de fonctionner sur
+plusieurs sites ; **Teams → Applications** permet de l’attribuer aux équipes
+avec les droits voulus.
+
+Le prompt `mock-linux` ou `mock-windows` génère des commandes de fichiers
+témoins. La map suit ensuite l’import normal sur les agents ordinaires choisis,
+sans préparation de simulation obligatoire. Applications réelles et simulées
+peuvent coexister. Voir les guides de
+[génération et publication](docs/MAP_GENERATION.fr.md),
+[simulation](docs/SIMULATION_MAPS.fr.md) et [Swagger](docs/SWAGGER.fr.md).
 
 Trois exemples dans `appcontrol-docs-scripts.zip` :
 

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-10-28T10:44:27.791Z",
+  "platform": "OpenShift HTTPS Route, Chrome",
+  "application_id": "1fbec161-c910-4a00-8945-0ccadd81f854",
+  "checks": [
+    "Login through rendered UI with verified HTTPS",
+    "Both persisted components are visible in the map",
+    "UI start executes real commands and both components become RUNNING",
+    "UI stop returns both components to STOPPED"
+  ],
+  "page_errors": [],
+  "result": "PASS"
+}

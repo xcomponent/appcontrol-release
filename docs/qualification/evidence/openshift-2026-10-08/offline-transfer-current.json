@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "source_images": {
+    "backend": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/appcontrol-bank-backend@sha256:ecb685fc6f1acc8ae1f1119973c6d3d80e7fb659b16ac85ec07096fc6d511cf6",
+    "frontend": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/frontend@sha256:5c31fd1c891ebb44b04d6a51f6c9dd50f429dd967f008431c0a8d686a407ac5d",
+    "gateway": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/gateway@sha256:7c565b2f98479e1da4483fdd66efad4a670ed0eb665ae3d8557727dab9d7907d",
+    "postgresql": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/postgresql@sha256:7e7ea71ced4675de7e1096e537d1c69798525b886fbd73648188c1bb4ee5f9ea",
+    "agent": "image-registry.openshift-image-registry.svc:5000/frecarre-dev/agent@sha256:93c1386a33fc09e5c0bf1a71975b625fa1e9fca3f5a429c2de68f1bf110af3af"
+  },
+  "destination_images": {
+    "backend": "registry:5000/appcontrol/backend@sha256:ecb685fc6f1acc8ae1f1119973c6d3d80e7fb659b16ac85ec07096fc6d511cf6",
+    "frontend": "registry:5000/appcontrol/frontend@sha256:5c31fd1c891ebb44b04d6a51f6c9dd50f429dd967f008431c0a8d686a407ac5d",
+    "gateway": "registry:5000/appcontrol/gateway@sha256:7c565b2f98479e1da4483fdd66efad4a670ed0eb665ae3d8557727dab9d7907d",
+    "postgresql": "registry:5000/appcontrol/postgresql@sha256:7e7ea71ced4675de7e1096e537d1c69798525b886fbd73648188c1bb4ee5f9ea",
+    "agent": "registry:5000/appcontrol/agent@sha256:93c1386a33fc09e5c0bf1a71975b625fa1e9fca3f5a429c2de68f1bf110af3af"
+  },
+  "scope": "Five exact corrected AppControl images, OCI offline import into an isolated TLS registry; no customer registry was available",
+  "digest_preservation": true
+}

@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-10-08T07:12:05.037675+00:00",
+  "platform": "OpenShift (public Routes and restricted SCC asserted)",
+  "checks": [
+    "Verified HTTPS login",
+    "Anonymous application access denied",
+    "Agent enrollment through verified TLS gateway and backend mTLS",
+    "Public reencrypt frontend Route, passthrough agent Route and restricted SCC admission",
+    "Read-only application key can read but cannot execute start",
+    "Real commands: dependency starts before its consumer",
+    "Real commands: consumer stops before its dependency",
+    "Gateway restart reconnects and still executes commands",
+    "Map persists after backend restart",
+    "Map persists and backend reconnects after PostgreSQL restart"
+  ],
+  "scc": {
+    "appcontrol-bank-backend-866768d855-gkvf4": "restricted-v2",
+    "appcontrol-bank-frontend-74d4969c4d-x8sq5": "restricted-v2",
+    "appcontrol-bank-gateway-c7f788dfb-hr6xz": "restricted-v2",
+    "appcontrol-bank-postgresql-0": "restricted-v2",
+    "appcontrol-bank-test-agent-7bf78998c-fsn7c": "restricted-v2"
+  },
+  "application_id": "2ccf6094-9e9d-4d02-beb7-182480d42707",
+  "result": "PASS"
+}

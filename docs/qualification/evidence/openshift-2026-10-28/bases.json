@@ -1,0 +1,12 @@
+{
+  "source_commit": "2268728478f117b2b578109eb9a2652794b74485",
+  "ci_run": 40669149665,
+  "platform": "linux/amd64",
+  "references": {
+    "backend": "registry.access.redhat.com/ubi10/ubi-minimal@sha256:bc7f89820c1edfadf7f7dc2d98f317aadedf6b71b90120c4c55907b8ba4852aa",
+    "gateway": "registry.access.redhat.com/ubi10/ubi-minimal@sha256:bc7f89820c1edfadf7f7dc2d98f317aadedf6b71b90120c4c55907b8ba4852aa",
+    "agent": "registry.access.redhat.com/ubi10/ubi-minimal@sha256:bc7f89820c1edfadf7f7dc2d98f317aadedf6b71b90120c4c55907b8ba4852aa",
+    "frontend": "docker.io/library/nginx@sha256:2db7d28517d1fba17c2da3210395f7be11a11b419246ad0da2edf782af72f367",
+    "postgresql": "docker.io/library/postgres@sha256:cbf42f0edc946c0bc1b8eeed62403734e1f25dc67a3491455d07a92fdb558b28"
+  }
+}

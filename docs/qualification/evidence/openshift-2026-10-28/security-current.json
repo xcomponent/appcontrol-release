@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-10-28T10:38:28.447786+00:00",
+  "trivy": "0.76.1",
+  "database": {
+    "Version": 2,
+    "NextUpdate": "2026-10-29T07:10:42.861393507Z",
+    "UpdatedAt": "2026-10-28T07:10:42.861393948Z",
+    "DownloadedAt": "2026-10-28T09:49:17.849193Z"
+  },
+  "source_commit": "2268728478f117b2b578109eb9a2652794b74485",
+  "results": [
+    {
+      "component": "backend",
+      "image": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-backend@sha256:f4707c96de3dadc44d40e8a96c2b7d711e5927c593dd7635e135b76093e81675",
+      "digest": "sha256:f4707c96de3dadc44d40e8a96c2b7d711e5927c593dd7635e135b76093e81675",
+      "findings": [],
+      "targets": 1
+    },
+    {
+      "component": "frontend",
+      "image": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-frontend@sha256:b4bb7660ef6512cad83876380b987a1d15bdab9dcecc46b5c8b752f9f8cff91f",
+      "digest": "sha256:b4bb7660ef6512cad83876380b987a1d15bdab9dcecc46b5c8b752f9f8cff91f",
+      "findings": [],
+      "targets": 1
+    },
+    {
+      "component": "gateway",
+      "image": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-gateway@sha256:782e86e414337f2d773c28f849101c7bd9ddf9d43f6a55fe490fa76e15fba7d5",
+      "digest": "sha256:782e86e414337f2d773c28f849101c7bd9ddf9d43f6a55fe490fa76e15fba7d5",
+      "findings": [],
+      "targets": 1
+    },
+    {
+      "component": "postgresql",
+      "image": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-postgresql@sha256:f647cb2073a95a464c1a01175ca5293013fd87779ff9ffd35b46d952b481baca",
+      "digest": "sha256:f647cb2073a95a464c1a01175ca5293013fd87779ff9ffd35b46d952b481baca",
+      "findings": [],
+      "targets": 1
+    },
+    {
+      "component": "agent",
+      "image": "default-route-openshift-image-registry.apps.rm1.0a51.p1.openshiftapps.com/frecarre-dev/appcontrol-eval-20261028-agent@sha256:ff0ba3c4bd4e42c4ad23a88c0c48e0ace693249b6f085b30fd672bcdbf0bfd40",
+      "digest": "sha256:ff0ba3c4bd4e42c4ad23a88c0c48e0ace693249b6f085b30fd672bcdbf0bfd40",
+      "findings": [],
+      "targets": 1
+    }
+  ],
+  "no_ignored_or_unfixed_filter": true
+}

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-10-08T05:30:36.916887+00:00",
+  "platform": "Kubernetes (OpenShift SCC/Route not validated)",
+  "checks": [
+    "Verified HTTPS login",
+    "Anonymous application access denied",
+    "Agent enrollment through verified TLS gateway and backend mTLS",
+    "Read-only application key can read but cannot execute start",
+    "Real commands: dependency starts before its consumer",
+    "Real commands: consumer stops before its dependency",
+    "Gateway restart reconnects and still executes commands",
+    "Map persists after backend restart",
+    "Map persists and backend reconnects after PostgreSQL restart"
+  ],
+  "application_id": "77cd112c-6466-45e7-aa31-c82d2c5fbc51",
+  "result": "PASS"
+}

@@ -1,0 +1,28 @@
+{
+  "source_commit": "2268728478f117b2b578109eb9a2652794b74485",
+  "run_id": 40669149665,
+  "components": {
+    "backend": {
+      "result": "PASS",
+      "image_digest": "sha256:f4707c96de3dadc44d40e8a96c2b7d711e5927c593dd7635e135b76093e81675",
+      "verified_ci_files": 1
+    },
+    "gateway": {
+      "result": "PASS",
+      "image_digest": "sha256:782e86e414337f2d773c28f849101c7bd9ddf9d43f6a55fe490fa76e15fba7d5",
+      "verified_ci_files": 1
+    },
+    "agent": {
+      "result": "PASS",
+      "image_digest": "sha256:ff0ba3c4bd4e42c4ad23a88c0c48e0ace693249b6f085b30fd672bcdbf0bfd40",
+      "verified_ci_files": 1
+    },
+    "frontend": {
+      "result": "PASS",
+      "image_digest": "sha256:b4bb7660ef6512cad83876380b987a1d15bdab9dcecc46b5c8b752f9f8cff91f",
+      "verified_ci_files": 4
+    }
+  },
+  "ci_compilation_commit": "0c4e7d1a85f68f4a9dacb99c8b23cfe0a81c8265",
+  "source_equivalence": "CI merge commit matches requested source 2268728478f117b2b578109eb9a2652794b74485 in product/build paths; see source-equivalence.json."
+}

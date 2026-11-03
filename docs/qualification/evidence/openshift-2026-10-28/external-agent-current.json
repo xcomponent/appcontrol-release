@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-10-28T10:45:26.378556+00:00",
+  "release": "appcontrol-review-20261028",
+  "platform": "Linux amd64 container on Docker Desktop, outside OpenShift",
+  "scope": "Synthetic two-component commands; not a client application or RHEL 8/9 VM qualification",
+  "checks": [
+    {
+      "check": "external-agent-enrollment",
+      "result": "PASS",
+      "detail": "Public gateway Route on 443, trusted public CA only, one-use token, non-root and read-only container"
+    },
+    {
+      "check": "dependency-start-order",
+      "result": "PASS",
+      "detail": "Consumer start command requires the dependency marker; both reach RUNNING"
+    },
+    {
+      "check": "dependency-stop-order",
+      "result": "PASS",
+      "detail": "Dependency stop command requires the consumer to be stopped; both reach STOPPED"
+    },
+    {
+      "check": "persistent-identity-after-recreation",
+      "result": "PASS",
+      "detail": "New container reuses the same certificate/configuration and agent ID without a bootstrap token; commands work after reconnection"
+    }
+  ],
+  "image": {
+    "reference": "sha256:88fd675d92474f3dd556aa0593f45eaf1c3dbaf1fcadc68c18ca81b394d6e4f7",
+    "config_digest": "sha256:88fd675d92474f3dd556aa0593f45eaf1c3dbaf1fcadc68c18ca81b394d6e4f7",
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  "runtime": {
+    "uid": 501,
+    "gateway_port": 443,
+    "transport": "WSS with verified server certificate and enrolled client certificate",
+    "os_release": {
+      "NAME": "\"Red Hat Enterprise Linux\"",
+      "VERSION": "\"10.0 (Coughlan)\"",
+      "ID": "\"rhel\"",
+      "ID_LIKE": "\"centos fedora\"",
+      "VERSION_ID": "\"10.0\"",
+      "PLATFORM_ID": "\"platform:el10\"",
+      "PRETTY_NAME": "\"Red Hat Enterprise Linux 10.0 (Coughlan)\"",
+      "ANSI_COLOR": "\"0;31\"",
+      "LOGO": "\"fedora-logo-icon\"",
+      "CPE_NAME": "\"cpe:/o:redhat:enterprise_linux:10.0\"",
+      "HOME_URL": "\"https://www.redhat.com/\"",
+      "VENDOR_NAME": "\"Red Hat\"",
+      "VENDOR_URL": "\"https://www.redhat.com/\"",
+      "DOCUMENTATION_URL": "\"https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/10\"",
+      "BUG_REPORT_URL": "\"https://issues.redhat.com/\"",
+      "REDHAT_BUGZILLA_PRODUCT": "\"Red Hat Enterprise Linux 10\"",
+      "REDHAT_BUGZILLA_PRODUCT_VERSION": "10.0",
+      "REDHAT_SUPPORT_PRODUCT": "\"Red Hat Enterprise Linux\"",
+      "REDHAT_SUPPORT_PRODUCT_VERSION": "\"10.0\""
+    }
+  },
+  "application_id": "ec58d637-94ae-47ac-85e9-cd9315e27424",
+  "agent_id": "a31d470f-dccc-5f63-b605-59dff59ec70c",
+  "result": "PASS",
+  "cleanup": "Temporary container removed; private enrolled identity retained locally for audit"
+}

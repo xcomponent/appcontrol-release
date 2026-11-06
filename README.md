@@ -1,6 +1,8 @@
-# AppControl
+# X4B by INVIVOO — AppControl
 
 *Read this in [English](README.en.md) — shorter, technical-first summary.*
+
+**INVIVOO est l’éditeur de X4B — XComponent for Business.** AppControl en constitue le premier module, dédié à la connaissance et à l’exploitation des applications. Cette identité prépare une plateforme extensible à de futures briques et connecteurs ; leur disponibilité sera documentée au fil des versions. L’interface démarre en thème sombre et conserve le choix clair/sombre de chaque navigateur.
 
 AppControl est une **plateforme d'exploitation pour applications critiques** — pour les équipes de production qui font tourner des systèmes où la disponibilité, la traçabilité régulatoire et la maîtrise du redémarrage ne sont pas négociables. Banques, assurances, télécoms, énergie, santé, opérateurs d'importance vitale, intégrateurs et MSP en charge de leurs applications.
 
@@ -17,8 +19,8 @@ Le projet est né d'un constat simple : depuis vingt ans, chaque famille d'outil
 ## Installer AppControl
 
 **POC OpenShift depuis un poste Windows :**
-[Kit léger 1.21.1-1 — téléchargement après publication](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip)
-· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256)
+[Kit léger 1.22.0-1 — téléchargement après publication](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip)
+· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip.sha256)
 · [Guide d’installation, de mise à jour et de désinstallation](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/).
 
 **PowerShell + votre `oc` existant uniquement.** Le ZIP contient les scripts et
@@ -26,11 +28,11 @@ les YAML ; OpenShift télécharge les images publiques d’évaluation, directem
 ou via Artifactory selon la politique de la banque. Aucun Docker, Python ou Helm
 à installer sur le poste.
 
-Le kit **1.21.1-1** accompagne AppControl **1.21.1**. Sa publication est
+Le kit **1.22.0-1** accompagne AppControl **1.22.0**. Sa publication est
 conditionnée au téléchargement anonyme des images et à la qualification du ZIP
 exact depuis Windows sur OpenShift. Les preuves attendues dans les assets de
-la release sont `PUBLICATION-EVALUATION-1.21.1-1.json` et
-`QUALIFICATION-EVALUATION-1.21.1-1.zip`. Les rapports 1.20.4 restent des preuves
+la release sont `PUBLICATION-EVALUATION-1.22.0-1.json` et
+`QUALIFICATION-EVALUATION-1.22.0-1.zip`. Les rapports 1.20.4 restent des preuves
 historiques ; ils ne valident pas cette nouvelle livraison.
 
 La version 1.21.1 permet de générer des maps avec **l’IA du client**, de choisir
@@ -265,22 +267,22 @@ with the dev repo and is not duplicated here.
 
 ### Parcours recommandé pour un POC OpenShift depuis Windows
 
-Utiliser le **kit léger 1.21.1-1 pour AppControl 1.21.1**, avec PowerShell et le
+Utiliser le **kit léger 1.21.1-2 pour AppControl 1.21.1**, avec PowerShell et le
 CLI `oc` déjà approuvé sur le poste. Les scripts et les YAML sont dans le ZIP ;
 les nœuds OpenShift téléchargent les images directement ou via Artifactory.
 Aucun Docker, Python ou Helm n’est à installer sur le poste.
 
 Après publication, télécharger le
-[kit léger](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip)
-et son [empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256),
+[kit léger](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip)
+et son [empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip.sha256),
 vérifier puis extraire le ZIP et lancer `Deployer-AppControl.ps1`.
 Le [guide Windows](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/)
 détaille le choix du projet, de PostgreSQL et du registre.
 
 La publication est conditionnée au téléchargement anonyme des images et à la
 qualification du ZIP exact depuis Windows sur OpenShift. Les preuves attendues
-sont `PUBLICATION-EVALUATION-1.21.1-1.json` et
-`QUALIFICATION-EVALUATION-1.21.1-1.zip`, jointes à la même release. Les résultats
+sont `PUBLICATION-EVALUATION-1.21.1-2.json` et
+`QUALIFICATION-EVALUATION-1.21.1-2.zip`, jointes à la même release. Les résultats
 historiques 1.20.4 ne qualifient pas la livraison 1.21.1.
 
 ### Autre option — Docker Compose (Linux / macOS)
@@ -331,7 +333,7 @@ utilise les cinq packages `ghcr.io/xcomponent/appcontrol-eval-*`, accessibles
 sans compte GitHub. Le kit fixe leurs empreintes ; chaque nouvelle version du
 POC utilise le même canal avec un numéro de version distinct.
 
-Le kit Windows léger 1.21.1-1 conserve
+Le kit Windows léger 1.21.1-2 conserve
 `Desinstaller-AppControl.ps1 -Projet 'projet-fourni'`, introduit avec 1.20.4-6, pour retirer
 AppControl sans supprimer le projet. `-Verifier` affiche le plan ; les données
 et la configuration sont conservées par défaut. L’option destructive

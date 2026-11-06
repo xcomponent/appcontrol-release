@@ -772,10 +772,18 @@ and access to each execution site remain required.
 The `maps:import` key profile exposes authorized context and preparation and
 publication of new maps, without lifecycle actions or updates to existing maps.
 See the [general workflow (French)](MAP_GENERATION.fr.md). Use the server and
-interface of the matching release; Windows/OpenShift kit **1.21.1-1** includes
+interface of the matching release; Windows/OpenShift kit **1.21.1-2** includes
 the PowerShell helper and these guides. Qualification results belong to the
 exact delivered kit and images, not to earlier releases.
 
 The separate optional `/map-generation/mock/*` tool still supports server-side
 command replacement and registered site defaults. It requires an explicit
 choice and is not the normal import path for maps generated with a mock prompt.
+
+## X4B platform and publisher identity
+
+X4B (XComponent for Business) is the INVIVOO software platform. AppControl is its application operations module. The login page and navigation display this hierarchy; existing application URLs, REST APIs, agent protocols and permissions retain their AppControl names.
+
+The interface starts in a dark theme. Use the theme button in the header or Settings to select light mode. This browser preference is retained across reloads. Brand assets are bundled with the application and require no Internet access.
+
+The X4B identity provides a common home for future connectors and transformation modules. This release does not add or advertise unimplemented connectors as available modules.

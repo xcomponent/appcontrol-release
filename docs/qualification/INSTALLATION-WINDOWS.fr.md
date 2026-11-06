@@ -8,7 +8,9 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.21.1**. Paquet : **Windows léger 1.21.1-1**.
+Produit : **AppControl 1.22.0**. Paquet : **Windows léger 1.22.0-1**.
+
+**AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** Cette version introduit l’identité X4B, le logo de l’éditeur INVIVOO et le thème sombre par défaut. Elle conserve les correctifs du kit 1.21.1-7 : URL publique explicite, choix du compte administrateur, configuration après installation, compatibilité des anciennes commandes oc et conservation du secret de téléchargement des images. Les commandes, noms techniques et API AppControl sont conservés.
 
 La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
@@ -17,7 +19,12 @@ ordinaire, importée sur les agents choisis sans préparation de simulation
 obligatoire. Le kit conserve l'installation, la mise à jour et le retrait
 ciblés, la protection des fichiers locaux et les dépôts Artifactory séparés.
 
-> La publication du kit est conditionnée au téléchargement anonyme des images et à la qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, `PUBLICATION-EVALUATION-1.21.1-1.json` et `QUALIFICATION-EVALUATION-1.21.1-1.zip`, lorsqu'elles sont jointes à la release. Ce guide ne constitue pas un résultat de qualification ; les rapports 1.20.4 restent des historiques et ne valident pas la livraison 1.21.1.
+La révision **1.21.1-2 du kit** corrige le parcours de nettoyage/réinstallation
+et les chemins de miroir Artifactory. Elle utilise les mêmes images du produit
+1.21.1. Les messages et confirmations des scripts sont désormais en **anglais** ;
+les noms de paramètres français des commandes existantes restent acceptés.
+
+> Le kit 1.21.1-3 est un correctif PowerShell ciblé pour les anciens clients oc. Les images sont inchangées. Les preuves `PUBLICATION-EVALUATION-1.21.1-2.json` et `QUALIFICATION-EVALUATION-1.21.1-2.zip` concernent le précédent ZIP uniquement ; elles ne constituent pas une qualification complète de ce nouveau ZIP. Voir `CORRECTIF-WINDOWS-1.21.1-3.fr.md` joint à la release pour les vérifications ciblées.
 
 ## 1. Ce qui sera déployé
 
@@ -140,7 +147,7 @@ seuls autorisés, demander l’ajout des nouveaux noms avant le créneau.
 
 **Les deux paramètres à ne pas confondre :**
 
-- `-Registre` = **adresse du registre Docker + chemin avant le nom de l’image**, sans `https://`. Si l’image est `artifactory.intra.example/docker-ghcr/xcomponent/appcontrol-eval-backend@sha256:…`, le paramètre est `artifactory.intra.example/docker-ghcr/xcomponent`. Le script conserve le nom `appcontrol-eval-backend`, et de même pour les autres composants.
+- `-Registre` = **adresse Docker du miroir et chemin du dépôt Artifactory**, sans `https://`. Le script conserve le namespace source **`xcomponent`** : avec `artifactory.intra.example/docker-ghcr`, il produit `artifactory.intra.example/docker-ghcr/xcomponent/appcontrol-eval-backend@sha256:…`. Le préfixe complet `artifactory.intra.example/docker-ghcr/xcomponent` est également accepté, sans doubler `xcomponent`.
 - `-SecretImages` = **nom d’un Secret OpenShift existant dans le projet cible**, contenant les identifiants de lecture **Artifactory**. Si la plateforme l’a nommé `artifactory-pull`, utiliser `-SecretImages 'artifactory-pull'`. Ce n’est ni le mot de passe, ni le jeton, ni un fichier à fournir sur Windows.
 
 Les valeurs `registry.banque.example/ghcr/xcomponent` et `lecture-artifactory`
@@ -148,6 +155,53 @@ utilisées dans les exemples sont fictives. Le script ne crée pas ce secret.
 Si l’accès Artifactory est déjà assuré par la plateforme ou si la lecture est
 anonyme, **omettre `-SecretImages`** après confirmation de l’équipe plateforme.
 L’accès amont public à GHCR ne rend pas automatiquement Artifactory public.
+
+**Où saisir le token Artifactory ?** Dans la console OpenShift, sélectionner
+le projet cible, puis **Workloads → Secrets → Create → Image pull secret**.
+Choisir par exemple le nom `lecture-artifactory`, renseigner le serveur du
+registre Docker, l’identifiant Artifactory associé au token, puis le **token
+dans le champ Password**. Utiliser ensuite `-SecretImages 'lecture-artifactory'`.
+Le secret est de type `kubernetes.io/dockerconfigjson` ; le type historique
+`kubernetes.io/dockercfg` est également accepté. Le script référence ce secret
+pour les pods qu’il déploie afin qu’OpenShift puisse tirer les images.
+Il ne faut mettre ni le token ni le nom de ce secret dans `images.lock.json`.
+
+Lors d’une reprise avec `-SansDemo` ou d’une mise à jour, l’agent de
+démonstration déjà présent conserve son pod et ses anciennes références de
+secret. Le script signale une différence éventuelle sans redémarrer cet agent :
+son identité se trouve dans un volume temporaire. Une nouvelle recette de
+démonstration utilise le nouveau secret, mais crée une nouvelle identité d’agent
+et une nouvelle map synthétique. Les services AppControl utilisent le secret
+fourni à la reprise.
+
+Exemples de résolution avec le kit 1.21.1-3 :
+
+| Valeur de `-Registre` | Préfixe obtenu avant `appcontrol-eval-*` |
+|---|---|
+| `artifactory.intra.example` | `artifactory.intra.example/xcomponent` |
+| `artifactory.intra.example/docker-ghcr` | `artifactory.intra.example/docker-ghcr/xcomponent` |
+| `artifactory.intra.example/docker-ghcr/xcomponent` | `artifactory.intra.example/docker-ghcr/xcomponent` |
+
+Le script ne devine pas le nom du dépôt Artifactory : si l’adresse de lecture
+comporte `docker-ghcr`, ce chemin doit être fourni. Les noms d’images et leurs
+empreintes restent ceux du kit. Les préfixes déjà enregistrés par un ancien kit
+sont repris tels quels ; leur contenu n’est pas modifié silencieusement.
+
+Si la plateforme a volontairement **aplati le chemin** et expose par exemple
+`artifactory.intra.example/flat/appcontrol-eval-backend`, demander le traitement
+exact du préfixe, sans ajout de namespace :
+
+```powershell
+.\Deployer-AppControl.ps1 -Projet 'projet-fourni' `
+  -Registre 'artifactory.intra.example/flat' -CheminRegistreExact `
+  -SecretImages 'lecture-artifactory'
+```
+
+L’alias anglais de cette option est `-ExactRegistryPrefix`. Une correction du
+chemin de registre ou du nom du secret de lecture peut être appliquée par une
+relance normale **si le produit, les noms et les empreintes d’images sont
+inchangés**. Un changement réel de version ou de contenu exige toujours
+`-MettreAJour` et une sauvegarde préalable.
 
 Une seule demande de préparation suffit : **projet cible, préfixe exact des
 images `appcontrol-eval-*` dans Artifactory (et celui de PostgreSQL s’il est
@@ -171,8 +225,8 @@ par deux dépôts différents, fournir les deux préfixes Docker :
 
 ```powershell
 .\Deployer-AppControl.ps1 -Projet appcontrol-evaluation -ModePostgreSQL Integre `
-  -Registre 'artifactory.banque.example/appcontrol/xcomponent' `
-  -RegistrePostgreSQL 'artifactory.banque.example/bases/xcomponent' `
+  -Registre 'artifactory.banque.example/appcontrol' `
+  -RegistrePostgreSQL 'artifactory.banque.example/bases' `
   -SecretImages 'lecture-artifactory'
 ```
 
@@ -188,12 +242,17 @@ artifactory.banque.example/bases/xcomponent/appcontrol-eval-postgresql@sha256:�
 le nom `appcontrol-eval-postgresql` et l’empreinte de l’image qualifiée. Les
 autres images utilisent `-Registre`. **Ne pas modifier `images.lock.json`.**
 Sans ce paramètre, PostgreSQL utilise le même préfixe que les autres images.
+Le namespace `xcomponent` est conservé dans les deux chemins. Pour un dépôt
+PostgreSQL aplati, utiliser `-CheminRegistrePostgreSQLExact`
+(`-ExactPostgreSQLRegistryPrefix` en anglais).
 
 Le secret éventuel doit permettre la lecture des **deux dépôts**. Si la
 plateforme assure déjà cet accès, omettre `-SecretImages`. Les deux préfixes
 sont enregistrés pour les relances. Pour les modifier après installation,
-utiliser le parcours `-MettreAJour`, après sauvegarde, en précisant le préfixe
-à changer.
+préciser le préfixe à corriger lors d’une relance. Si seules les adresses
+changent et que les noms/digests des images restent identiques, aucune mise à
+jour de version n’est nécessaire. Un changement de produit ou d’image utilise
+le parcours `-MettreAJour`, après sauvegarde.
 
 Cette option concerne uniquement **PostgreSQL intégré**. Elle est refusée en
 mode externe, qui ne déploie aucune image de base. Si le second dépôt contient
@@ -204,17 +263,17 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.21.1-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256)
+- [Paquet Windows léger 1.22.0-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.21.1-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.22.0-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
-    throw 'Empreinte incorrecte : ne pas utiliser cette archive.'
+    throw 'Checksum mismatch: do not use this archive.'
 }
 ```
 
@@ -255,7 +314,7 @@ Le script présente successivement :
 1. Le **serveur OpenShift** de votre connexion et les projets accessibles. Saisir un numéro ou le nom du projet cible. Si la liste n’est pas autorisée, saisir le nom fourni par la plateforme.
 2. Le choix **1 — PostgreSQL intégré** ou **2 — PostgreSQL externe**.
 3. Pour une base externe, le choix TLS : **1 — vérifier le certificat** (défaut) ou **2 — ignorer sa validation**, puis les informations de connexion. Le chiffrement reste obligatoire dans les deux cas.
-4. Un récapitulatif du serveur, du contexte, du **projet/namespace cible**, du registre et du mode de base. Taper **OUI** pour autoriser le déploiement dans ce projet.
+4. Un récapitulatif du serveur, du contexte, du **projet/namespace cible**, du registre et du mode de base. Taper **INSTALL** pour autoriser le déploiement dans ce projet.
 
 Le namespace n’est jamais déduit silencieusement du projet courant. Le script utilise `-n` pour cibler les objets et une copie privée de la connexion ; il ne change pas le projet par défaut de votre configuration `oc`. Il ne crée pas implicitement de projet et refuse les conflits avec une installation existante.
 
@@ -383,6 +442,24 @@ il n’y a ni image à transporter sur le poste, ni compte GitHub à créer.
 .\Deployer-AppControl.ps1 -Projet appcontrol-evaluation -MettreAJour
 ```
 
+Si l’interface ou le backend de l’installation actuelle a été supprimé à la
+main, restaurer d’abord les services **avec le kit de la version déjà installée**
+et le dossier privé d’origine :
+
+```powershell
+.\Deployer-AppControl.ps1 -Projet 'projet-fourni' -Nom 'appcontrol-evaluation' `
+  -DossierEtat 'C:\AppControl\Etat' -SansDemo
+```
+
+Remplacer ces valeurs par celles de l’installation. Cette reprise conserve la
+base et les maps ; elle n’exécute pas une nouvelle démonstration. Une fois
+l’interface accessible, lancer `-MettreAJour` **depuis le nouveau kit cible**.
+La mise à jour doit pouvoir relever l’inventaire des applications avant de les
+modifier. Si cet inventaire est inaccessible, elle affiche cette commande de
+réparation sans créer un nouveau journal de mise à jour bloquant. Si une vraie
+mise à jour était déjà en cours, conserver son kit cible et sa sauvegarde ; ne
+pas déployer une ancienne version sur une base potentiellement migrée.
+
 Reprendre le même `-Nom` si l’installation initiale utilisait un nom personnalisé,
 et le même `-DossierEtat` si vous aviez choisi un autre emplacement. Le script
 retrouve les paramètres enregistrés : registre AppControl, éventuel registre
@@ -444,96 +521,193 @@ et la sauvegarde PostgreSQL ; ne pas modifier les verrous à la main.
 
 ## Retirer AppControl sans supprimer le projet
 
-**Ce parcours convient au projet fourni par la banque : il ne nécessite ni
-création ni suppression de projet.** Ne pas utiliser `oc delete project` pour
-retirer AppControl d’un projet partagé.
+**Le nettoyage cible l’installation choisie. Il ne supprime jamais le
+projet/namespace ni une base PostgreSQL externe.** Il convient donc à un projet
+fourni par la banque, sans droit de création ou de suppression de projet.
 
-Depuis le kit, commencer par afficher les ressources concernées, sans rien
-modifier :
-
-```powershell
-.\Desinstaller-AppControl.ps1 -Projet 'projet-fourni' -Verifier
-```
-
-Puis lancer la désinstallation avec confirmation du récapitulatif :
+Depuis le kit **1.21.1-3**, commencer par le récapitulatif sans modification :
 
 ```powershell
-.\Desinstaller-AppControl.ps1 -Projet 'projet-fourni'
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation' -Preview
 ```
 
-L’assistant affiche le plan puis demande de saisir le **nom exact de
-l’installation** pour confirmer. `-Verifier` ne modifie ni le cluster ni les
-fichiers locaux.
+Puis retirer les services en conservant les données et la configuration :
 
-Remplacer `projet-fourni` par le namespace utilisé à l’installation. Reprendre
-le même `-Nom` si vous aviez choisi un nom personnalisé, ainsi que le même
-`-DossierEtat` si vous aviez changé son emplacement. Le dossier privé d’origine
-permet de vérifier que la commande vise la bonne installation et le bon cluster.
+```powershell
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation'
+```
 
-| Avec la commande par défaut | Résultat |
+Remplacer le projet et le nom par les valeurs de l’installation initiale.
+Si vous aviez choisi un autre dossier privé, ajouter
+`-StateDirectory 'C:\AppControl\Etat'` avec **son chemin réel**.
+Les paramètres français restent acceptés : `-Projet`, `-Nom`, `-Verifier`
+et `-DossierEtat` sont équivalents aux alias utilisés ici.
+
+Les messages et confirmations sont en anglais. Le récapitulatif indique la
+cible, les objets à retirer et ceux à conserver ; l’invite de confirmation
+indique explicitement le texte à saisir. `-Preview` ne supprime rien et ne
+modifie pas les fichiers locaux.
+
+Par exemple, pour `-Name appcontrol-evaluation`, l’invite affiche :
+
+```text
+To remove the listed resources from project projet-fourni, type the installation name appcontrol-evaluation
+```
+
+Saisir **`appcontrol-evaluation`**, puis Entrée. Si vous aviez choisi un autre
+nom, saisir ce nom exact affiché dans l’invite.
+
+### Un nettoyage qui peut être repris
+
+Un objet déjà supprimé à la main n’est pas une erreur. Le script traite les
+objets restants un par un et poursuit le nettoyage si un objet est inaccessible,
+a changé de propriétaire ou ne peut pas être supprimé. Il termine avec un
+bilan des objets **supprimés, déjà absents, ignorés et en échec**. Les objets
+ignorés ou en échec sont nommés pour permettre de corriger le problème, puis de
+relancer exactement la même commande. Un résultat incomplet n’est pas présenté
+comme une désinstallation réussie.
+
+Le changement de nom du contexte `oc` ne bloque plus à lui seul la reprise,
+si le serveur, le namespace et le nom de l’installation correspondent. Une
+connexion vers un autre cluster ou une ressource appartenant à une autre
+installation n’est pas acceptée comme cible de suppression.
+
+| Sans `-RemoveAll` | Résultat |
 |---|---|
-| Services AppControl et agent de démonstration du cluster | Arrêtés et retirés, avec leurs Routes, Services et règles réseau propres à cette installation |
+| Services AppControl et agent de démonstration du cluster | Retirés avec leurs Routes, Services et règles réseau propres à l’installation |
 | PostgreSQL intégré | Pod retiré ; volume de données conservé |
-| Secrets et ConfigMaps de cette installation | Conservés pour garder identifiants, certificats et configuration |
+| Secrets et ConfigMaps AppControl | Conservés pour garder identifiants, certificats et configuration |
+| Secret de lecture Artifactory | Conservé |
 | PostgreSQL externe | Base et données inchangées |
-| Projet, autres applications, secret de lecture Artifactory fourni par la plateforme | Inchangés |
+| Projet et autres applications | Inchangés |
 | Dossier privé sur Windows | Conservé |
 
-La commande cible les objets identifiés comme appartenant à l’installation
-native AppControl. Elle ne supprime pas les autres objets du projet, les agents
-installés sur des machines externes, ni une installation Helm. En cas de conflit
-de propriétaire ou de droit manquant, elle s’arrête avec un diagnostic.
+Le script ne supprime pas les agents installés sur des machines externes ni
+une installation Helm. Pour un complément de simulation actif, retirer d’abord
+ce complément avec `Configurer-Simulation.ps1 -DossierEtat <dossier-prive> -Supprimer`,
+puis relancer la désinstallation. Le nettoyage conserve alors les services et
+la base nécessaires à cette opération ; il peut retirer des ressources
+indépendantes, comme l’agent de démonstration. Les éléments conservés sont
+identifiés dans le bilan.
 
-Pour remettre les services après ce retrait avec conservation des données,
-relancer `Deployer-AppControl.ps1` avec le même kit, le même projet, le même nom
-et le dossier privé conservé. Les données et maps restent dans PostgreSQL.
-L’agent de démonstration, en revanche, perd son identité temporaire avec son
-pod : une nouvelle recette crée un nouvel agent et une nouvelle map. Ajouter
-`-SansDemo` si vous souhaitez seulement remettre les services, sans créer une
-nouvelle démonstration.
+Pour remettre les services en conservant les données, relancer
+`Deployer-AppControl.ps1` avec le même kit, le même projet, le même nom et le
+dossier privé conservé. Les objets manquants du déploiement sont recréés à partir
+de cette configuration. La base conserve les maps. L’agent de démonstration peut
+recevoir une nouvelle identité après remplacement de son pod ; ajouter
+`-SansDemo` (`-SkipDemo`) pour remettre seulement les services.
 
-### Supprimer aussi les données de l’évaluation
+### Supprimer complètement les ressources de l’évaluation
 
-**Cette option peut détruire les données PostgreSQL intégrées.** Faire une
-sauvegarde avant de l’utiliser si les maps ou les configurations doivent être
-conservées. Un volume persistant n’est pas une sauvegarde.
-
-```powershell
-.\Desinstaller-AppControl.ps1 -Projet 'projet-fourni' -SupprimerDonnees
-```
-
-L’assistant demande de saisir `SAUVEGARDE` pour attester la sauvegarde ou
-l’acceptation de la perte des données, puis le nom exact de l’installation.
-Pour une exécution non interactive, ces confirmations doivent être explicites :
+**`-RemoveAll` peut détruire les données PostgreSQL intégrées.** Réaliser une
+sauvegarde si elles doivent être conservées. Un PVC n’est pas une sauvegarde.
 
 ```powershell
-.\Desinstaller-AppControl.ps1 -Projet 'projet-fourni' `
-  -SupprimerDonnees -SauvegardeConfirmee -NonInteractif
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation' `
+  -RemoveAll -Preview
 ```
 
-`-SauvegardeConfirmee` ne réalise aucune sauvegarde.
+Puis exécuter le même nettoyage sans `-Preview` :
 
-L’option ajoute à la suppression les volumes, Secrets et ConfigMaps appartenant
-à cette installation AppControl. Le projet et le secret d’images de la
-plateforme restent conservés. **Elle ne supprime jamais une base PostgreSQL
-externe** : son nettoyage relève de l’équipe base de données. Le dossier privé
-sur Windows n’est pas effacé automatiquement.
+```powershell
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation' `
+  -RemoveAll
+```
 
-Après cette suppression complète, le dossier privé est marqué comme
-désinstallé pour éviter de réutiliser par erreur ses anciens identifiants.
-L’archiver dans un emplacement protégé. Pour une nouvelle installation,
-choisir un **nouveau** `-DossierEtat` ; le même nom d’installation peut être
-repris une fois les anciennes ressources effectivement retirées. Avec une
-base externe, prévoir aussi une nouvelle base dédiée ou un nettoyage validé
-par son administrateur : le désinstallateur ne l’a pas vidée.
+`-RemoveAll` est l’alias anglais de `-SupprimerDonnees`. Il ajoute les volumes,
+Secrets et ConfigMaps propres à l’installation. Les **Secrets de téléchargement
+Artifactory sont toujours conservés**, même avec `-RemoveAll` et `-WithoutState`.
+Ils peuvent être réutilisés pour la prochaine installation. Le projet,
+les autres applications et la base PostgreSQL externe restent inchangés.
+
+L’assistant affiche d’abord :
+
+```text
+This can permanently delete stored data and registry credentials. Type DELETE DATA to confirm your backup or accept their loss
+```
+
+Saisir **`DELETE DATA`**, avec l’espace, puis Entrée. Saisir ensuite le nom
+exact de l’installation à la seconde invite. En mode non interactif,
+l’attestation doit être explicite :
+
+```powershell
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation' `
+  -RemoveAll -BackupConfirmed -NonInteractive
+```
+
+`-BackupConfirmed` ne réalise aucune sauvegarde. Le dossier privé Windows est
+conservé pour le diagnostic ; le nettoyage ne le détruit pas.
+
+### Si le dossier privé a été perdu ou endommagé
+
+Utiliser le nettoyage sans état local en donnant explicitement **le projet et
+le nom de l’installation** :
+
+```powershell
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation' `
+  -WithoutState -RemoveAll -Preview
+```
+
+Après lecture du plan, retirer `-Preview` pour exécuter. `-WithoutState`
+(`-SansEtat`) identifie les ressources par les marqueurs de propriété AppControl
+et leurs noms attendus ; il n’adopte pas une ressource simplement parce que son
+nom commence de la même manière. Le dossier privé n’est pas modifié ; un journal
+de nettoyage séparé est écrit à côté. `-ImagePullSecret 'lecture-artifactory'`
+permet de désigner explicitement un secret à conserver ; il n'autorise jamais
+sa suppression.
+
+### Réinstaller proprement après le nettoyage complet
+
+Il n’est pas nécessaire de supprimer le projet ni d’effacer manuellement le
+dossier privé. Après retrait des ressources de l’ancienne installation :
+
+```powershell
+.\Deployer-AppControl.ps1 -Projet 'projet-fourni' -Nom 'appcontrol-evaluation' `
+  -Reinstaller
+```
+
+`-Reinstaller` (`-Reinstall`) vérifie que les anciennes ressources AppControl,
+y compris leurs données et configuration conservées, ont été retirées. Un secret
+de lecture Artifactory protégé peut rester. Le script **archive** l’ancien
+état local et son journal de nettoyage, puis prépare de nouveaux identifiants.
+Il ne réutilise pas les certificats d’une base effacée. Si le bilan de suppression
+mentionne encore des ressources AppControl, terminer leur nettoyage avant cette
+commande. Reprendre le même `-DossierEtat` si son emplacement était personnalisé.
+
+Avec Artifactory, fournir à nouveau le registre et le secret de lecture à
+utiliser ; recréer ce secret s’il a été supprimé :
+
+```powershell
+.\Deployer-AppControl.ps1 -Projet 'projet-fourni' -Nom 'appcontrol-evaluation' `
+  -Reinstaller -Registre 'artifactory.intra.example/docker-ghcr' `
+  -SecretImages 'lecture-artifactory'
+```
+
+Pour une base externe, faire préparer une **base dédiée vide** ou faire valider
+son nettoyage par l’administrateur PostgreSQL, puis confirmer explicitement :
+
+```powershell
+.\Deployer-AppControl.ps1 -Projet 'projet-fourni' -Nom 'appcontrol-evaluation' `
+  -Reinstaller -ModePostgreSQL Externe -BaseExterneVideConfirmee
+```
+
+`-BaseExterneVideConfirmee` (`-EmptyExternalDatabaseConfirmed`) est une attestation,
+pas une commande SQL : le script n’efface jamais la base bancaire. Pour conserver
+une base existante et ses maps, utiliser la reprise avec l’état d’origine, et non
+une réinstallation avec de nouvelles identités.
 
 ## Reprendre et diagnostiquer
 
 **Reprendre la même version, hors mise à jour incomplète**, ne nécessite pas
-`-MettreAJour`. Conserver le dossier privé, le même kit, les mêmes projet et nom
+`-MettreAJour`. Conserver le dossier privé, les mêmes produit, projet et nom
 et reprendre avec la commande indiquée par le script. Pour reprendre les
 services en conservant la démonstration existante, ajouter `-SansDemo`. Sans
 cette option, la recette peut créer une nouvelle démonstration.
+
+Le kit corrigé 1.21.1-3 peut remplacer le kit 1.21.1-1 sans changer les images
+du produit. Un préfixe Artifactory erroné ou un nouveau nom de secret de lecture
+peuvent être fournis à cette relance. Le contrôle porte sur les noms et
+empreintes des images, pas sur la seule adresse du miroir.
 
 Le script refuse d’écraser une installation Helm ou des objets qui ne lui
 appartiennent pas. Ne pas supprimer le dossier privé pour contourner un refus.
@@ -553,20 +727,27 @@ déployée. Ne pas supprimer son dossier d’état.
 | `SeSecurityPrivilege` dans `Windows-Common.ps1` / `Set-Acl` | Utiliser le kit léger 1.20.4-5 ou ultérieur. Ce correctif protège les fichiers locaux sans demander le privilège d’audit Windows. Conserver le dossier d’état et les paramètres de l’installation ; ne pas relancer en administrateur ni retirer la protection des fichiers pour contourner cette erreur. |
 | Secret d’images absent | Pour Artifactory privé, faire créer le secret dans le bon projet. Le canal public GHCR `appcontrol-eval-*` n’en demande pas. |
 | `ImagePullBackOff` | Chemin `appcontrol-eval-*`, droits OpenShift → registre interne, accès amont Artifactory → GHCR et confiance TLS des nœuds. Si PostgreSQL utilise un dépôt distinct, vérifier aussi `-RegistrePostgreSQL` et les droits sur ce dépôt. |
-| Changement d’images refusé en reprise | Utiliser le nouveau kit avec `-MettreAJour`, après sauvegarde PostgreSQL ; ne pas modifier manuellement les verrous. |
+| `xcomponent` absent du chemin Artifactory | Utiliser le kit 1.21.1-3 et fournir le préfixe de lecture corrigé avec `-Registre`. Le namespace source est conservé, sauf option explicite `-CheminRegistreExact`. |
+| Changement d’images refusé en reprise | Si les noms/digests ou le produit changent, utiliser `-MettreAJour` après sauvegarde. Une simple correction du miroir à contenu identique est acceptée en reprise ; ne pas modifier les verrous manuellement. |
 | Mise à jour interrompue ou incomplète | Garder le dossier privé et relancer le même kit cible avec `-MettreAJour`. Le journal `update.json` signale l’opération incomplète ; aucun retour arrière de la base n’est réalisé. |
+| Inventaire inaccessible avant une nouvelle mise à jour | Restaurer les services avec le kit de la version installée, le dossier d’état d’origine et `-SansDemo`, puis revenir au nouveau kit pour `-MettreAJour`. Aucun nouveau journal de mise à jour n’est créé si cet inventaire initial échoue. |
+| Ancien secret conservé sur l’agent de démonstration | L’agent temporaire n’est pas redémarré seulement pour changer son secret. Une nouvelle recette utilise le nouveau secret avec une nouvelle identité/map ; `-SansDemo` et la mise à jour conservent l’agent existant. |
 | Volume `Pending` en mode intégré | StorageClass, capacité et quota du projet. |
 | Backend indisponible en mode externe | URI et droits applicatifs, correspondance DNS/certificat, CA PEM, destinations CIDR et autorisations réseau de la banque. Ne pas désactiver TLS pour contourner une erreur. |
 | Tunnel d’installation refusé | Droit `pods/portforward` et passage du tunnel par le proxy vers l’API. |
-| Ressource existante refusée | Vérifier le projet et le nom choisis ; reprendre avec le dossier privé d’origine, sans forcer l’écrasement. |
+| Ressource existante refusée | Vérifier le projet et le nom. Pour reprendre les données, conserver l’état d’origine ; pour repartir à vide, nettoyer avec `-RemoveAll`, puis utiliser `-Reinstaller`. Aucun écrasement d’une ressource étrangère. |
+| Nettoyage partiel ou objet déjà supprimé | Relancer la même commande de désinstallation ; les absences sont acceptées et les autres objets sont traités. Lire le bilan des objets ignorés/en échec. |
+| Dossier privé perdu ou endommagé | Afficher le plan avec `-WithoutState -Namespace ... -Name ... -Preview`, puis retirer `-Preview` si la cible est correcte. |
 
 ## Qualification et suite du POC
 
-Pour 1.21.1, consulter les preuves portant exactement la version du kit
-`1.21.1-1`, ses empreintes d'images et son commit de livraison. Leur publication
-intervient après les contrôles de la chaîne de release. Les rapports ci-dessous
-décrivent les versions précédentes ; ils ne qualifient pas les nouveautés de
-1.21.1.
+La publication du kit 1.22.0-1 est conditionnée à sa qualification Windows/OpenShift. Consulter les preuves `PUBLICATION-EVALUATION-1.22.0-1.json` et `QUALIFICATION-EVALUATION-1.22.0-1.zip` jointes à la release ; les rapports historiques ci-dessous ne qualifient pas cette nouvelle version.
+
+### Historique des qualifications
+
+La qualification complète Windows/OpenShift disponible concerne le kit `1.21.1-2`.
+Le correctif `1.21.1-3` conserve ses images et fait l’objet de tests ciblés des scripts
+et du packaging, sans nouvelle qualification complète sur cluster.
 
 **Historique :** le [rapport des trois parcours du paquet 1.20.4-3](https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-WINDOWS-OC-v1.20.4-3.fr.md) décrit les tests avec PostgreSQL intégré, PostgreSQL externe avec vérification du certificat, et PostgreSQL externe chiffré avec validation du certificat désactivée. Il précise aussi le refus d’un serveur sans TLS et les limites de la qualification.
 
@@ -661,3 +842,135 @@ Le dossier d'état est celui conservé par l'installation principale. Le script
 vérifie les capacités du serveur avant de créer ses ressources. Le guide de
 simulation décrit séparément la transformation serveur et ses métriques
 simulées. Le poste conserve les mêmes prérequis : PowerShell et `oc` uniquement.
+
+### Compatibilité de la désinstallation avec les anciens clients oc
+
+Le correctif de désinstallation détecte le format de `--cascade` via `oc delete --help`,
+sans appel au cluster : `foreground` pour les clients récents, `true` pour les anciens
+clients comme oc 4.6. Une aide non reconnue bloque avant toute suppression.
+Les données et secrets restent protégés tant que des composants de cette installation
+sont encore présents ou que leur absence ne peut pas être vérifiée. Avec un ancien
+client, si des pods sont encore en cours de terminaison, attendre puis relancer la
+même commande de désinstallation.
+
+Ce correctif est inclus dans le ZIP Windows 1.21.1-3. Les images AppControl sont
+identiques au kit 1.21.1-2. Validation ciblée locale : 86 contrôles de désinstallation
+et 68 contrôles de reprise ; pas de nouvelle qualification complète sur OpenShift.
+
+
+## Configuration après installation : équipes et topologie
+
+Le nouveau point d’entrée `Configurer-AppControl.ps1` reprend les fonctions
+administratives utiles du parcours Windows standalone. Il utilise uniquement
+PowerShell et le client `oc` existant, avec les identifiants du dossier privé
+et un tunnel TLS vers AppControl.
+
+1. Copier `configuration.example.json` dans un fichier de travail.
+2. Renseigner les sites et hébergements, le catalogue, les utilisateurs et équipes.
+3. Vérifier puis appliquer :
+
+```powershell
+.\Configurer-AppControl.ps1 -DossierEtat 'CHEMIN_DU_DOSSIER_PRIVE' -Configuration .\configuration.json -Verifier
+.\Configurer-AppControl.ps1 -DossierEtat 'CHEMIN_DU_DOSSIER_PRIVE' -Configuration .\configuration.json
+```
+
+Chaque site déclaré crée une gateway (ou le nombre indiqué par `gateways`) et
+un agent Linux persistant dans le namespace existant. Ajouter un site au fichier
+puis relancer complète la topologie. Aucun déploiement automatique ne découle
+simplement d’une création de site dans l’interface. Changer le nombre de gateways
+ou le stockage d’un site déjà configuré reste une opération explicite distincte.
+
+`agent_profile: "standard"` crée des agents ordinaires sans les définir comme
+agents mock par défaut. `"mock-linux"` ajoute ce lien pour les imports de simulation.
+Les agents du cluster exécutent leurs commandes dans leur conteneur ; ils ne
+pilotent pas automatiquement les serveurs externes de la banque.
+
+Exemple de sections à ajouter au fichier (remplacer les valeurs fictives) :
+
+```json
+{
+  "users": [{"email": "operateur@example.test", "name": "Operateur", "role": "operator"}],
+  "teams": [{"name": "Exploitation", "members": ["operateur@example.test"]}],
+  "permissions": [{"app": "Application existante", "team": "Exploitation", "level": "operate"}]
+}
+```
+
+Les mots de passe des nouveaux comptes sont demandés en saisie masquée, jamais
+placés dans le JSON. Les comptes existants et leurs mots de passe sont conservés.
+La configuration ajoute les membres manquants ; elle ne retire aucun membre ni
+aucun droit existant. Un rôle ou droit divergent bloque et doit être modifié
+explicitement dans AppControl. Les membres peuvent référencer des utilisateurs
+existants sans les redéclarer dans `users`.
+
+Les applications doivent exister avant l’attribution des droits. Pour une première
+configuration, laisser `permissions` vide, importer les maps puis ajouter les droits
+et relancer le même fichier. Les noms d’application et d’équipe doivent être non
+ambigus. Le script ne remplace pas un raccordement SSO et ne synchronise pas un annuaire.
+
+Les ressources déjà créées sont retrouvées lors d’une reprise. La configuration
+n’est pas une transaction globale : conserver le fichier et le dossier privé puis
+relancer après correction d’un échec. Aucun secret n’est affiché dans l’aperçu.
+
+## Choisir le premier administrateur
+
+À la première installation interactive, `Deployer-AppControl.ps1` demande l’email
+administrateur (Entrée conserve `admin@example.test`), puis un mot de passe
+masqué d’au moins 12 caractères et sa confirmation. Ce compte est créé comme
+administrateur par l’initialisation AppControl. Il n’existe pas de mot de passe
+commun livré dans le ZIP.
+
+Les identifiants sont conservés dans le fichier privé `credentials.json` du
+dossier d’état indiqué par l’installeur, sous
+`%LOCALAPPDATA%\AppControl\Installations`. Ce fichier est créé sur le poste
+pendant l’installation ; il n’est pas dans le kit téléchargé.
+
+Une reprise conserve le compte et le mot de passe existants. Fournir de nouveaux
+identifiants ne réinitialise pas un compte déjà créé. Le script
+`Configurer-AppControl.ps1` réutilise ces identifiants pour configurer les sites,
+les agents, les utilisateurs et les équipes déclarés dans votre configuration.
+
+Pour automatiser, les paramètres `-AdminEmail` et `-AdminPassword` permettent
+de fournir l’email et un `SecureString` obtenu avec `Read-Host -AsSecureString`.
+Avec `-NonInteractif` et sans mot de passe fourni, un mot de passe aléatoire est
+généré et enregistré dans ce même fichier privé. Ne mettez pas de mot de passe
+en clair dans le fichier de configuration.
+
+Le kit 1.21.1-6 conserve les images 1.21.1. Ses tests ciblés de scripts ne
+remplacent pas une nouvelle qualification complète sur le cluster du client.
+
+## Fournir explicitement l’URL publique (kit 1.21.1-7)
+
+Sans option supplémentaire, le domaine reste détecté automatiquement comme
+avant. À la première installation ou après un retrait volontaire complet,
+ajouter à votre commande habituelle :
+
+```powershell
+-UrlPublique 'https://appcontrol-evaluation-monprojet.pres.cluster.example'
+```
+
+Le nom complet est utilisé tel quel : aucun nom de projet n’est ajouté.
+Utiliser HTTPS, sans chemin, identifiant, paramètres ni port personnalisé.
+L’adresse est propagée à la route frontend, au certificat frontend généré,
+à PUBLIC_BACKEND_URL et aux vérifications externes. Le TLS reencrypt et
+les services restent inchangés. OpenShift gère lui-même status.ingress.
+
+Par défaut, la gateway utilise `gateway-` suivi du nom d’hôte public.
+Pour une adresse distincte, fournir également :
+
+```powershell
+-UrlGateway 'wss://gateway-monprojet.pres.cluster.example'
+```
+
+Cette adresse alimente la route gateway, son certificat, et PUBLIC_GATEWAY_URL.
+Lors d’une reprise, les adresses enregistrées sont conservées, même si les
+options ne sont pas répétées. Une adresse différente sur une installation
+existante est refusée : ce kit ne réalise pas une migration de domaine.
+`-Reinstaller` exige que le nettoyage ait été terminé ; il ne supprime pas
+l’installation à votre place. Un retrait complet peut supprimer les données
+PostgreSQL intégrées : ne pas l’utiliser pour une migration avec conservation
+des données.
+
+L’option ne contourne pas les droits OpenShift ni les règles DNS du client.
+Un domaine personnalisé peut être refusé à la création. Le choix du domaine
+`.pres.` reste à confirmer avec la plateforme ; l’option ne prouve pas que
+le domaine était la cause de l’erreur d’exposition.

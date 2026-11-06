@@ -3,7 +3,7 @@
 La version 1.21.1 réunit les évolutions du produit et les démonstrations.
 Son kit OpenShift vise une première installation isolée, puis un POC cadré.
 Le numéro de release stable ne constitue pas une certification de production bancaire.
-Pour Windows, le parcours recommandé est le kit léger **1.21.1-1**, avec
+Pour Windows, le parcours recommandé est le kit léger **1.21.1-2**, avec
 PowerShell et le client `oc` existant. Les résultats à retenir sont ceux des
 preuves de cette livraison, une fois sa qualification terminée ; les rapports
 1.20.4 restent historiques.

@@ -1,8 +1,8 @@
-# AppControl v1.21.1 — release qualification report
+# AppControl v1.22.0 — release qualification report
 
-Generated: 2026-11-03T12:09:15.500172+00:00
-Source commit: `c82f61c89ea9429166785702475b5cea9b7ed8bf`
-Release workflow: https://github.com/fredericcarre/appcontrol/actions/runs/41625978777
+Generated: 2026-11-06T20:46:58.021020+00:00
+Source commit: `608b801c07ac64308e6a7408de9d82587aed2062`
+Release workflow: https://github.com/fredericcarre/appcontrol/actions/runs/42285470589
 
 ## Scope and result
 
@@ -13,22 +13,22 @@ The OpenShift client kit targets Linux amd64. Its five images are backend, front
 ## Vulnerability scans and inventories
 
 Trivy 0.76.1 scans OS and application packages at all severities (UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL), including unfixed advisories. No ignore file, vulnerability suppression or severity exclusion is used. Each image has its own CycloneDX SBOM; locked Rust and npm dependencies have an additional SBOM including development dependencies.
-Source vulnerability database updated: 2026-11-03T07:14:02.629452927Z. Per-image scanner metadata records the database used for that scan.
+Source vulnerability database updated: 2026-11-06T18:59:52.855177206Z. Per-image scanner metadata records the database used for that scan.
 
 | Image | Delivered immutable reference | Findings | Scan timestamp |
 |---|---|---:|---|
-| backend | `ghcr.io/fredericcarre/appcontrol-backend@sha256:2661efa31fef6ce0c5e1d006bcbacd7893251cb37a5cc0ee5f9b4465b624b94d` | 0 | 2026-11-03T12:00:19.139053151Z |
-| frontend | `ghcr.io/fredericcarre/appcontrol-frontend@sha256:c7eebab2b6ebbee825b699f45c9a1089ae42459ad5894600ef806acabe64980a` | 0 | 2026-11-03T12:00:14.722016985Z |
-| gateway | `ghcr.io/fredericcarre/appcontrol-gateway@sha256:fa36849338cbcd9b4998b8ac4caffd11c6c1b9ae41b78c7f178509e328fce312` | 0 | 2026-11-03T12:00:13.297772134Z |
-| agent | `ghcr.io/fredericcarre/appcontrol-agent@sha256:85e9ed5ecce7530fe1217ff55b4d501605e4e2f79a41da4ba7a6eb391dd2fa61` | 0 | 2026-11-03T12:00:15.979693536Z |
-| postgresql | `ghcr.io/fredericcarre/appcontrol-postgresql@sha256:0f70cc13e4dd5c2349c4533cadb2bccd76179824d78f2352c64d9e0c3c4abeea` | 0 | 2026-11-03T12:00:33.330985975Z |
-| init-certs | `ghcr.io/fredericcarre/appcontrol-init-certs@sha256:a19b15b903118366896f3f6b15ab93f39e0b4c2170b777f984dd1c0b7a3ad5cf` | 0 | 2026-11-03T12:00:15.627228118Z |
-| azure-gateway | `ghcr.io/fredericcarre/appcontrol-azure-gateway@sha256:faef4fd4d4a8a453ef0d1cdd11877cb001c828dcfed94c688362fa6b815415b0` | 0 | 2026-11-03T12:00:25.890112518Z |
+| backend | `ghcr.io/fredericcarre/appcontrol-backend@sha256:2ba5130daf70e320ac48c91370fdfea2ceb3d22fb3c9bdf4d9ab59752e0efbd4` | 0 | 2026-11-06T20:42:05.536232717Z |
+| frontend | `ghcr.io/fredericcarre/appcontrol-frontend@sha256:af6d68d435c332317e9b3997e97c5da87504be12577cacd2139c280bf524e849` | 0 | 2026-11-06T20:42:01.365736345Z |
+| gateway | `ghcr.io/fredericcarre/appcontrol-gateway@sha256:59237d1fffa7487fd0bbdc05fb03ca1b55e6eea073180bb8e3479f5048507613` | 0 | 2026-11-06T20:42:03.258287174Z |
+| agent | `ghcr.io/fredericcarre/appcontrol-agent@sha256:bb18205203fe7e1947abf61cd6a316e9146fc5ba2319ed06b84acd09accc77d8` | 0 | 2026-11-06T20:41:59.121602328Z |
+| postgresql | `ghcr.io/fredericcarre/appcontrol-postgresql@sha256:223daad73e92ab3bd9a34af782640f6ebfaae8f25c4f21621400c0a0d13afafe` | 0 | 2026-11-06T20:42:05.817270692Z |
+| init-certs | `ghcr.io/fredericcarre/appcontrol-init-certs@sha256:cf714b91dafb4111321c834a5459f4de646ef100e9b38b49146cbd712c229b38` | 0 | 2026-11-06T20:42:09.319102208Z |
+| azure-gateway | `ghcr.io/fredericcarre/appcontrol-azure-gateway@sha256:ced18c90b08591b06a080de0c08a848c19781a3c3ef2f77e794960f2ec9f6580` | 0 | 2026-11-06T20:42:06.722247776Z |
 
 | Dependency scope | Inputs | Findings | Scan timestamp |
 |---|---|---:|---|
-| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-03T11:15:46.788762718Z |
-| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-03T11:16:00.058479906Z |
+| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-06T20:07:08.033068306Z |
+| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-06T20:07:22.444921899Z |
 
 RustSec: zero vulnerability advisories. Informational warnings, if any, remain in rustsec.json and are not reclassified as vulnerabilities.
 RustSec warning categories: unmaintained: 2, yanked: 1.

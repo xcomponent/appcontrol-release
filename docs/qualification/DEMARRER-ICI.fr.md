@@ -1,7 +1,7 @@
 # AppControl sur OpenShift — démarrer le POC
 
 **Parcours recommandé depuis Windows : le [guide PowerShell + oc](INSTALLATION-WINDOWS.fr.md),
-pour AppControl 1.21.1 et le kit léger 1.21.1-1.**
+pour AppControl 1.21.1 et le kit léger 1.21.1-2.**
 Le ZIP contient les scripts, les YAML et leurs guides. Il utilise la commande
 `oc` déjà approuvée sur le poste ; aucun Docker, Python, Helm ou outil de transfert
 d’images n’est à installer. Les nœuds OpenShift téléchargent les images.
@@ -15,17 +15,20 @@ restent privés ; le dépôt source n’est pas rendu public.
 
 > La livraison du kit Windows léger est conditionnée au téléchargement anonyme
 > des images et à la qualification du ZIP exact depuis Windows sur OpenShift.
-> Les preuves attendues pour le kit 1.21.1-1 sont
-> `PUBLICATION-EVALUATION-1.21.1-1.json` et `QUALIFICATION-EVALUATION-1.21.1-1.zip`,
+> Les preuves attendues pour le kit 1.21.1-2 sont
+> `PUBLICATION-EVALUATION-1.21.1-2.json` et `QUALIFICATION-EVALUATION-1.21.1-2.zip`,
 > jointes à la même release lorsque les contrôles ont abouti. Ce guide ne vaut
 > pas résultat de qualification. Les rapports de la release 1.20.4 et de ses
 > kits restent des preuves historiques ; ils ne valident pas la livraison 1.21.1.
 
 Après publication :
-[kit léger 1.21.1-1](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip)
-et [empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-1.zip.sha256).
+[kit léger 1.21.1-2](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip)
+et [empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip.sha256).
 Les images de cette version utilisent les tags `appcontrol-eval-*:1.21.1` ;
 l’installation fixe leurs empreintes dans le verrou d’images du kit.
+La révision **1.21.1-2** modifie les scripts de déploiement, nettoyage et reprise,
+sans changer le produit 1.21.1 ni ses images. Les messages et confirmations sont
+en anglais ; les paramètres français des commandes existantes restent acceptés.
 
 ## Avant le premier créneau
 
@@ -42,6 +45,16 @@ Avec Artifactory, demander **le préfixe Docker exact des images
 packages publics ne demandent aucun identifiant GitHub amont ; les droits
 OpenShift → Artifactory restent ceux de la banque.
 
+Le token Artifactory se renseigne dans ce **Secret OpenShift de type Image pull
+secret**, avec son identifiant, dans le projet cible. `-SecretImages` reçoit
+uniquement le nom du secret. Pour un miroir GHCR exposé à
+`artifactory.intra.example/docker-ghcr`, utiliser cette valeur dans `-Registre` :
+le script conserve **`xcomponent`** et construit
+`artifactory.intra.example/docker-ghcr/xcomponent/appcontrol-eval-…`.
+Si le chemin fourni comporte déjà `xcomponent`, il n’est pas ajouté une seconde
+fois. Pour un miroir volontairement aplati, le guide décrit
+`-CheminRegistreExact`.
+
 ## Installer, démontrer, faire évoluer
 
 1. Télécharger le kit Windows léger et vérifier son empreinte SHA-256.
@@ -55,11 +68,58 @@ jour les services AppControl et, en mode intégré, l’image PostgreSQL. Les ag
 existants gardent leur version et leur identité ; leur mise à jour est une
 opération distincte.
 
+Si l’interface ou le backend a été supprimé à la main, remettre d’abord les
+services avec **le kit de la version déjà installée**, le dossier privé d’origine
+et `-SansDemo`. Ensuite, revenir au nouveau kit pour lancer `-MettreAJour`.
+La procédure détaillée fournit la commande de réparation ; une ancienne version
+ne doit pas être redéployée si une vraie mise à jour était déjà en cours.
+
+L’agent de démonstration conservé garde également ses anciennes références de
+secret Artifactory. Le script signale une différence sans redémarrer son pod,
+car son identité est temporaire. Une nouvelle recette applique le nouveau secret
+mais crée une nouvelle identité d’agent et une nouvelle map ; `-SansDemo`
+préserve l’agent et la démonstration existants.
+
 La publication des versions suivantes réutilise la chaîne existante. Les images
 validées sont copiées vers le même canal public avec un numéro de version,
 sans nouvelle compilation ni copie manuelle chez le client. L’installation
 reste fixée aux digests du kit choisi ; elle ne suit pas automatiquement
 `latest`.
+
+## Nettoyer ou recommencer sans supprimer le projet
+
+Depuis le kit 1.21.1-2, afficher d’abord la cible :
+
+```powershell
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation' -Preview
+```
+
+Retirer `-Preview` pour enlever les services tout en conservant la base et la
+configuration. Pour une **suppression complète des données de l’évaluation**,
+ajouter `-RemoveAll` ; sauvegarder auparavant si les données doivent être
+conservées. Le script traite les objets restants même si certains ont déjà été
+supprimés ; un bilan identifie ce qui a été retiré ou reste à corriger. Le projet
+et la base PostgreSQL externe ne sont jamais supprimés. Un secret Artifactory
+référencé peut être supprimé avec `-RemoveAll` uniquement s’il n’est pas partagé.
+
+Si le dossier privé est perdu ou illisible, le parcours `-WithoutState` exige
+le projet et le nom explicites et contrôle les marqueurs de propriété des
+ressources. Après nettoyage complet, utiliser :
+
+```powershell
+.\Deployer-AppControl.ps1 -Projet 'projet-fourni' -Nom 'appcontrol-evaluation' -Reinstaller
+```
+
+Le script vérifie que les anciennes ressources ont été retirées, archive
+l’ancien état local et prépare une installation neuve. Fournir à nouveau les
+paramètres Artifactory, puis recréer le secret de lecture s’il a été supprimé.
+Avec PostgreSQL externe, une nouvelle base dédiée vide ou un nettoyage validé
+par son administrateur est requis ; `-BaseExterneVideConfirmee` atteste cette
+préparation sans effacer la base. Pour conserver les maps, reprendre l’état
+d’origine au lieu de réinstaller à vide.
+
+Voir les [commandes de nettoyage et de reprise](INSTALLATION-WINDOWS.fr.md#retirer-appcontrol-sans-supprimer-le-projet),
+notamment le choix du dossier privé personnalisé et les confirmations.
 
 ## Publier les applications du client
 

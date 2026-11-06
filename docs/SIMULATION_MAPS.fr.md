@@ -5,7 +5,7 @@ La simulation est un **choix de prompt**. Avec `mock-linux` ou `mock-windows`, l
 Aucun registre d’agents mock, agent spécial, réglage global de simulation ou script de préparation dédié n’est obligatoire. Les applications réelles et simulées peuvent coexister dans la même instance. Ce sont les commandes de chaque map qui déterminent ce qu’elle fait. Le [parcours général](MAP_GENERATION.fr.md) reste la référence pour les droits, les placements et la publication.
 
 Ce parcours est disponible à partir d'**AppControl 1.21.1**. Le kit Windows
-léger **1.21.1-1** livre les helpers et ce guide ; les images de la même release
+léger **1.21.1-2** livre les helpers et ce guide ; les images de la même release
 fournissent les routes décrites ci-dessous. Un script ou un prompt récent ne
 remplace pas une mise à jour du serveur si ces routes sont absentes. Consulter
 les preuves de la livraison exacte pour ses résultats de qualification.

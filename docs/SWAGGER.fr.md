@@ -4,7 +4,7 @@ AppControl embarque une page de documentation interactive : **API documentation*
 
 Le parcours de génération et de publication décrit ici est disponible à partir
 d'**AppControl 1.21.1**. Installer le serveur et l'interface de la même release ;
-sur Windows/OpenShift, le kit léger correspondant est **1.21.1-1**. Les anciens
+sur Windows/OpenShift, le kit léger correspondant est **1.21.1-2**. Les anciens
 rapports de qualification ne remplacent pas ceux de cette livraison.
 
 La couverture de la documentation progresse par fonctionnalité : elle ne représente pas encore toutes les API du produit. Le parcours de génération de maps par une IA externe, sa validation et ses imports sont décrits avec leurs paramètres, corps de requête et réponses.

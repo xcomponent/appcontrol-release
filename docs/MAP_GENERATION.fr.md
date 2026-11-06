@@ -9,7 +9,7 @@ La simulation est un **choix de prompt** : `mock-linux` ou `mock-windows` demand
 **Ce parcours est disponible à partir d'AppControl 1.21.1.** Il nécessite le
 serveur et l'interface de cette version, avec les routes de publication et de
 placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
-**1.21.1-1** et les preuves de sa propre release ; un script récent ne met pas
+**1.21.1-2** et les preuves de sa propre release ; un script récent ne met pas
 à jour le serveur 1.20.4 à lui seul.
 
 Le prompt explique aussi le modèle métier, avant la syntaxe JSON :

@@ -1012,6 +1012,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Qualification et suite du POC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#historique-des-qualifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Historique des qualifications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1033,8 +1048,53 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#compatibilite-de-la-desinstallation-avec-les-anciens-clients-oc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compatibilité de la désinstallation avec les anciens clients oc
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-apres-installation-equipes-et-topologie" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration après installation : équipes et topologie
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choisir-le-premier-administrateur" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choisir le premier administrateur
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fournir-explicitement-lurl-publique-kit-1211-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fournir explicitement l’URL publique (kit 1.21.1-7)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demonstration-bancaire-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Démonstration bancaire complète
+    </span>
+  </a>
   
 </li>
       
@@ -2473,6 +2533,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Qualification et suite du POC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#historique-des-qualifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Historique des qualifications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2494,8 +2569,53 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#compatibilite-de-la-desinstallation-avec-les-anciens-clients-oc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compatibilité de la désinstallation avec les anciens clients oc
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-apres-installation-equipes-et-topologie" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration après installation : équipes et topologie
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choisir-le-premier-administrateur" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choisir le premier administrateur
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fournir-explicitement-lurl-publique-kit-1211-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fournir explicitement l’URL publique (kit 1.21.1-7)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demonstration-bancaire-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Démonstration bancaire complète
+    </span>
+  </a>
   
 </li>
       
@@ -2529,7 +2649,8 @@ paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.<
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.21.1</strong>. Paquet : <strong>Windows léger 1.21.1-2</strong>.</p>
+<p>Produit : <strong>AppControl 1.22.0</strong>. Paquet : <strong>Windows léger 1.22.0-2</strong>.</p>
+<p><strong>AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.</strong> Cette version introduit l’identité X4B, le logo de l’éditeur INVIVOO et le thème sombre par défaut. Elle conserve les correctifs du kit 1.21.1-7 : URL publique explicite, choix du compte administrateur, configuration après installation, compatibilité des anciennes commandes oc et conservation du secret de téléchargement des images. Les commandes, noms techniques et API AppControl sont conservés.</p>
 <p>La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
 d'applications aux équipes. Le choix mock dans le prompt produit une map
@@ -2541,7 +2662,7 @@ et les chemins de miroir Artifactory. Elle utilise les mêmes images du produit
 1.21.1. Les messages et confirmations des scripts sont désormais en <strong>anglais</strong> ;
 les noms de paramètres français des commandes existantes restent acceptés.</p>
 <blockquote>
-<p>La publication du kit est conditionnée au téléchargement anonyme des images et à la qualification du ZIP exact depuis Windows sur OpenShift. Télécharger avec le kit ses preuves de même révision, <code>PUBLICATION-EVALUATION-1.21.1-2.json</code> et <code>QUALIFICATION-EVALUATION-1.21.1-2.zip</code>, lorsqu'elles sont jointes à la release. Ce guide ne constitue pas un résultat de qualification ; les rapports 1.20.4 restent des historiques et ne valident pas la livraison 1.21.1.</p>
+<p>Le kit 1.21.1-3 est un correctif PowerShell ciblé pour les anciens clients oc. Les images sont inchangées. Les preuves <code>PUBLICATION-EVALUATION-1.21.1-2.json</code> et <code>QUALIFICATION-EVALUATION-1.21.1-2.zip</code> concernent le précédent ZIP uniquement ; elles ne constituent pas une qualification complète de ce nouveau ZIP. Voir <code>CORRECTIF-WINDOWS-1.21.1-3.fr.md</code> joint à la release pour les vérifications ciblées.</p>
 </blockquote>
 <h2 id="1-ce-qui-sera-deploye">1. Ce qui sera déployé<a class="headerlink" href="#1-ce-qui-sera-deploye" title="Permanent link">&para;</a></h2>
 <p><strong>Le script vous demande quel projet/namespace utiliser, puis quel mode PostgreSQL installer.</strong> Les deux options utilisent les mêmes images AppControl et les mêmes scripts PowerShell.</p>
@@ -2751,7 +2872,7 @@ son identité se trouve dans un volume temporaire. Une nouvelle recette de
 démonstration utilise le nouveau secret, mais crée une nouvelle identité d’agent
 et une nouvelle map synthétique. Les services AppControl utilisent le secret
 fourni à la reprise.</p>
-<p>Exemples de résolution avec le kit 1.21.1-2 :</p>
+<p>Exemples de résolution avec le kit 1.21.1-3 :</p>
 <table>
 <thead>
 <tr>
@@ -2836,12 +2957,12 @@ compatibilité séparément, ou utiliser une base déjà exploitée par la banqu
 avec <code>-ModePostgreSQL Externe</code> et sa chaîne de connexion.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip">Paquet Windows léger 1.21.1-2 — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-2.zip">Paquet Windows léger 1.22.0-2 — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-2.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.21.1-2.zip&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.22.0-2.zip&#39;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Checksum mismatch: do not use this archive.&#39;</span>
@@ -3045,7 +3166,7 @@ et la sauvegarde PostgreSQL ; ne pas modifier les verrous à la main.</p>
 <p><strong>Le nettoyage cible l’installation choisie. Il ne supprime jamais le
 projet/namespace ni une base PostgreSQL externe.</strong> Il convient donc à un projet
 fourni par la banque, sans droit de création ou de suppression de projet.</p>
-<p>Depuis le kit <strong>1.21.1-2</strong>, commencer par le récapitulatif sans modification :</p>
+<p>Depuis le kit <strong>1.21.1-3</strong>, commencer par le récapitulatif sans modification :</p>
 <div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="n">-Preview</span>
 </span></code></pre></div>
 <p>Puis retirer les services en conservant les données et la configuration :</p>
@@ -3139,10 +3260,9 @@ sauvegarde si elles doivent être conservées. Un PVC n’est pas une sauvegarde
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  <span class="n">-RemoveAll</span>
 </span></code></pre></div>
 <p><code>-RemoveAll</code> est l’alias anglais de <code>-SupprimerDonnees</code>. Il ajoute les volumes,
-Secrets et ConfigMaps propres à l’installation. Le <strong>secret de téléchargement
-Artifactory référencé</strong> peut également être retiré s’il n’est utilisé par
-aucun autre workload ou compte de service du projet. Un secret partagé ou dont
-l’utilisation ne peut pas être vérifiée est conservé et signalé. Le projet,
+Secrets et ConfigMaps propres à l’installation. Les <strong>Secrets de téléchargement
+Artifactory sont toujours conservés</strong>, même avec <code>-RemoveAll</code> et <code>-WithoutState</code>.
+Ils peuvent être réutilisés pour la prochaine installation. Le projet,
 les autres applications et la base PostgreSQL externe restent inchangés.</p>
 <p>L’assistant affiche d’abord :</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>This can permanently delete stored data and registry credentials. Type DELETE DATA to confirm your backup or accept their loss
@@ -3165,9 +3285,9 @@ le nom de l’installation</strong> :</p>
 (<code>-SansEtat</code>) identifie les ressources par les marqueurs de propriété AppControl
 et leurs noms attendus ; il n’adopte pas une ressource simplement parce que son
 nom commence de la même manière. Le dossier privé n’est pas modifié ; un journal
-de nettoyage séparé est écrit à côté. Pour inclure un secret de lecture dédié
-que le dossier privé ne permet plus d’identifier, préciser son nom avec
-<code>-ImagePullSecret 'lecture-artifactory'</code>. Il reste protégé s’il est partagé.</p>
+de nettoyage séparé est écrit à côté. <code>-ImagePullSecret 'lecture-artifactory'</code>
+permet de désigner explicitement un secret à conserver ; il n'autorise jamais
+sa suppression.</p>
 <h3 id="reinstaller-proprement-apres-le-nettoyage-complet">Réinstaller proprement après le nettoyage complet<a class="headerlink" href="#reinstaller-proprement-apres-le-nettoyage-complet" title="Permanent link">&para;</a></h3>
 <p>Il n’est pas nécessaire de supprimer le projet ni d’effacer manuellement le
 dossier privé. Après retrait des ressources de l’ancienne installation :</p>
@@ -3202,7 +3322,7 @@ une réinstallation avec de nouvelles identités.</p>
 et reprendre avec la commande indiquée par le script. Pour reprendre les
 services en conservant la démonstration existante, ajouter <code>-SansDemo</code>. Sans
 cette option, la recette peut créer une nouvelle démonstration.</p>
-<p>Le kit corrigé 1.21.1-2 peut remplacer le kit 1.21.1-1 sans changer les images
+<p>Le kit corrigé 1.21.1-3 peut remplacer le kit 1.21.1-1 sans changer les images
 du produit. Un préfixe Artifactory erroné ou un nouveau nom de secret de lecture
 peuvent être fournis à cette relance. Le contrôle porte sur les noms et
 empreintes des images, pas sur la seule adresse du miroir.</p>
@@ -3245,7 +3365,7 @@ déployée. Ne pas supprimer son dossier d’état.</p>
 </tr>
 <tr>
 <td><code>xcomponent</code> absent du chemin Artifactory</td>
-<td>Utiliser le kit 1.21.1-2 et fournir le préfixe de lecture corrigé avec <code>-Registre</code>. Le namespace source est conservé, sauf option explicite <code>-CheminRegistreExact</code>.</td>
+<td>Utiliser le kit 1.21.1-3 et fournir le préfixe de lecture corrigé avec <code>-Registre</code>. Le namespace source est conservé, sauf option explicite <code>-CheminRegistreExact</code>.</td>
 </tr>
 <tr>
 <td>Changement d’images refusé en reprise</td>
@@ -3290,11 +3410,11 @@ déployée. Ne pas supprimer son dossier d’état.</p>
 </tbody>
 </table>
 <h2 id="qualification-et-suite-du-poc">Qualification et suite du POC<a class="headerlink" href="#qualification-et-suite-du-poc" title="Permanent link">&para;</a></h2>
-<p>Pour 1.21.1, consulter les preuves portant exactement la version du kit
-<code>1.21.1-2</code>, ses empreintes d'images et son commit de livraison. Leur publication
-intervient après les contrôles de la chaîne de release. Les rapports ci-dessous
-décrivent les versions précédentes ; ils ne qualifient pas les nouveautés de
-1.21.1.</p>
+<p>La publication du kit 1.22.0-2 est conditionnée à sa qualification Windows/OpenShift. Consulter les preuves <code>PUBLICATION-EVALUATION-1.22.0-2.json</code> et <code>QUALIFICATION-EVALUATION-1.22.0-2.zip</code> jointes à la release ; les rapports historiques ci-dessous ne qualifient pas cette nouvelle version.</p>
+<h3 id="historique-des-qualifications">Historique des qualifications<a class="headerlink" href="#historique-des-qualifications" title="Permanent link">&para;</a></h3>
+<p>La qualification complète Windows/OpenShift disponible concerne le kit <code>1.21.1-2</code>.
+Le correctif <code>1.21.1-3</code> conserve ses images et fait l’objet de tests ciblés des scripts
+et du packaging, sans nouvelle qualification complète sur cluster.</p>
 <p><strong>Historique :</strong> le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-WINDOWS-OC-v1.20.4-3.fr.md">rapport des trois parcours du paquet 1.20.4-3</a> décrit les tests avec PostgreSQL intégré, PostgreSQL externe avec vérification du certificat, et PostgreSQL externe chiffré avec validation du certificat désactivée. Il précise aussi le refus d’un serveur sans TLS et les limites de la qualification.</p>
 <p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.20.4/QUALIFICATION-EVALUATION-1.20.4-4.fr.md">rapport du paquet 1.20.4-4</a>
 décrit la publication anonyme, les trois profils d’installation et la mise à
@@ -3370,6 +3490,128 @@ Pour choisir cette option, adapter <code>simulation.example.json</code>, puis la
 vérifie les capacités du serveur avant de créer ses ressources. Le guide de
 simulation décrit séparément la transformation serveur et ses métriques
 simulées. Le poste conserve les mêmes prérequis : PowerShell et <code>oc</code> uniquement.</p>
+<h3 id="compatibilite-de-la-desinstallation-avec-les-anciens-clients-oc">Compatibilité de la désinstallation avec les anciens clients oc<a class="headerlink" href="#compatibilite-de-la-desinstallation-avec-les-anciens-clients-oc" title="Permanent link">&para;</a></h3>
+<p>Le correctif de désinstallation détecte le format de <code>--cascade</code> via <code>oc delete --help</code>,
+sans appel au cluster : <code>foreground</code> pour les clients récents, <code>true</code> pour les anciens
+clients comme oc 4.6. Une aide non reconnue bloque avant toute suppression.
+Les données et secrets restent protégés tant que des composants de cette installation
+sont encore présents ou que leur absence ne peut pas être vérifiée. Avec un ancien
+client, si des pods sont encore en cours de terminaison, attendre puis relancer la
+même commande de désinstallation.</p>
+<p>Ce correctif est inclus dans le ZIP Windows 1.21.1-3. Les images AppControl sont
+identiques au kit 1.21.1-2. Validation ciblée locale : 86 contrôles de désinstallation
+et 68 contrôles de reprise ; pas de nouvelle qualification complète sur OpenShift.</p>
+<h2 id="configuration-apres-installation-equipes-et-topologie">Configuration après installation : équipes et topologie<a class="headerlink" href="#configuration-apres-installation-equipes-et-topologie" title="Permanent link">&para;</a></h2>
+<p>Le nouveau point d’entrée <code>Configurer-AppControl.ps1</code> reprend les fonctions
+administratives utiles du parcours Windows standalone. Il utilise uniquement
+PowerShell et le client <code>oc</code> existant, avec les identifiants du dossier privé
+et un tunnel TLS vers AppControl.</p>
+<ol>
+<li>Copier <code>configuration.example.json</code> dans un fichier de travail.</li>
+<li>Renseigner les sites et hébergements, le catalogue, les utilisateurs et équipes.</li>
+<li>Vérifier puis appliquer :</li>
+</ol>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">.\</span><span class="n">Configurer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_PRIVE&#39;</span> <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span> <span class="n">-Verifier</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="p">.\</span><span class="n">Configurer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_PRIVE&#39;</span> <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span>
+</span></code></pre></div>
+<p>Chaque site déclaré crée une gateway (ou le nombre indiqué par <code>gateways</code>) et
+un agent Linux persistant dans le namespace existant. Ajouter un site au fichier
+puis relancer complète la topologie. Aucun déploiement automatique ne découle
+simplement d’une création de site dans l’interface. Changer le nombre de gateways
+ou le stockage d’un site déjà configuré reste une opération explicite distincte.</p>
+<p><code>agent_profile: "standard"</code> crée des agents ordinaires sans les définir comme
+agents mock par défaut. <code>"mock-linux"</code> ajoute ce lien pour les imports de simulation.
+Les agents du cluster exécutent leurs commandes dans leur conteneur ; ils ne
+pilotent pas automatiquement les serveurs externes de la banque.</p>
+<p>Exemple de sections à ajouter au fichier (remplacer les valeurs fictives) :</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">{</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="nt">&quot;users&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operateur@example.test&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Operateur&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operator&quot;</span><span class="p">}],</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span><span class="nt">&quot;teams&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exploitation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;members&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;operateur@example.test&quot;</span><span class="p">]}],</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;app&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Application existante&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;team&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exploitation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operate&quot;</span><span class="p">}]</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Les mots de passe des nouveaux comptes sont demandés en saisie masquée, jamais
+placés dans le JSON. Les comptes existants et leurs mots de passe sont conservés.
+La configuration ajoute les membres manquants ; elle ne retire aucun membre ni
+aucun droit existant. Un rôle ou droit divergent bloque et doit être modifié
+explicitement dans AppControl. Les membres peuvent référencer des utilisateurs
+existants sans les redéclarer dans <code>users</code>.</p>
+<p>Les applications doivent exister avant l’attribution des droits. Pour une première
+configuration, laisser <code>permissions</code> vide, importer les maps puis ajouter les droits
+et relancer le même fichier. Les noms d’application et d’équipe doivent être non
+ambigus. Le script ne remplace pas un raccordement SSO et ne synchronise pas un annuaire.</p>
+<p>Les ressources déjà créées sont retrouvées lors d’une reprise. La configuration
+n’est pas une transaction globale : conserver le fichier et le dossier privé puis
+relancer après correction d’un échec. Aucun secret n’est affiché dans l’aperçu.</p>
+<h2 id="choisir-le-premier-administrateur">Choisir le premier administrateur<a class="headerlink" href="#choisir-le-premier-administrateur" title="Permanent link">&para;</a></h2>
+<p>À la première installation interactive, <code>Deployer-AppControl.ps1</code> demande l’email
+administrateur (Entrée conserve <code>admin@example.test</code>), puis un mot de passe
+masqué d’au moins 12 caractères et sa confirmation. Ce compte est créé comme
+administrateur par l’initialisation AppControl. Il n’existe pas de mot de passe
+commun livré dans le ZIP.</p>
+<p>Les identifiants sont conservés dans le fichier privé <code>credentials.json</code> du
+dossier d’état indiqué par l’installeur, sous
+<code>%LOCALAPPDATA%\AppControl\Installations</code>. Ce fichier est créé sur le poste
+pendant l’installation ; il n’est pas dans le kit téléchargé.</p>
+<p>Une reprise conserve le compte et le mot de passe existants. Fournir de nouveaux
+identifiants ne réinitialise pas un compte déjà créé. Le script
+<code>Configurer-AppControl.ps1</code> réutilise ces identifiants pour configurer les sites,
+les agents, les utilisateurs et les équipes déclarés dans votre configuration.</p>
+<p>Pour automatiser, les paramètres <code>-AdminEmail</code> et <code>-AdminPassword</code> permettent
+de fournir l’email et un <code>SecureString</code> obtenu avec <code>Read-Host -AsSecureString</code>.
+Avec <code>-NonInteractif</code> et sans mot de passe fourni, un mot de passe aléatoire est
+généré et enregistré dans ce même fichier privé. Ne mettez pas de mot de passe
+en clair dans le fichier de configuration.</p>
+<p>Le kit 1.21.1-6 conserve les images 1.21.1. Ses tests ciblés de scripts ne
+remplacent pas une nouvelle qualification complète sur le cluster du client.</p>
+<h2 id="fournir-explicitement-lurl-publique-kit-1211-7">Fournir explicitement l’URL publique (kit 1.21.1-7)<a class="headerlink" href="#fournir-explicitement-lurl-publique-kit-1211-7" title="Permanent link">&para;</a></h2>
+<p>Sans option supplémentaire, le domaine reste détecté automatiquement comme
+avant. À la première installation ou après un retrait volontaire complet,
+ajouter à votre commande habituelle :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">-UrlPublique</span> <span class="s1">&#39;https://appcontrol-evaluation-monprojet.pres.cluster.example&#39;</span>
+</span></code></pre></div>
+<p>Le nom complet est utilisé tel quel : aucun nom de projet n’est ajouté.
+Utiliser HTTPS, sans chemin, identifiant, paramètres ni port personnalisé.
+L’adresse est propagée à la route frontend, au certificat frontend généré,
+à PUBLIC_BACKEND_URL et aux vérifications externes. Le TLS reencrypt et
+les services restent inchangés. OpenShift gère lui-même status.ingress.</p>
+<p>Par défaut, la gateway utilise <code>gateway-</code> suivi du nom d’hôte public.
+Pour une adresse distincte, fournir également :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">-UrlGateway</span> <span class="s1">&#39;wss://gateway-monprojet.pres.cluster.example&#39;</span>
+</span></code></pre></div>
+<p>Cette adresse alimente la route gateway, son certificat, et PUBLIC_GATEWAY_URL.
+Lors d’une reprise, les adresses enregistrées sont conservées, même si les
+options ne sont pas répétées. Une adresse différente sur une installation
+existante est refusée : ce kit ne réalise pas une migration de domaine.
+<code>-Reinstaller</code> exige que le nettoyage ait été terminé ; il ne supprime pas
+l’installation à votre place. Un retrait complet peut supprimer les données
+PostgreSQL intégrées : ne pas l’utiliser pour une migration avec conservation
+des données.</p>
+<p>L’option ne contourne pas les droits OpenShift ni les règles DNS du client.
+Un domaine personnalisé peut être refusé à la création. Le choix du domaine
+<code>.pres.</code> reste à confirmer avec la plateforme ; l’option ne prouve pas que
+le domaine était la cause de l’erreur d’exposition.</p>
+<h2 id="demonstration-bancaire-complete">Démonstration bancaire complète<a class="headerlink" href="#demonstration-bancaire-complete" title="Permanent link">&para;</a></h2>
+<p>Après l’installation et sa vérification, exécutez depuis le dossier du kit :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">.\</span><span class="n">Installer-DemoBancaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_ETAT&#39;</span>
+</span></code></pre></div>
+<p>Utilisez le <strong>dossier d’état privé indiqué par l’installeur</strong>, pas le dossier du ZIP.
+Le parcours par défaut fournit déjà un agent Linux dans OpenShift ; aucun outil
+supplémentaire ni nouvelle image n’est nécessaire. Si vous avez choisi <code>-SansDemo</code>,
+relancez d’abord votre installation sans cette option pour vérifier et enrôler cet agent.</p>
+<p>Ouvrez <strong>Core Banking System (demo)</strong> dans le catalogue : neuf composants reprennent
+l’architecture de l’exemple standalone (Oracle RAC, MQ Series, deux serveurs WebSphere,
+Control-M, traitements de nuit, F5 et portail bancaire). Lancez <strong>Start All</strong>, observez
+les dépendances et les états, puis <strong>Stop All</strong>. Les commandes vérifient réellement
+l’ordre des dépendances. Elles créent/suppriment uniquement des fichiers isolés dans
+<code>/tmp/appcontrol-banking-&lt;identifiant application&gt;</code> sur l’agent ; elles ne contactent
+aucun système bancaire. Les fichiers disparaissent si le pod agent est remplacé.</p>
+<p>Le script conserve un reçu <code>banking-demo.json</code> dans le dossier privé : le relancer
+ne duplique pas l’application. Une installation partielle peut être reprise. Une démo
+existante sans ce reçu n’est pas adoptée ou écrasée automatiquement.
+Les agents sont ceux de la vérification initiale : cet exemple est mono-site. La
+configuration multi-sites reste disponible via <code>Configurer-AppControl.ps1</code>.</p>
+<p>L’application technique de qualification à deux composants est conservée séparément.</p>
 
 
 
@@ -3392,7 +3634,7 @@ simulées. Le poste conserve les mêmes prérequis : PowerShell et <code>oc</cod
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T16:36:36+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-07T08:27:33+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-07</span>
   </span>
 
     

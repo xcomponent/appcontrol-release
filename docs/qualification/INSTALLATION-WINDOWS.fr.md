@@ -8,9 +8,9 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.22.0**. Paquet : **Windows léger 1.22.0-1**.
+Produit : **AppControl 1.23.1**. Paquet : **Windows léger 1.23.1-1**.
 
-**AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** Cette version introduit l’identité X4B, le logo de l’éditeur INVIVOO et le thème sombre par défaut. Elle conserve les correctifs du kit 1.21.1-7 : URL publique explicite, choix du compte administrateur, configuration après installation, compatibilité des anciennes commandes oc et conservation du secret de téléchargement des images. Les commandes, noms techniques et API AppControl sont conservés.
+**AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La version 1.23.1 ajoute [AppControl Embedded](../EMBEDDED.fr.md), le [raccordement d’une source documentaire](../KNOWLEDGE-ENGINE-CONNECTOR.fr.md) et le [suivi des certificats et jetons](#echeances-des-certificats-et-jetons). Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
 
 La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
@@ -77,11 +77,13 @@ compte administrateur Windows, de droit `cluster-admin` ni de SCC `anyuid`.
 Un projet dédié sépare les objets et les données ; il ne réserve pas à lui seul
 des nœuds physiques.
 
-Si la banque fournit un projet partagé, choisir un nom d’installation distinct
-avec `-Nom`, par exemple `-Nom appcontrol-poc`. Le désinstallateur décrit plus
-bas retire les ressources de cette installation sans supprimer le projet ni
-les autres applications. Il faut disposer des droits de suppression sur ces
-ressources dans le projet ; aucun droit de suppression du projet n’est demandé.
+Pour déployer une deuxième instance dans le même cluster, voir
+[Installer une deuxième instance](#installer-une-deuxieme-instance).
+
+Pour livrer une instance directement configurée, ajoutez
+`-Configuration .\configuration.json` à votre commande d’installation.
+Le socle AppControl, les gateways, les agents et la configuration applicative
+sont traités dans cette invocation. [Contenu du JSON et commande complète](#configuration-apres-installation-equipes-et-topologie)
 
 ## 3. Où sont les images et comment passe-t-on par Artifactory ?
 
@@ -263,14 +265,14 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.22.0-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip.sha256)
+- [Paquet Windows léger 1.23.1-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.23.1/appcontrol-openshift-windows-light-1.23.1-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.23.1/appcontrol-openshift-windows-light-1.23.1-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.22.0-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.23.1-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
     throw 'Checksum mismatch: do not use this archive.'
@@ -317,6 +319,52 @@ Le script présente successivement :
 4. Un récapitulatif du serveur, du contexte, du **projet/namespace cible**, du registre et du mode de base. Taper **INSTALL** pour autoriser le déploiement dans ce projet.
 
 Le namespace n’est jamais déduit silencieusement du projet courant. Le script utilise `-n` pour cibler les objets et une copie privée de la connexion ; il ne change pas le projet par défaut de votre configuration `oc`. Il ne crée pas implicitement de projet et refuse les conflits avec une installation existante.
+
+### Installer une deuxième instance
+
+`-Nom` (alias `-Name`) définit le préfixe des ressources. La valeur par défaut
+est `appcontrol-evaluation`. Pour préparer une démo à côté de cette instance,
+utilisez par exemple `appcontrol-demo`. Le contrôle de conflit réserve aussi
+le préfixe suivi d’un tiret. Évitez donc `appcontrol-evaluation-demo` dans le
+même projet, car ce nom gênerait les opérations de maintenance de la première
+instance. Utilisez des minuscules, des chiffres et des tirets, avec un maximum
+de 40 caractères. La longueur du nom de projet et du nom d’installation
+additionnés doit rester inférieure ou égale à 54 pour les noms de Routes.
+
+```powershell
+$installation = @{
+    Projet = 'projet-client'
+    Nom = 'appcontrol-demo'
+    ModePostgreSQL = 'Integre'
+}
+.\Deployer-AppControl.ps1 @installation -Verifier
+.\Deployer-AppControl.ps1 @installation
+```
+
+Remplacez `projet-client` par le projet prévu pour la démo. Si le client utilise
+Artifactory, ajoutez au tableau les valeurs `Registre` et, si nécessaire,
+`SecretImages` fournies pour ce projet. La première commande vérifie la connexion,
+les droits et les conflits. La seconde déploie l’instance après confirmation.
+
+Le nom apparaît notamment dans `appcontrol-demo-backend`,
+`data-appcontrol-demo-postgresql-0` et, avec les Routes par défaut,
+`https://appcontrol-demo-projet-client.<domaine-apps>`. Le dossier d’état local,
+les certificats, les identifiants et la base intégrée sont propres à l’instance.
+En PostgreSQL externe, fournissez une base dédiée à cette deuxième installation.
+
+Pour réserver la démo à votre équipe, demandez un projet dédié avec les droits
+correspondants et une Route dont l’accès est limité par la plateforme. Le projet
+contrôle les droits OpenShift sur les ressources, et la Route contrôle l’accès
+réseau au site. Le nom distingue les instances dans le projet. `-UrlPublique`
+et `-UrlGateway` permettent de spécifier des adresses approuvées par la plateforme.
+Utilisez des adresses distinctes pour les deux installations.
+
+Conservez le même projet et le même nom lors des relances et des mises à jour.
+Pour contrôler le périmètre du retrait avant toute suppression, lancez :
+
+```powershell
+.\Desinstaller-AppControl.ps1 -Namespace 'projet-client' -Name 'appcontrol-demo' -Preview
+```
 
 ### Choix 1 : PostgreSQL intégré
 
@@ -741,7 +789,7 @@ déployée. Ne pas supprimer son dossier d’état.
 
 ## Qualification et suite du POC
 
-La publication du kit 1.22.0-1 est conditionnée à sa qualification Windows/OpenShift. Consulter les preuves `PUBLICATION-EVALUATION-1.22.0-1.json` et `QUALIFICATION-EVALUATION-1.22.0-1.zip` jointes à la release ; les rapports historiques ci-dessous ne qualifient pas cette nouvelle version.
+La publication du kit 1.23.1-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.23.1-1.json` et `QUALIFICATION-EVALUATION-1.23.1-1.zip` identifient les images et le ZIP de cette recette.
 
 ### Historique des qualifications
 
@@ -860,30 +908,63 @@ et 68 contrôles de reprise ; pas de nouvelle qualification complète sur OpenSh
 
 ## Configuration après installation : équipes et topologie
 
-Le nouveau point d’entrée `Configurer-AppControl.ps1` reprend les fonctions
-administratives utiles du parcours Windows standalone. Il utilise uniquement
-PowerShell et le client `oc` existant, avec les identifiants du dossier privé
-et un tunnel TLS vers AppControl.
-
-1. Copier `configuration.example.json` dans un fichier de travail.
-2. Renseigner les sites et hébergements, le catalogue, les utilisateurs et équipes.
-3. Vérifier puis appliquer :
+Le chemin le plus court est de fournir le JSON à **`Deployer-AppControl.ps1`**.
+Le script installe le socle puis applique la configuration dans la même
+invocation. Copiez le `configuration.example.json` du kit en
+`configuration.json` et adaptez les codes, noms et comptes à votre projet.
 
 ```powershell
-.\Configurer-AppControl.ps1 -DossierEtat 'CHEMIN_DU_DOSSIER_PRIVE' -Configuration .\configuration.json -Verifier
+.\Deployer-AppControl.ps1 -Projet appcontrol-poc -Nom appcontrol-demo -ModePostgreSQL Integre `
+  -Configuration .\configuration.json -Verifier
+.\Deployer-AppControl.ps1 -Projet appcontrol-poc -Nom appcontrol-demo -ModePostgreSQL Integre `
+  -Configuration .\configuration.json
+```
+
+Ajoutez à ces commandes vos options habituelles de registre, de stockage,
+de base externe ou de route publique. `-SansDemo` installe le socle et
+applique votre JSON sans charger la démo bancaire intégrée. Sur une
+installation neuve, `-Verifier` valide le fichier et les prérequis
+accessibles. La recette des gateways, des agents et de l’API AppControl a
+lieu une fois le socle disponible.
+
+| Champ JSON | Ce que le déploiement configure |
+| --- | --- |
+| `hostings`, `sites` | Regroupements d’infrastructure, codes de site et nombre de gateways par site. |
+| `agent_profile`, `agent_storage` | Profil et stockage de l’agent Linux persistant de chaque site. |
+| `catalog` | Types de composants à ajouter au catalogue technique. |
+| `users`, `teams` | Comptes locaux, rôles, équipes et rattachement des membres. |
+| `permissions` | Droits des équipes sur les maps déjà présentes au moment de la configuration. |
+| `document_source.secret_name` | Référence facultative au Secret OpenShift de la source documentaire X4B. |
+| `embedded.allowed_origins`, `embedded.simulation_sites` | Origines HTTPS des portails et codes des sites dédiés à la simulation Embedded. |
+
+Pour appliquer uniquement la configuration à une installation existante,
+utilisez le dossier d’état privé indiqué par l’installateur.
+
+```powershell
 .\Configurer-AppControl.ps1 -DossierEtat 'CHEMIN_DU_DOSSIER_PRIVE' -Configuration .\configuration.json
 ```
 
-Chaque site déclaré crée une gateway (ou le nombre indiqué par `gateways`) et
-un agent Linux persistant dans le namespace existant. Ajouter un site au fichier
-puis relancer complète la topologie. Aucun déploiement automatique ne découle
-simplement d’une création de site dans l’interface. Changer le nombre de gateways
-ou le stockage d’un site déjà configuré reste une opération explicite distincte.
+Chaque entrée de `sites` crée **un agent Linux persistant** et le nombre
+de gateways indiqué dans `gateways` (1 par défaut, jusqu’à 8). Un
+`hosting` regroupe des sites. La gateway du socle est déployée
+séparément. Les gateways d’un site partagent un service interne auquel
+se connecte son agent. Les agents et gateways sont déployés dans le
+projet OpenShift de l’installation. Ajouter un site au fichier puis
+relancer complète la topologie. Un changement de nombre de gateways
+ou de stockage sur un site déjà configuré se traite séparément.
 
-`agent_profile: "standard"` crée des agents ordinaires sans les définir comme
-agents mock par défaut. `"mock-linux"` ajoute ce lien pour les imports de simulation.
-Les agents du cluster exécutent leurs commandes dans leur conteneur ; ils ne
-pilotent pas automatiquement les serveurs externes de la banque.
+`agent_profile` s’applique à tous les agents créés par ce fichier.
+`standard`, indiqué dans `configuration.example.json`, enregistre des
+agents ordinaires. `mock-linux` utilise le même agent et le désigne
+comme cible par défaut de l’assistant de simulation de son site. Le
+script historique de simulation retient `mock-linux` si le champ est
+omis. Indiquer la valeur explicitement dans le JSON.
+
+`site_type` classe le site, par exemple `primary` ou `dr`. Pour une
+map, le profil de rattachement définit quels agents exécutent ses
+composants. Un profil de reprise peut sélectionner d’autres agents.
+Le type du site et la présence de plusieurs gateways ne suffisent
+pas à configurer cette bascule. [Affecter les agents aux composants](../MAP_GENERATION.fr.md)
 
 Exemple de sections à ajouter au fichier (remplacer les valeurs fictives) :
 
@@ -895,8 +976,9 @@ Exemple de sections à ajouter au fichier (remplacer les valeurs fictives) :
 }
 ```
 
-Les mots de passe des nouveaux comptes sont demandés en saisie masquée, jamais
-placés dans le JSON. Les comptes existants et leurs mots de passe sont conservés.
+Les mots de passe des nouveaux comptes locaux sont demandés en saisie masquée.
+En mode `-NonInteractif`, utilisez des comptes déjà créés ou laissez `users`
+vide. Les comptes existants et leurs mots de passe sont conservés.
 La configuration ajoute les membres manquants ; elle ne retire aucun membre ni
 aucun droit existant. Un rôle ou droit divergent bloque et doit être modifié
 explicitement dans AppControl. Les membres peuvent référencer des utilisateurs
@@ -907,9 +989,104 @@ configuration, laisser `permissions` vide, importer les maps puis ajouter les dr
 et relancer le même fichier. Les noms d’application et d’équipe doivent être non
 ambigus. Le script ne remplace pas un raccordement SSO et ne synchronise pas un annuaire.
 
+Pour le parcours X4B, ajoutez par exemple
+`"document_source": {"secret_name": "appcontrol-source-documentaire"}` à la
+racine du JSON. Le Secret est créé au préalable dans le projet OpenShift.
+La configuration est injectée dans le backend, puis l’interface
+**Génération de maps** permet de tester le raccordement et de lancer la
+synchronisation. L’option `-SecretSourceDocumentaire` reste disponible
+pour passer la référence directement sur la ligne de commande.
+[Guide de raccordement et de qualification du workflow X4B](../KNOWLEDGE-ENGINE-CONNECTOR.fr.md#preparer-et-rejouer-linstallation-openshift)
+
 Les ressources déjà créées sont retrouvées lors d’une reprise. La configuration
 n’est pas une transaction globale : conserver le fichier et le dossier privé puis
 relancer après correction d’un échec. Aucun secret n’est affiché dans l’aperçu.
+
+### Activer Embedded pour Panoramisk
+
+Ajoutez un site `SIM` avec une gateway et déclarez son code sous `embedded`.
+Le kit crée le site, la gateway et l’agent, retrouve les UUID après l’enrôlement
+et configure le backend et le frontend. Une paire suffit pour les maps qui
+décrivent plusieurs sites. Réservez la paire à Embedded. Avec `mock-linux`,
+le kit réserve ces sites à Embedded et enregistre les autres comme cibles
+par défaut de l’import mock historique.
+
+```json
+{
+  "schema_version": 1,
+  "agent_profile": "standard",
+  "sites": [
+    { "code": "VEGA", "name": "Vega", "site_type": "primary", "gateways": 1 },
+    { "code": "SIRIUS", "name": "Sirius", "site_type": "primary", "gateways": 1 },
+    { "code": "SIM", "name": "Simulation AppControl", "site_type": "staging", "gateways": 1 }
+  ],
+  "embedded": {
+    "allowed_origins": ["https://panoramisk.banque.example"],
+    "simulation_sites": ["SIM"]
+  }
+}
+```
+
+Donnez l’origine exacte du portail, sans chemin. Ajoutez l’origine AppControl
+si vous utilisez aussi la carte Embedded depuis l’interface native. Pour le
+Knowledge Engine, ajoutez `document_source.secret_name` dans le même fichier.
+Sur une installation existante, mettez d’abord à jour le socle, puis relancez
+`Configurer-AppControl.ps1` avec ce fichier. Le kit recrée les pods du backend
+et du frontend quand la configuration Embedded change. La désinstallation du
+complément retire aussi cette configuration. Voir [l’intégration du portail](../EMBEDDED.fr.md#session-authentification-et-web-component).
+
+### Echeances des certificats et jetons
+
+Le jeton de gateway dure 30 jours et sert à chaque reconnexion au backend.
+Le jeton d’enrôlement initial d’un agent sert une fois. Après l’enrôlement,
+l’agent se reconnecte avec son certificat client, valable 365 jours par défaut.
+Les certificats des services et des gateways du kit durent 90 jours.
+
+Sur le poste Windows, connectez `oc` au cluster de l’installation, puis lancez
+le connecteur avec le dossier privé indiqué par l’installeur.
+
+```powershell
+.\Maintenir-AppControl.ps1 -DossierEtat 'CHEMIN_D_ETAT' -Watch
+```
+
+Dans AppControl, ouvrez **Certificates & tokens → Maintenance**. Sélectionnez
+une brique, consultez l’échéance et confirmez **Request renewal**. Le connecteur doit
+rester ouvert pendant l’opération. Il utilise la connexion OpenShift du poste
+et le compte administrateur conservé dans le dossier privé. L’écran affiche
+la progression de la demande et le résultat. Les jetons et les clés privées
+restent dans le dossier d’état ou dans les Secrets OpenShift.
+Le compte OpenShift doit pouvoir mettre à jour les Secrets et redéployer les
+briques de cette installation. Le renouvellement d’un agent nécessite aussi
+l’accès `pods/exec` à son pod.
+Arrêtez le connecteur avant de mettre à jour, réinstaller ou désinstaller
+l’instance.
+
+Le parcours gère les jetons et certificats des gateways du socle et des sites,
+les certificats de transport émis par le kit et les certificats des agents
+persistants configurés par le kit. La reconnexion peut interrompre brièvement
+les contrôles. Les autorités de certification, la Route HTTPS fournie par la
+plateforme et les agents hors cluster demandent une intervention de leur
+gestionnaire. Pour ces derniers, suivre la
+[procédure de réenrôlement](../AGENT_INSTALLATION.md#certificate-renewal) avec le
+même nom d’agent. Si la Route hérite du certificat du routeur, son échéance
+peut ne pas être disponible dans l’inventaire.
+
+Si une rotation interrompue laisse un fichier de récupération, fermez le
+connecteur, vérifiez le projet ciblé et restaurez l’ancienne valeur depuis le
+poste connecté à OpenShift. Vérifiez ensuite la santé du service. Conservez
+le dossier privé tant que la restauration n’est pas terminée.
+
+```powershell
+.\Maintenir-AppControl.ps1 -DossierEtat 'CHEMIN_D_ETAT' -Restore
+```
+
+Si plusieurs certificats de transport ont expiré et bloquent l’interface,
+renouvelez le transport depuis Windows tant que son autorité reste valide.
+Le script renouvelle les services dans l’ordre et vérifie ensuite l’API.
+
+```powershell
+.\Maintenir-AppControl.ps1 -DossierEtat 'CHEMIN_D_ETAT' -RecoverTransport
+```
 
 ## Choisir le premier administrateur
 
@@ -974,3 +1151,39 @@ L’option ne contourne pas les droits OpenShift ni les règles DNS du client.
 Un domaine personnalisé peut être refusé à la création. Le choix du domaine
 `.pres.` reste à confirmer avec la plateforme ; l’option ne prouve pas que
 le domaine était la cause de l’erreur d’exposition.
+
+
+## Démonstration bancaire complète
+
+**Le kit 1.23.1-1 installe automatiquement la démo bancaire lors d’une installation
+par défaut**, après la vérification technique et l’enrôlement de l’agent Linux.
+Aucune seconde commande n’est nécessaire. `-SansDemo` désactive les deux démonstrations ;
+une mise à jour avec `-MettreAJour` conserve les applications existantes sans en ajouter.
+
+Pour ajouter la démo à une installation réalisée avec le kit 1.22.0-2, ou reprendre
+uniquement sa création, exécutez depuis le dossier du kit :
+
+```powershell
+.\Installer-DemoBancaire.ps1 -DossierEtat 'CHEMIN_DU_DOSSIER_ETAT'
+```
+
+Utilisez le **dossier d’état privé indiqué par l’installeur**, pas le dossier du ZIP.
+Le parcours par défaut fournit déjà un agent Linux dans OpenShift ; aucun outil
+supplémentaire ni nouvelle image n’est nécessaire. Si vous avez choisi `-SansDemo`,
+relancez d’abord votre installation sans cette option pour vérifier et enrôler cet agent.
+
+Ouvrez **Core Banking System (demo)** dans le catalogue : neuf composants reprennent
+l’architecture de l’exemple standalone (Oracle RAC, MQ Series, deux serveurs WebSphere,
+Control-M, traitements de nuit, F5 et portail bancaire). Lancez **Start All**, observez
+les dépendances et les états, puis **Stop All**. Les commandes vérifient réellement
+l’ordre des dépendances. Elles créent/suppriment uniquement des fichiers isolés dans
+`/tmp/appcontrol-banking-<identifiant application>` sur l’agent ; elles ne contactent
+aucun système bancaire. Les fichiers disparaissent si le pod agent est remplacé.
+
+Le script conserve un reçu `banking-demo.json` dans le dossier privé : le relancer
+ne duplique pas l’application. Une installation partielle peut être reprise. Une démo
+existante sans ce reçu n’est pas adoptée ou écrasée automatiquement.
+Les agents sont ceux de la vérification initiale : cet exemple est mono-site. La
+configuration multi-sites reste disponible via `Configurer-AppControl.ps1`.
+
+L’application technique de qualification à deux composants est conservée séparément.

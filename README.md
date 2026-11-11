@@ -19,8 +19,7 @@ Le projet est né d'un constat simple : depuis vingt ans, chaque famille d'outil
 ## Installer AppControl
 
 **POC OpenShift depuis un poste Windows :**
-[Kit léger 1.22.0-1 — téléchargement après publication](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip)
-· [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-1.zip.sha256)
+[Versions et kits Windows disponibles](https://github.com/xcomponent/appcontrol-release/releases)
 · [Guide d’installation, de mise à jour et de désinstallation](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/).
 
 **PowerShell + votre `oc` existant uniquement.** Le ZIP contient les scripts et
@@ -28,12 +27,10 @@ les YAML ; OpenShift télécharge les images publiques d’évaluation, directem
 ou via Artifactory selon la politique de la banque. Aucun Docker, Python ou Helm
 à installer sur le poste.
 
-Le kit **1.22.0-1** accompagne AppControl **1.22.0**. Sa publication est
-conditionnée au téléchargement anonyme des images et à la qualification du ZIP
-exact depuis Windows sur OpenShift. Les preuves attendues dans les assets de
-la release sont `PUBLICATION-EVALUATION-1.22.0-1.json` et
-`QUALIFICATION-EVALUATION-1.22.0-1.zip`. Les rapports 1.20.4 restent des preuves
-historiques ; ils ne valident pas cette nouvelle livraison.
+Choisissez le fichier `appcontrol-openshift-windows-light-<révision>.zip` et
+son fichier `.sha256` dans la release de la version souhaitée. Les preuves
+`PUBLICATION-EVALUATION-<révision>.json` et `QUALIFICATION-EVALUATION-<révision>.zip`
+identifient les images et le ZIP effectivement testés depuis Windows sur OpenShift.
 
 La version 1.21.1 permet de générer des maps avec **l’IA du client**, de choisir
 les agents de chaque composant sur plusieurs sites et d’attribuer les

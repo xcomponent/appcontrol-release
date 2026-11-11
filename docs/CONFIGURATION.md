@@ -7,6 +7,7 @@ Complete configuration reference for all AppControl components.
 - [Architecture Overview](#architecture-overview)
 - [Users & Authentication](#users--authentication)
 - [Backend (API Server)](#backend-api-server)
+- [Embedded simulation](#embedded-simulation)
 - [Gateway](#gateway)
 - [Agent](#agent)
 - [Frontend](#frontend)
@@ -49,6 +50,26 @@ Complete configuration reference for all AppControl components.
 - **Gateways never connect to the database**
 
 ---
+
+## Embedded simulation
+
+Embedded is disabled until an administrator configures dedicated execution
+targets and exact portal origins on the backend:
+
+| Variable | Value |
+|---|---|
+| `APPCONTROL_EMBEDDED_ALLOWED_ORIGINS` | Comma-separated exact HTTPS origins, such as `https://wiki.bank.example`. HTTP is limited to loopback development. No wildcard or URL path. |
+| `APPCONTROL_EMBEDDED_SIMULATION_TARGETS` | JSON array of `{ "site_id": "UUID", "agent_id": "UUID", "gateway_id": "UUID" }`; at most eight distinct sites. |
+
+Targets must belong to the authorized organization, be connected, and use
+gateways reserved for simulation. Production components cannot use these
+reserved executors. The portal server needs `app:<id>:simulate` and existing
+application/site access; its long-lived key must not reach browser code.
+
+Helm exposes the corresponding `embedded.allowedOrigins` and
+`embedded.simulationTargets` values and the narrow iframe framing exception.
+Custom reverse proxies also need that exception. See the complete
+[Embedded integration and lifecycle guide](EMBEDDED.fr.md).
 
 ## Users & Authentication
 

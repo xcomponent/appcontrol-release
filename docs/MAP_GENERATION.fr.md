@@ -4,13 +4,19 @@ AppControl fournit les instructions et le format de ses maps. Votre moteur conse
 
 Le parcours principal est celui des **applications réelles** : récupérer le contrat `standard`, appeler votre IA avec vos documents, vérifier le JSON et les commandes, résoudre les placements par composant, puis publier avec les droits des équipes. Une seule application peut fonctionner simultanément sur plusieurs sites.
 
-La simulation est un **choix de prompt** : `mock-linux` ou `mock-windows` demande à votre IA de produire des commandes fondées sur des fichiers témoins. La map obtenue suit ensuite **le même import normal**, avec des agents ordinaires et des placements explicites. Aucun registre d’agents mock, déploiement spécial ou réglage global n’est nécessaire. Applications réelles et simulées coexistent dans la même instance ; leurs commandes déterminent leur comportement. Le [guide de simulation](SIMULATION_MAPS.fr.md) détaille ce parcours.
+La démonstration de cycle de vie peut être un **choix de prompt** : `mock-linux` ou `mock-windows` demande à votre IA de produire des commandes fondées sur des fichiers témoins. La map obtenue suit ensuite **le même import normal**, avec des agents ordinaires et des placements explicites. Ce parcours n’exige pas de registre d’agents mock ni de réglage global. Applications réelles et simulées coexistent dans la même instance ; leurs commandes déterminent leur comportement. Le [guide de simulation](SIMULATION_MAPS.fr.md) détaille ce parcours.
 
-**Ce parcours est disponible à partir d'AppControl 1.21.1.** Il nécessite le
-serveur et l'interface de cette version, avec les routes de publication et de
-placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
-**1.21.1-2** et les preuves de sa propre release ; un script récent ne met pas
-à jour le serveur 1.20.4 à lui seul.
+**AppControl Embedded est un autre périmètre de sécurité** : à partir d'une map
+publiée, le serveur crée une copie avec ses propres commandes de reconstruction,
+sur des agents et gateways dédiés, et délivre un jeton limité à cette simulation.
+Un profil mock adressé à l'IA ne remplace pas cette isolation imposée côté serveur.
+Voir [EMBEDDED.fr.md](EMBEDDED.fr.md).
+
+**Le parcours initial de publication existe depuis AppControl 1.21.1.** Les
+enrichissements décrits ici — prompt révision `7`, synchronisation du catalogue et
+Embedded — nécessitent un serveur qui expose ces capacités. Vérifier la réponse
+du contrat et les routes de l'instance installée ; un script ou un kit récent ne
+met pas à jour les images du produit à lui seul.
 
 Le prompt explique aussi le modèle métier, avant la syntaxe JSON :
 
@@ -49,6 +55,14 @@ La réponse JSON contient notamment :
 | `json_schema` | Schéma JSON du profil de génération. Peut aussi configurer la sortie structurée de votre moteur, s’il accepte ce dialecte de JSON Schema. |
 | `examples` | Exemples nommés : chacun contient un champ `map`. |
 | `capabilities` et `limitations` | Fonctionnalités du profil et limites à prendre en compte par l’intégration. Le schéma reste la référence pour les champs acceptés. |
+
+La révision actuelle des instructions est `prompt_revision: "7"`. L’IA reprend
+dans `source_site` le code ou le nom du site explicitement documenté pour un
+composant. Lorsque les hôtes sont inconnus, elle laisse `binding_profiles`
+et `host` absents. L'intégration peut fournir les placements autorisés.
+`contract_version: "1"` et `format_version: "4.2"` ne sont pas des numéros de
+révision du prompt. Conserver la réponse du contrat plutôt que coder ces
+instructions en dur.
 
 Stockez la réponse et son en-tête `ETag` dans un cache **séparé pour chaque instance, identité de connexion et ensemble d’options**. Avant le lot suivant, vérifiez sa fraîcheur :
 
@@ -92,11 +106,21 @@ GET /api/v1/map-generation/contract?profile=standard&include_catalog=true&catalo
 
 Le champ `catalog` contient alors les briques de **votre organisation**, avec leur clé, leur description et leurs commandes de vérification, démarrage et arrêt. Les variables d’environnement du catalogue sont exclues. L’IA reprend la clé dans `component_type` et développe les commandes retenues dans la map ; il ne s’agit pas d’un lien vivant qui modifierait ultérieurement les maps déjà importées.
 
-Cette option expose du contenu propre à l’organisation : une clé API doit avoir une capacité globale `read`, `design` ou `*`. Une clé limitée à une seule application peut obtenir le contrat générique, mais pas le catalogue de toute l’organisation. Les commandes et descriptions du catalogue peuvent contenir des informations internes : leur transmission au modèle relève du moteur du client.
+Cette option expose du contenu propre à l’organisation : une clé API doit avoir `catalog:read`, ou une capacité globale `read`, `design` ou `*`. Une clé limitée à une seule application peut obtenir le contrat générique, mais pas le catalogue de toute l’organisation. Les commandes et descriptions du catalogue peuvent contenir des informations internes : leur transmission au modèle relève du moteur du client.
 
 La réponse est limitée à 100 briques et 256 Kio de données de catalogue. Si le catalogue dépasse ces limites, utilisez `catalog_types` pour sélectionner les briques pertinentes au traitement.
 
 Un changement du profil, de la sélection de briques ou du contenu retourné du catalogue change l’`ETag`. Il faut conserver ces options dans la clé du cache et utiliser la même URL lors de la vérification conditionnelle.
+
+Pour combiner publication et génération guidée par le catalogue, attribuer
+explicitement `maps:import` et `catalog:read`. `catalog:write` permet les mutations
+du catalogue, toujours sous les droits administrateur de son propriétaire ; il
+ne remplace pas `catalog:read` pour obtenir ce snapshot dans le prompt.
+
+Le catalogue accepte un [import atomique avec aperçu et mise à jour](EMBEDDED.fr.md#alimenter-le-catalogue-du-client).
+Le mode `add` conserve les clés existantes ; `upsert` exige un aperçu `dry_run`
+puis son `digest` dans `expected_digest`. Une modification du catalogue n'applique
+pas rétroactivement ses commandes aux maps déjà publiées.
 
 ### Exemple de cache en PowerShell
 
@@ -139,6 +163,43 @@ Le prompt explique notamment le sens des dépendances, les commandes et les [clu
 
 Le coût du modèle dépend du volume documentaire et du modèle choisi par le client. AppControl ne déclenche aucun appel de modèle dans ce parcours. Le cache HTTP évite de retransférer le contrat depuis AppControl, mais le prompt reste transmis au modèle pour chaque génération. Une éventuelle mise en cache des tokens du prompt dépend des capacités du fournisseur ou du moteur d’IA utilisé.
 
+### Exemple externe avec plusieurs documents et correction bornée
+
+Le client de démonstration `demo-rebuild/map-generation/generate.py` récupère le
+contrat installé, appelle un fournisseur externe, puis valide le JSON. Il ne
+publie aucune map et n'exécute aucune commande. Il utilise `APPCONTROL_API_KEY`
+ou `APPCONTROL_TOKEN` pour le contrat et la validation ; la clé du fournisseur
+reste dans son propre processus.
+
+```sh
+python3 demo-rebuild/map-generation/generate.py \
+  --url https://appcontrol.banque.example \
+  --profile standard \
+  --include-catalog \
+  --catalog-types web-portal payments-api ibm-mq oracle-rac \
+  --documents dossier-architecture.fr.md procedures-exploitation.fr.md \
+  --repair-attempts 1 \
+  --anthropic-key-file /chemin/prive/cle-anthropic.txt \
+  --output resultat-generation
+```
+
+`--documents` combine uniquement les fichiers UTF-8 explicitement sélectionnés,
+avec leurs noms. `--include-catalog` ajoute le catalogue autorisé au contrat ;
+`--catalog-types` limite les briques demandées et implique cette option.
+`--repair-attempts` accepte `0`, `1` ou `2` (défaut `1`) : si le candidat JSON est
+refusé par le schéma, les erreurs structurées sont renvoyées au modèle pour au plus
+ce nombre de corrections, chacune à nouveau validée. Un JSON illisible, une
+réponse tronquée ou un `generation_error` arrête le parcours. Le client ne corrige
+pas lui-même la topologie ou les commandes pour faire passer la validation.
+
+Le dossier de sortie conserve le contrat, les réponses du modèle, les candidats
+rejetés, les rapports de validation et les empreintes de génération. `--replay`
+ne rappelle pas le modèle et exige des documents, contrat, modèle et candidat
+inchangés ; il revalide le candidat enregistré. Un replay ne prouve pas un nouvel
+appel à l'IA. Ces fichiers contiennent les connaissances fournies au modèle :
+ils restent privés. Python est ici un outil de démonstration, pas un prérequis
+pour intégrer les API HTTP d'AppControl.
+
 ## 3. Vérifier le JSON sans modifier AppControl
 
 ```http
@@ -178,7 +239,7 @@ La validation ne crée aucune application et n’exécute aucune commande. **Ell
 
 ### Parcours recommandé : placements par composant et équipes
 
-Créez une clé **Import new application maps — real or simulated** dans AppControl : sa portée `maps:import` donne accès au contexte filtré et aux nouvelles routes de préparation/publication. Elle ne permet ni de modifier une application existante, ni d'appeler start/stop. Elle permet cependant de publier des commandes de vérification qui peuvent s'exécuter immédiatement : la revue des commandes précède la publication. Le catalogue complet conserve son contrôle séparé `read`/`design`.
+Créez une clé **Import new application maps — real or simulated** dans AppControl : sa portée `maps:import` donne accès au contexte filtré et aux nouvelles routes de préparation/publication. Elle ne permet ni de modifier une application existante, ni d'appeler start/stop. Elle permet cependant de publier des commandes de vérification qui peuvent s'exécuter immédiatement : la revue des commandes précède la publication. Le catalogue complet conserve son contrôle séparé `catalog:read` (ou une capacité globale `read`/`design`).
 
 1. `GET /api/v1/map-generation/context` (équivalent à `?profile=standard`) retourne les sites accessibles et leurs agents enrôlés, avec leur état. Le client peut exploiter les noms/codes pour rapprocher son référentiel.
 2. `POST /api/v1/map-generation/prepare` vérifie la map et résout chaque placement, sans créer d'application. Examiner `ready`, `issues`, `bindings`, `member_bindings` et `warnings`.
@@ -213,7 +274,9 @@ Exemple de requête pour une application répartie :
 
 Remplacez les hôtes et l'identifiant d'équipe par ceux de votre instance, et utilisez la map issue des documents avec ses procédures relues. Cet exemple montre les affectations ; il ne contient volontairement aucune procédure de production. `ready` signifie que la préparation accepte la configuration, pas que les procédures sont éprouvées.
 
-Omettez `profile` dans cette enveloppe : l’import normal utilise `standard` par défaut et conserve exactement les commandes fournies, y compris celles générées par un prompt mock. L’écriture explicite `"profile": "standard"` reste compatible. Le `site_code` de l'enveloppe est le rattachement administratif et le site par défaut des composants non listés. Chaque entrée de `placements` peut choisir un autre site. En `standard`, choisissez **soit** `agent_id`, **soit** `host` ; à défaut, le champ `host` du composant sert de référence. La résolution est exacte (nom d'hôte ou IP) dans le site sélectionné et ne choisit jamais un agent mock implicitement. Les cibles absentes ou ambiguës doivent être corrigées. Un agent enregistré mais hors ligne produit un avertissement : une map peut être préparée sans être exploitable immédiatement.
+Omettez `profile` dans cette enveloppe. L’import normal utilise `standard` par défaut et conserve les commandes fournies, y compris celles d’un prompt mock. L’écriture explicite `"profile": "standard"` reste compatible. Une entrée dans `placements` définit en priorité le site du composant. À défaut, AppControl rapproche `source_site` du code ou du nom d’un site de l’organisation, en ignorant la casse et les espaces en bordure. Une correspondance unique avec un site actif permet de préparer le placement. Une référence introuvable, inactive ou ambiguë demande une affectation explicite. En l’absence des deux champs, le `site_code` administratif de l’enveloppe sert de site par défaut.
+
+En `standard`, choisissez **soit** `agent_id`, **soit** `host` dans `placements`. À défaut, le `host` du composant sert de référence. AppControl recherche l’hôte ou l’IP exacte dans le site résolu. Un code de site seul laisse le choix de l’agent à compléter. Un agent enregistré mais hors ligne produit un avertissement. Vérifiez le rapport de préparation avant la publication.
 
 L'intégration construit ces placements à partir du référentiel structuré et du contexte AppControl. Ils restent séparés du JSON de map : les documents ne peuvent pas attribuer eux-mêmes des droits ou inventer des UUID. Le contexte est relu par lot et les cibles sont recontrôlées à chaque publication.
 
@@ -273,7 +336,28 @@ Remplacez l’UUID d’exemple par un `sites[].id` obtenu avec `GET /api/v1/site
 
 Le marqueur `generation_contract_version` active à nouveau la validation stricte avant l’import : un fichier modifié après sa vérification n’échappe donc pas aux contrôles. Les rattachements aux agents et les droits sont vérifiés par le parcours d’import. Une map sans commandes ou sans rattachement complet peut rester une map à compléter, pas une autorisation d’exécution.
 
-Conservez l’`application_id` retourné avec l’identifiant de votre document source. **Cet endpoint crée une application ; il ne constitue pas un mécanisme d’upsert ni une synchronisation automatique.** Après un délai d’attente réseau pendant l’import, vérifiez le résultat avant de relancer : une répétition aveugle peut créer un doublon. Pour faire évoluer une application existante, utilisez un parcours de mise à jour et de revue explicite.
+### Associer la map à la fiche source
+
+Au départ de la génération, le job retient l’identifiant stable de l’application
+dans le référentiel de l’hôte, par exemple `PAI-042`. Utilisez la même valeur pour
+les versions successives du Knowledge Document et pour l’URL de la fiche.
+Ajoutez ce champ facultatif à l’enveloppe de préparation et d’import, à côté de
+`map` et des paramètres de placement.
+
+```json
+{"source_reference":{"system":"panoramisk","id":"PAI-042"}}
+```
+
+AppControl réserve la référence à la création et la rend disponible à la
+résolution après réussite de la publication. La réponse d’import donne toujours
+l’`application_id`. Une référence réservée par une autre application produit un
+conflit `409`. Après une erreur réseau ou une publication incomplète, vérifiez
+l’état de la map avant de relancer l’import. Une réservation incomplète est
+masquée à la résolution. Traitez l’éventuelle map partielle avec le parcours
+habituel de revue et de suppression autorisée avant de republier.
+
+Le portail peut demander l’UUID correspondant à l’identifiant de la fiche avec
+`GET /api/v1/embedded/resolve`. Voir [Relier les fiches à leur map AppControl](EMBEDDED.fr.md#relier-les-fiches-a-leur-map-appcontrol).
 
 ### Choisir les agents au moment de l’import
 

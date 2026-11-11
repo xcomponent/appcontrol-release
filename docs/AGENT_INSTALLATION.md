@@ -96,7 +96,7 @@ Tokens are created by an administrator. Three options:
 
 **Option A: Web UI**
 
-1. Go to **Settings > Enrollment** in the AppControl web UI.
+1. Open **Enrollment** under **Configuration** in the AppControl web UI.
 2. Click **Create Token**.
 3. Set a name, scope (`agent` or `gateway`), optional max uses and expiry.
 4. Copy the token (shown once, starts with `ac_enroll_`).
@@ -452,7 +452,7 @@ curl -X POST https://backend:3000/api/v1/pki/init \
   -H "Content-Type: application/json" \
   -d '{"org_name": "My Company", "validity_days": 3650}'
 
-# Via web UI: Settings > Enrollment > Initialize PKI
+# Via web UI: Configuration > Enrollment > Initialize PKI
 ```
 
 ### Token security

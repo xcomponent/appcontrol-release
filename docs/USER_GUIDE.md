@@ -444,7 +444,7 @@ API keys enable programmatic access for **scheduler integration**, automation sc
 
 **Creating an API key:**
 
-1. Navigate to **Settings > API Keys**
+1. Open **Account settings** and select **Manage Keys**.
 2. Click **Create API Key**
 3. Provide a descriptive name (e.g., "Control-M Production")
 4. Copy the generated key immediately — it won't be shown again
@@ -632,13 +632,11 @@ appctl component stop --app "Trading Platform" --component "Order Service"
 
 ### Certificate Rotation
 
-Seamless CA migration without downtime:
-
-1. Import new CA certificate
-2. Dual-trust period — both CAs trusted
-3. Agents automatically request new certificates
-4. Monitor progress in the UI
-5. Finalize — remove old CA
+Plan TLS rotation before expiry. Renew service and gateway certificates during
+a maintenance window and reload the affected workloads. To renew an agent's
+client certificate, follow the [agent enrollment procedure](AGENT_INSTALLATION.md#certificate-renewal)
+and keep its registered hostname. The native OpenShift kit documents the
+[certificate and enrollment token lifetimes](qualification/INSTALLATION-WINDOWS.fr.md#echeances-des-certificats-et-jetons).
 
 ### Authentication Methods
 
@@ -787,3 +785,27 @@ X4B (XComponent for Business) is the INVIVOO software platform. AppControl is it
 The interface starts in a dark theme. Use the theme button in the header or Settings to select light mode. This browser preference is retained across reloads. Brand assets are bundled with the application and require no Internet access.
 
 The X4B identity provides a common home for future connectors and transformation modules. This release does not add or advertise unimplemented connectors as available modules.
+
+
+### Embedded architecture and reconstruction
+
+AppControl Embedded presents a documentary map and executes isolated reconstruction
+scenarios using the existing Rust runtime and dedicated agents. Open **Simulation workspace**
+from an application map. Use **Copy application ID** in the map menu or copy the
+Web Component code from **Intégrer dans un portail documentaire**. A portal can
+pass a stable source reference at map import and resolve it from its shared
+architecture tab. Use a portal simulation key scoped to selected maps or to the
+maps its account can view. The key stays on the host server.
+See [the integration guide](EMBEDDED.fr.md) and [the replayable demonstration](../demo-rebuild/embedded/README.fr.md).
+
+**Reconstruction** is the main verified recovery workspace. Choose runtime restart,
+application reconstruction or infrastructure plus application reconstruction, then
+review the affected scope and server plan. Daily Start/Stop are grouped under
+**Operations**; **Restart with dependents** is an atomic backend operation. A plan
+preview is distinct from an executed sandbox scenario. Reconstruction on another
+site does not itself switch the active site, synchronize data or route external traffic.
+
+Catalog bulk imports retain add-only behavior by default. Use `mode: "upsert"`
+with `dry_run: true` to review a diff; then provide the returned `digest` as
+`expected_digest` to apply. Upsert records are complete definitions: omitted
+optional fields are cleared. Imports are atomic and do not rewrite existing maps.

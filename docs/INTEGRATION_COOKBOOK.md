@@ -11,7 +11,7 @@ All recipes assume:
 
 ### Create an API Key
 
-Create a key in Settings → API Keys, or use the API with an authenticated account. For a single application's lifecycle operations:
+Open **Account settings** and select **Manage Keys**, or use the API with an authenticated account. For a single application's lifecycle operations:
 
 ```bash
 jq -n --arg app "$APP_ID" '{name: "control-m-integration", allowed_actions: [("app:" + $app + ":read"), ("app:" + $app + ":start"), ("app:" + $app + ":stop")]}' > key-request.json

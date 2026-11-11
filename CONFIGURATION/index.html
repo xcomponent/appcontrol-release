@@ -910,6 +910,8 @@
       
         
       
+        
+      
     
     
       
@@ -957,6 +959,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EMBEDDED.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embedded maps and simulation (FR)
   </span>
   
 
@@ -1155,6 +1178,8 @@
       
         
       
+        
+      
     
     
       
@@ -1256,6 +1281,15 @@
   <a href="#architecture-overview" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedded-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embedded simulation
     </span>
   </a>
   
@@ -2033,6 +2067,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../KNOWLEDGE-ENGINE-CONNECTOR.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../SIMULATION_MAPS.fr/" class="md-nav__link">
         
   
@@ -2725,6 +2780,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#embedded-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embedded simulation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#users-authentication" class="md-nav__link">
     <span class="md-ellipsis">
       Users &amp; Authentication
@@ -3405,6 +3469,7 @@
 <li><a href="#architecture-overview">Architecture Overview</a></li>
 <li><a href="#users--authentication">Users &amp; Authentication</a></li>
 <li><a href="#backend-api-server">Backend (API Server)</a></li>
+<li><a href="#embedded-simulation">Embedded simulation</a></li>
 <li><a href="#gateway">Gateway</a></li>
 <li><a href="#agent">Agent</a></li>
 <li><a href="#frontend">Frontend</a></li>
@@ -3442,6 +3507,35 @@
 - <strong>Agents never connect directly to the backend or database</strong>
 - <strong>Gateways never connect to the database</strong></p>
 <hr />
+<h2 id="embedded-simulation">Embedded simulation<a class="headerlink" href="#embedded-simulation" title="Permanent link">&para;</a></h2>
+<p>Embedded is disabled until an administrator configures dedicated execution
+targets and exact portal origins on the backend:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APPCONTROL_EMBEDDED_ALLOWED_ORIGINS</code></td>
+<td>Comma-separated exact HTTPS origins, such as <code>https://wiki.bank.example</code>. HTTP is limited to loopback development. No wildcard or URL path.</td>
+</tr>
+<tr>
+<td><code>APPCONTROL_EMBEDDED_SIMULATION_TARGETS</code></td>
+<td>JSON array of <code>{ "site_id": "UUID", "agent_id": "UUID", "gateway_id": "UUID" }</code>; at most eight distinct sites.</td>
+</tr>
+</tbody>
+</table>
+<p>Targets must belong to the authorized organization, be connected, and use
+gateways reserved for simulation. Production components cannot use these
+reserved executors. The portal server needs <code>app:&lt;id&gt;:simulate</code> and existing
+application/site access; its long-lived key must not reach browser code.</p>
+<p>Helm exposes the corresponding <code>embedded.allowedOrigins</code> and
+<code>embedded.simulationTargets</code> values and the narrow iframe framing exception.
+Custom reverse proxies also need that exception. See the complete
+<a href="../EMBEDDED.fr/">Embedded integration and lifecycle guide</a>.</p>
 <h2 id="users-authentication">Users &amp; Authentication<a class="headerlink" href="#users-authentication" title="Permanent link">&para;</a></h2>
 <p>AppControl supports three authentication methods. Only one needs to be active at a time, although OIDC and SAML can coexist.</p>
 <h3 id="authentication-methods-summary">Authentication Methods Summary<a class="headerlink" href="#authentication-methods-summary" title="Permanent link">&para;</a></h3>
@@ -4904,7 +4998,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-08T05:06:25+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-10T22:49:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-10</span>
   </span>
 
     

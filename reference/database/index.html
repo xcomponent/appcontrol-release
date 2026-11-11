@@ -910,6 +910,8 @@
       
         
       
+        
+      
     
     
       
@@ -957,6 +959,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EMBEDDED.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embedded maps and simulation (FR)
   </span>
   
 
@@ -1153,6 +1176,8 @@
       
         
       
+        
+      
     
     
       
@@ -1305,6 +1330,27 @@
   
   <span class="md-ellipsis">
     AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../KNOWLEDGE-ENGINE-CONNECTOR.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Knowledge Engine connector (FR)
   </span>
   
 
@@ -2206,6 +2252,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#embedded_sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      embedded_sessions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#enrollment_events" class="md-nav__link">
     <span class="md-ellipsis">
       enrollment_events
@@ -2353,6 +2408,51 @@
   <a href="#organizations" class="md-nav__link">
     <span class="md-ellipsis">
       organizations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pki_maintenance_installations" class="md-nav__link">
+    <span class="md-ellipsis">
+      pki_maintenance_installations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pki_maintenance_requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      pki_maintenance_requests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portfolio_generation_applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      portfolio_generation_applications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portfolio_generation_jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      portfolio_generation_jobs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portfolio_source_refreshes" class="md-nav__link">
+    <span class="md-ellipsis">
+      portfolio_source_refreshes
     </span>
   </a>
   
@@ -3152,6 +3252,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#embedded_sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      embedded_sessions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#enrollment_events" class="md-nav__link">
     <span class="md-ellipsis">
       enrollment_events
@@ -3299,6 +3408,51 @@
   <a href="#organizations" class="md-nav__link">
     <span class="md-ellipsis">
       organizations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pki_maintenance_installations" class="md-nav__link">
+    <span class="md-ellipsis">
+      pki_maintenance_installations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pki_maintenance_requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      pki_maintenance_requests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portfolio_generation_applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      portfolio_generation_applications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portfolio_generation_jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      portfolio_generation_jobs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portfolio_source_refreshes" class="md-nav__link">
+    <span class="md-ellipsis">
+      portfolio_source_refreshes
     </span>
   </a>
   
@@ -3552,7 +3706,7 @@
 <blockquote>
 <p>Auto-generated from <code>migrations/V*.sql</code>. Run <code>scripts/docs/regen.py</code> to refresh.</p>
 </blockquote>
-<p>The schema is defined by <strong>59 versioned migrations</strong> applied in order at backend startup. PostgreSQL 16 is the production target; SQLite is supported for development and small-scale deployments. Schema parity between the two backends is mandatory — see <a href="../../SQLITE_IMPLEMENTATION/">SQLite implementation notes</a>.</p>
+<p>The schema is defined by <strong>63 versioned migrations</strong> applied in order at backend startup. PostgreSQL 16 is the production target; SQLite is supported for development and small-scale deployments. Schema parity between the two backends is mandatory — see <a href="../../SQLITE_IMPLEMENTATION/">SQLite implementation notes</a>.</p>
 <p><strong>Append-only tables</strong> (no <code>UPDATE</code>, no <code>DELETE</code>, ever — they are the audit substrate):</p>
 <ul>
 <li><code>action_log</code></li>
@@ -3630,6 +3784,9 @@
     discovery_drafts ||--o{ applications : "applied_app_id"
     discovery_reports ||--o{ agents : "agent_id"
     dr_pattern_rules ||--o{ organizations : "organization_id"
+    embedded_sessions ||--o{ organizations : "org_id"
+    embedded_sessions ||--o{ users : "user_id"
+    embedded_sessions ||--o{ applications : "simulation_app_id"
     enrollment_events ||--o{ organizations : "organization_id"
     enrollment_events ||--o{ enrollment_tokens : "token_id"
     enrollment_tokens ||--o{ organizations : "organization_id"
@@ -3669,6 +3826,12 @@
     operation_schedules ||--o{ components : "component_id"
     operation_schedules ||--o{ action_log : "last_action_log_id"
     operation_schedules ||--o{ users : "created_by"
+    pki_maintenance_installations ||--o{ organizations : "organization_id"
+    pki_maintenance_requests ||--o{ pki_maintenance_installations : "organization_id,installation_id"
+    portfolio_generation_applications ||--o{ organizations : "organization_id"
+    portfolio_generation_applications ||--o{ applications : "published_application_id"
+    portfolio_generation_jobs ||--o{ portfolio_generation_applications : "organization_id,source,application_key"
+    portfolio_source_refreshes ||--o{ organizations : "organization_id"
     rebuild_operations ||--o{ applications : "application_id"
     revoked_certificates ||--o{ organizations : "organization_id"
     revoked_certificates ||--o{ agents : "agent_id"
@@ -3705,7 +3868,7 @@
     workspace_sites ||--o{ sites : "site_id"
     workspaces ||--o{ organizations : "organization_id"</code></pre>
 <h2 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link">&para;</a></h2>
-<p>Total: <strong>79</strong> tables.</p>
+<p>Total: <strong>85</strong> tables.</p>
 <h3 id="action_log"><code>action_log</code><a class="headerlink" href="#action_log" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Append-only</p>
@@ -4433,7 +4596,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Indexes:</strong> <code>idx_applications_org</code>, <code>idx_applications_site</code>, <code>idx_applications_suspended</code></p>
+<p><strong>Indexes:</strong> <code>idx_applications_org</code>, <code>idx_applications_site</code>, <code>idx_applications_suspended</code>, <code>idx_applications_source_reference</code></p>
 <p>Defined in: <code>migrations/V003__sites_applications.sql</code></p>
 <h3 id="approval_decisions"><code>approval_decisions</code><a class="headerlink" href="#approval_decisions" title="Permanent link">&para;</a></h3>
 <p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
@@ -6300,6 +6463,88 @@
 </table>
 <p><strong>Indexes:</strong> <code>idx_dr_pattern_rules_org</code></p>
 <p>Defined in: <code>migrations/V030__binding_profiles.sql</code></p>
+<h3 id="embedded_sessions"><code>embedded_sessions</code><a class="headerlink" href="#embedded_sessions" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(id)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(org_id)</code> → <code>organizations(id)</code></li>
+<li><code>(user_id)</code> → <code>users(id)</code></li>
+<li><code>(simulation_app_id)</code> → <code>applications(id)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>U</code></td>
+<td>PK</td>
+</tr>
+<tr>
+<td><code>org_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, FK→<code>organizations</code></td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, FK→<code>users</code></td>
+</tr>
+<tr>
+<td><code>reference_app_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>simulation_app_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, UNIQUE, FK→<code>applications</code></td>
+</tr>
+<tr>
+<td><code>token_hash</code></td>
+<td><code>V</code></td>
+<td>NOT NULL, UNIQUE</td>
+</tr>
+<tr>
+<td><code>parent_origin</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>expires_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>revoked_at</code></td>
+<td><code>B</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>snapshot</code></td>
+<td><code>J</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td><code>J</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>T</code></td>
+<td>NOT NULL, default NOW()</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Indexes:</strong> <code>idx_embedded_sessions_owner</code></p>
+<p>Defined in: <code>migrations/V062__embedded_sessions.sql</code></p>
 <h3 id="enrollment_events"><code>enrollment_events</code><a class="headerlink" href="#enrollment_events" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Append-only</p>
@@ -7382,6 +7627,360 @@
 </tbody>
 </table>
 <p>Defined in: <code>migrations/V001__organizations_users.sql</code></p>
+<h3 id="pki_maintenance_installations"><code>pki_maintenance_installations</code><a class="headerlink" href="#pki_maintenance_installations" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(organization_id, id)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(organization_id)</code> → <code>organizations(id)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>organization_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, FK→<code>organizations</code></td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>worker_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>identities</code></td>
+<td><code>J</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>last_seen</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+</tbody>
+</table>
+<p>Defined in: <code>migrations/V065__pki_maintenance.sql</code></p>
+<h3 id="pki_maintenance_requests"><code>pki_maintenance_requests</code><a class="headerlink" href="#pki_maintenance_requests" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(id)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(organization_id, installation_id)</code> → <code>pki_maintenance_installations(organization_id, id)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>U</code></td>
+<td>PK</td>
+</tr>
+<tr>
+<td><code>organization_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>installation_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>identity_id</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>requested_by</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>claimed_at</code></td>
+<td><code>B</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>finished_at</code></td>
+<td><code>B</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><code>T</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Indexes:</strong> <code>idx_pki_maintenance_active</code>, <code>idx_pki_maintenance_history</code></p>
+<p>Defined in: <code>migrations/V065__pki_maintenance.sql</code></p>
+<h3 id="portfolio_generation_applications"><code>portfolio_generation_applications</code><a class="headerlink" href="#portfolio_generation_applications" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(organization_id, source, application_key)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(organization_id)</code> → <code>organizations(id)</code></li>
+<li><code>(published_application_id)</code> → <code>applications(id)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>organization_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, FK→<code>organizations</code></td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>application_key</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>sha</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>fingerprint</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>is_present</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>observed_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>published_application_id</code></td>
+<td><code>U</code></td>
+<td>FK→<code>applications</code></td>
+</tr>
+<tr>
+<td><code>published_sha</code></td>
+<td><code>T</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>published_fingerprint</code></td>
+<td><code>T</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>published_at</code></td>
+<td><code>B</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Indexes:</strong> <code>idx_portfolio_generation_published_app</code></p>
+<p>Defined in: <code>migrations/V064__portfolio_generation.sql</code></p>
+<h3 id="portfolio_generation_jobs"><code>portfolio_generation_jobs</code><a class="headerlink" href="#portfolio_generation_jobs" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(id)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(organization_id, source, application_key)</code> → <code>portfolio_generation_applications(organization_id, source, application_key)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>U</code></td>
+<td>PK</td>
+</tr>
+<tr>
+<td><code>organization_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>application_key</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>sha</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>fingerprint</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>attempts</code></td>
+<td><code>I</code></td>
+<td>NOT NULL, default 0 CHECK (ATTEMPTS &gt;= 0)</td>
+</tr>
+<tr>
+<td><code>available_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>lease_token</code></td>
+<td><code>U</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>lease_until</code></td>
+<td><code>B</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><code>T</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>candidate</code></td>
+<td><code>J</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Indexes:</strong> <code>idx_portfolio_generation_due</code></p>
+<p>Defined in: <code>migrations/V064__portfolio_generation.sql</code></p>
+<h3 id="portfolio_source_refreshes"><code>portfolio_source_refreshes</code><a class="headerlink" href="#portfolio_source_refreshes" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(organization_id, source)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(organization_id)</code> → <code>organizations(id)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>organization_id</code></td>
+<td><code>U</code></td>
+<td>NOT NULL, FK→<code>organizations</code></td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>requested_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>last_success_at</code></td>
+<td><code>B</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>lease_token</code></td>
+<td><code>U</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>lease_until</code></td>
+<td><code>B</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><code>T</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Defined in: <code>migrations/V064__portfolio_generation.sql</code></p>
 <h3 id="rate_limit_counters"><code>rate_limit_counters</code><a class="headerlink" href="#rate_limit_counters" title="Permanent link">&para;</a></h3>
 <p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
 <p><strong>Primary key:</strong> <code>(key)</code></p>
@@ -8723,7 +9322,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-07T19:31:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-07</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T19:50:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
   </span>
 
     
@@ -8733,7 +9332,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-07T19:31:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-07</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T19:50:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
   </span>
 
     

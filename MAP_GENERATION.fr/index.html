@@ -18,7 +18,7 @@
         <link rel="prev" href="../INTEGRATION_COOKBOOK/">
       
       
-        <link rel="next" href="../SIMULATION_MAPS.fr/">
+        <link rel="next" href="../KNOWLEDGE-ENGINE-CONNECTOR.fr/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -910,6 +910,8 @@
       
         
       
+        
+      
     
     
       
@@ -957,6 +959,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EMBEDDED.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embedded maps and simulation (FR)
   </span>
   
 
@@ -1130,6 +1153,8 @@
   
     
     
+      
+        
       
         
       
@@ -1388,6 +1413,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Appeler votre IA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemple-externe-avec-plusieurs-documents-et-correction-bornee" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemple externe avec plusieurs documents et correction bornée
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1446,6 +1486,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#associer-la-map-a-la-fiche-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Associer la map à la fiche source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#choisir-les-agents-au-moment-de-limport" class="md-nav__link">
     <span class="md-ellipsis">
       Choisir les agents au moment de l’import
@@ -1481,6 +1530,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KNOWLEDGE-ENGINE-CONNECTOR.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -2206,6 +2276,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Appeler votre IA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemple-externe-avec-plusieurs-documents-et-correction-bornee" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemple externe avec plusieurs documents et correction bornée
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2258,6 +2343,15 @@
   <a href="#imports-classiques-et-affectations-explicites" class="md-nav__link">
     <span class="md-ellipsis">
       Imports classiques et affectations explicites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#associer-la-map-a-la-fiche-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Associer la map à la fiche source
     </span>
   </a>
   
@@ -2321,12 +2415,17 @@
 <h1 id="generer-des-maps-avec-lia-du-client">Générer des maps avec l’IA du client<a class="headerlink" href="#generer-des-maps-avec-lia-du-client" title="Permanent link">&para;</a></h1>
 <p>AppControl fournit les instructions et le format de ses maps. Votre moteur conserve les documents sources, choisit son modèle d’IA et exécute le prompt. AppControl ne reçoit aucun document source pour fournir ce contrat et n’appelle aucun modèle dans ce parcours.</p>
 <p>Le parcours principal est celui des <strong>applications réelles</strong> : récupérer le contrat <code>standard</code>, appeler votre IA avec vos documents, vérifier le JSON et les commandes, résoudre les placements par composant, puis publier avec les droits des équipes. Une seule application peut fonctionner simultanément sur plusieurs sites.</p>
-<p>La simulation est un <strong>choix de prompt</strong> : <code>mock-linux</code> ou <code>mock-windows</code> demande à votre IA de produire des commandes fondées sur des fichiers témoins. La map obtenue suit ensuite <strong>le même import normal</strong>, avec des agents ordinaires et des placements explicites. Aucun registre d’agents mock, déploiement spécial ou réglage global n’est nécessaire. Applications réelles et simulées coexistent dans la même instance ; leurs commandes déterminent leur comportement. Le <a href="../SIMULATION_MAPS.fr/">guide de simulation</a> détaille ce parcours.</p>
-<p><strong>Ce parcours est disponible à partir d'AppControl 1.21.1.</strong> Il nécessite le
-serveur et l'interface de cette version, avec les routes de publication et de
-placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
-<strong>1.21.1-2</strong> et les preuves de sa propre release ; un script récent ne met pas
-à jour le serveur 1.20.4 à lui seul.</p>
+<p>La démonstration de cycle de vie peut être un <strong>choix de prompt</strong> : <code>mock-linux</code> ou <code>mock-windows</code> demande à votre IA de produire des commandes fondées sur des fichiers témoins. La map obtenue suit ensuite <strong>le même import normal</strong>, avec des agents ordinaires et des placements explicites. Ce parcours n’exige pas de registre d’agents mock ni de réglage global. Applications réelles et simulées coexistent dans la même instance ; leurs commandes déterminent leur comportement. Le <a href="../SIMULATION_MAPS.fr/">guide de simulation</a> détaille ce parcours.</p>
+<p><strong>AppControl Embedded est un autre périmètre de sécurité</strong> : à partir d'une map
+publiée, le serveur crée une copie avec ses propres commandes de reconstruction,
+sur des agents et gateways dédiés, et délivre un jeton limité à cette simulation.
+Un profil mock adressé à l'IA ne remplace pas cette isolation imposée côté serveur.
+Voir <a href="../EMBEDDED.fr/">EMBEDDED.fr.md</a>.</p>
+<p><strong>Le parcours initial de publication existe depuis AppControl 1.21.1.</strong> Les
+enrichissements décrits ici — prompt révision <code>7</code>, synchronisation du catalogue et
+Embedded — nécessitent un serveur qui expose ces capacités. Vérifier la réponse
+du contrat et les routes de l'instance installée ; un script ou un kit récent ne
+met pas à jour les images du produit à lui seul.</p>
 <p>Le prompt explique aussi le modèle métier, avant la syntaxe JSON :</p>
 <ul>
 <li><strong>Application / map</strong> : un périmètre applicatif et les éléments nécessaires à son exploitation.</li>
@@ -2387,6 +2486,13 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
 </tr>
 </tbody>
 </table>
+<p>La révision actuelle des instructions est <code>prompt_revision: "7"</code>. L’IA reprend
+dans <code>source_site</code> le code ou le nom du site explicitement documenté pour un
+composant. Lorsque les hôtes sont inconnus, elle laisse <code>binding_profiles</code>
+et <code>host</code> absents. L'intégration peut fournir les placements autorisés.
+<code>contract_version: "1"</code> et <code>format_version: "4.2"</code> ne sont pas des numéros de
+révision du prompt. Conserver la réponse du contrat plutôt que coder ces
+instructions en dur.</p>
 <p>Stockez la réponse et son en-tête <code>ETag</code> dans un cache <strong>séparé pour chaque instance, identité de connexion et ensemble d’options</strong>. Avant le lot suivant, vérifiez sa fraîcheur :</p>
 <div class="language-http highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="err">GET /api/v1/map-generation/contract</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="err">Authorization: ApiKey &lt;clé AppControl&gt;</span>
@@ -2431,9 +2537,17 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
 <div class="language-http highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="err">GET /api/v1/map-generation/contract?profile=standard&amp;include_catalog=true&amp;catalog_types=payments-service,batch-worker</span>
 </span></code></pre></div>
 <p>Le champ <code>catalog</code> contient alors les briques de <strong>votre organisation</strong>, avec leur clé, leur description et leurs commandes de vérification, démarrage et arrêt. Les variables d’environnement du catalogue sont exclues. L’IA reprend la clé dans <code>component_type</code> et développe les commandes retenues dans la map ; il ne s’agit pas d’un lien vivant qui modifierait ultérieurement les maps déjà importées.</p>
-<p>Cette option expose du contenu propre à l’organisation : une clé API doit avoir une capacité globale <code>read</code>, <code>design</code> ou <code>*</code>. Une clé limitée à une seule application peut obtenir le contrat générique, mais pas le catalogue de toute l’organisation. Les commandes et descriptions du catalogue peuvent contenir des informations internes : leur transmission au modèle relève du moteur du client.</p>
+<p>Cette option expose du contenu propre à l’organisation : une clé API doit avoir <code>catalog:read</code>, ou une capacité globale <code>read</code>, <code>design</code> ou <code>*</code>. Une clé limitée à une seule application peut obtenir le contrat générique, mais pas le catalogue de toute l’organisation. Les commandes et descriptions du catalogue peuvent contenir des informations internes : leur transmission au modèle relève du moteur du client.</p>
 <p>La réponse est limitée à 100 briques et 256 Kio de données de catalogue. Si le catalogue dépasse ces limites, utilisez <code>catalog_types</code> pour sélectionner les briques pertinentes au traitement.</p>
 <p>Un changement du profil, de la sélection de briques ou du contenu retourné du catalogue change l’<code>ETag</code>. Il faut conserver ces options dans la clé du cache et utiliser la même URL lors de la vérification conditionnelle.</p>
+<p>Pour combiner publication et génération guidée par le catalogue, attribuer
+explicitement <code>maps:import</code> et <code>catalog:read</code>. <code>catalog:write</code> permet les mutations
+du catalogue, toujours sous les droits administrateur de son propriétaire ; il
+ne remplace pas <code>catalog:read</code> pour obtenir ce snapshot dans le prompt.</p>
+<p>Le catalogue accepte un <a href="../EMBEDDED.fr/#alimenter-le-catalogue-du-client">import atomique avec aperçu et mise à jour</a>.
+Le mode <code>add</code> conserve les clés existantes ; <code>upsert</code> exige un aperçu <code>dry_run</code>
+puis son <code>digest</code> dans <code>expected_digest</code>. Une modification du catalogue n'applique
+pas rétroactivement ses commandes aux maps déjà publiées.</p>
 <h3 id="exemple-de-cache-en-powershell">Exemple de cache en PowerShell<a class="headerlink" href="#exemple-de-cache-en-powershell" title="Permanent link">&para;</a></h3>
 <p>Le dépôt fournit <code>examples/map-generation-client.ps1</code>, compatible PowerShell 5.1 et 7, sans Python. Il fournit une fonction de récupération avec cache en mémoire, sans appel de modèle ni import automatique :</p>
 <div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.</span> <span class="p">.\</span><span class="n">map-generation-client</span><span class="p">.</span><span class="n">ps1</span>
@@ -2463,25 +2577,56 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
 <p>Si le résultat contient <code>generation_error</code>, traitez-le comme un diagnostic et ne tentez pas de l’importer. Le <code>json_schema</code> décrit uniquement une map réussie : un moteur imposant une sortie structurée doit gérer cette alternative d’erreur séparément, sans contraindre l’IA à inventer une map pour satisfaire le schéma.</p>
 <p>Le prompt explique notamment le sens des dépendances, les commandes et les <a href="../FAN_OUT/">clusters à membres explicites</a>. Un cluster <code>fan_out</code> contient les membres connus et leurs éventuelles variantes de commandes ; il ne déclenche pas une découverte automatique de machines par sélecteur. Le prompt interdit d’inventer des commandes, des machines ou des secrets absents des sources. Les champs manquants peuvent entraîner des avertissements ; une réponse signalant une impossibilité de génération ne doit jamais être envoyée comme une map.</p>
 <p>Le coût du modèle dépend du volume documentaire et du modèle choisi par le client. AppControl ne déclenche aucun appel de modèle dans ce parcours. Le cache HTTP évite de retransférer le contrat depuis AppControl, mais le prompt reste transmis au modèle pour chaque génération. Une éventuelle mise en cache des tokens du prompt dépend des capacités du fournisseur ou du moteur d’IA utilisé.</p>
+<h3 id="exemple-externe-avec-plusieurs-documents-et-correction-bornee">Exemple externe avec plusieurs documents et correction bornée<a class="headerlink" href="#exemple-externe-avec-plusieurs-documents-et-correction-bornee" title="Permanent link">&para;</a></h3>
+<p>Le client de démonstration <code>demo-rebuild/map-generation/generate.py</code> récupère le
+contrat installé, appelle un fournisseur externe, puis valide le JSON. Il ne
+publie aucune map et n'exécute aucune commande. Il utilise <code>APPCONTROL_API_KEY</code>
+ou <code>APPCONTROL_TOKEN</code> pour le contrat et la validation ; la clé du fournisseur
+reste dans son propre processus.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python3<span class="w"> </span>demo-rebuild/map-generation/generate.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--url<span class="w"> </span>https://appcontrol.banque.example<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--profile<span class="w"> </span>standard<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--include-catalog<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>--catalog-types<span class="w"> </span>web-portal<span class="w"> </span>payments-api<span class="w"> </span>ibm-mq<span class="w"> </span>oracle-rac<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span>--documents<span class="w"> </span>dossier-architecture.fr.md<span class="w"> </span>procedures-exploitation.fr.md<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span>--repair-attempts<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span>--anthropic-key-file<span class="w"> </span>/chemin/prive/cle-anthropic.txt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span>--output<span class="w"> </span>resultat-generation
+</span></code></pre></div>
+<p><code>--documents</code> combine uniquement les fichiers UTF-8 explicitement sélectionnés,
+avec leurs noms. <code>--include-catalog</code> ajoute le catalogue autorisé au contrat ;
+<code>--catalog-types</code> limite les briques demandées et implique cette option.
+<code>--repair-attempts</code> accepte <code>0</code>, <code>1</code> ou <code>2</code> (défaut <code>1</code>) : si le candidat JSON est
+refusé par le schéma, les erreurs structurées sont renvoyées au modèle pour au plus
+ce nombre de corrections, chacune à nouveau validée. Un JSON illisible, une
+réponse tronquée ou un <code>generation_error</code> arrête le parcours. Le client ne corrige
+pas lui-même la topologie ou les commandes pour faire passer la validation.</p>
+<p>Le dossier de sortie conserve le contrat, les réponses du modèle, les candidats
+rejetés, les rapports de validation et les empreintes de génération. <code>--replay</code>
+ne rappelle pas le modèle et exige des documents, contrat, modèle et candidat
+inchangés ; il revalide le candidat enregistré. Un replay ne prouve pas un nouvel
+appel à l'IA. Ces fichiers contiennent les connaissances fournies au modèle :
+ils restent privés. Python est ici un outil de démonstration, pas un prérequis
+pour intégrer les API HTTP d'AppControl.</p>
 <h2 id="3-verifier-le-json-sans-modifier-appcontrol">3. Vérifier le JSON sans modifier AppControl<a class="headerlink" href="#3-verifier-le-json-sans-modifier-appcontrol" title="Permanent link">&para;</a></h2>
-<div class="language-http highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="err">POST /api/v1/maps/validate</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">Authorization: ApiKey &lt;clé AppControl&gt;</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">Content-Type: application/json</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="err">{</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="err">  &quot;contract_version&quot;: &quot;1&quot;,</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="err">  &quot;map&quot;: {</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="err">    &quot;format_version&quot;: &quot;4.2&quot;,</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="err">    &quot;application&quot;: {</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="err">      &quot;name&quot;: &quot;Paiements&quot;,</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="err">      &quot;components&quot;: [</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="err">        { &quot;name&quot;: &quot;api&quot;, &quot;component_type&quot;: &quot;service&quot; },</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="err">        { &quot;name&quot;: &quot;base&quot;, &quot;component_type&quot;: &quot;database&quot; }</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="err">      ],</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="err">      &quot;dependencies&quot;: [ { &quot;from&quot;: &quot;api&quot;, &quot;to&quot;: &quot;base&quot;, &quot;dep_type&quot;: &quot;strong&quot; } ]</span>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="err">    }</span>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="err">  }</span>
-</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="err">}</span>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="err">POST /api/v1/maps/validate</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="err">Authorization: ApiKey &lt;clé AppControl&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="err">Content-Type: application/json</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="err">{</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="err">  &quot;contract_version&quot;: &quot;1&quot;,</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="err">  &quot;map&quot;: {</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="err">    &quot;format_version&quot;: &quot;4.2&quot;,</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="err">    &quot;application&quot;: {</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="err">      &quot;name&quot;: &quot;Paiements&quot;,</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="err">      &quot;components&quot;: [</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="err">        { &quot;name&quot;: &quot;api&quot;, &quot;component_type&quot;: &quot;service&quot; },</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="err">        { &quot;name&quot;: &quot;base&quot;, &quot;component_type&quot;: &quot;database&quot; }</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="err">      ],</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="err">      &quot;dependencies&quot;: [ { &quot;from&quot;: &quot;api&quot;, &quot;to&quot;: &quot;base&quot;, &quot;dep_type&quot;: &quot;strong&quot; } ]</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="err">    }</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="err">  }</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="err">}</span>
 </span></code></pre></div>
 <p>Dans cet exemple, <code>api</code> dépend de <code>base</code>. L’absence de commandes et de rattachement à des agents est volontaire : l’exemple représente une structure, pas une application prête à exploiter.</p>
 <p>La réponse contient <code>valid</code>, <code>errors</code> et <code>warnings</code>. Chaque diagnostic comporte <code>path</code> (chemin JSON), <code>code</code> et <code>message</code>.</p>
@@ -2495,55 +2640,56 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
 <p>La validation ne crée aucune application et n’exécute aucune commande. <strong>Elle ne prouve pas la fidélité aux documents, l’existence d’un agent, la justesse d’une procédure shell ou la disponibilité d’un serveur.</strong> Ces vérifications et la revue des commandes restent nécessaires <strong>avant l’import</strong>, car les agents rattachés peuvent commencer les vérifications périodiques dès réception de la map. Le profil de génération est strict : un champ inconnu est rejeté au lieu d’être ignoré.</p>
 <h2 id="4-importer-la-map-validee">4. Importer la map validée<a class="headerlink" href="#4-importer-la-map-validee" title="Permanent link">&para;</a></h2>
 <h3 id="parcours-recommande-placements-par-composant-et-equipes">Parcours recommandé : placements par composant et équipes<a class="headerlink" href="#parcours-recommande-placements-par-composant-et-equipes" title="Permanent link">&para;</a></h3>
-<p>Créez une clé <strong>Import new application maps — real or simulated</strong> dans AppControl : sa portée <code>maps:import</code> donne accès au contexte filtré et aux nouvelles routes de préparation/publication. Elle ne permet ni de modifier une application existante, ni d'appeler start/stop. Elle permet cependant de publier des commandes de vérification qui peuvent s'exécuter immédiatement : la revue des commandes précède la publication. Le catalogue complet conserve son contrôle séparé <code>read</code>/<code>design</code>.</p>
+<p>Créez une clé <strong>Import new application maps — real or simulated</strong> dans AppControl : sa portée <code>maps:import</code> donne accès au contexte filtré et aux nouvelles routes de préparation/publication. Elle ne permet ni de modifier une application existante, ni d'appeler start/stop. Elle permet cependant de publier des commandes de vérification qui peuvent s'exécuter immédiatement : la revue des commandes précède la publication. Le catalogue complet conserve son contrôle séparé <code>catalog:read</code> (ou une capacité globale <code>read</code>/<code>design</code>).</p>
 <ol>
 <li><code>GET /api/v1/map-generation/context</code> (équivalent à <code>?profile=standard</code>) retourne les sites accessibles et leurs agents enrôlés, avec leur état. Le client peut exploiter les noms/codes pour rapprocher son référentiel.</li>
 <li><code>POST /api/v1/map-generation/prepare</code> vérifie la map et résout chaque placement, sans créer d'application. Examiner <code>ready</code>, <code>issues</code>, <code>bindings</code>, <code>member_bindings</code> et <code>warnings</code>.</li>
 <li><code>POST /api/v1/map-generation/import</code> reçoit <strong>le même corps</strong>, refait les contrôles puis crée l'application. Il retourne <code>application_id</code>. Il ne faut pas remplacer l'entrée par les UUID ou commandes de la prévisualisation.</li>
 </ol>
 <p>Exemple de requête pour une application répartie :</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;contract_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;site_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PARIS&quot;</span><span class="p">,</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">&quot;placements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;component_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;base&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;site_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PARIS&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;db-paris.example&quot;</span><span class="p">},</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;component_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;site_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LYON&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api-lyon.example&quot;</span><span class="p">}</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">&quot;team_grants&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;44444444-4444-4444-8444-444444444444&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;permission_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operate&quot;</span><span class="p">}</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="nt">&quot;map&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="nt">&quot;format_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4.2&quot;</span><span class="p">,</span>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="nt">&quot;application&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paiements&quot;</span><span class="p">,</span>
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">      </span><span class="nt">&quot;components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;base&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;component_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;database&quot;</span><span class="p">},</span>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;component_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;service&quot;</span><span class="p">}</span>
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">      </span><span class="p">],</span>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">      </span><span class="nt">&quot;dependencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;base&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dep_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;strong&quot;</span><span class="p">}]</span>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;contract_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;site_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PARIS&quot;</span><span class="p">,</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">&quot;placements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;component_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;base&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;site_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PARIS&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;db-paris.example&quot;</span><span class="p">},</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;component_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;site_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LYON&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api-lyon.example&quot;</span><span class="p">}</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">&quot;team_grants&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;44444444-4444-4444-8444-444444444444&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;permission_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operate&quot;</span><span class="p">}</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="nt">&quot;map&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="nt">&quot;format_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4.2&quot;</span><span class="p">,</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="nt">&quot;application&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paiements&quot;</span><span class="p">,</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">      </span><span class="nt">&quot;components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;base&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;component_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;database&quot;</span><span class="p">},</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;component_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;service&quot;</span><span class="p">}</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">      </span><span class="p">],</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">      </span><span class="nt">&quot;dependencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;base&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dep_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;strong&quot;</span><span class="p">}]</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Remplacez les hôtes et l'identifiant d'équipe par ceux de votre instance, et utilisez la map issue des documents avec ses procédures relues. Cet exemple montre les affectations ; il ne contient volontairement aucune procédure de production. <code>ready</code> signifie que la préparation accepte la configuration, pas que les procédures sont éprouvées.</p>
-<p>Omettez <code>profile</code> dans cette enveloppe : l’import normal utilise <code>standard</code> par défaut et conserve exactement les commandes fournies, y compris celles générées par un prompt mock. L’écriture explicite <code>"profile": "standard"</code> reste compatible. Le <code>site_code</code> de l'enveloppe est le rattachement administratif et le site par défaut des composants non listés. Chaque entrée de <code>placements</code> peut choisir un autre site. En <code>standard</code>, choisissez <strong>soit</strong> <code>agent_id</code>, <strong>soit</strong> <code>host</code> ; à défaut, le champ <code>host</code> du composant sert de référence. La résolution est exacte (nom d'hôte ou IP) dans le site sélectionné et ne choisit jamais un agent mock implicitement. Les cibles absentes ou ambiguës doivent être corrigées. Un agent enregistré mais hors ligne produit un avertissement : une map peut être préparée sans être exploitable immédiatement.</p>
+<p>Omettez <code>profile</code> dans cette enveloppe. L’import normal utilise <code>standard</code> par défaut et conserve les commandes fournies, y compris celles d’un prompt mock. L’écriture explicite <code>"profile": "standard"</code> reste compatible. Une entrée dans <code>placements</code> définit en priorité le site du composant. À défaut, AppControl rapproche <code>source_site</code> du code ou du nom d’un site de l’organisation, en ignorant la casse et les espaces en bordure. Une correspondance unique avec un site actif permet de préparer le placement. Une référence introuvable, inactive ou ambiguë demande une affectation explicite. En l’absence des deux champs, le <code>site_code</code> administratif de l’enveloppe sert de site par défaut.</p>
+<p>En <code>standard</code>, choisissez <strong>soit</strong> <code>agent_id</code>, <strong>soit</strong> <code>host</code> dans <code>placements</code>. À défaut, le <code>host</code> du composant sert de référence. AppControl recherche l’hôte ou l’IP exacte dans le site résolu. Un code de site seul laisse le choix de l’agent à compléter. Un agent enregistré mais hors ligne produit un avertissement. Vérifiez le rapport de préparation avant la publication.</p>
 <p>L'intégration construit ces placements à partir du référentiel structuré et du contexte AppControl. Ils restent séparés du JSON de map : les documents ne peuvent pas attribuer eux-mêmes des droits ou inventer des UUID. Le contexte est relu par lot et les cibles sont recontrôlées à chaque publication.</p>
 <p>Une map issue d’un prompt mock utilise ces mêmes placements avec <code>host</code> ou <code>agent_id</code>, les mêmes agents enrôlés et les mêmes <code>team_grants</code>. Le serveur ne réécrit ni ses commandes ni son nom. Une base à Paris et une API à Lyon s’exécutent simultanément, qu’elles représentent des services réels ou des fichiers témoins. Un profil DR reste une destination alternative du parcours classique ci-dessous.</p>
 <p>L’outil historique <code>simulation_workflow</code> est facultatif et distinct : il transforme les commandes côté serveur et exige des défauts mock enregistrés par site. Seuls ses appels dédiés, ou un <code>profile: "mock-linux"</code> / <code>"mock-windows"</code> explicitement demandé à la publication, activent cette transformation. Choisir un prompt mock ne l’active pas. Voir la <a href="../SIMULATION_MAPS.fr/#outil-historique-facultatif-transformation-par-le-serveur">section de compatibilité</a>.</p>
 <p>Les membres <code>fan_out</code> du parcours général utilisent le site de leur composant. Pour des membres répartis sur plusieurs sites, le parcours classique avec <code>member_mappings</code> explicites permet de choisir leurs agents. Les profils DR avec membres restent soumis aux limites de réaffectation documentées.</p>
 <h3 id="automatiser-un-lot-depuis-windows">Automatiser un lot depuis Windows<a class="headerlink" href="#automatiser-un-lot-depuis-windows" title="Permanent link">&para;</a></h3>
 <p>Le kit léger inclut <code>map-publication-client.ps1</code>, compatible PowerShell 5.1 et 7, sans outil supplémentaire. Après avoir récupéré le contrat et produit les maps avec votre moteur, utilisez :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.</span> <span class="p">.\</span><span class="n">map-publication-client</span><span class="p">.</span><span class="n">ps1</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">$url</span> <span class="p">=</span> <span class="s1">&#39;https://appcontrol.banque.example&#39;</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nv">$contexte</span> <span class="p">=</span> <span class="nb">Get-AppControlPublicationContext</span> <span class="n">-BaseUrl</span> <span class="nv">$url</span> <span class="p">`</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  <span class="n">-ApiKey</span> <span class="nv">$env:APPCONTROL_API_KEY</span> <span class="n">-Profile</span> <span class="n">standard</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nv">$lot</span> <span class="p">=</span> <span class="p">@(</span><span class="nb">Get-Content</span> <span class="s1">&#39;.\lot-publications.json&#39;</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span><span class="p">)</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nv">$preparations</span> <span class="p">=</span> <span class="p">@(</span><span class="nb">Import-AppControlMaps</span> <span class="n">-BaseUrl</span> <span class="nv">$url</span> <span class="p">`</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  <span class="n">-ApiKey</span> <span class="nv">$env:APPCONTROL_API_KEY</span> <span class="n">-Requests</span> <span class="nv">$lot</span><span class="p">)</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c"># Apres revue des commandes, des placements et des droits :</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nv">$resultats</span> <span class="p">=</span> <span class="p">@(</span><span class="nb">Import-AppControlMaps</span> <span class="n">-BaseUrl</span> <span class="nv">$url</span> <span class="p">`</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  <span class="n">-ApiKey</span> <span class="nv">$env:APPCONTROL_API_KEY</span> <span class="n">-Requests</span> <span class="nv">$lot</span> <span class="n">-Importer</span><span class="p">)</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="nv">$resultats</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">index</span><span class="p">,</span><span class="n">success</span><span class="p">,</span><span class="n">ready</span><span class="p">,</span><span class="n">imported</span><span class="p">,</span><span class="n">error</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.</span> <span class="p">.\</span><span class="n">map-publication-client</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">$url</span> <span class="p">=</span> <span class="s1">&#39;https://appcontrol.banque.example&#39;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nv">$contexte</span> <span class="p">=</span> <span class="nb">Get-AppControlPublicationContext</span> <span class="n">-BaseUrl</span> <span class="nv">$url</span> <span class="p">`</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  <span class="n">-ApiKey</span> <span class="nv">$env:APPCONTROL_API_KEY</span> <span class="n">-Profile</span> <span class="n">standard</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nv">$lot</span> <span class="p">=</span> <span class="p">@(</span><span class="nb">Get-Content</span> <span class="s1">&#39;.\lot-publications.json&#39;</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span><span class="p">)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nv">$preparations</span> <span class="p">=</span> <span class="p">@(</span><span class="nb">Import-AppControlMaps</span> <span class="n">-BaseUrl</span> <span class="nv">$url</span> <span class="p">`</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  <span class="n">-ApiKey</span> <span class="nv">$env:APPCONTROL_API_KEY</span> <span class="n">-Requests</span> <span class="nv">$lot</span><span class="p">)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c"># Apres revue des commandes, des placements et des droits :</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="nv">$resultats</span> <span class="p">=</span> <span class="p">@(</span><span class="nb">Import-AppControlMaps</span> <span class="n">-BaseUrl</span> <span class="nv">$url</span> <span class="p">`</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>  <span class="n">-ApiKey</span> <span class="nv">$env:APPCONTROL_API_KEY</span> <span class="n">-Requests</span> <span class="nv">$lot</span> <span class="n">-Importer</span><span class="p">)</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="nv">$resultats</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">index</span><span class="p">,</span><span class="n">success</span><span class="p">,</span><span class="n">ready</span><span class="p">,</span><span class="n">imported</span><span class="p">,</span><span class="n">error</span>
 </span></code></pre></div>
 <p>Chaque élément du lot est une enveloppe complète comme l'exemple précédent. Le helper retourne un résultat par application, avec les problèmes de préparation dans <code>issues</code>. <code>ready: false</code> bloque la publication de cet élément ; les autres éléments continuent. Il ne réessaie pas les imports et ne remplace pas les applications existantes. Conserver les résultats et vérifier la présence de l'application avant toute reprise après une coupure réseau. Les communications utilisent HTTPS avec la confiance TLS du poste.</p>
 <h3 id="creer-les-equipes-et-attribuer-les-applications">Créer les équipes et attribuer les applications<a class="headerlink" href="#creer-les-equipes-et-attribuer-les-applications" title="Permanent link">&para;</a></h3>
@@ -2553,19 +2699,35 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
 <h3 id="imports-classiques-et-affectations-explicites">Imports classiques et affectations explicites<a class="headerlink" href="#imports-classiques-et-affectations-explicites" title="Permanent link">&para;</a></h3>
 <p>Les routes historiques <code>/import/*</code>, <code>/agents</code>, <code>/gateways</code> et <code>/sites</code> demandent une session utilisateur autorisée, ou une clé <code>*</code> soumise aux droits de son propriétaire. Les portées <code>maps:import</code> et <code>mock:import</code> n'ouvrent pas ces routes historiques. Les exemples suivants restent utiles pour les profils DR, les mises à jour explicites et les affectations avancées.</p>
 <p>L’import est une publication de configuration, pas une simple validation : lorsqu’un agent est rattaché, la configuration lui est transmise et les commandes de vérification peuvent être exécutées automatiquement. Pour un premier essai, choisissez un agent de test et des commandes relues. Le profil mock guide l’IA, mais ne constitue pas une garantie que toute commande renvoyée par le modèle est une simulation.</p>
-<div class="language-http highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="err">POST /api/v1/import/json</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="err">Authorization: Bearer &lt;session autorisée à importer&gt;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="err">Content-Type: application/json</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="err">{</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="err">  &quot;generation_contract_version&quot;: &quot;1&quot;,</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="err">  &quot;site_id&quot;: &quot;11111111-1111-4111-8111-111111111111&quot;,</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="err">  &quot;json&quot;: &quot;{\&quot;format_version\&quot;:\&quot;4.2\&quot;,\&quot;application\&quot;:{\&quot;name\&quot;:\&quot;Paiements\&quot;,\&quot;components\&quot;:[{\&quot;name\&quot;:\&quot;api\&quot;,\&quot;component_type\&quot;:\&quot;service\&quot;},{\&quot;name\&quot;:\&quot;base\&quot;,\&quot;component_type\&quot;:\&quot;database\&quot;}],\&quot;dependencies\&quot;:[{\&quot;from\&quot;:\&quot;api\&quot;,\&quot;to\&quot;:\&quot;base\&quot;,\&quot;dep_type\&quot;:\&quot;strong\&quot;}]}}&quot;</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="err">}</span>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="err">POST /api/v1/import/json</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">Authorization: Bearer &lt;session autorisée à importer&gt;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="err">Content-Type: application/json</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="err">{</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="err">  &quot;generation_contract_version&quot;: &quot;1&quot;,</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="err">  &quot;site_id&quot;: &quot;11111111-1111-4111-8111-111111111111&quot;,</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="err">  &quot;json&quot;: &quot;{\&quot;format_version\&quot;:\&quot;4.2\&quot;,\&quot;application\&quot;:{\&quot;name\&quot;:\&quot;Paiements\&quot;,\&quot;components\&quot;:[{\&quot;name\&quot;:\&quot;api\&quot;,\&quot;component_type\&quot;:\&quot;service\&quot;},{\&quot;name\&quot;:\&quot;base\&quot;,\&quot;component_type\&quot;:\&quot;database\&quot;}],\&quot;dependencies\&quot;:[{\&quot;from\&quot;:\&quot;api\&quot;,\&quot;to\&quot;:\&quot;base\&quot;,\&quot;dep_type\&quot;:\&quot;strong\&quot;}]}}&quot;</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="err">}</span>
 </span></code></pre></div>
 <p>Remplacez l’UUID d’exemple par un <code>sites[].id</code> obtenu avec <code>GET /api/v1/sites</code>. Le champ <code>json</code> est une <strong>chaîne</strong>, contrairement au champ <code>map</code> de la validation, qui est un objet. Utilisez le sérialiseur JSON de votre langage plutôt qu’un assemblage manuel de guillemets. Réutilisez <code>contract_version</code> reçu du serveur ; ne fixez pas cette valeur dans votre intégration.</p>
 <p>Le marqueur <code>generation_contract_version</code> active à nouveau la validation stricte avant l’import : un fichier modifié après sa vérification n’échappe donc pas aux contrôles. Les rattachements aux agents et les droits sont vérifiés par le parcours d’import. Une map sans commandes ou sans rattachement complet peut rester une map à compléter, pas une autorisation d’exécution.</p>
-<p>Conservez l’<code>application_id</code> retourné avec l’identifiant de votre document source. <strong>Cet endpoint crée une application ; il ne constitue pas un mécanisme d’upsert ni une synchronisation automatique.</strong> Après un délai d’attente réseau pendant l’import, vérifiez le résultat avant de relancer : une répétition aveugle peut créer un doublon. Pour faire évoluer une application existante, utilisez un parcours de mise à jour et de revue explicite.</p>
+<h3 id="associer-la-map-a-la-fiche-source">Associer la map à la fiche source<a class="headerlink" href="#associer-la-map-a-la-fiche-source" title="Permanent link">&para;</a></h3>
+<p>Au départ de la génération, le job retient l’identifiant stable de l’application
+dans le référentiel de l’hôte, par exemple <code>PAI-042</code>. Utilisez la même valeur pour
+les versions successives du Knowledge Document et pour l’URL de la fiche.
+Ajoutez ce champ facultatif à l’enveloppe de préparation et d’import, à côté de
+<code>map</code> et des paramètres de placement.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span><span class="nt">&quot;source_reference&quot;</span><span class="p">:{</span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="s2">&quot;panoramisk&quot;</span><span class="p">,</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;PAI-042&quot;</span><span class="p">}}</span>
+</span></code></pre></div>
+<p>AppControl réserve la référence à la création et la rend disponible à la
+résolution après réussite de la publication. La réponse d’import donne toujours
+l’<code>application_id</code>. Une référence réservée par une autre application produit un
+conflit <code>409</code>. Après une erreur réseau ou une publication incomplète, vérifiez
+l’état de la map avant de relancer l’import. Une réservation incomplète est
+masquée à la résolution. Traitez l’éventuelle map partielle avec le parcours
+habituel de revue et de suppression autorisée avant de republier.</p>
+<p>Le portail peut demander l’UUID correspondant à l’identifiant de la fiche avec
+<code>GET /api/v1/embedded/resolve</code>. Voir <a href="../EMBEDDED.fr/#relier-les-fiches-a-leur-map-appcontrol">Relier les fiches à leur map AppControl</a>.</p>
 <h3 id="choisir-les-agents-au-moment-de-limport">Choisir les agents au moment de l’import<a class="headerlink" href="#choisir-les-agents-au-moment-de-limport" title="Permanent link">&para;</a></h3>
 <p>L’IA décrit l’application ; l’intégration peut choisir les agents après la génération. Un <strong>agent</strong> est un processus déjà installé et enrôlé, qui exécute les commandes sur une machine. Une <strong>gateway</strong> relie ces agents à AppControl. Un <strong>site</strong> représente une implantation ou un environnement logique ; ce n’est pas le projet/namespace OpenShift.</p>
 <table>
@@ -2601,39 +2763,39 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
 <li><strong>Assistant <code>/import/preview</code> puis <code>/import/execute</code></strong> : les rattachements sont fournis à côté de la map, dans <code>profile.mappings</code>. Chaque entrée associe un nom exact de composant à un UUID d’agent. C’est le parcours adapté pour décider de l’environnement au moment de la publication.</li>
 </ul>
 <p>Pour un premier essai de l’assistant, prévisualisez la résolution dans les gateways choisies :</p>
-<div class="language-http highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="err">POST /api/v1/import/preview</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="err">Content-Type: application/json</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="err">{</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="err">  &quot;format&quot;: &quot;json&quot;,</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="err">  &quot;gateway_ids&quot;: [&quot;22222222-2222-4222-8222-222222222222&quot;],</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="err">  &quot;content&quot;: &quot;{\&quot;format_version\&quot;:\&quot;4.2\&quot;,\&quot;application\&quot;:{\&quot;name\&quot;:\&quot;Paiements\&quot;,\&quot;components\&quot;:[{\&quot;name\&quot;:\&quot;api\&quot;,\&quot;component_type\&quot;:\&quot;service\&quot;,\&quot;host\&quot;:\&quot;test-agent.example\&quot;}],\&quot;dependencies\&quot;:[]}}&quot;</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="err">}</span>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="err">POST /api/v1/import/preview</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="err">Content-Type: application/json</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="err">{</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="err">  &quot;format&quot;: &quot;json&quot;,</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="err">  &quot;gateway_ids&quot;: [&quot;22222222-2222-4222-8222-222222222222&quot;],</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="err">  &quot;content&quot;: &quot;{\&quot;format_version\&quot;:\&quot;4.2\&quot;,\&quot;application\&quot;:{\&quot;name\&quot;:\&quot;Paiements\&quot;,\&quot;components\&quot;:[{\&quot;name\&quot;:\&quot;api\&quot;,\&quot;component_type\&quot;:\&quot;service\&quot;,\&quot;host\&quot;:\&quot;test-agent.example\&quot;}],\&quot;dependencies\&quot;:[]}}&quot;</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="err">}</span>
 </span></code></pre></div>
 <p><code>content</code> est la map sérialisée. Le preview renvoie <code>components[].resolution.status</code> (<code>resolved</code>, <code>multiple</code>, <code>unresolved</code> ou <code>no_host</code>), les agents disponibles et l’éventuelle application de même nom. Une sélection vide de gateways ne fournit aucun agent candidat. Le preview ne modifie pas l’application, ne lance aucune commande et ne remplace pas <code>/maps/validate</code> : il ne reçoit pas le marqueur de contrat strict.</p>
 <p>Après validation, revue des commandes et choix des cibles, publiez avec les UUID explicites :</p>
-<div class="language-http highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="err">POST /api/v1/import/execute</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="err">Content-Type: application/json</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="err">{</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="err">  &quot;generation_contract_version&quot;: &quot;1&quot;,</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="err">  &quot;format&quot;: &quot;json&quot;,</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="err">  &quot;site_id&quot;: &quot;11111111-1111-4111-8111-111111111111&quot;,</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="err">  &quot;content&quot;: &quot;{\&quot;format_version\&quot;:\&quot;4.2\&quot;,\&quot;application\&quot;:{\&quot;name\&quot;:\&quot;Paiements\&quot;,\&quot;components\&quot;:[{\&quot;name\&quot;:\&quot;api\&quot;,\&quot;component_type\&quot;:\&quot;service\&quot;}],\&quot;dependencies\&quot;:[]}}&quot;,</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="err">  &quot;profile&quot;: {</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="err">    &quot;name&quot;: &quot;Evaluation&quot;,</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="err">    &quot;profile_type&quot;: &quot;primary&quot;,</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="err">    &quot;gateway_ids&quot;: [&quot;22222222-2222-4222-8222-222222222222&quot;],</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="err">    &quot;mappings&quot;: [</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="err">      {</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="err">        &quot;component_name&quot;: &quot;api&quot;,</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="err">        &quot;agent_id&quot;: &quot;33333333-3333-4333-8333-333333333333&quot;,</span>
-</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="err">        &quot;resolved_via&quot;: &quot;manual&quot;</span>
-</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="err">      }</span>
-</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="err">    ]</span>
-</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="err">  },</span>
-</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="err">  &quot;conflict_action&quot;: &quot;fail&quot;</span>
-</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="err">}</span>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="err">POST /api/v1/import/execute</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="err">Content-Type: application/json</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="err">{</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="err">  &quot;generation_contract_version&quot;: &quot;1&quot;,</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="err">  &quot;format&quot;: &quot;json&quot;,</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">  &quot;site_id&quot;: &quot;11111111-1111-4111-8111-111111111111&quot;,</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="err">  &quot;content&quot;: &quot;{\&quot;format_version\&quot;:\&quot;4.2\&quot;,\&quot;application\&quot;:{\&quot;name\&quot;:\&quot;Paiements\&quot;,\&quot;components\&quot;:[{\&quot;name\&quot;:\&quot;api\&quot;,\&quot;component_type\&quot;:\&quot;service\&quot;}],\&quot;dependencies\&quot;:[]}}&quot;,</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="err">  &quot;profile&quot;: {</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="err">    &quot;name&quot;: &quot;Evaluation&quot;,</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="err">    &quot;profile_type&quot;: &quot;primary&quot;,</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="err">    &quot;gateway_ids&quot;: [&quot;22222222-2222-4222-8222-222222222222&quot;],</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="err">    &quot;mappings&quot;: [</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="err">      {</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="err">        &quot;component_name&quot;: &quot;api&quot;,</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="err">        &quot;agent_id&quot;: &quot;33333333-3333-4333-8333-333333333333&quot;,</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="err">        &quot;resolved_via&quot;: &quot;manual&quot;</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="err">      }</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="err">    ]</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="err">  },</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="err">  &quot;conflict_action&quot;: &quot;fail&quot;</span>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="err">}</span>
 </span></code></pre></div>
 <p>Cet exemple sans commandes sert à comprendre le rattachement. Pour une démonstration opérationnelle, utilisez à sa place la map validée et revue générée avec <code>mock-linux</code> ou <code>mock-windows</code>. Rattachez chaque composant au bon agent, et conservez les cibles explicites des membres <code>fan_out</code> lorsqu’il y en a.</p>
 <p><strong>Ne mélangez pas les deux mécanismes</strong> : avec <code>generation_contract_version</code>, l’assistant refuse une map qui contient déjà <code>binding_profiles</code>. Utilisez alors l’import direct, ou produisez une map sans profils intégrés et passez les profils explicitement dans l’enveloppe de l’assistant. Les profils secondaires se renseignent dans <code>dr_profiles</code>, chacun avec son nom distinct, son type (<code>dr</code> ou <code>custom</code>), ses gateways et ses correspondances.</p>
@@ -2688,7 +2850,7 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T16:28:16+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T12:18:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
   </span>
 
     
@@ -2752,13 +2914,13 @@ placement décrites ici. Pour Windows/OpenShift, utiliser le kit léger
         
         
           
-          <a href="../SIMULATION_MAPS.fr/" class="md-footer__link md-footer__link--next" aria-label="Next: Site-based simulation workflow (FR)">
+          <a href="../KNOWLEDGE-ENGINE-CONNECTOR.fr/" class="md-footer__link md-footer__link--next" aria-label="Next: Knowledge Engine connector (FR)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Site-based simulation workflow (FR)
+                Knowledge Engine connector (FR)
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Source documentaire — catalogue et exécution de prompts
+  version: 1.0.0
+  description: >
+    Contrat HTTP proposé pour le service fourni par le client. Le service expose
+    ses documents versionnés et transmet les demandes de génération à son IA.
+    Le consommateur pilote le traitement en lot et la publication des résultats.
+servers:
+  - url: /api/v1
+security:
+  - serviceToken: []
+paths:
+  /knowledge-documents:
+    get:
+      operationId: listKnowledgeDocuments
+      summary: Lister les révisions courantes des documents
+      description: >
+        Retourne au plus une entrée par clé applicative autorisée, dans un ordre stable
+        par clé applicative. Un catalogue vide retourne 200 avec items vide. Pour parcourir
+        toutes les pages, renvoyer next_cursor dans cursor avec les mêmes filtres.
+        La présence de next_cursor indique qu’une autre page est disponible.
+      parameters:
+        - name: cursor
+          in: query
+          description: Curseur opaque de la page suivante.
+          schema:
+            type: string
+            minLength: 1
+        - name: limit
+          in: query
+          description: Nombre maximal de résultats par page.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 100
+        - name: application_key
+          in: query
+          description: Filtre exact pour vérifier la révision courante d’une application.
+          schema:
+            $ref: '#/components/schemas/ApplicationKey'
+      responses:
+        '200':
+          description: Page du catalogue de métadonnées.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentPage'
+              example:
+                items:
+                  - application_key: '00142'
+                    sha256: 5c7a066fce3161f2ac727f983aa1c877a646c2f7b27608d8ff244e7cc4b6f982
+        '400':
+          description: Filtre, limite ou curseur invalide ou expiré.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /knowledge-documents/{application_key}/versions/{sha256}:
+    parameters:
+      - name: application_key
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ApplicationKey'
+      - name: sha256
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Sha256'
+    get:
+      operationId: getKnowledgeDocumentVersion
+      summary: Lire le contenu exact d’une révision
+      description: >
+        Cette opération de diagnostic est facultative pour la génération en lot.
+        Le corps est le document JSON versionné lui-même, encodé en UTF-8.
+        Après décompression HTTP éventuelle, ses octets donnent le SHA-256
+        demandé. L’appel est utile pour la consultation et le diagnostic.
+      responses:
+        '200':
+          description: Document de référence dans son format d’origine.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                application: Paiements
+                components: [API, PostgreSQL]
+        '400':
+          description: Clé applicative ou empreinte invalide.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/VersionNotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /prompt-executions:
+    post:
+      operationId: executePrompt
+      summary: Exécuter un prompt sur une révision précise
+      description: >
+        Le service vérifie les droits sur le document et résout la paire formée par la clé
+        applicative et son SHA-256. Il transmet le prompt à son IA en utilisant le contenu de cette
+        révision comme donnée d’entrée. La réponse est synchrone et contient le
+        résultat textuel de l’IA, y compris lorsque le prompt demande du JSON.
+        Une révision absente donne 404 avant tout appel à l’IA.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromptRequest'
+            example:
+              document:
+                application_key: '00142'
+                sha256: 5c7a066fce3161f2ac727f983aa1c877a646c2f7b27608d8ff244e7cc4b6f982
+              prompt: Retourne un objet JSON contenant les noms des composants décrits.
+      responses:
+        '200':
+          description: Exécution terminée.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptResult'
+              example:
+                document:
+                  application_key: '00142'
+                  sha256: 5c7a066fce3161f2ac727f983aa1c877a646c2f7b27608d8ff244e7cc4b6f982
+                result: '{"components":["API","PostgreSQL"]}'
+        '400':
+          description: Corps de requête invalide.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/VersionNotFound'
+        '422':
+          description: Prompt et document incompatibles avec les limites de traitement configurées.
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '504':
+          description: Délai d’exécution dépassé. L’état de l’appel à l’IA peut être inconnu.
+components:
+  securitySchemes:
+    serviceToken:
+      type: http
+      scheme: bearer
+      description: >
+        Jeton de service transmis sur HTTPS. Le service vérifie le périmètre
+        du compte pour la liste, la lecture et l’exécution.
+  schemas:
+    ApplicationKey:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >
+        Clé exacte du référentiel, conservée comme chaîne avec sa casse et
+        ses zéros initiaux. Maximum 128 octets en UTF-8, sans espaces aux
+        extrémités ni caractères de contrôle.
+      example: '00142'
+    Sha256:
+      type: string
+      pattern: '^[0-9a-f]{64}$'
+      description: SHA-256 des octets UTF-8 conservés pour cette révision.
+    DocumentReference:
+      type: object
+      required: [application_key, sha256]
+      properties:
+        application_key:
+          $ref: '#/components/schemas/ApplicationKey'
+        sha256:
+          $ref: '#/components/schemas/Sha256'
+    DocumentPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          maxItems: 500
+          items:
+            $ref: '#/components/schemas/DocumentReference'
+        next_cursor:
+          type: string
+          minLength: 1
+    PromptRequest:
+      type: object
+      required: [document, prompt]
+      properties:
+        document:
+          $ref: '#/components/schemas/DocumentReference'
+        prompt:
+          type: string
+          minLength: 1
+          description: Instructions rédigées par le consommateur, en un seul champ texte.
+    PromptResult:
+      type: object
+      required: [document, result]
+      properties:
+        document:
+          $ref: '#/components/schemas/DocumentReference'
+        result:
+          type: string
+          description: Texte de sortie du modèle, à interpréter et valider par le consommateur.
+        request_id:
+          type: string
+          description: Identifiant facultatif de corrélation pour le support.
+  responses:
+    Unauthorized:
+      description: Jeton absent ou invalide.
+    Forbidden:
+      description: Opération hors du périmètre du compte de service.
+    VersionNotFound:
+      description: Révision demandée indisponible pour ce clé applicative.
+    RateLimited:
+      description: Requête refusée avant traitement en raison d’une limite de débit.
+      headers:
+        Retry-After:
+          description: Nombre de secondes avant une nouvelle tentative, si connu.
+          schema:
+            type: integer
+            minimum: 0
+    Unavailable:
+      description: Service temporairement indisponible.

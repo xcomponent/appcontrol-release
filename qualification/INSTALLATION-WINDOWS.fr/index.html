@@ -887,6 +887,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#installer-une-deuxieme-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installer une deuxième instance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#choix-1-postgresql-integre" class="md-nav__link">
     <span class="md-ellipsis">
       Choix 1 : PostgreSQL intégré
@@ -1069,6 +1078,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Configuration après installation : équipes et topologie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activer-embedded-pour-panoramisk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activer Embedded pour Panoramisk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#echeances-des-certificats-et-jetons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Echeances des certificats et jetons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1244,6 +1277,8 @@
       
         
       
+        
+      
     
     
       
@@ -1291,6 +1326,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EMBEDDED.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embedded maps and simulation (FR)
   </span>
   
 
@@ -1487,6 +1543,8 @@
       
         
       
+        
+      
     
     
       
@@ -1639,6 +1697,27 @@
   
   <span class="md-ellipsis">
     AI map generation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../KNOWLEDGE-ENGINE-CONNECTOR.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Knowledge Engine connector (FR)
   </span>
   
 
@@ -2408,6 +2487,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#installer-une-deuxieme-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installer une deuxième instance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#choix-1-postgresql-integre" class="md-nav__link">
     <span class="md-ellipsis">
       Choix 1 : PostgreSQL intégré
@@ -2590,6 +2678,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Configuration après installation : équipes et topologie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activer-embedded-pour-panoramisk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activer Embedded pour Panoramisk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#echeances-des-certificats-et-jetons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Echeances des certificats et jetons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2649,8 +2761,8 @@ paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.<
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.22.0</strong>. Paquet : <strong>Windows léger 1.22.0-3</strong>.</p>
-<p><strong>AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.</strong> Cette version introduit l’identité X4B, le logo de l’éditeur INVIVOO et le thème sombre par défaut. Elle conserve les correctifs du kit 1.21.1-7 : URL publique explicite, choix du compte administrateur, configuration après installation, compatibilité des anciennes commandes oc et conservation du secret de téléchargement des images. Les commandes, noms techniques et API AppControl sont conservés.</p>
+<p>Produit : <strong>AppControl 1.23.1</strong>. Paquet : <strong>Windows léger 1.23.1-1</strong>.</p>
+<p><strong>AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.</strong> La version 1.23.1 ajoute <a href="../../EMBEDDED.fr/">AppControl Embedded</a>, le <a href="../../KNOWLEDGE-ENGINE-CONNECTOR.fr/">raccordement d’une source documentaire</a> et le <a href="#echeances-des-certificats-et-jetons">suivi des certificats et jetons</a>. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.</p>
 <p>La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
 d'applications aux équipes. Le choix mock dans le prompt produit une map
@@ -2773,11 +2885,12 @@ les noms de paramètres français des commandes existantes restent acceptés.</p
 compte administrateur Windows, de droit <code>cluster-admin</code> ni de SCC <code>anyuid</code>.
 Un projet dédié sépare les objets et les données ; il ne réserve pas à lui seul
 des nœuds physiques.</p>
-<p>Si la banque fournit un projet partagé, choisir un nom d’installation distinct
-avec <code>-Nom</code>, par exemple <code>-Nom appcontrol-poc</code>. Le désinstallateur décrit plus
-bas retire les ressources de cette installation sans supprimer le projet ni
-les autres applications. Il faut disposer des droits de suppression sur ces
-ressources dans le projet ; aucun droit de suppression du projet n’est demandé.</p>
+<p>Pour déployer une deuxième instance dans le même cluster, voir
+<a href="#installer-une-deuxieme-instance">Installer une deuxième instance</a>.</p>
+<p>Pour livrer une instance directement configurée, ajoutez
+<code>-Configuration .\configuration.json</code> à votre commande d’installation.
+Le socle AppControl, les gateways, les agents et la configuration applicative
+sont traités dans cette invocation. <a href="#configuration-apres-installation-equipes-et-topologie">Contenu du JSON et commande complète</a></p>
 <h2 id="3-ou-sont-les-images-et-comment-passe-t-on-par-artifactory">3. Où sont les images et comment passe-t-on par Artifactory ?<a class="headerlink" href="#3-ou-sont-les-images-et-comment-passe-t-on-par-artifactory" title="Permanent link">&para;</a></h2>
 <p>Le <a href="https://github.com/xcomponent/appcontrol-release/releases">dépôt public de livraison XComponent</a>
 fournit les scripts, les YAML et les rapports. Le <strong>canal public d’évaluation</strong>
@@ -2957,12 +3070,12 @@ compatibilité séparément, ou utiliser une base déjà exploitée par la banqu
 avec <code>-ModePostgreSQL Externe</code> et sa chaîne de connexion.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-3.zip">Paquet Windows léger 1.22.0-3 — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.22.0/appcontrol-openshift-windows-light-1.22.0-3.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.23.1/appcontrol-openshift-windows-light-1.23.1-1.zip">Paquet Windows léger 1.23.1-1 — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.23.1/appcontrol-openshift-windows-light-1.23.1-1.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.22.0-3.zip&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.23.1-1.zip&#39;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Checksum mismatch: do not use this archive.&#39;</span>
@@ -2995,11 +3108,47 @@ ce ne sont pas des logiciels supplémentaires à installer.</p>
 <li>Un récapitulatif du serveur, du contexte, du <strong>projet/namespace cible</strong>, du registre et du mode de base. Taper <strong>INSTALL</strong> pour autoriser le déploiement dans ce projet.</li>
 </ol>
 <p>Le namespace n’est jamais déduit silencieusement du projet courant. Le script utilise <code>-n</code> pour cibler les objets et une copie privée de la connexion ; il ne change pas le projet par défaut de votre configuration <code>oc</code>. Il ne crée pas implicitement de projet et refuse les conflits avec une installation existante.</p>
+<h3 id="installer-une-deuxieme-instance">Installer une deuxième instance<a class="headerlink" href="#installer-une-deuxieme-instance" title="Permanent link">&para;</a></h3>
+<p><code>-Nom</code> (alias <code>-Name</code>) définit le préfixe des ressources. La valeur par défaut
+est <code>appcontrol-evaluation</code>. Pour préparer une démo à côté de cette instance,
+utilisez par exemple <code>appcontrol-demo</code>. Le contrôle de conflit réserve aussi
+le préfixe suivi d’un tiret. Évitez donc <code>appcontrol-evaluation-demo</code> dans le
+même projet, car ce nom gênerait les opérations de maintenance de la première
+instance. Utilisez des minuscules, des chiffres et des tirets, avec un maximum
+de 40 caractères. La longueur du nom de projet et du nom d’installation
+additionnés doit rester inférieure ou égale à 54 pour les noms de Routes.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">$installation</span> <span class="p">=</span> <span class="p">@{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">Projet</span> <span class="p">=</span> <span class="s1">&#39;projet-client&#39;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">Nom</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-demo&#39;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">ModePostgreSQL</span> <span class="p">=</span> <span class="s1">&#39;Integre&#39;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">}</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="nv">@installation</span> <span class="n">-Verifier</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="nv">@installation</span>
+</span></code></pre></div>
+<p>Remplacez <code>projet-client</code> par le projet prévu pour la démo. Si le client utilise
+Artifactory, ajoutez au tableau les valeurs <code>Registre</code> et, si nécessaire,
+<code>SecretImages</code> fournies pour ce projet. La première commande vérifie la connexion,
+les droits et les conflits. La seconde déploie l’instance après confirmation.</p>
+<p>Le nom apparaît notamment dans <code>appcontrol-demo-backend</code>,
+<code>data-appcontrol-demo-postgresql-0</code> et, avec les Routes par défaut,
+<code>https://appcontrol-demo-projet-client.&lt;domaine-apps&gt;</code>. Le dossier d’état local,
+les certificats, les identifiants et la base intégrée sont propres à l’instance.
+En PostgreSQL externe, fournissez une base dédiée à cette deuxième installation.</p>
+<p>Pour réserver la démo à votre équipe, demandez un projet dédié avec les droits
+correspondants et une Route dont l’accès est limité par la plateforme. Le projet
+contrôle les droits OpenShift sur les ressources, et la Route contrôle l’accès
+réseau au site. Le nom distingue les instances dans le projet. <code>-UrlPublique</code>
+et <code>-UrlGateway</code> permettent de spécifier des adresses approuvées par la plateforme.
+Utilisez des adresses distinctes pour les deux installations.</p>
+<p>Conservez le même projet et le même nom lors des relances et des mises à jour.
+Pour contrôler le périmètre du retrait avant toute suppression, lancez :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-client&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-demo&#39;</span> <span class="n">-Preview</span>
+</span></code></pre></div>
 <h3 id="choix-1-postgresql-integre">Choix 1 : PostgreSQL intégré<a class="headerlink" href="#choix-1-postgresql-integre" title="Permanent link">&para;</a></h3>
 <p>Aucune chaîne de connexion à fournir. Le script prépare la base, les identifiants, les certificats et le stockage. Pour prédéfinir ces deux choix :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
 <p>Ajouter <code>-ClasseStockage 'nom-fourni-par-la-plateforme'</code> uniquement si la classe par défaut ne convient pas. Cette option concerne uniquement la base intégrée.</p>
 <h3 id="choix-2-postgresql-externe-fourni-par-la-banque">Choix 2 : PostgreSQL externe fourni par la banque<a class="headerlink" href="#choix-2-postgresql-externe-fourni-par-la-banque" title="Permanent link">&para;</a></h3>
@@ -3023,19 +3172,19 @@ applicatif propriétaire de sa base dédiée, sans <code>SUPERUSER</code>, <code
 <code>CREATEROLE</code>. L'administrateur PostgreSQL doit valider les droits équivalents
 si la banque impose une autre organisation des rôles ou des schémas.</p>
 <p>Lancer le script avec le mode externe ; il demandera les informations manquantes :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
 <p>La saisie de la chaîne de connexion est <strong>masquée</strong>. Elle n’apparaît ni dans l’historique PowerShell, ni dans les YAML livrés, ni dans le récapitulatif. Elle est conservée dans le dossier privé de reprise, puis transmise à un Secret OpenShift. Ce dossier contient des secrets lisibles par votre compte Windows et le système : ne pas le partager. Les administrateurs autorisés du cluster peuvent accéder aux Secrets selon les droits de la banque.</p>
 <p>On peut préparer les valeurs non secrètes avec <code>-CertificatPostgreSQL 'C:\Certificats\ca-postgres.pem'</code> et <code>-CidrPostgreSQL @('10.20.30.40/32','10.20.30.41/32')</code>. Pour une automatisation, <code>-ChaineConnexion</code> attend un objet <code>SecureString</code>, obtenu par exemple avec <code>Read-Host -AsSecureString</code> ; ne pas écrire un mot de passe en clair dans la commande. <code>-NonInteractif</code> exige le projet et le mode explicites à la première installation.</p>
 <h3 id="option-ignorer-la-validation-du-certificat-postgresql">Option : ignorer la validation du certificat PostgreSQL<a class="headerlink" href="#option-ignorer-la-validation-du-certificat-postgresql" title="Permanent link">&para;</a></h3>
 <p><strong>Disponible depuis le paquet léger 1.20.4-3.</strong> C’est l’équivalent d’une option HTTPS qui accepte un certificat non reconnu. Elle est désactivée par défaut et concerne uniquement la connexion du backend à <strong>PostgreSQL externe</strong>.</p>
 <p>Ajouter <code>-IgnorerCertificatPostgreSQL</code> dès la première installation :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span> <span class="p">`</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>  <span class="n">-IgnorerCertificatPostgreSQL</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="p">`</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  <span class="n">-Registre</span> <span class="s1">&#39;registry.banque.example/ghcr/xcomponent&#39;</span> <span class="p">`</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span> <span class="p">`</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>  <span class="n">-IgnorerCertificatPostgreSQL</span>
 </span></code></pre></div>
 <p>Remplacer les deux valeurs de registre et de secret par celles de la plateforme. Sans option en ligne de commande, l’assistant interactif propose aussi ce choix lors d’une nouvelle installation externe si aucun fichier CA n’a été fourni. Entrée conserve le mode avec vérification.</p>
 <p>Dans ce mode :</p>
@@ -3100,13 +3249,13 @@ il n’y a ni image à transporter sur le poste, ni compte GitHub à créer.</p>
 <li><strong>Sauvegarder PostgreSQL avant la mise à jour</strong> et disposer d’une procédure de restauration. Pour une base externe, obtenir la confirmation de l’équipe base de données. Pour la base intégrée, appliquer la procédure de sauvegarde retenue pour le POC. Le script ne crée pas cette sauvegarde et un PVC n’en tient pas lieu.</li>
 <li>Réserver une interruption des services AppControl, puis lancer depuis le nouveau kit :</li>
 </ol>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-MettreAJour</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="n">-MettreAJour</span>
 </span></code></pre></div>
 <p>Si l’interface ou le backend de l’installation actuelle a été supprimé à la
 main, restaurer d’abord les services <strong>avec le kit de la version déjà installée</strong>
 et le dossier privé d’origine :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  <span class="n">-DossierEtat</span> <span class="s1">&#39;C:\AppControl\Etat&#39;</span> <span class="n">-SansDemo</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  <span class="n">-DossierEtat</span> <span class="s1">&#39;C:\AppControl\Etat&#39;</span> <span class="n">-SansDemo</span>
 </span></code></pre></div>
 <p>Remplacer ces valeurs par celles de l’installation. Cette reprise conserve la
 base et les maps ; elle n’exécute pas une nouvelle démonstration. Une fois
@@ -3124,16 +3273,16 @@ mode PostgreSQL, connexion et politique TLS. L’assistant demande confirmation
 que la sauvegarde a été réalisée avant d’appliquer la mise à jour.</p>
 <p>Pour passer d’une ancienne installation utilisant directement le miroir privé
 à la distribution publique XComponent, préciser le nouveau registre :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-Registre</span> <span class="s1">&#39;ghcr.io/xcomponent&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-Registre</span> <span class="s1">&#39;ghcr.io/xcomponent&#39;</span>
 </span></code></pre></div>
 <p>Avec Artifactory, conserver le préfixe interne approuvé et faire autoriser les
 nouveaux noms <code>appcontrol-eval-*</code>. Un ancien secret de lecture est conservé :
 l’agent déjà installé peut encore utiliser son image privée. Le passage au
 canal public ne révoque pas automatiquement ces accès existants.</p>
 <p>Pour un lancement non interactif, après avoir réellement effectué la sauvegarde :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-SauvegardeConfirmee</span> <span class="n">-NonInteractif</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  <span class="n">-MettreAJour</span> <span class="n">-SauvegardeConfirmee</span> <span class="n">-NonInteractif</span>
 </span></code></pre></div>
 <p><code>-SauvegardeConfirmee</code> est une <strong>attestation de l’opérateur</strong>, pas une commande de
 sauvegarde. L’installation garde son projet, son stockage, ses identifiants et
@@ -3167,10 +3316,10 @@ et la sauvegarde PostgreSQL ; ne pas modifier les verrous à la main.</p>
 projet/namespace ni une base PostgreSQL externe.</strong> Il convient donc à un projet
 fourni par la banque, sans droit de création ou de suppression de projet.</p>
 <p>Depuis le kit <strong>1.21.1-3</strong>, commencer par le récapitulatif sans modification :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="n">-Preview</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="n">-Preview</span>
 </span></code></pre></div>
 <p>Puis retirer les services en conservant les données et la configuration :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span>
 </span></code></pre></div>
 <p>Remplacer le projet et le nom par les valeurs de l’installation initiale.
 Si vous aviez choisi un autre dossier privé, ajouter
@@ -3182,7 +3331,7 @@ cible, les objets à retirer et ceux à conserver ; l’invite de confirmation
 indique explicitement le texte à saisir. <code>-Preview</code> ne supprime rien et ne
 modifie pas les fichiers locaux.</p>
 <p>Par exemple, pour <code>-Name appcontrol-evaluation</code>, l’invite affiche :</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>To remove the listed resources from project projet-fourni, type the installation name appcontrol-evaluation
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>To remove the listed resources from project projet-fourni, type the installation name appcontrol-evaluation
 </span></code></pre></div>
 <p>Saisir <strong><code>appcontrol-evaluation</code></strong>, puis Entrée. Si vous aviez choisi un autre
 nom, saisir ce nom exact affiché dans l’invite.</p>
@@ -3252,12 +3401,12 @@ recevoir une nouvelle identité après remplacement de son pod ; ajouter
 <h3 id="supprimer-completement-les-ressources-de-levaluation">Supprimer complètement les ressources de l’évaluation<a class="headerlink" href="#supprimer-completement-les-ressources-de-levaluation" title="Permanent link">&para;</a></h3>
 <p><strong><code>-RemoveAll</code> peut détruire les données PostgreSQL intégrées.</strong> Réaliser une
 sauvegarde si elles doivent être conservées. Un PVC n’est pas une sauvegarde.</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  <span class="n">-RemoveAll</span> <span class="n">-Preview</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  <span class="n">-RemoveAll</span> <span class="n">-Preview</span>
 </span></code></pre></div>
 <p>Puis exécuter le même nettoyage sans <code>-Preview</code> :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  <span class="n">-RemoveAll</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>  <span class="n">-RemoveAll</span>
 </span></code></pre></div>
 <p><code>-RemoveAll</code> est l’alias anglais de <code>-SupprimerDonnees</code>. Il ajoute les volumes,
 Secrets et ConfigMaps propres à l’installation. Les <strong>Secrets de téléchargement
@@ -3265,21 +3414,21 @@ Artifactory sont toujours conservés</strong>, même avec <code>-RemoveAll</code
 Ils peuvent être réutilisés pour la prochaine installation. Le projet,
 les autres applications et la base PostgreSQL externe restent inchangés.</p>
 <p>L’assistant affiche d’abord :</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>This can permanently delete stored data and registry credentials. Type DELETE DATA to confirm your backup or accept their loss
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>This can permanently delete stored data and registry credentials. Type DELETE DATA to confirm your backup or accept their loss
 </span></code></pre></div>
 <p>Saisir <strong><code>DELETE DATA</code></strong>, avec l’espace, puis Entrée. Saisir ensuite le nom
 exact de l’installation à la seconde invite. En mode non interactif,
 l’attestation doit être explicite :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>  <span class="n">-RemoveAll</span> <span class="n">-BackupConfirmed</span> <span class="n">-NonInteractive</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  <span class="n">-RemoveAll</span> <span class="n">-BackupConfirmed</span> <span class="n">-NonInteractive</span>
 </span></code></pre></div>
 <p><code>-BackupConfirmed</code> ne réalise aucune sauvegarde. Le dossier privé Windows est
 conservé pour le diagnostic ; le nettoyage ne le détruit pas.</p>
 <h3 id="si-le-dossier-prive-a-ete-perdu-ou-endommage">Si le dossier privé a été perdu ou endommagé<a class="headerlink" href="#si-le-dossier-prive-a-ete-perdu-ou-endommage" title="Permanent link">&para;</a></h3>
 <p>Utiliser le nettoyage sans état local en donnant explicitement <strong>le projet et
 le nom de l’installation</strong> :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>  <span class="n">-WithoutState</span> <span class="n">-RemoveAll</span> <span class="n">-Preview</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>  <span class="n">-WithoutState</span> <span class="n">-RemoveAll</span> <span class="n">-Preview</span>
 </span></code></pre></div>
 <p>Après lecture du plan, retirer <code>-Preview</code> pour exécuter. <code>-WithoutState</code>
 (<code>-SansEtat</code>) identifie les ressources par les marqueurs de propriété AppControl
@@ -3291,8 +3440,8 @@ sa suppression.</p>
 <h3 id="reinstaller-proprement-apres-le-nettoyage-complet">Réinstaller proprement après le nettoyage complet<a class="headerlink" href="#reinstaller-proprement-apres-le-nettoyage-complet" title="Permanent link">&para;</a></h3>
 <p>Il n’est pas nécessaire de supprimer le projet ni d’effacer manuellement le
 dossier privé. Après retrait des ressources de l’ancienne installation :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  <span class="n">-Reinstaller</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>  <span class="n">-Reinstaller</span>
 </span></code></pre></div>
 <p><code>-Reinstaller</code> (<code>-Reinstall</code>) vérifie que les anciennes ressources AppControl,
 y compris leurs données et configuration conservées, ont été retirées. Un secret
@@ -3303,14 +3452,14 @@ mentionne encore des ressources AppControl, terminer leur nettoyage avant cette
 commande. Reprendre le même <code>-DossierEtat</code> si son emplacement était personnalisé.</p>
 <p>Avec Artifactory, fournir à nouveau le registre et le secret de lecture à
 utiliser ; recréer ce secret s’il a été supprimé :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>  <span class="n">-Reinstaller</span> <span class="n">-Registre</span> <span class="s1">&#39;artifactory.intra.example/docker-ghcr&#39;</span> <span class="p">`</span>
-</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>  <span class="n">-Reinstaller</span> <span class="n">-Registre</span> <span class="s1">&#39;artifactory.intra.example/docker-ghcr&#39;</span> <span class="p">`</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>  <span class="n">-SecretImages</span> <span class="s1">&#39;lecture-artifactory&#39;</span>
 </span></code></pre></div>
 <p>Pour une base externe, faire préparer une <strong>base dédiée vide</strong> ou faire valider
 son nettoyage par l’administrateur PostgreSQL, puis confirmer explicitement :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>  <span class="n">-Reinstaller</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="n">-BaseExterneVideConfirmee</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Nom</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="p">`</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>  <span class="n">-Reinstaller</span> <span class="n">-ModePostgreSQL</span> <span class="n">Externe</span> <span class="n">-BaseExterneVideConfirmee</span>
 </span></code></pre></div>
 <p><code>-BaseExterneVideConfirmee</code> (<code>-EmptyExternalDatabaseConfirmed</code>) est une attestation,
 pas une commande SQL : le script n’efface jamais la base bancaire. Pour conserver
@@ -3410,7 +3559,7 @@ déployée. Ne pas supprimer son dossier d’état.</p>
 </tbody>
 </table>
 <h2 id="qualification-et-suite-du-poc">Qualification et suite du POC<a class="headerlink" href="#qualification-et-suite-du-poc" title="Permanent link">&para;</a></h2>
-<p>La publication du kit 1.22.0-3 est conditionnée à sa qualification Windows/OpenShift. Consulter les preuves <code>PUBLICATION-EVALUATION-1.22.0-3.json</code> et <code>QUALIFICATION-EVALUATION-1.22.0-3.zip</code> jointes à la release ; les rapports historiques ci-dessous ne qualifient pas cette nouvelle version.</p>
+<p>La publication du kit 1.23.1-1 suit sa qualification Windows/OpenShift. Les fichiers <code>PUBLICATION-EVALUATION-1.23.1-1.json</code> et <code>QUALIFICATION-EVALUATION-1.23.1-1.zip</code> identifient les images et le ZIP de cette recette.</p>
 <h3 id="historique-des-qualifications">Historique des qualifications<a class="headerlink" href="#historique-des-qualifications" title="Permanent link">&para;</a></h3>
 <p>La qualification complète Windows/OpenShift disponible concerne le kit <code>1.21.1-2</code>.
 Le correctif <code>1.21.1-3</code> conserve ses images et fait l’objet de tests ciblés des scripts
@@ -3482,9 +3631,9 @@ gateways et un agent Linux persistant par site pour l'outil historique de
 transformation serveur. Il enregistre des défauts mock utilisés uniquement par
 ce parcours explicite. Il n'est pas une étape préalable à l'import normal.
 Pour choisir cette option, adapter <code>simulation.example.json</code>, puis lancer :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">.\</span><span class="n">Configurer-Simulation</span><span class="p">.</span><span class="n">ps1</span> <span class="p">`</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>  <span class="n">-DossierEtat</span> <span class="s1">&#39;C:\AppControl\etat-installation&#39;</span> <span class="p">`</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>  <span class="n">-Configuration</span> <span class="s1">&#39;.\simulation.example.json&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">.\</span><span class="n">Configurer-Simulation</span><span class="p">.</span><span class="n">ps1</span> <span class="p">`</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>  <span class="n">-DossierEtat</span> <span class="s1">&#39;C:\AppControl\etat-installation&#39;</span> <span class="p">`</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>  <span class="n">-Configuration</span> <span class="s1">&#39;.\simulation.example.json&#39;</span>
 </span></code></pre></div>
 <p>Le dossier d'état est celui conservé par l'installation principale. Le script
 vérifie les capacités du serveur avant de créer ses ressources. Le guide de
@@ -3502,36 +3651,92 @@ même commande de désinstallation.</p>
 identiques au kit 1.21.1-2. Validation ciblée locale : 86 contrôles de désinstallation
 et 68 contrôles de reprise ; pas de nouvelle qualification complète sur OpenShift.</p>
 <h2 id="configuration-apres-installation-equipes-et-topologie">Configuration après installation : équipes et topologie<a class="headerlink" href="#configuration-apres-installation-equipes-et-topologie" title="Permanent link">&para;</a></h2>
-<p>Le nouveau point d’entrée <code>Configurer-AppControl.ps1</code> reprend les fonctions
-administratives utiles du parcours Windows standalone. Il utilise uniquement
-PowerShell et le client <code>oc</code> existant, avec les identifiants du dossier privé
-et un tunnel TLS vers AppControl.</p>
-<ol>
-<li>Copier <code>configuration.example.json</code> dans un fichier de travail.</li>
-<li>Renseigner les sites et hébergements, le catalogue, les utilisateurs et équipes.</li>
-<li>Vérifier puis appliquer :</li>
-</ol>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">.\</span><span class="n">Configurer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_PRIVE&#39;</span> <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span> <span class="n">-Verifier</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="p">.\</span><span class="n">Configurer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_PRIVE&#39;</span> <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span>
+<p>Le chemin le plus court est de fournir le JSON à <strong><code>Deployer-AppControl.ps1</code></strong>.
+Le script installe le socle puis applique la configuration dans la même
+invocation. Copiez le <code>configuration.example.json</code> du kit en
+<code>configuration.json</code> et adaptez les codes, noms et comptes à votre projet.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="n">-Nom</span> <span class="n">appcontrol-demo</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>  <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span> <span class="n">-Verifier</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="n">-Nom</span> <span class="n">appcontrol-demo</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>  <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span>
 </span></code></pre></div>
-<p>Chaque site déclaré crée une gateway (ou le nombre indiqué par <code>gateways</code>) et
-un agent Linux persistant dans le namespace existant. Ajouter un site au fichier
-puis relancer complète la topologie. Aucun déploiement automatique ne découle
-simplement d’une création de site dans l’interface. Changer le nombre de gateways
-ou le stockage d’un site déjà configuré reste une opération explicite distincte.</p>
-<p><code>agent_profile: "standard"</code> crée des agents ordinaires sans les définir comme
-agents mock par défaut. <code>"mock-linux"</code> ajoute ce lien pour les imports de simulation.
-Les agents du cluster exécutent leurs commandes dans leur conteneur ; ils ne
-pilotent pas automatiquement les serveurs externes de la banque.</p>
+<p>Ajoutez à ces commandes vos options habituelles de registre, de stockage,
+de base externe ou de route publique. <code>-SansDemo</code> installe le socle et
+applique votre JSON sans charger la démo bancaire intégrée. Sur une
+installation neuve, <code>-Verifier</code> valide le fichier et les prérequis
+accessibles. La recette des gateways, des agents et de l’API AppControl a
+lieu une fois le socle disponible.</p>
+<table>
+<thead>
+<tr>
+<th>Champ JSON</th>
+<th>Ce que le déploiement configure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hostings</code>, <code>sites</code></td>
+<td>Regroupements d’infrastructure, codes de site et nombre de gateways par site.</td>
+</tr>
+<tr>
+<td><code>agent_profile</code>, <code>agent_storage</code></td>
+<td>Profil et stockage de l’agent Linux persistant de chaque site.</td>
+</tr>
+<tr>
+<td><code>catalog</code></td>
+<td>Types de composants à ajouter au catalogue technique.</td>
+</tr>
+<tr>
+<td><code>users</code>, <code>teams</code></td>
+<td>Comptes locaux, rôles, équipes et rattachement des membres.</td>
+</tr>
+<tr>
+<td><code>permissions</code></td>
+<td>Droits des équipes sur les maps déjà présentes au moment de la configuration.</td>
+</tr>
+<tr>
+<td><code>document_source.secret_name</code></td>
+<td>Référence facultative au Secret OpenShift de la source documentaire X4B.</td>
+</tr>
+<tr>
+<td><code>embedded.allowed_origins</code>, <code>embedded.simulation_sites</code></td>
+<td>Origines HTTPS des portails et codes des sites dédiés à la simulation Embedded.</td>
+</tr>
+</tbody>
+</table>
+<p>Pour appliquer uniquement la configuration à une installation existante,
+utilisez le dossier d’état privé indiqué par l’installateur.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="p">.\</span><span class="n">Configurer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_PRIVE&#39;</span> <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span>
+</span></code></pre></div>
+<p>Chaque entrée de <code>sites</code> crée <strong>un agent Linux persistant</strong> et le nombre
+de gateways indiqué dans <code>gateways</code> (1 par défaut, jusqu’à 8). Un
+<code>hosting</code> regroupe des sites. La gateway du socle est déployée
+séparément. Les gateways d’un site partagent un service interne auquel
+se connecte son agent. Les agents et gateways sont déployés dans le
+projet OpenShift de l’installation. Ajouter un site au fichier puis
+relancer complète la topologie. Un changement de nombre de gateways
+ou de stockage sur un site déjà configuré se traite séparément.</p>
+<p><code>agent_profile</code> s’applique à tous les agents créés par ce fichier.
+<code>standard</code>, indiqué dans <code>configuration.example.json</code>, enregistre des
+agents ordinaires. <code>mock-linux</code> utilise le même agent et le désigne
+comme cible par défaut de l’assistant de simulation de son site. Le
+script historique de simulation retient <code>mock-linux</code> si le champ est
+omis. Indiquer la valeur explicitement dans le JSON.</p>
+<p><code>site_type</code> classe le site, par exemple <code>primary</code> ou <code>dr</code>. Pour une
+map, le profil de rattachement définit quels agents exécutent ses
+composants. Un profil de reprise peut sélectionner d’autres agents.
+Le type du site et la présence de plusieurs gateways ne suffisent
+pas à configurer cette bascule. <a href="../../MAP_GENERATION.fr/">Affecter les agents aux composants</a></p>
 <p>Exemple de sections à ajouter au fichier (remplacer les valeurs fictives) :</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">{</span>
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="nt">&quot;users&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operateur@example.test&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Operateur&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operator&quot;</span><span class="p">}],</span>
-</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span><span class="nt">&quot;teams&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exploitation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;members&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;operateur@example.test&quot;</span><span class="p">]}],</span>
-</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;app&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Application existante&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;team&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exploitation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operate&quot;</span><span class="p">}]</span>
-</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;users&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operateur@example.test&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Operateur&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operator&quot;</span><span class="p">}],</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span><span class="nt">&quot;teams&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exploitation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;members&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;operateur@example.test&quot;</span><span class="p">]}],</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;app&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Application existante&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;team&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exploitation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;operate&quot;</span><span class="p">}]</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Les mots de passe des nouveaux comptes sont demandés en saisie masquée, jamais
-placés dans le JSON. Les comptes existants et leurs mots de passe sont conservés.
+<p>Les mots de passe des nouveaux comptes locaux sont demandés en saisie masquée.
+En mode <code>-NonInteractif</code>, utilisez des comptes déjà créés ou laissez <code>users</code>
+vide. Les comptes existants et leurs mots de passe sont conservés.
 La configuration ajoute les membres manquants ; elle ne retire aucun membre ni
 aucun droit existant. Un rôle ou droit divergent bloque et doit être modifié
 explicitement dans AppControl. Les membres peuvent référencer des utilisateurs
@@ -3540,9 +3745,85 @@ existants sans les redéclarer dans <code>users</code>.</p>
 configuration, laisser <code>permissions</code> vide, importer les maps puis ajouter les droits
 et relancer le même fichier. Les noms d’application et d’équipe doivent être non
 ambigus. Le script ne remplace pas un raccordement SSO et ne synchronise pas un annuaire.</p>
+<p>Pour le parcours X4B, ajoutez par exemple
+<code>"document_source": {"secret_name": "appcontrol-source-documentaire"}</code> à la
+racine du JSON. Le Secret est créé au préalable dans le projet OpenShift.
+La configuration est injectée dans le backend, puis l’interface
+<strong>Génération de maps</strong> permet de tester le raccordement et de lancer la
+synchronisation. L’option <code>-SecretSourceDocumentaire</code> reste disponible
+pour passer la référence directement sur la ligne de commande.
+<a href="../../KNOWLEDGE-ENGINE-CONNECTOR.fr/#preparer-et-rejouer-linstallation-openshift">Guide de raccordement et de qualification du workflow X4B</a></p>
 <p>Les ressources déjà créées sont retrouvées lors d’une reprise. La configuration
 n’est pas une transaction globale : conserver le fichier et le dossier privé puis
 relancer après correction d’un échec. Aucun secret n’est affiché dans l’aperçu.</p>
+<h3 id="activer-embedded-pour-panoramisk">Activer Embedded pour Panoramisk<a class="headerlink" href="#activer-embedded-pour-panoramisk" title="Permanent link">&para;</a></h3>
+<p>Ajoutez un site <code>SIM</code> avec une gateway et déclarez son code sous <code>embedded</code>.
+Le kit crée le site, la gateway et l’agent, retrouve les UUID après l’enrôlement
+et configure le backend et le frontend. Une paire suffit pour les maps qui
+décrivent plusieurs sites. Réservez la paire à Embedded. Avec <code>mock-linux</code>,
+le kit réserve ces sites à Embedded et enregistre les autres comme cibles
+par défaut de l’import mock historique.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;schema_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span><span class="nt">&quot;agent_profile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;standard&quot;</span><span class="p">,</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">  </span><span class="nt">&quot;sites&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VEGA&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Vega&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;site_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gateways&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SIRIUS&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sirius&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;site_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gateways&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SIM&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Simulation AppControl&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;site_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;staging&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;gateways&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="w">  </span><span class="nt">&quot;embedded&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">    </span><span class="nt">&quot;allowed_origins&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;https://panoramisk.banque.example&quot;</span><span class="p">],</span>
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="w">    </span><span class="nt">&quot;simulation_sites&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;SIM&quot;</span><span class="p">]</span>
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Donnez l’origine exacte du portail, sans chemin. Ajoutez l’origine AppControl
+si vous utilisez aussi la carte Embedded depuis l’interface native. Pour le
+Knowledge Engine, ajoutez <code>document_source.secret_name</code> dans le même fichier.
+Sur une installation existante, mettez d’abord à jour le socle, puis relancez
+<code>Configurer-AppControl.ps1</code> avec ce fichier. Le kit recrée les pods du backend
+et du frontend quand la configuration Embedded change. La désinstallation du
+complément retire aussi cette configuration. Voir <a href="../../EMBEDDED.fr/#session-authentification-et-web-component">l’intégration du portail</a>.</p>
+<h3 id="echeances-des-certificats-et-jetons">Echeances des certificats et jetons<a class="headerlink" href="#echeances-des-certificats-et-jetons" title="Permanent link">&para;</a></h3>
+<p>Le jeton de gateway dure 30 jours et sert à chaque reconnexion au backend.
+Le jeton d’enrôlement initial d’un agent sert une fois. Après l’enrôlement,
+l’agent se reconnecte avec son certificat client, valable 365 jours par défaut.
+Les certificats des services et des gateways du kit durent 90 jours.</p>
+<p>Sur le poste Windows, connectez <code>oc</code> au cluster de l’installation, puis lancez
+le connecteur avec le dossier privé indiqué par l’installeur.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="p">.\</span><span class="n">Maintenir-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_D_ETAT&#39;</span> <span class="n">-Watch</span>
+</span></code></pre></div>
+<p>Dans AppControl, ouvrez <strong>Certificates &amp; tokens → Maintenance</strong>. Sélectionnez
+une brique, consultez l’échéance et confirmez <strong>Request renewal</strong>. Le connecteur doit
+rester ouvert pendant l’opération. Il utilise la connexion OpenShift du poste
+et le compte administrateur conservé dans le dossier privé. L’écran affiche
+la progression de la demande et le résultat. Les jetons et les clés privées
+restent dans le dossier d’état ou dans les Secrets OpenShift.
+Le compte OpenShift doit pouvoir mettre à jour les Secrets et redéployer les
+briques de cette installation. Le renouvellement d’un agent nécessite aussi
+l’accès <code>pods/exec</code> à son pod.
+Arrêtez le connecteur avant de mettre à jour, réinstaller ou désinstaller
+l’instance.</p>
+<p>Le parcours gère les jetons et certificats des gateways du socle et des sites,
+les certificats de transport émis par le kit et les certificats des agents
+persistants configurés par le kit. La reconnexion peut interrompre brièvement
+les contrôles. Les autorités de certification, la Route HTTPS fournie par la
+plateforme et les agents hors cluster demandent une intervention de leur
+gestionnaire. Pour ces derniers, suivre la
+<a href="../../AGENT_INSTALLATION/#certificate-renewal">procédure de réenrôlement</a> avec le
+même nom d’agent. Si la Route hérite du certificat du routeur, son échéance
+peut ne pas être disponible dans l’inventaire.</p>
+<p>Si une rotation interrompue laisse un fichier de récupération, fermez le
+connecteur, vérifiez le projet ciblé et restaurez l’ancienne valeur depuis le
+poste connecté à OpenShift. Vérifiez ensuite la santé du service. Conservez
+le dossier privé tant que la restauration n’est pas terminée.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">.\</span><span class="n">Maintenir-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_D_ETAT&#39;</span> <span class="n">-Restore</span>
+</span></code></pre></div>
+<p>Si plusieurs certificats de transport ont expiré et bloquent l’interface,
+renouvelez le transport depuis Windows tant que son autorité reste valide.
+Le script renouvelle les services dans l’ordre et vérifie ensuite l’API.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="p">.\</span><span class="n">Maintenir-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_D_ETAT&#39;</span> <span class="n">-RecoverTransport</span>
+</span></code></pre></div>
 <h2 id="choisir-le-premier-administrateur">Choisir le premier administrateur<a class="headerlink" href="#choisir-le-premier-administrateur" title="Permanent link">&para;</a></h2>
 <p>À la première installation interactive, <code>Deployer-AppControl.ps1</code> demande l’email
 administrateur (Entrée conserve <code>admin@example.test</code>), puis un mot de passe
@@ -3568,7 +3849,7 @@ remplacent pas une nouvelle qualification complète sur le cluster du client.</p
 <p>Sans option supplémentaire, le domaine reste détecté automatiquement comme
 avant. À la première installation ou après un retrait volontaire complet,
 ajouter à votre commande habituelle :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">-UrlPublique</span> <span class="s1">&#39;https://appcontrol-evaluation-monprojet.pres.cluster.example&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="n">-UrlPublique</span> <span class="s1">&#39;https://appcontrol-evaluation-monprojet.pres.cluster.example&#39;</span>
 </span></code></pre></div>
 <p>Le nom complet est utilisé tel quel : aucun nom de projet n’est ajouté.
 Utiliser HTTPS, sans chemin, identifiant, paramètres ni port personnalisé.
@@ -3577,7 +3858,7 @@ L’adresse est propagée à la route frontend, au certificat frontend généré
 les services restent inchangés. OpenShift gère lui-même status.ingress.</p>
 <p>Par défaut, la gateway utilise <code>gateway-</code> suivi du nom d’hôte public.
 Pour une adresse distincte, fournir également :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">-UrlGateway</span> <span class="s1">&#39;wss://gateway-monprojet.pres.cluster.example&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="n">-UrlGateway</span> <span class="s1">&#39;wss://gateway-monprojet.pres.cluster.example&#39;</span>
 </span></code></pre></div>
 <p>Cette adresse alimente la route gateway, son certificat, et PUBLIC_GATEWAY_URL.
 Lors d’une reprise, les adresses enregistrées sont conservées, même si les
@@ -3592,13 +3873,13 @@ Un domaine personnalisé peut être refusé à la création. Le choix du domaine
 <code>.pres.</code> reste à confirmer avec la plateforme ; l’option ne prouve pas que
 le domaine était la cause de l’erreur d’exposition.</p>
 <h2 id="demonstration-bancaire-complete">Démonstration bancaire complète<a class="headerlink" href="#demonstration-bancaire-complete" title="Permanent link">&para;</a></h2>
-<p><strong>Le kit 1.22.0-3 installe automatiquement la démo bancaire lors d’une installation
+<p><strong>Le kit 1.23.1-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut</strong>, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. <code>-SansDemo</code> désactive les deux démonstrations ;
 une mise à jour avec <code>-MettreAJour</code> conserve les applications existantes sans en ajouter.</p>
 <p>Pour ajouter la démo à une installation réalisée avec le kit 1.22.0-2, ou reprendre
 uniquement sa création, exécutez depuis le dossier du kit :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">.\</span><span class="n">Installer-DemoBancaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_ETAT&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="p">.\</span><span class="n">Installer-DemoBancaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-DossierEtat</span> <span class="s1">&#39;CHEMIN_DU_DOSSIER_ETAT&#39;</span>
 </span></code></pre></div>
 <p>Utilisez le <strong>dossier d’état privé indiqué par l’installeur</strong>, pas le dossier du ZIP.
 Le parcours par défaut fournit déjà un agent Linux dans OpenShift ; aucun outil
@@ -3639,7 +3920,7 @@ configuration multi-sites reste disponible via <code>Configurer-AppControl.ps1</
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-07T14:59:40+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-07</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T17:24:52+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
   </span>
 
     

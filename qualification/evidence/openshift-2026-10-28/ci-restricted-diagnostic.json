@@ -1,7 +1,7 @@
 {
   "run_id": 40669149665,
   "job_id": 122759287249,
-  "job_url": "https://github.com/fredericcarre/appcontrol/actions/runs/40669149665/job/122759287249",
+  "job_url": null,
   "head_sha": "2268728478f117b2b578109eb9a2652794b74485",
   "job_result": "failure",
   "failed_step": {

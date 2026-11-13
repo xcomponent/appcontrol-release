@@ -1058,9 +1058,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-panoramisk" class="md-nav__link">
+  <a href="#integration-documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Intégration Panoramisk
+      Intégration d’un portail documentaire
     </span>
   </a>
   
@@ -2166,9 +2166,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-panoramisk" class="md-nav__link">
+  <a href="#integration-documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Intégration Panoramisk
+      Intégration d’un portail documentaire
     </span>
   </a>
   
@@ -2210,24 +2210,24 @@
 <p>X4B, édité par Invivoo, réunit AppControl, Génération de maps et les applications enregistrées. L’accueil est à <code>/x4b</code>. Le menu du compte donne accès à <strong>Comptes et accès</strong> et <strong>Applications raccordées</strong> pour les administrateurs. AppControl conserve ses liens directs, notamment <code>/apps/&lt;id&gt;</code>.</p>
 <h2 id="comptes-et-acces">Comptes et accès<a class="headerlink" href="#comptes-et-acces" title="Permanent link">&para;</a></h2>
 <p>L’administrateur réutilise les comptes locaux AppControl. Les comptes existants gardent leur accès AppControl après mise à jour. Les nouveaux comptes créés dans X4B reçoivent les accès choisis dans l’administration. La génération et la publication par lots restent réservées aux administrateurs dans cette version. Les autorisations AppControl sur les maps, les sites et les opérations s’appliquent en plus de l’accès au module.</p>
-<p>Pour un POC avec Panoramisk, créer un compte administrateur de revue et un compte de consultation. Donner à ce dernier accès à Panoramisk, puis un droit de lecture sur la map et les sites nécessaires, dont le site de simulation. Le compte peut ouvrir une simulation isolée. Les opérations sur une map réelle nécessitent les droits d’exploitation AppControl.</p>
-<h2 id="integration-panoramisk">Intégration Panoramisk<a class="headerlink" href="#integration-panoramisk" title="Permanent link">&para;</a></h2>
+<p>Pour un POC avec un portail documentaire, créer un compte administrateur de revue et un compte de consultation. Donner à ce dernier accès au portail, puis un droit de lecture sur la map et les sites nécessaires, dont le site de simulation. Le compte peut ouvrir une simulation isolée. Les opérations sur une map réelle nécessitent les droits d’exploitation AppControl.</p>
+<h2 id="integration-documentation">Intégration d’un portail documentaire<a class="headerlink" href="#integration-documentation" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Conserver les URL HTTPS de Panoramisk et d’AppControl. L’accueil X4B peut utiliser le même hôte qu’AppControl avec le chemin <code>/x4b</code>.</li>
-<li>Dans <strong>Applications raccordées</strong>, enregistrer <code>panoramisk</code>. Pour l’hôte de référence, utiliser <code>https://panoramisk.example.test/</code> comme URL d’entrée et <code>https://panoramisk.example.test/x4b/callback</code> comme URL de retour, avec le domaine réel de l’hôte. Copier le secret affiché à la création dans le gestionnaire de secrets du serveur Panoramisk.</li>
-<li>Protéger les fiches et les API Panoramisk avec la session X4B. Lors d’un accès direct, conserver le chemin de la fiche côté serveur, effectuer l’échange d’autorisation et revenir à ce chemin. Le serveur Panoramisk vérifie aussi ses propres droits de consultation de fiche. Voir <a href="../X4B-ACCESS.fr/">le contrat d’accès</a>.</li>
-<li>Ajouter les composants à la mise en page et à la fiche. Le serveur Panoramisk expose les routes locales ci-dessous. Les données d’identité restent sur les canaux serveur à serveur.</li>
+<li>Conserver les URL HTTPS du portail et d’AppControl. L’accueil X4B peut utiliser le même hôte qu’AppControl avec le chemin <code>/x4b</code>.</li>
+<li>Dans <strong>Applications raccordées</strong>, enregistrer <code>documentation</code>. Pour l’hôte de référence, utiliser <code>https://documentation.example.test/</code> comme URL d’entrée et <code>https://documentation.example.test/x4b/callback</code> comme URL de retour, avec le domaine réel de l’hôte. Copier le secret affiché à la création dans le gestionnaire de secrets du serveur du portail.</li>
+<li>Protéger les fiches et les API du portail avec la session X4B. Lors d’un accès direct, conserver le chemin de la fiche côté serveur, effectuer l’échange d’autorisation et revenir à ce chemin. Le serveur du portail vérifie aussi ses propres droits de consultation de fiche. Voir <a href="../X4B-ACCESS.fr/">le contrat d’accès</a>.</li>
+<li>Ajouter les composants à la mise en page et à la fiche. Le serveur du portail expose les routes locales ci-dessous. Les données d’identité restent sur les canaux serveur à serveur.</li>
 </ol>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">defer</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://appcontrol.example.test/x4b-portal.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">defer</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://appcontrol.example.test/appcontrol-embedded.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">&lt;</span><span class="nt">x4b-shell</span> <span class="na">module</span><span class="o">=</span><span class="s">&quot;panoramisk&quot;</span> <span class="na">platform-url</span><span class="o">=</span><span class="s">&quot;https://appcontrol.example.test&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">x4b-shell</span><span class="p">&gt;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">&lt;</span><span class="nt">x4b-shell</span> <span class="na">module</span><span class="o">=</span><span class="s">&quot;documentation&quot;</span> <span class="na">platform-url</span><span class="o">=</span><span class="s">&quot;https://appcontrol.example.test&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">x4b-shell</span><span class="p">&gt;</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">&lt;</span><span class="nt">appcontrol-status</span> <span class="na">endpoint</span><span class="o">=</span><span class="s">&quot;/fiches/PAI-042/status&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">appcontrol-status</span><span class="p">&gt;</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">&lt;</span><span class="nt">appcontrol-map</span> <span class="na">backend-url</span><span class="o">=</span><span class="s">&quot;https://appcontrol.example.test&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">appcontrol-map</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <table>
 <thead>
 <tr>
-<th>Route Panoramisk</th>
+<th>Route du portail</th>
 <th>Appel serveur X4B/AppControl</th>
 </tr>
 </thead>
@@ -2238,7 +2238,7 @@
 </tr>
 <tr>
 <td><code>POST /x4b/logout</code></td>
-<td><code>POST /api/v1/x4b/session/revoke</code> révoque la session partagée, puis Panoramisk efface sa session locale. Vérifier l’origine du POST.</td>
+<td><code>POST /api/v1/x4b/session/revoke</code> révoque la session partagée, puis le portail efface sa session locale. Vérifier l’origine du POST.</td>
 </tr>
 <tr>
 <td><code>GET /fiches/&lt;id&gt;/status</code></td>
@@ -2250,10 +2250,10 @@
 </tr>
 </tbody>
 </table>
-<p>Pour les deux routes Embedded, <code>credentials</code> contient <code>client_id</code>, <code>client_secret</code> et <code>session_token</code>. La source de la map est résolue par <code>source_reference.system</code> égal à la clé du module et <code>source_reference.id</code> égal à l’identifiant de la fiche. La configuration <a href="../EMBEDDED.fr/">AppControl Embedded</a> déclare en plus l’origine Panoramisk et le site de simulation. Le jeton de simulation reste court et suit la validité de la session X4B qui l’a demandé.</p>
-<p>Pour les maps générées depuis Panoramisk, renseigner <code>X4B_KNOWLEDGE_SOURCE=panoramisk</code> dans le Secret de source documentaire OpenShift. L’<code>application_key</code> exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple <code>PAI-042</code>.</p>
-<p>Le badge actualise les données toutes les 15 secondes quand la page est visible. Autoriser l’hôte AppControl dans <code>script-src</code>, <code>style-src</code> et <code>frame-src</code> du portail. Le navigateur interroge les routes Panoramisk sous sa propre origine.</p>
-<p>L’hôte de référence <code>demo-rebuild/embedded/x4b_host.py</code> contient deux fiches fictives, dont <code>PAI-042</code>. Il est livré dans l’archive <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/demo-rebuild.tar.gz">demo-rebuild.tar.gz de la release</a>. Le placer derrière un proxy HTTPS qui transmet le <code>Host</code> public. Configurer <code>X4B_URL=https://appcontrol.example.test</code>, <code>X4B_HOST_ORIGIN=https://panoramisk.example.test</code> et <code>X4B_MODULE_KEY=panoramisk</code> avec les valeurs de l’installation, puis injecter le secret client dans <code>X4B_CLIENT_SECRET</code>. Si plusieurs sites de simulation sont configurés, préciser <code>X4B_SIMULATION_SITE_ID</code>. L’hôte écoute en boucle locale sur le port <code>8081</code> par défaut. Le modèle de production doit s’appuyer sur les sessions du framework Panoramisk et vérifier les droits de chaque fiche.</p>
+<p>Pour les deux routes Embedded, <code>credentials</code> contient <code>client_id</code>, <code>client_secret</code> et <code>session_token</code>. La source de la map est résolue par <code>source_reference.system</code> égal à la clé du module et <code>source_reference.id</code> égal à l’identifiant de la fiche. La configuration <a href="../EMBEDDED.fr/">AppControl Embedded</a> déclare en plus l’origine du portail et le site de simulation. Le jeton de simulation reste court et suit la validité de la session X4B qui l’a demandé.</p>
+<p>Pour les maps générées depuis une source documentaire externe, renseigner <code>X4B_KNOWLEDGE_SOURCE=documentation</code> dans le Secret de source documentaire OpenShift. L’<code>application_key</code> exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple <code>PAI-042</code>.</p>
+<p>Le badge actualise les données toutes les 15 secondes quand la page est visible. Autoriser l’hôte AppControl dans <code>script-src</code>, <code>style-src</code> et <code>frame-src</code> du portail. Le navigateur interroge les routes du portail sous sa propre origine.</p>
+<p>L’hôte de référence <code>demo-rebuild/embedded/x4b_host.py</code> contient deux fiches fictives, dont <code>PAI-042</code>. Il est livré dans l’archive <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/demo-rebuild.tar.gz">demo-rebuild.tar.gz de la release</a>. Le placer derrière un proxy HTTPS qui transmet le <code>Host</code> public. Configurer <code>X4B_URL=https://appcontrol.example.test</code>, <code>X4B_HOST_ORIGIN=https://documentation.example.test</code> et <code>X4B_MODULE_KEY=documentation</code> avec les valeurs de l’installation, puis injecter le secret client dans <code>X4B_CLIENT_SECRET</code>. Si plusieurs sites de simulation sont configurés, préciser <code>X4B_SIMULATION_SITE_ID</code>. L’hôte écoute en boucle locale sur le port <code>8081</code> par défaut. Le modèle de production doit s’appuyer sur les sessions du framework du portail et vérifier les droits de chaque fiche.</p>
 <p>Si le certificat de X4B est signé par une autorité interne, configurer <code>X4B_CA_FILE</code> avec la chaîne de confiance PEM sur le serveur de l’hôte de référence. Le navigateur doit lui aussi faire confiance à l’autorité utilisée par les deux sites.</p>
 <h2 id="catalogue-complet-et-generation">Catalogue complet et génération<a class="headerlink" href="#catalogue-complet-et-generation" title="Permanent link">&para;</a></h2>
 <p>Le catalogue appartient à AppControl. Les entrées acceptent <code>match_terms</code> (ou <code>keys</code> sur les exports existants). Le kit Windows envoie les entrées par lots. Chaque lot respecte les limites de la requête, sans plafond total sur le catalogue configuré. Pour enrichir une entrée déjà importée, utiliser le mode <code>upsert</code> de l’API catalogue avec une prévisualisation <code>dry_run</code> puis l’<code>expected_digest</code> obtenu. Le kit Windows conserve le mode ajout pour préserver les entrées existantes.</p>

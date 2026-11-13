@@ -2202,8 +2202,8 @@ La génération de maps est accessible aux administrateurs de l’organisation.<
    X4B présente le secret client une seule fois. Conservez-le côté serveur, par
    exemple dans un Secret OpenShift, et configurez le serveur hôte avec l’URL
    publique de X4B. Pour l’hôte de référence, l’URL d’entrée est
-   <code>https://panoramisk.example.test/</code> et l’URL de retour est
-   <code>https://panoramisk.example.test/x4b/callback</code>. Remplacez le domaine par celui
+   <code>https://documentation.example.test/</code> et l’URL de retour est
+   <code>https://documentation.example.test/x4b/callback</code>. Remplacez le domaine par celui
    de votre hôte.</li>
 <li>Accordez l’accès à une personne dans « Comptes et accès ». Cet accord couvre
    uniquement le module. Ajoutez les droits AppControl sur les maps qui doivent
@@ -2213,8 +2213,8 @@ La génération de maps est accessible aux administrateurs de l’organisation.<
    externe avec son adaptateur, y compris lorsqu’elles sont ouvertes directement.</li>
 </ol>
 <p>Utilisez l’identifiant du module comme système de référence des maps pour le badge
-et la simulation. Un module enregistré sous <code>panoramisk</code> utilise donc des
-références <code>{ "system": "panoramisk", "id": "PAI-042" }</code>.</p>
+et la simulation. Un module enregistré sous <code>documentation</code> utilise donc des
+références <code>{ "system": "documentation", "id": "PAI-042" }</code>.</p>
 <h2 id="protocole-cote-serveur">Protocole côté serveur<a class="headerlink" href="#protocole-cote-serveur" title="Permanent link">&para;</a></h2>
 <p>Le serveur hôte crée un état aléatoire et un vérificateur PKCE uniques pour
 chaque tentative. Il conserve ces valeurs et le chemin de retour local dans la
@@ -2248,7 +2248,7 @@ chemin de la même origine.</p>
 </table>
 <p>Les chemins relatifs des modules natifs se résolvent par rapport à l’URL publique
 de X4B configurée sur le serveur hôte. L’accueil X4B et les modules natifs
-partagent cette origine. Panoramisk et les autres modules externes gardent leur
+partagent cette origine. Les modules externes gardent leur
 propre origine. L’adaptateur garde le secret et le jeton de
 session côté serveur et utilise une session hôte distincte. Les jetons de
 simulation Embedded gardent leurs droits et leur durée propres.</p>

@@ -2570,12 +2570,12 @@ le simple téléchargement du Web Component ne modifie pas un reverse proxy exis
 <p>Dans <code>configuration.json</code>, renseignez <code>embedded.allowed_origins</code> et
 <code>embedded.simulation_sites</code>. Le kit résout les identités après l’enrôlement
 de l’agent et de la gateway de chaque site dédié, puis configure l’exception
-d’encadrement. <a href="../qualification/INSTALLATION-WINDOWS.fr/#activer-embedded-pour-panoramisk">Exemple complet du kit</a></p>
+d’encadrement. <a href="../qualification/INSTALLATION-WINDOWS.fr/#activer-embedded-pour-un-portail-documentaire">Exemple complet du kit</a></p>
 <h2 id="relier-les-fiches-a-leur-map-appcontrol">Relier les fiches à leur map AppControl<a class="headerlink" href="#relier-les-fiches-a-leur-map-appcontrol" title="Permanent link">&para;</a></h2>
 <p>Le job de publication reçoit l’identifiant stable de la fiche Panoramix, par
 exemple <code>PAI-042</code>. Après validation du JSON généré, le job passe cette identité
 dans l’enveloppe de <code>POST /api/v1/map-generation/import</code>.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;source_reference&quot;</span><span class="p">:{</span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="s2">&quot;panoramisk&quot;</span><span class="p">,</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;PAI-042&quot;</span><span class="p">}}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;source_reference&quot;</span><span class="p">:{</span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="s2">&quot;documentation&quot;</span><span class="p">,</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;PAI-042&quot;</span><span class="p">}}</span>
 </span></code></pre></div>
 <p><code>source_reference</code> accompagne les autres champs de la requête d’import. Le
 référentiel fournit sa valeur et le modèle génère la topologie. AppControl
@@ -2583,12 +2583,12 @@ associe la référence à l’UUID créé et garantit son unicité dans l’orga
 L’association devient disponible à la recherche après un import réussi. Pour
 une map déjà importée, un gestionnaire autorisé peut associer la même référence
 avec <code>PUT /api/v1/apps/&lt;application-id&gt;/source-reference</code>, avec le corps
-<code>{"system":"panoramisk","id":"PAI-042"}</code>. <a href="../MAP_GENERATION.fr/#associer-la-map-a-la-fiche-source">Contrat d’import</a></p>
+<code>{"system":"documentation","id":"PAI-042"}</code>. <a href="../MAP_GENERATION.fr/#associer-la-map-a-la-fiche-source">Contrat d’import</a></p>
 <p>Le portail conserve dans sa configuration serveur l’URL AppControl, le système
-source <code>panoramisk</code> et une clé de simulation. Le gabarit de l’onglet
+source <code>documentation</code> et une clé de simulation. Le gabarit de l’onglet
 <strong>Architecture</strong> utilise l’identifiant de la fiche courante. À l’ouverture,
 le serveur du portail envoie la requête suivante.</p>
-<div class="language-http highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="err">GET /api/v1/embedded/resolve?system=panoramisk&amp;id=PAI-042</span>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="err">GET /api/v1/embedded/resolve?system=documentation&amp;id=PAI-042</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">Authorization: ApiKey &lt;cle-du-serveur-hote&gt;</span>
 </span></code></pre></div>
 <ul>
@@ -2626,10 +2626,10 @@ de service du portail pour créer l’un des profils suivants.</p>
 </tr>
 </tbody>
 </table>
-<p>Dans le POC, Panoramis est accessible sans authentification. Tous les visiteurs
+<p>Dans le POC, un portail en mode POC peut être accessible sans authentification. Tous les visiteurs
 consultent les mêmes fiches et partagent le périmètre de la clé de service.
 Choisissez <strong>Embedded portal — all maps the account can view</strong> pour retrouver
-les maps publiées que ce compte peut consulter. Quand Panoramis identifiera
+les maps publiées que ce compte peut consulter. Quand le portail identifiera
 ses utilisateurs, le portail pourra vérifier leur périmètre applicatif avant
 chaque résolution et ouverture de session. Le profil <strong>Import new application
 maps</strong> sert à la publication.</p>
@@ -2670,7 +2670,7 @@ cookies de l'interface Operations à la place de leur jeton dédié.</p>
 L’API <code>/api/fiches/&lt;identifiant&gt;/session-appcontrol</code> appartient au portail. Elle
 résout la référence de la fiche, puis crée la session avec la clé de service.
 Un portail authentifié peut y appliquer les droits propres à chaque utilisateur.
-Le module n'impose ni React ni une dépendance métier à Panoramisk.</p>
+Le module n'impose ni React ni une dépendance métier au portail documentaire.</p>
 <p>Le Web Component encapsule un iframe et transmet le jeton par un handshake
 <code>postMessage</code> contrôlant l'origine, la fenêtre et l'identifiant de session. Il ne
 stocke le jeton ni dans les attributs, ni dans l'URL, ni dans <code>localStorage</code>.

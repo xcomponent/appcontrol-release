@@ -906,6 +906,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -974,6 +978,48 @@
   
   <span class="md-ellipsis">
     Embedded maps and simulation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../X4B-PLATEFORME.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    X4B platform and application onboarding (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../X4B-ACCESS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    X4B access contract (FR)
   </span>
   
 
@@ -2090,8 +2136,8 @@ images immuables, le chart, les migrations et un kit d'installation OpenShift.
 Les démonstrations restent versionnées dans le dépôt et dans les archives de
 release. Le candidat <code>openshift-evaluation-2026.10.28-rc1</code> est un historique
 d'évaluation distinct ; il n'est pas promu par simple changement d'étiquette.</p>
-<p>La version produit <strong>1.23.1</strong> correspond au tag <code>v1.23.1</code>. La première révision
-du kit Windows léger est <strong>1.23.1-1</strong>. Le numéro du kit distingue la révision
+<p>La version produit <strong>1.24.1</strong> correspond au tag <code>v1.24.1</code>. La première révision
+du kit Windows léger est <strong>1.24.1-1</strong>. Le numéro du kit distingue la révision
 des scripts et des manifestes de celle des images. Les résultats de qualification
 se lisent dans la chaîne de release et les preuves jointes aux artefacts.</p>
 <h2 id="preparer-et-integrer">Préparer et intégrer<a class="headerlink" href="#preparer-et-integrer" title="Permanent link">&para;</a></h2>
@@ -2132,16 +2178,18 @@ qualifie le ZIP exact sur OpenShift avant de le livrer. Ne pas réutiliser un
 verrou 1.20.4 pour distribuer les fonctionnalités 1.21.1. Les locks historiques
 restent des références d'ancienne livraison, notamment pour la recette de mise
 à jour.</p>
-<p>Pour la version 1.23.1, rejouer aussi la recette Windows/OpenShift étendue.
+<p>Pour la version 1.24.1, rejouer aussi la recette Windows/OpenShift étendue.
 Elle couvre la publication de maps, les sessions Embedded sur agents isolés
 et le renouvellement des jetons et certificats gérés par le kit. La recette
-du canal public qualifie ensuite le ZIP exact et ses digests d’images.</p>
+du canal public qualifie ensuite le ZIP exact et ses digests d’images.
+Pour raccorder une application externe et vérifier ses accès, suivre le
+<a href="docs/X4B-PLATEFORME.fr.md">guide X4B</a>.</p>
 <h2 id="remettre-au-client">Remettre au client<a class="headerlink" href="#remettre-au-client" title="Permanent link">&para;</a></h2>
 <p><strong>Pour Windows/OpenShift, recommander le kit léger PowerShell + oc</strong> :
-<code>appcontrol-openshift-windows-light-1.23.1-1.zip</code>, son <code>.sha256</code>, le guide
+<code>appcontrol-openshift-windows-light-1.24.1-1.zip</code>, son <code>.sha256</code>, le guide
 <code>COMMENCER-ICI.fr.md</code> et les preuves de même révision
-<code>PUBLICATION-EVALUATION-1.23.1-1.json</code> et
-<code>QUALIFICATION-EVALUATION-1.23.1-1.zip</code>, lorsqu'ils sont publiés par la chaîne.
+<code>PUBLICATION-EVALUATION-1.24.1-1.json</code> et
+<code>QUALIFICATION-EVALUATION-1.24.1-1.zip</code>, lorsqu'ils sont publiés par la chaîne.
 Le client utilise son <code>oc</code> existant ; aucun Python, Helm, Docker ni outil de
 transfert d'images n'est requis sur le poste. Les nœuds téléchargent les images
 publiques d'évaluation, directement ou via Artifactory autorisé.</p>
@@ -2184,7 +2232,7 @@ sauvegarde restaurable et un essai sur les données existantes sont nécessaires
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T19:50:22+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T00:05:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
   </span>
 
     
@@ -2194,7 +2242,7 @@ sauvegarde restaurable et un essai sur les données existantes sont nécessaires
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T19:50:22+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T00:05:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
   </span>
 
     

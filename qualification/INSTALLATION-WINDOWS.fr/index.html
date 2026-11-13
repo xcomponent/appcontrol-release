@@ -1279,6 +1279,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1347,6 +1351,48 @@
   
   <span class="md-ellipsis">
     Embedded maps and simulation (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../X4B-PLATEFORME.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    X4B platform and application onboarding (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../X4B-ACCESS.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    X4B access contract (FR)
   </span>
   
 
@@ -2761,8 +2807,8 @@ paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.<
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.23.1</strong>. Paquet : <strong>Windows léger 1.23.1-1</strong>.</p>
-<p><strong>AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.</strong> La version 1.23.1 ajoute <a href="../../EMBEDDED.fr/">AppControl Embedded</a>, le <a href="../../KNOWLEDGE-ENGINE-CONNECTOR.fr/">raccordement d’une source documentaire</a> et le <a href="#echeances-des-certificats-et-jetons">suivi des certificats et jetons</a>. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.</p>
+<p>Produit : <strong>AppControl 1.24.1</strong>. Paquet : <strong>Windows léger 1.24.1-1</strong>.</p>
+<p><strong>AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.</strong> La version 1.24.1 ajoute <a href="../../X4B-PLATEFORME.fr/">l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications</a>. Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.</p>
 <p>La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
 d'applications aux équipes. Le choix mock dans le prompt produit une map
@@ -3070,12 +3116,12 @@ compatibilité séparément, ou utiliser une base déjà exploitée par la banqu
 avec <code>-ModePostgreSQL Externe</code> et sa chaîne de connexion.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.23.1/appcontrol-openshift-windows-light-1.23.1-1.zip">Paquet Windows léger 1.23.1-1 — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.23.1/appcontrol-openshift-windows-light-1.23.1-1.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/appcontrol-openshift-windows-light-1.24.1-1.zip">Paquet Windows léger 1.24.1-1 — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/appcontrol-openshift-windows-light-1.24.1-1.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.23.1-1.zip&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.24.1-1.zip&#39;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Checksum mismatch: do not use this archive.&#39;</span>
@@ -3559,7 +3605,7 @@ déployée. Ne pas supprimer son dossier d’état.</p>
 </tbody>
 </table>
 <h2 id="qualification-et-suite-du-poc">Qualification et suite du POC<a class="headerlink" href="#qualification-et-suite-du-poc" title="Permanent link">&para;</a></h2>
-<p>La publication du kit 1.23.1-1 suit sa qualification Windows/OpenShift. Les fichiers <code>PUBLICATION-EVALUATION-1.23.1-1.json</code> et <code>QUALIFICATION-EVALUATION-1.23.1-1.zip</code> identifient les images et le ZIP de cette recette.</p>
+<p>La publication du kit 1.24.1-1 suit sa qualification Windows/OpenShift. Les fichiers <code>PUBLICATION-EVALUATION-1.24.1-1.json</code> et <code>QUALIFICATION-EVALUATION-1.24.1-1.zip</code> identifient les images et le ZIP de cette recette.</p>
 <h3 id="historique-des-qualifications">Historique des qualifications<a class="headerlink" href="#historique-des-qualifications" title="Permanent link">&para;</a></h3>
 <p>La qualification complète Windows/OpenShift disponible concerne le kit <code>1.21.1-2</code>.
 Le correctif <code>1.21.1-3</code> conserve ses images et fait l’objet de tests ciblés des scripts
@@ -3873,7 +3919,7 @@ Un domaine personnalisé peut être refusé à la création. Le choix du domaine
 <code>.pres.</code> reste à confirmer avec la plateforme ; l’option ne prouve pas que
 le domaine était la cause de l’erreur d’exposition.</p>
 <h2 id="demonstration-bancaire-complete">Démonstration bancaire complète<a class="headerlink" href="#demonstration-bancaire-complete" title="Permanent link">&para;</a></h2>
-<p><strong>Le kit 1.23.1-1 installe automatiquement la démo bancaire lors d’une installation
+<p><strong>Le kit 1.24.1-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut</strong>, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. <code>-SansDemo</code> désactive les deux démonstrations ;
 une mise à jour avec <code>-MettreAJour</code> conserve les applications existantes sans en ajouter.</p>
@@ -3920,7 +3966,7 @@ configuration multi-sites reste disponible via <code>Configurer-AppControl.ps1</
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T17:24:52+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-12T21:50:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-12</span>
   </span>
 
     

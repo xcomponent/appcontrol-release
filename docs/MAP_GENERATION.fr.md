@@ -345,7 +345,7 @@ Ajoutez ce champ facultatif à l’enveloppe de préparation et d’import, à c
 `map` et des paramètres de placement.
 
 ```json
-{"source_reference":{"system":"panoramisk","id":"PAI-042"}}
+{"source_reference":{"system":"documentation","id":"PAI-042"}}
 ```
 
 AppControl réserve la référence à la création et la rend disponible à la

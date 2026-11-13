@@ -85,7 +85,7 @@ télécharger quoi que ce soit :
 Les commandes et toutes les options des scripts sont regroupées dans la
 **[référence PowerShell](docs/POWERSHELL_COMMANDS.md)**. La documentation
 complète est publiée sur
-**[fredericcarre.github.io/appcontrol](https://xcomponent.github.io/appcontrol-release/)**.
+**[xcomponent.github.io/appcontrol-release](https://xcomponent.github.io/appcontrol-release/)**.
 
 ---
 

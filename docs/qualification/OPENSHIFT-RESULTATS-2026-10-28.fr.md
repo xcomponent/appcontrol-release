@@ -78,7 +78,7 @@ livrées et les dépendances de leurs sources, sans exclusion. Lire le
 correctifs et du comparatif avec le kit du 8 octobre, désormais remplacé.
 
 **La CI générale n’est pas entièrement verte.** Les compilations et tests
-fonctionnels du [run 40669149665](https://github.com/fredericcarre/appcontrol/actions/runs/40669149665),
+fonctionnels du run 40669149665,
 notamment OpenShift, réussissent ; son scan Kubernetes refuse les bases Wolfi
 épinglées des images génériques. Ces images diffèrent des UBI 10/Alpine livrées
 et qualifiées ici. Le [diagnostic](evidence/openshift-2026-10-28/ci-restricted-diagnostic.json)

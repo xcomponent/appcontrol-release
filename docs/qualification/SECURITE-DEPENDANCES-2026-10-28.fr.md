@@ -100,7 +100,7 @@ du 8 octobre reste conservé ; ses alertes ne sont pas supprimées rétroactivem
 ## Échec de la CI générale : périmètre distinct et explicite
 
 Le job Kubernetes restreint de la
-[CI 40669149665](https://github.com/fredericcarre/appcontrol/actions/runs/40669149665/job/122759287249)
+CI 40669149665
 a réussi ses neuf contrôles fonctionnels puis échoué à l’étape de scan des
 images. Le [diagnostic détaillé](evidence/openshift-2026-10-28/ci-restricted-diagnostic.json)
 identifie des vulnérabilités dans les paquets système de ses bases Wolfi :

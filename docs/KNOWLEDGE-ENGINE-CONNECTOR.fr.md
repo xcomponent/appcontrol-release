@@ -59,7 +59,7 @@ concatène le prompt et le document dans un bloc délimité. Le corps du documen
 reste côté Knowledge Engine pendant le parcours nominal.
 
 La clé applicative reprend l’identifiant exact du référentiel, casse et zéros
-initiaux compris. Pour Panoramix, utiliser le CIA comme `application_key`.
+initiaux compris. Pour le portail documentaire, utiliser le CIA comme `application_key`.
 Un autre référentiel peut fournir sa propre clé. Calculer le SHA-256 sur
 les octets UTF-8 du JSON versionné et conserver ces octets pour la lecture
 et l’exécution. Servir une révision
@@ -124,7 +124,7 @@ type `Opaque` dans le projet de l’installation, avec les clés suivantes.
 | `X4B_KNOWLEDGE_URL` | URL de base HTTPS de la source, avec le préfixe `/api/v1`. |
 | `X4B_KNOWLEDGE_TOKEN` | Jeton de service autorisé à lister les documents et à exécuter les prompts pour le périmètre choisi. |
 | `X4B_KNOWLEDGE_ORGANIZATION_ID` | Pour une base vide initialisée par le kit, `00000000-0000-0000-0000-000000000001`. Pour une organisation existante, champ `user.organization_id` de `/api/v1/users/me` dans une session administrateur. |
-| `X4B_KNOWLEDGE_SOURCE` | Nom stable de la source, `documentation` par défaut. Pour Panoramix, utiliser la valeur configurée pour le rapprochement des fiches, par exemple `panoramisk`. |
+| `X4B_KNOWLEDGE_SOURCE` | Nom stable de la source, `documentation` par défaut. Pour le portail documentaire, utiliser la valeur configurée pour le rapprochement des fiches, par exemple `documentation`. |
 | `X4B_KNOWLEDGE_REFRESH_SECONDS` | Intervalle de synchronisation. `0` par défaut pour un déclenchement à la demande. |
 | `X4B_KNOWLEDGE_CONCURRENCY` | De 1 à 4 appels IA simultanés par backend, 2 par défaut. |
 | `X4B_KNOWLEDGE_CA_FILE` | Chemin d’un fichier PEM déjà monté, si la source utilise une autorité interne. |
@@ -191,7 +191,7 @@ redémarrage du backend pour recharger la valeur.
    et l’encadrement HTTP. Sur le kit natif, le bloc `embedded` de
    `configuration.json` sélectionne les origines autorisées et les codes des
    sites dédiés. L’exception d’encadrement est limitée aux routes de session
-   Embedded. [Configuration Windows/OpenShift](qualification/INSTALLATION-WINDOWS.fr.md#activer-embedded-pour-panoramisk)
+   Embedded. [Configuration Windows/OpenShift](qualification/INSTALLATION-WINDOWS.fr.md#activer-embedded-pour-un-portail-documentaire)
 
 Le catalogue du connecteur couvre les documents visibles par le compte de
 service. La mesure de couverture du portefeuille suppose un inventaire

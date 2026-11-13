@@ -1002,7 +1002,7 @@ Les ressources déjà créées sont retrouvées lors d’une reprise. La configu
 n’est pas une transaction globale : conserver le fichier et le dossier privé puis
 relancer après correction d’un échec. Aucun secret n’est affiché dans l’aperçu.
 
-### Activer Embedded pour Panoramisk
+### Activer Embedded pour documentation
 
 Ajoutez un site `SIM` avec une gateway et déclarez son code sous `embedded`.
 Le kit crée le site, la gateway et l’agent, retrouve les UUID après l’enrôlement
@@ -1021,7 +1021,7 @@ par défaut de l’import mock historique.
     { "code": "SIM", "name": "Simulation AppControl", "site_type": "staging", "gateways": 1 }
   ],
   "embedded": {
-    "allowed_origins": ["https://panoramisk.banque.example"],
+    "allowed_origins": ["https://documentation.example.test"],
     "simulation_sites": ["SIM"]
   }
 }

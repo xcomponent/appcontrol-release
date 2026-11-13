@@ -2,7 +2,7 @@
 
 **Le candidat d’évaluation ed757ba passe les dix contrôles OpenShift réels,
 les quatre contrôles d’agent externe et l’import hors ligne de ses cinq images.**
-La [CI 37740566560](https://github.com/fredericcarre/appcontrol/actions/runs/37740566560)
+La CI 37740566560
 est verte. Les anciens paquets intermédiaires ne doivent pas être distribués.
 
 ## Version et plateforme

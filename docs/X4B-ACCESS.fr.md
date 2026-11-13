@@ -14,8 +14,8 @@ La génération de maps est accessible aux administrateurs de l’organisation.
    X4B présente le secret client une seule fois. Conservez-le côté serveur, par
    exemple dans un Secret OpenShift, et configurez le serveur hôte avec l’URL
    publique de X4B. Pour l’hôte de référence, l’URL d’entrée est
-   `https://panoramisk.example.test/` et l’URL de retour est
-   `https://panoramisk.example.test/x4b/callback`. Remplacez le domaine par celui
+   `https://documentation.example.test/` et l’URL de retour est
+   `https://documentation.example.test/x4b/callback`. Remplacez le domaine par celui
    de votre hôte.
 2. Accordez l’accès à une personne dans « Comptes et accès ». Cet accord couvre
    uniquement le module. Ajoutez les droits AppControl sur les maps qui doivent
@@ -25,8 +25,8 @@ La génération de maps est accessible aux administrateurs de l’organisation.
    externe avec son adaptateur, y compris lorsqu’elles sont ouvertes directement.
 
 Utilisez l’identifiant du module comme système de référence des maps pour le badge
-et la simulation. Un module enregistré sous `panoramisk` utilise donc des
-références `{ "system": "panoramisk", "id": "PAI-042" }`.
+et la simulation. Un module enregistré sous `documentation` utilise donc des
+références `{ "system": "documentation", "id": "PAI-042" }`.
 
 ## Protocole côté serveur
 
@@ -44,7 +44,7 @@ chemin de la même origine.
 
 Les chemins relatifs des modules natifs se résolvent par rapport à l’URL publique
 de X4B configurée sur le serveur hôte. L’accueil X4B et les modules natifs
-partagent cette origine. Panoramisk et les autres modules externes gardent leur
+partagent cette origine. documentation et les autres modules externes gardent leur
 propre origine. L’adaptateur garde le secret et le jeton de
 session côté serveur et utilise une session hôte distincte. Les jetons de
 simulation Embedded gardent leurs droits et leur durée propres.

@@ -94,9 +94,9 @@ Il faut distinguer le code, les fichiers de livraison et les images :
 
 | Emplacement | Ce qu’il contient | Accès nécessaire pour ce parcours |
 |---|---|---|
-| Dépôt source `fredericcarre/appcontrol` | Le code du produit ; dépôt privé. | Aucun : le client ne compile pas le produit. |
+| Dépôt source interne | Le code du produit ; dépôt privé. | Aucun : le client ne compile pas le produit. |
 | [Release publique XComponent](https://github.com/xcomponent/appcontrol-release/releases/tag/v1.20.4) | Le ZIP Windows, les procédures, les rapports et les empreintes. Le ZIP contient les **cinq images déjà construites** sous forme d’archives OCI. | Téléchargement public, sans compte ni mot de passe GitHub. Le fichier peut ensuite être transféré par le canal approuvé de la banque. |
-| Registre GitHub `ghcr.io/fredericcarre/appcontrol-*` | Les images d’origine, identifiées précisément dans `images.source.lock.json` du ZIP. | **Non utilisé par l’assistant après réception du ZIP.** |
+| Registre GitHub `registre de build interne` | Les images d’origine, identifiées précisément dans `images.source.lock.json` du ZIP. | **Non utilisé par l’assistant après réception du ZIP.** |
 | Artifactory de la banque, ou registre intégré OpenShift | La copie des cinq images que les pods vont réellement utiliser. | Droits d’import pour l’installation et droits de lecture pour OpenShift. |
 
 Vérification anonyme des références exactes de la release le 31 octobre 2026 :

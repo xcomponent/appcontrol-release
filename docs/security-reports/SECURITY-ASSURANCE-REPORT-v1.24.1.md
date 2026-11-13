@@ -2,7 +2,7 @@
 
 Generated: 2026-11-12T23:21:15.677149+00:00
 Source commit: `4d56a844b1b4efd925c2794c18c556c5a1dd3db7`
-Release workflow: https://github.com/fredericcarre/appcontrol/actions/runs/43318378407
+Release workflow: https://github.com/xcomponent/appcontrol-release/releases
 
 ## Scope and result
 
@@ -17,13 +17,13 @@ Source vulnerability database updated: 2026-11-12T18:57:38.498853214Z. Per-image
 
 | Image | Delivered immutable reference | Findings | Scan timestamp |
 |---|---|---:|---|
-| backend | `ghcr.io/fredericcarre/appcontrol-backend@sha256:1e78baf0002af142cbdba6a57ee4703643477d980e208917bca5fc85bbe2a37d` | 0 | 2026-11-12T23:05:28.871559135Z |
-| frontend | `ghcr.io/fredericcarre/appcontrol-frontend@sha256:9c6f432d8eee861dd9b58298d8d0b6fa408112d604a84a1ea263d8b3677b2174` | 0 | 2026-11-12T23:05:36.286395779Z |
-| gateway | `ghcr.io/fredericcarre/appcontrol-gateway@sha256:433b8612a1de429003da95c9bd5aaa6c0e4bb05db97877e6a2566cd087077236` | 0 | 2026-11-12T23:05:32.615164795Z |
-| agent | `ghcr.io/fredericcarre/appcontrol-agent@sha256:92a4b838c1edb70d5be900e1ce08db1293405ed224fa8cf7a6833406457f5534` | 0 | 2026-11-12T23:05:33.943443564Z |
-| postgresql | `ghcr.io/fredericcarre/appcontrol-postgresql@sha256:98c940a895a9dc13c22b3ec95f0a5368801c0391a66480a521ed7548a29be90a` | 0 | 2026-11-12T23:05:35.574809154Z |
-| init-certs | `ghcr.io/fredericcarre/appcontrol-init-certs@sha256:13ce79ced59562307eb09b695ffcd74d0bcf0401ad43d3fd03879d452e45b08c` | 0 | 2026-11-12T23:05:30.135243203Z |
-| azure-gateway | `ghcr.io/fredericcarre/appcontrol-azure-gateway@sha256:76cdbfbda363d348bea0345e2f3e32bfdccfb41efffd667ec8498bb57ea514bd` | 0 | 2026-11-12T23:05:39.095854304Z |
+| backend | `appcontrol-backend@sha256:1e78baf0002af142cbdba6a57ee4703643477d980e208917bca5fc85bbe2a37d` | 0 | 2026-11-12T23:05:28.871559135Z |
+| frontend | `appcontrol-frontend@sha256:9c6f432d8eee861dd9b58298d8d0b6fa408112d604a84a1ea263d8b3677b2174` | 0 | 2026-11-12T23:05:36.286395779Z |
+| gateway | `appcontrol-gateway@sha256:433b8612a1de429003da95c9bd5aaa6c0e4bb05db97877e6a2566cd087077236` | 0 | 2026-11-12T23:05:32.615164795Z |
+| agent | `appcontrol-agent@sha256:92a4b838c1edb70d5be900e1ce08db1293405ed224fa8cf7a6833406457f5534` | 0 | 2026-11-12T23:05:33.943443564Z |
+| postgresql | `appcontrol-postgresql@sha256:98c940a895a9dc13c22b3ec95f0a5368801c0391a66480a521ed7548a29be90a` | 0 | 2026-11-12T23:05:35.574809154Z |
+| init-certs | `appcontrol-init-certs@sha256:13ce79ced59562307eb09b695ffcd74d0bcf0401ad43d3fd03879d452e45b08c` | 0 | 2026-11-12T23:05:30.135243203Z |
+| azure-gateway | `appcontrol-azure-gateway@sha256:76cdbfbda363d348bea0345e2f3e32bfdccfb41efffd667ec8498bb57ea514bd` | 0 | 2026-11-12T23:05:39.095854304Z |
 
 | Dependency scope | Inputs | Findings | Scan timestamp |
 |---|---|---:|---|

@@ -193,8 +193,9 @@ components:
           items:
             $ref: '#/components/schemas/DocumentReference'
         next_cursor:
-          type: string
+          type: [string, 'null']
           minLength: 1
+          description: Curseur de la page suivante. À omettre ou à mettre à null sur la dernière page.
     PromptRequest:
       type: object
       required: [document, prompt]

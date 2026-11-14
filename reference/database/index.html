@@ -9,8 +9,6 @@
         <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
       
       
-        <meta name="author" content="AppControl">
-      
       
         <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/reference/database/">
       
@@ -2730,6 +2728,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#x4b_knowledge_settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      x4b_knowledge_settings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#x4b_module_grants" class="md-nav__link">
     <span class="md-ellipsis">
       x4b_module_grants
@@ -3775,6 +3782,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#x4b_knowledge_settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      x4b_knowledge_settings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#x4b_module_grants" class="md-nav__link">
     <span class="md-ellipsis">
       x4b_module_grants
@@ -3826,15 +3842,15 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
-  
-  
+                
+                  
 
 
 <h1 id="database-schema-reference">Database schema reference<a class="headerlink" href="#database-schema-reference" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>Auto-generated from <code>migrations/V*.sql</code>. Run <code>scripts/docs/regen.py</code> to refresh.</p>
 </blockquote>
-<p>The schema is defined by <strong>65 versioned migrations</strong> applied in order at backend startup. PostgreSQL 16 is the production target; SQLite is supported for development and small-scale deployments. Schema parity between the two backends is mandatory — see <a href="../../SQLITE_IMPLEMENTATION/">SQLite implementation notes</a>.</p>
+<p>The schema is defined by <strong>67 versioned migrations</strong> applied in order at backend startup. PostgreSQL 16 is the production target; SQLite is supported for development and small-scale deployments. Schema parity between the two backends is mandatory — see <a href="../../SQLITE_IMPLEMENTATION/">SQLite implementation notes</a>.</p>
 <p><strong>Append-only tables</strong> (no <code>UPDATE</code>, no <code>DELETE</code>, ever — they are the audit substrate):</p>
 <ul>
 <li><code>action_log</code></li>
@@ -3999,13 +4015,14 @@
     x4b_external_sessions ||--o{ x4b_module_grants : "organization_id,user_id,module_key"
     x4b_handoffs ||--o{ users : "user_id"
     x4b_handoffs ||--o{ x4b_module_grants : "organization_id,user_id,module_key"
+    x4b_knowledge_settings ||--o{ organizations : "organization_id"
     x4b_module_grants ||--o{ users : "user_id"
     x4b_module_grants ||--o{ x4b_modules : "organization_id,module_key"
     x4b_modules ||--o{ organizations : "organization_id"
     x4b_user_policies ||--o{ organizations : "organization_id"
     x4b_user_policies ||--o{ users : "user_id"</code></pre>
 <h2 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link">&para;</a></h2>
-<p>Total: <strong>90</strong> tables.</p>
+<p>Total: <strong>91</strong> tables.</p>
 <h3 id="action_log"><code>action_log</code><a class="headerlink" href="#action_log" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Append-only</p>
@@ -9542,6 +9559,55 @@
 </table>
 <p><strong>Indexes:</strong> <code>idx_x4b_handoffs_expires</code></p>
 <p>Defined in: <code>migrations/V066__x4b_access.sql</code></p>
+<h3 id="x4b_knowledge_settings"><code>x4b_knowledge_settings</code><a class="headerlink" href="#x4b_knowledge_settings" title="Permanent link">&para;</a></h3>
+<p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
+<p><strong>Primary key:</strong> <code>(organization_id)</code></p>
+<p><strong>Foreign keys:</strong></p>
+<ul>
+<li><code>(organization_id)</code> → <code>organizations(id)</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>organization_id</code></td>
+<td><code>U</code></td>
+<td>PK, FK→<code>organizations</code></td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td><code>T</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>refresh_seconds</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>encrypted_token</code></td>
+<td><code>B</code></td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td><code>revision</code></td>
+<td><code>U</code></td>
+<td>NOT NULL</td>
+</tr>
+</tbody>
+</table>
+<p>Defined in: <code>migrations/V068__knowledge_settings.sql</code></p>
 <h3 id="x4b_module_grants"><code>x4b_module_grants</code><a class="headerlink" href="#x4b_module_grants" title="Permanent link">&para;</a></h3>
 <p><em>(purpose: add to <code>scripts/docs/gen_database_schema.py::TABLE_PURPOSE</code>)</em></p>
 <p><strong>Primary key:</strong> <code>(organization_id, user_id, module_key)</code></p>
@@ -9690,7 +9756,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T00:05:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-14T15:33:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-14</span>
   </span>
 
     
@@ -9700,7 +9766,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T00:05:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-14T15:33:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-14</span>
   </span>
 
     
@@ -9777,7 +9843,8 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Source on GitHub</a>
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Releases on GitHub</a>
+
     </div>
   
   

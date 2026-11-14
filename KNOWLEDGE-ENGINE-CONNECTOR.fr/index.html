@@ -9,8 +9,6 @@
         <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
       
       
-        <meta name="author" content="AppControl">
-      
       
         <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/KNOWLEDGE-ENGINE-CONNECTOR.fr/">
       
@@ -1475,6 +1473,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Raccorder la source documentaire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#renseigner-lurl-et-le-jeton-dans-x4b" class="md-nav__link">
+    <span class="md-ellipsis">
+      Renseigner l’URL et le jeton dans X4B
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fournir-le-connecteur-au-deploiement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fournir le connecteur au déploiement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2233,6 +2255,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Raccorder la source documentaire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#renseigner-lurl-et-le-jeton-dans-x4b" class="md-nav__link">
+    <span class="md-ellipsis">
+      Renseigner l’URL et le jeton dans X4B
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fournir-le-connecteur-au-deploiement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fournir le connecteur au déploiement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2278,8 +2324,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
-  
-  
+                
+                  
 
 
 <h1 id="raccorder-une-source-documentaire-a-x4b">Raccorder une source documentaire à X4B<a class="headerlink" href="#raccorder-une-source-documentaire-a-x4b" title="Permanent link">&para;</a></h1>
@@ -2362,8 +2408,9 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.</p>
    Un document sans changement réutilise son résultat pour la même configuration.</li>
 <li><strong>Générer.</strong> Le traitement de fond limite le nombre d’appels simultanés et
    conserve l’état de chaque application dans PostgreSQL. Il identifie une
-   génération par la source, la clé applicative, l’empreinte du document et celle du
-   prompt envoyé. Un retour <code>429</code> déclenche une reprise différée. Un délai
+   génération par la source, la clé applicative, l’empreinte du document et le
+   contexte de génération, dont le prompt, les références du catalogue de
+   composants et les codes et noms des sites actifs. Un retour <code>429</code> déclenche une reprise différée. Un délai
    dépassé ou une coupure après envoi est signalé pour relance. Après un
    arrêt du backend pendant un appel, sa reprise peut consommer un deuxième
    appel à l’IA. La déduplication des générations et des maps est
@@ -2379,6 +2426,13 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.</p>
    séparément l’empreinte source de la map publiée et celle de la dernière
    génération. Une disparition du catalogue est signalée et la map est conservée.</li>
 </ol>
+<p>Avec un catalogue de composants AppControl, X4B demande d’abord à l’IA de relever
+les briques et les indices techniques dans le document. Il compare ces éléments
+aux clés, libellés et alias du catalogue de l’organisation. Le prompt final est
+exécuté sur le même document et transmet les références pertinentes par composant,
+ainsi que les codes et noms des sites actifs. Les commandes, icônes et couleurs du
+catalogue restent dans AppControl. Sans catalogue de composants, X4B exécute
+directement le prompt final avec les sites disponibles.</p>
 <h2 id="preparer-et-rejouer-linstallation-openshift">Préparer et rejouer l’installation OpenShift<a class="headerlink" href="#preparer-et-rejouer-linstallation-openshift" title="Permanent link">&para;</a></h2>
 <p>Copiez <code>configuration.example.json</code> en <code>configuration.json</code>. Le fichier
 décrit les sites, hébergements, gateways, agents Linux persistants,
@@ -2422,9 +2476,45 @@ de passe masquée.</p>
 d’exécution logiques. Les datacenters réels sont des cibles que le client
 raccorde avec leurs gateways et agents.</p>
 <h3 id="raccorder-la-source-documentaire">Raccorder la source documentaire<a class="headerlink" href="#raccorder-la-source-documentaire" title="Permanent link">&para;</a></h3>
-<p>Le backend lit la configuration au démarrage. L’interface permet de tester
-et de synchroniser la source configurée. Sur OpenShift, créez un Secret de
-type <code>Opaque</code> dans le projet de l’installation, avec les clés suivantes.</p>
+<p>Le backend doit pouvoir joindre le connecteur en HTTPS. Avec Helm,
+<code>networkPolicy.backendHttpsCIDRs</code> permet de déclarer les CIDR approuvés sur le
+port 443. Avec le kit OpenShift natif, appliquez la politique de sortie
+approuvée pour le backend de cette installation.</p>
+<h4 id="renseigner-lurl-et-le-jeton-dans-x4b">Renseigner l’URL et le jeton dans X4B<a class="headerlink" href="#renseigner-lurl-et-le-jeton-dans-x4b" title="Permanent link">&para;</a></h4>
+<p>Sur OpenShift, le script suivant prépare le Secret qui autorise les réglages
+dans l’interface. Donnez l’origine HTTPS approuvée du connecteur, sans le
+chemin <code>/api/v1</code>.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  <span class="n">-AutoriserReglagesUI</span> <span class="n">-OriginesAutorisees</span> <span class="s1">&#39;https://knowledge.example&#39;</span>
+</span></code></pre></div>
+<p>Référencez <code>appcontrol-reglages-generation</code> dans <code>document_source.secret_name</code>
+et appliquez le JSON avec <code>Deployer-AppControl.ps1 -Configuration</code> lors de
+l’installation ou avec <code>Configurer-AppControl.ps1</code> sur une instance existante.
+Si le projet héberge plusieurs instances, attribuez un nom distinct à chaque
+Secret avec <code>-Nom</code> et reportez ce nom dans le JSON de l’instance.
+Dans <strong>Génération de maps → Paramètres</strong>, renseignez ensuite l’URL complète
+terminée par <code>/api/v1</code>, le jeton et, si nécessaire, le nom de source utilisé
+pour rapprocher les fiches. La génération utilise les réglages enregistrés
+sans redémarrage du backend.</p>
+<p>Dans le formulaire, <strong>Tester la connexion</strong> vérifie l’accès HTTPS avec le
+jeton saisi et contrôle le format de la première page de
+<code>GET /knowledge-documents</code>. <strong>Tester le prompt sur un document</strong> appelle
+<code>POST /prompt-executions</code> sur le premier document accessible et vérifie
+la référence de la révision et la topologie AppControl renvoyée. Ce second
+test utilise l’IA du connecteur. Les tests ne sauvegardent aucun réglage,
+ne lancent aucun lot et ne publient aucune map. <strong>Enregistrer</strong> applique les
+paramètres.</p>
+<p>Pour les autres modes de déploiement, fournissez au backend
+<code>X4B_KNOWLEDGE_SETTINGS_KEY</code> (32 octets aléatoires encodés en base64) et
+<code>X4B_KNOWLEDGE_SETTINGS_ALLOWED_ORIGINS</code> (origines HTTPS exactes, séparées
+par des virgules). Conservez et sauvegardez cette clé avec le déploiement.
+Toutes les répliques utilisent la même clé pour lire les jetons chiffrés
+en base. Le script conserve la clé lors de ses relances.</p>
+<h4 id="fournir-le-connecteur-au-deploiement">Fournir le connecteur au déploiement<a class="headerlink" href="#fournir-le-connecteur-au-deploiement" title="Permanent link">&para;</a></h4>
+<p>Pour une configuration automatisée, fournissez le connecteur au backend au
+démarrage. Cette configuration est prioritaire pour l’organisation concernée.
+Sur OpenShift, utilisez un Secret de type <code>Opaque</code> dans le projet de
+l’installation, avec les clés suivantes.</p>
 <table>
 <thead>
 <tr>
@@ -2435,7 +2525,7 @@ type <code>Opaque</code> dans le projet de l’installation, avec les clés suiv
 <tbody>
 <tr>
 <td><code>X4B_KNOWLEDGE_URL</code></td>
-<td>URL de base HTTPS de la source, avec le préfixe <code>/api/v1</code>.</td>
+<td>URL de base de la source terminant par <code>/api/v1</code>, en HTTPS par défaut.</td>
 </tr>
 <tr>
 <td><code>X4B_KNOWLEDGE_TOKEN</code></td>
@@ -2458,25 +2548,61 @@ type <code>Opaque</code> dans le projet de l’installation, avec les clés suiv
 <td>De 1 à 4 appels IA simultanés par backend, 2 par défaut.</td>
 </tr>
 <tr>
+<td><code>X4B_KNOWLEDGE_HTTP_SERVICE</code></td>
+<td>Nom DNS exact du Service interne autorisé en HTTP, par exemple <code>ciascribe-api.appcontrol-poc.svc</code>.</td>
+</tr>
+<tr>
+<td><code>X4B_KNOWLEDGE_TLS_SKIP_VERIFY</code></td>
+<td><code>true</code> pour ignorer la vérification du certificat du connecteur HTTPS configuré au déploiement, en développement uniquement.</td>
+</tr>
+<tr>
 <td><code>X4B_KNOWLEDGE_CA_FILE</code></td>
 <td>Chemin d’un fichier PEM déjà monté, si la source utilise une autorité interne.</td>
 </tr>
 </tbody>
 </table>
-<p>Faites autoriser la sortie HTTPS du pod backend vers le service de la source.
-Avec Helm, <code>networkPolicy.backendHttpsCIDRs</code> permet de déclarer les CIDR
-approuvés sur le port 443. Avec le kit OpenShift natif, appliquez la politique
-de sortie approuvée pour le backend de cette installation.</p>
+<p>Pour créer ce Secret depuis un script PowerShell, lancez
+<code>Preparer-SourceDocumentaire.ps1</code> depuis le dossier du kit avant le déploiement.
+La commande utilise la connexion OpenShift active et demande le jeton en saisie
+masquée. En automatisation, injectez <code>X4B_KNOWLEDGE_TOKEN</code> depuis votre coffre et
+ajoutez <code>-NonInteractif</code>. Vous pouvez aussi fournir une valeur <code>SecureString</code>
+avec <code>-Jeton</code>.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  <span class="n">-Url</span> <span class="s1">&#39;https://knowledge.example/api/v1&#39;</span> <span class="p">`</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span> <span class="n">-Source</span> <span class="n">documentation</span>
+</span></code></pre></div>
+<p>Pour un Service interne au cluster, utilisez son nom DNS et le <strong>port du
+Service</strong>, généralement 80 en HTTP. Ajoutez <code>-AutoriserHttpInterne</code>.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">-Url</span> <span class="s1">&#39;http://ciascribe-api.appcontrol-poc.svc/api/v1&#39;</span> <span class="p">`</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">-AutoriserHttpInterne</span> <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span>
+</span></code></pre></div>
+<p>Si le connecteur utilise HTTPS avec un certificat interne non reconnu, montez
+de préférence le PEM de son autorité de certification et indiquez-le via
+<code>X4B_KNOWLEDGE_CA_FILE</code>. Pour un test temporaire, ajoutez
+<code>-IgnorerCertificatTls</code> à la commande HTTPS. Cette option désactive la
+vérification du certificat pour le seul connecteur fourni au déploiement.
+Relancez le préparateur sans l’option puis redémarrez le backend pour rétablir
+la vérification. En HTTP, le jeton et les documents circulent en clair.</p>
+<p>En cas d’échec, consultez les journaux du <strong>backend</strong>, par exemple
+<code>oc -n appcontrol-poc logs deployment/appcontrol-demo-backend --since=10m</code>.
+Cherchez <code>Knowledge source</code>. Le journal indique l’opération, l’hôte,
+le statut HTTP ou le type d’échec de transport. Si une NetworkPolicy limite
+les sorties, faites autoriser le flux du backend vers le pod de la source
+sur le port cible du Service.</p>
+<p>Le script crée <code>appcontrol-source-documentaire</code> par défaut. Il peut mettre à
+jour un Secret qu’il a créé et laisse un Secret préexistant intact. Ajoutez
+<code>-Intervalle 900</code> pour synchroniser la source toutes les quinze minutes.</p>
 <p>Ajoutez ce champ à la racine de <code>configuration.json</code> avec le nom du Secret
 existant.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;document_source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;secret_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;appcontrol-source-documentaire&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;document_source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;secret_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;appcontrol-source-documentaire&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="n">-Nom</span> <span class="n">appcontrol-demo</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span> <span class="n">-SansDemo</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="n">-Nom</span> <span class="n">appcontrol-demo</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span> <span class="n">-SansDemo</span>
 </span></code></pre></div>
 <p>Ici, <code>-SansDemo</code> laisse le portefeuille libre pour votre scénario.
 La commande accepte <code>-Verifier</code> pour contrôler la configuration et les
@@ -2494,14 +2620,13 @@ redémarrage du backend pour recharger la valeur.
 <li>Cliquez sur <strong>Synchroniser les sources</strong>. X4B met en file les documents
    nouveaux ou modifiés du périmètre autorisé et affiche l’état de chaque
    clé. Le premier lot peut être borné par le périmètre du compte de service.</li>
-<li>Examinez les candidates et les sites proposés par composant. Par exemple,
-   une source qui situe la base sur <code>Vega</code> et l’API sur <code>Sirius</code> affiche les
-   deux correspondances si ces sites sont configurés. La revue signale les
-   sites introuvables ou ambigus. Si tous les composants correspondent au
-   même site actif, le formulaire individuel le propose comme rattachement
-   de l’application. Les autres cas demandent un choix explicite. La
-   publication X4B crée la topologie, et l’import opérationnel utilise son
-   propre parcours pour résoudre les agents.
+<li>Examinez les candidates et les sites proposés par composant. Si le document
+   situe une même API à <code>Sirius</code> et <code>Legac</code>, les deux sites apparaissent sur ce
+   composant et restent visibles sur la map publiée. La revue signale les sites
+   introuvables ou ambigus. Si chaque composant correspond au même site actif,
+   le formulaire individuel le propose comme rattachement administratif de
+   l’application. Les autres cas demandent un choix explicite. Les placements
+   d’exécution et les agents se configurent dans AppControl.
    Une publication groupée peut traiter jusqu’à
    100 candidates par appel API. Une fois les maps présentes, ajoutez les
    droits d’équipe dans AppControl ou renseignez <code>permissions</code> dans le
@@ -2512,9 +2637,13 @@ redémarrage du backend pour recharger la valeur.
    manuellement, ouvrez <strong>Ouvrir la map publiée</strong>, puis <strong>Edit</strong>. La
    proposition reste à comparer tant que l’intégration de la révision
    source n’a pas été enregistrée par une action dédiée.</li>
-<li>Ouvrez la map pour la qualifier dans AppControl. Le widget peut utiliser
-   sa copie de simulation quand les cibles dédiées et les origines
-   autorisées sont configurées. Le chart Helm sait configurer le backend
+<li>Ouvrez la map dans le widget pour tester sa reconstruction. Avec un seul
+   site dédié dans <code>embedded.simulation_sites</code>, AppControl utilise l’agent et
+   la gateway enrôlés par le kit pour ce site. Toutes les maps publiées et
+   accessibles au portail peuvent être simulées ainsi, sans affectation par
+   composant. Avec plusieurs cibles, la session indique le site de simulation
+   choisi. Les sites documentés sur la map restent visibles dans le widget.
+   Le chart Helm sait configurer le backend
    et l’encadrement HTTP. Sur le kit natif, le bloc <code>embedded</code> de
    <code>configuration.json</code> sélectionne les origines autorisées et les codes des
    sites dédiés. L’exception d’encadrement est limitée aux routes de session
@@ -2543,6 +2672,11 @@ synchronisation.</p>
 <td>Même empreinte et même configuration</td>
 <td>X4B réutilise la génération précédente.</td>
 <td>Aucune action.</td>
+</tr>
+<tr>
+<td>Catalogue de composants ou sites actifs modifiés</td>
+<td>La synchronisation recalcule les propositions concernées.</td>
+<td>Relire les correspondances avant publication.</td>
 </tr>
 <tr>
 <td>Empreinte différente et map déjà publiée</td>
@@ -2603,7 +2737,7 @@ reste responsable de la publication de la map.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T12:18:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:18:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
   </span>
 
     
@@ -2690,7 +2824,8 @@ reste responsable de la publication de la map.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Source on GitHub</a>
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Releases on GitHub</a>
+
     </div>
   
   

@@ -9,8 +9,6 @@
         <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
       
       
-        <meta name="author" content="AppControl">
-      
       
         <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/MAP_GENERATION.fr/">
       
@@ -2446,8 +2444,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
-  
-  
+                
+                  
 
 
 <h1 id="generer-des-maps-avec-lia-du-client">Générer des maps avec l’IA du client<a class="headerlink" href="#generer-des-maps-avec-lia-du-client" title="Permanent link">&para;</a></h1>
@@ -2460,7 +2458,7 @@ sur des agents et gateways dédiés, et délivre un jeton limité à cette simul
 Un profil mock adressé à l'IA ne remplace pas cette isolation imposée côté serveur.
 Voir <a href="../EMBEDDED.fr/">EMBEDDED.fr.md</a>.</p>
 <p><strong>Le parcours initial de publication existe depuis AppControl 1.21.1.</strong> Les
-enrichissements décrits ici — prompt révision <code>7</code>, synchronisation du catalogue et
+enrichissements décrits ici — prompt révision <code>8</code>, synchronisation du catalogue et
 Embedded — nécessitent un serveur qui expose ces capacités. Vérifier la réponse
 du contrat et les routes de l'instance installée ; un script ou un kit récent ne
 met pas à jour les images du produit à lui seul.</p>
@@ -2524,10 +2522,12 @@ met pas à jour les images du produit à lui seul.</p>
 </tr>
 </tbody>
 </table>
-<p>La révision actuelle des instructions est <code>prompt_revision: "7"</code>. L’IA reprend
-dans <code>source_site</code> le code ou le nom du site explicitement documenté pour un
-composant. Lorsque les hôtes sont inconnus, elle laisse <code>binding_profiles</code>
-et <code>host</code> absents. L'intégration peut fournir les placements autorisés.
+<p>La révision actuelle des instructions est <code>prompt_revision: "8"</code>. L’IA reprend
+dans <code>source_sites</code> les codes ou noms de tous les sites explicitement documentés
+pour un composant, par exemple <code>"source_sites": ["Sirius", "Legac"]</code>. Le champ
+historique <code>source_site</code> reste accepté pour un seul site. Lorsque les hôtes sont
+inconnus, l’IA laisse <code>binding_profiles</code> et <code>host</code> absents. L’intégration peut
+fournir les placements autorisés.
 <code>contract_version: "1"</code> et <code>format_version: "4.2"</code> ne sont pas des numéros de
 révision du prompt. Conserver la réponse du contrat plutôt que coder ces
 instructions en dur.</p>
@@ -2709,7 +2709,7 @@ pour intégrer les API HTTP d'AppControl.</p>
 </span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Remplacez les hôtes et l'identifiant d'équipe par ceux de votre instance, et utilisez la map issue des documents avec ses procédures relues. Cet exemple montre les affectations ; il ne contient volontairement aucune procédure de production. <code>ready</code> signifie que la préparation accepte la configuration, pas que les procédures sont éprouvées.</p>
-<p>Omettez <code>profile</code> dans cette enveloppe. L’import normal utilise <code>standard</code> par défaut et conserve les commandes fournies, y compris celles d’un prompt mock. L’écriture explicite <code>"profile": "standard"</code> reste compatible. Une entrée dans <code>placements</code> définit en priorité le site du composant. À défaut, AppControl rapproche <code>source_site</code> du code ou du nom d’un site de l’organisation, en ignorant la casse et les espaces en bordure. Une correspondance unique avec un site actif permet de préparer le placement. Une référence introuvable, inactive ou ambiguë demande une affectation explicite. En l’absence des deux champs, le <code>site_code</code> administratif de l’enveloppe sert de site par défaut.</p>
+<p>Omettez <code>profile</code> dans cette enveloppe. L’import normal utilise <code>standard</code> par défaut et conserve les commandes fournies, y compris celles d’un prompt mock. L’écriture explicite <code>"profile": "standard"</code> reste compatible. Une entrée dans <code>placements</code> définit en priorité le site d’exécution du composant. Avec un seul site documenté, AppControl le rapproche du code ou du nom d’un site actif de l’organisation, en ignorant la casse et les espaces en bordure. Plusieurs sites documentés ou une référence introuvable, inactive ou ambiguë demandent une affectation explicite. Sans placement ni site documenté, le <code>site_code</code> administratif de l’enveloppe sert de site par défaut. La liste des sites documentés reste attachée au composant après l’import.</p>
 <p>En <code>standard</code>, choisissez <strong>soit</strong> <code>agent_id</code>, <strong>soit</strong> <code>host</code> dans <code>placements</code>. À défaut, le <code>host</code> du composant sert de référence. AppControl recherche l’hôte ou l’IP exacte dans le site résolu. Un code de site seul laisse le choix de l’agent à compléter. Un agent enregistré mais hors ligne produit un avertissement. Vérifiez le rapport de préparation avant la publication.</p>
 <p>L'intégration construit ces placements à partir du référentiel structuré et du contexte AppControl. Ils restent séparés du JSON de map : les documents ne peuvent pas attribuer eux-mêmes des droits ou inventer des UUID. Le contexte est relu par lot et les cibles sont recontrôlées à chaque publication.</p>
 <p>Une map issue d’un prompt mock utilise ces mêmes placements avec <code>host</code> ou <code>agent_id</code>, les mêmes agents enrôlés et les mêmes <code>team_grants</code>. Le serveur ne réécrit ni ses commandes ni son nom. Une base à Paris et une API à Lyon s’exécutent simultanément, qu’elles représentent des services réels ou des fichiers témoins. Un profil DR reste une destination alternative du parcours classique ci-dessous.</p>
@@ -2888,7 +2888,7 @@ habituel de revue et de suppression autorisée avant de republier.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T12:18:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:18:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
   </span>
 
     
@@ -2975,7 +2975,8 @@ habituel de revue et de suppression autorisée avant de republier.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Source on GitHub</a>
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Releases on GitHub</a>
+
     </div>
   
   

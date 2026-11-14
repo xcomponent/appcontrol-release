@@ -9,8 +9,6 @@
         <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
       
       
-        <meta name="author" content="AppControl">
-      
       
         <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/X4B-PLATEFORME.fr/">
       
@@ -1058,7 +1056,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-documentation" class="md-nav__link">
+  <a href="#integration-dun-portail-documentaire" class="md-nav__link">
     <span class="md-ellipsis">
       Intégration d’un portail documentaire
     </span>
@@ -2166,7 +2164,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-documentation" class="md-nav__link">
+  <a href="#integration-dun-portail-documentaire" class="md-nav__link">
     <span class="md-ellipsis">
       Intégration d’un portail documentaire
     </span>
@@ -2194,8 +2192,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
-  
-  
+                
+                  
 
 
 <h1 id="x4b-raccorder-une-application">X4B — Raccorder une application<a class="headerlink" href="#x4b-raccorder-une-application" title="Permanent link">&para;</a></h1>
@@ -2203,7 +2201,7 @@
 <h2 id="comptes-et-acces">Comptes et accès<a class="headerlink" href="#comptes-et-acces" title="Permanent link">&para;</a></h2>
 <p>L’administrateur réutilise les comptes locaux AppControl. Les comptes existants gardent leur accès AppControl après mise à jour. Les nouveaux comptes créés dans X4B reçoivent les accès choisis dans l’administration. La génération et la publication par lots restent réservées aux administrateurs dans cette version. Les autorisations AppControl sur les maps, les sites et les opérations s’appliquent en plus de l’accès au module.</p>
 <p>Pour un POC avec un portail documentaire, créer un compte administrateur de revue et un compte de consultation. Donner à ce dernier accès au portail, puis un droit de lecture sur la map et les sites nécessaires, dont le site de simulation. Le compte peut ouvrir une simulation isolée. Les opérations sur une map réelle nécessitent les droits d’exploitation AppControl.</p>
-<h2 id="integration-documentation">Intégration d’un portail documentaire<a class="headerlink" href="#integration-documentation" title="Permanent link">&para;</a></h2>
+<h2 id="integration-dun-portail-documentaire">Intégration d’un portail documentaire<a class="headerlink" href="#integration-dun-portail-documentaire" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Conserver les URL HTTPS du portail et d’AppControl. L’accueil X4B peut utiliser le même hôte qu’AppControl avec le chemin <code>/x4b</code>.</li>
 <li>Dans <strong>Applications raccordées</strong>, enregistrer <code>documentation</code>. Pour l’hôte de référence, utiliser <code>https://documentation.example.test/</code> comme URL d’entrée et <code>https://documentation.example.test/x4b/callback</code> comme URL de retour, avec le domaine réel de l’hôte. Copier le secret affiché à la création dans le gestionnaire de secrets du serveur du portail.</li>
@@ -2243,7 +2241,7 @@
 </tbody>
 </table>
 <p>Pour les deux routes Embedded, <code>credentials</code> contient <code>client_id</code>, <code>client_secret</code> et <code>session_token</code>. La source de la map est résolue par <code>source_reference.system</code> égal à la clé du module et <code>source_reference.id</code> égal à l’identifiant de la fiche. La configuration <a href="../EMBEDDED.fr/">AppControl Embedded</a> déclare en plus l’origine du portail et le site de simulation. Le jeton de simulation reste court et suit la validité de la session X4B qui l’a demandé.</p>
-<p>Pour les maps générées depuis une source documentaire externe, renseigner <code>X4B_KNOWLEDGE_SOURCE=documentation</code> dans le Secret de source documentaire OpenShift. L’<code>application_key</code> exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple <code>PAI-042</code>.</p>
+<p>Pour les maps générées depuis une source documentaire externe, renseigner <code>documentation</code> comme nom de source dans <strong>Génération de maps → Paramètres</strong>, ou définir <code>X4B_KNOWLEDGE_SOURCE=documentation</code> lors du déploiement. L’<code>application_key</code> exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple <code>PAI-042</code>.</p>
 <p>Le badge actualise les données toutes les 15 secondes quand la page est visible. Autoriser l’hôte AppControl dans <code>script-src</code>, <code>style-src</code> et <code>frame-src</code> du portail. Le navigateur interroge les routes du portail sous sa propre origine.</p>
 <p>L’hôte de référence <code>demo-rebuild/embedded/x4b_host.py</code> contient deux fiches fictives, dont <code>PAI-042</code>. Il est livré dans l’archive <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/demo-rebuild.tar.gz">demo-rebuild.tar.gz de la release</a>. Le placer derrière un proxy HTTPS qui transmet le <code>Host</code> public. Configurer <code>X4B_URL=https://appcontrol.example.test</code>, <code>X4B_HOST_ORIGIN=https://documentation.example.test</code> et <code>X4B_MODULE_KEY=documentation</code> avec les valeurs de l’installation, puis injecter le secret client dans <code>X4B_CLIENT_SECRET</code>. Si plusieurs sites de simulation sont configurés, préciser <code>X4B_SIMULATION_SITE_ID</code>. L’hôte écoute en boucle locale sur le port <code>8081</code> par défaut. Le modèle de production doit s’appuyer sur les sessions du framework du portail et vérifier les droits de chaque fiche.</p>
 <p>Si le certificat de X4B est signé par une autorité interne, configurer <code>X4B_CA_FILE</code> avec la chaîne de confiance PEM sur le serveur de l’hôte de référence. Le navigateur doit lui aussi faire confiance à l’autorité utilisée par les deux sites.</p>
@@ -2273,7 +2271,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-12T21:50:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:18:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
   </span>
 
     
@@ -2360,7 +2358,8 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Source on GitHub</a>
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Releases on GitHub</a>
+
     </div>
   
   

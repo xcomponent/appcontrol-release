@@ -9,8 +9,6 @@
         <meta name="description" content="Operational platform for IT resilience. Map applications as dependency graphs, monitor health in real time, orchestrate sequenced operations, and maintain DORA-compliant audit trails.">
       
       
-        <meta name="author" content="AppControl">
-      
       
         <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS.fr/">
       
@@ -2788,8 +2786,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
-  
-  
+                
+                  
 
 
 <h1 id="installer-mettre-a-jour-et-retirer-appcontrol-sur-openshift-avec-powershell-et-oc">Installer, mettre à jour et retirer AppControl sur OpenShift avec PowerShell et oc<a class="headerlink" href="#installer-mettre-a-jour-et-retirer-appcontrol-sur-openshift-avec-powershell-et-oc" title="Permanent link">&para;</a></h1>
@@ -2799,8 +2797,8 @@ paquet de fichiers PowerShell et YAML, puis une seule commande de déploiement.<
 léger ne contient <strong>aucune image ni aucun exécutable</strong>. Il n’installe pas <code>oc</code> et
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.</p>
-<p>Produit : <strong>AppControl 1.24.1</strong>. Paquet : <strong>Windows léger 1.24.1-1</strong>.</p>
-<p><strong>AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.</strong> La version 1.24.1 ajoute <a href="../../X4B-PLATEFORME.fr/">l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications</a>. Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.</p>
+<p>Produit : <strong>AppControl 1.24.2</strong>. Paquet : <strong>Windows léger 1.24.2-1</strong>.</p>
+<p><strong>AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.</strong> La plateforme inclut <a href="../../X4B-PLATEFORME.fr/">l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications</a>. Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.</p>
 <p>La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
 d'applications aux équipes. Le choix mock dans le prompt produit une map
@@ -3108,12 +3106,12 @@ compatibilité séparément, ou utiliser une base déjà exploitée par la banqu
 avec <code>-ModePostgreSQL Externe</code> et sa chaîne de connexion.</p>
 <h2 id="4-telecharger-les-petits-fichiers-de-deploiement">4. Télécharger les petits fichiers de déploiement<a class="headerlink" href="#4-telecharger-les-petits-fichiers-de-deploiement" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/appcontrol-openshift-windows-light-1.24.1-1.zip">Paquet Windows léger 1.24.1-1 — scripts et YAML</a></li>
-<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/appcontrol-openshift-windows-light-1.24.1-1.zip.sha256">Empreinte SHA-256</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.2/appcontrol-openshift-windows-light-1.24.2-1.zip">Paquet Windows léger 1.24.2-1 — scripts et YAML</a></li>
+<li><a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.2/appcontrol-openshift-windows-light-1.24.2-1.zip.sha256">Empreinte SHA-256</a></li>
 </ul>
 <p>Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.24.1-1.zip&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$archive</span> <span class="p">=</span> <span class="s1">&#39;appcontrol-openshift-windows-light-1.24.2-1.zip&#39;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">$attendu</span> <span class="p">=</span> <span class="p">((</span><span class="nb">Get-Content</span> <span class="s2">&quot;$archive.sha256&quot;</span> <span class="n">-Raw</span><span class="p">).</span><span class="n">Trim</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39;\s+&#39;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="nv">$archive</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span><span class="p">).</span><span class="n">Hash</span> <span class="o">-ne</span> <span class="nv">$attendu</span><span class="p">)</span> <span class="p">{</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">throw</span> <span class="s1">&#39;Checksum mismatch: do not use this archive.&#39;</span>
@@ -3423,13 +3421,12 @@ installation n’est pas acceptée comme cible de suppression.</p>
 </tr>
 </tbody>
 </table>
-<p>Le script ne supprime pas les agents installés sur des machines externes ni
-une installation Helm. Pour un complément de simulation actif, retirer d’abord
-ce complément avec <code>Configurer-Simulation.ps1 -DossierEtat &lt;dossier-prive&gt; -Supprimer</code>,
-puis relancer la désinstallation. Le nettoyage conserve alors les services et
-la base nécessaires à cette opération ; il peut retirer des ressources
-indépendantes, comme l’agent de démonstration. Les éléments conservés sont
-identifiés dans le bilan.</p>
+<p>Depuis le kit 1.24.2, la désinstallation peut reprendre une installation
+1.24.1 avec le dossier privé d’origine. Elle retire d’abord le complément de
+simulation à travers l’API encore active, puis recalcule les ressources à
+supprimer. En cas de blocage, les ressources nécessaires à la reprise sont
+conservées. Le script ne retire pas les agents sur des machines externes ni
+les installations Helm.</p>
 <p>Pour remettre les services en conservant les données, relancer
 <code>Deployer-AppControl.ps1</code> avec le même kit, le même projet, le même nom et le
 dossier privé conservé. Les objets manquants du déploiement sont recréés à partir
@@ -3452,7 +3449,7 @@ Artifactory sont toujours conservés</strong>, même avec <code>-RemoveAll</code
 Ils peuvent être réutilisés pour la prochaine installation. Le projet,
 les autres applications et la base PostgreSQL externe restent inchangés.</p>
 <p>L’assistant affiche d’abord :</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>This can permanently delete stored data and registry credentials. Type DELETE DATA to confirm your backup or accept their loss
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>This can permanently delete stored data. Type DELETE DATA to confirm your backup or accept their loss
 </span></code></pre></div>
 <p>Saisir <strong><code>DELETE DATA</code></strong>, avec l’espace, puis Entrée. Saisir ensuite le nom
 exact de l’installation à la seconde invite. En mode non interactif,
@@ -3597,7 +3594,7 @@ déployée. Ne pas supprimer son dossier d’état.</p>
 </tbody>
 </table>
 <h2 id="qualification-et-suite-du-poc">Qualification et suite du POC<a class="headerlink" href="#qualification-et-suite-du-poc" title="Permanent link">&para;</a></h2>
-<p>La publication du kit 1.24.1-1 suit sa qualification Windows/OpenShift. Les fichiers <code>PUBLICATION-EVALUATION-1.24.1-1.json</code> et <code>QUALIFICATION-EVALUATION-1.24.1-1.zip</code> identifient les images et le ZIP de cette recette.</p>
+<p>La publication du kit 1.24.2-1 suit sa qualification Windows/OpenShift. Les fichiers <code>PUBLICATION-EVALUATION-1.24.2-1.json</code> et <code>QUALIFICATION-EVALUATION-1.24.2-1.zip</code> identifient les images et le ZIP de cette recette.</p>
 <h3 id="historique-des-qualifications">Historique des qualifications<a class="headerlink" href="#historique-des-qualifications" title="Permanent link">&para;</a></h3>
 <p>La qualification complète Windows/OpenShift disponible concerne le kit <code>1.21.1-2</code>.
 Le correctif <code>1.21.1-3</code> conserve ses images et fait l’objet de tests ciblés des scripts
@@ -3700,8 +3697,12 @@ invocation. Copiez le <code>configuration.example.json</code> du kit en
 </span></code></pre></div>
 <p>Ajoutez à ces commandes vos options habituelles de registre, de stockage,
 de base externe ou de route publique. <code>-SansDemo</code> installe le socle et
-applique votre JSON sans charger la démo bancaire intégrée. Sur une
-installation neuve, <code>-Verifier</code> valide le fichier et les prérequis
+applique votre JSON sans charger la démo bancaire intégrée. Si la première
+connexion via la Route HTTPS expire pendant une installation interactive avec
+<code>-Configuration</code>, le script applique le JSON via le tunnel OpenShift. La
+recette HTTPS et la démo restent en attente. Quand la Route répond depuis le
+poste Windows, utilisez la commande de reprise affichée par le script.
+Sur une installation neuve, <code>-Verifier</code> valide le fichier et les prérequis
 accessibles. La recette des gateways, des agents et de l’API AppControl a
 lieu une fois le socle disponible.</p>
 <table>
@@ -3786,10 +3787,17 @@ ambigus. Le script ne remplace pas un raccordement SSO et ne synchronise pas un 
 <p>Pour le parcours X4B, ajoutez par exemple
 <code>"document_source": {"secret_name": "appcontrol-source-documentaire"}</code> à la
 racine du JSON. Le Secret est créé au préalable dans le projet OpenShift.
+Le fichier <code>configuration.example.json</code> omet cette option pour rester utilisable
+sans service externe. Avec le Secret référencé dans le JSON passé à
+<code>Deployer-AppControl.ps1 -Configuration</code>, le raccordement se fait dès
+l’installation.
 La configuration est injectée dans le backend, puis l’interface
 <strong>Génération de maps</strong> permet de tester le raccordement et de lancer la
 synchronisation. L’option <code>-SecretSourceDocumentaire</code> reste disponible
 pour passer la référence directement sur la ligne de commande.
+Pour saisir l’URL et le jeton dans l’interface, préparez le Secret avec
+<code>Preparer-SourceDocumentaire.ps1 -AutoriserReglagesUI</code>, puis référencez le
+Secret <code>appcontrol-reglages-generation</code> dans le même champ.
 <a href="../../KNOWLEDGE-ENGINE-CONNECTOR.fr/#preparer-et-rejouer-linstallation-openshift">Guide de raccordement et de qualification du workflow X4B</a></p>
 <p>Les ressources déjà créées sont retrouvées lors d’une reprise. La configuration
 n’est pas une transaction globale : conserver le fichier et le dossier privé puis
@@ -3911,7 +3919,7 @@ Un domaine personnalisé peut être refusé à la création. Le choix du domaine
 <code>.pres.</code> reste à confirmer avec la plateforme ; l’option ne prouve pas que
 le domaine était la cause de l’erreur d’exposition.</p>
 <h2 id="demonstration-bancaire-complete">Démonstration bancaire complète<a class="headerlink" href="#demonstration-bancaire-complete" title="Permanent link">&para;</a></h2>
-<p><strong>Le kit 1.24.1-1 installe automatiquement la démo bancaire lors d’une installation
+<p><strong>Le kit 1.24.2-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut</strong>, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. <code>-SansDemo</code> désactive les deux démonstrations ;
 une mise à jour avec <code>-MettreAJour</code> conserve les applications existantes sans en ajouter.</p>
@@ -3958,7 +3966,7 @@ configuration multi-sites reste disponible via <code>Configurer-AppControl.ps1</
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-12T21:50:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:18:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
   </span>
 
     
@@ -4045,7 +4053,8 @@ configuration multi-sites reste disponible via <code>Configurer-AppControl.ps1</
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Source on GitHub</a>
+      Copyright &copy; AppControl &mdash; <a href="https://github.com/xcomponent/appcontrol-release">Releases on GitHub</a>
+
     </div>
   
   

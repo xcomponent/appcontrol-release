@@ -56,7 +56,7 @@ Deployment mode in which the backend generates a per-organization CA on first st
 
 ### Bastion
 <a id="bastion"></a>
-A privileged control-plane agent used to execute both `infra_check_cmd` and `rebuild_infra_cmd` against another host. Configured via `components.rebuild_agent_id`. It is intentionally separate from the runtime agent: the bastion remains available when the target VM has failed and is typically the only host with the credentials and network reach to query the cloud inventory or invoke the approved XL Release/Ansible workflow. If none is configured, AppControl falls back to the runtime agent for backward compatibility. See [Backend CLAUDE.md — Rebuild Engine](https://github.com/xcomponent/appcontrol-release/blob/main/crates/backend/CLAUDE.md).
+A privileged control-plane agent used to execute both `infra_check_cmd` and `rebuild_infra_cmd` against another host. Configured via `components.rebuild_agent_id`. It is intentionally separate from the runtime agent: the bastion remains available when the target VM has failed and is typically the only host with the credentials and network reach to query the cloud inventory or invoke the approved XL Release/Ansible workflow. If none is configured, AppControl falls back to the runtime agent for backward compatibility. See [Backend CLAUDE.md — Rebuild Engine](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### Binding profile
 <a id="binding-profile"></a>
@@ -74,7 +74,7 @@ The root authority that signs all gateway and agent certificates. AppControl sup
 
 ### Check event
 <a id="check-event"></a>
-A single row in the `check_events` table representing one execution of a check command on one component. Includes `check_type` (`health` | `integrity` | `post_start` | `infrastructure`), `exit_code`, truncated `stdout`, and `duration_ms`. The table is partitioned by month and append-only. See [migrations/V005](https://github.com/xcomponent/appcontrol-release/blob/main/migrations/V005__event_tables.sql).
+A single row in the `check_events` table representing one execution of a check command on one component. Includes `check_type` (`health` | `integrity` | `post_start` | `infrastructure`), `exit_code`, truncated `stdout`, and `duration_ms`. The table is partitioned by month and append-only. See [migrations/V005](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### Check type
 <a id="check-type"></a>
@@ -96,7 +96,7 @@ A multi-host deployment of a single logical component. AppControl supports two m
 - **[Aggregate](#aggregate-cluster)** — one FSM, one set of commands, the `check_cmd` rolls up cluster state.
 - **[Fan-out](#fan-out-cluster)** — each member is a first-class monitored entity with its own agent, commands, and state.
 
-The chosen mode is stored in `components.cluster_mode`. See migration [`V049`](https://github.com/xcomponent/appcontrol-release/blob/main/migrations/V049__fan_out_clusters.sql).
+The chosen mode is stored in `components.cluster_mode`. See migration [`V049`](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### Cluster health policy
 <a id="cluster-health-policy"></a>
@@ -205,7 +205,7 @@ A stateless WebSocket relay that sits between agents and the backend. Each netwo
 
 ### Heartbeat
 <a id="heartbeat"></a>
-The 60-second-interval message an agent sends to the gateway containing CPU, memory, and system info. Missing 3 consecutive heartbeats (default 180 s — `organizations.heartbeat_timeout_seconds`) marks the agent stale; the heartbeat monitor task transitions its managed components to `UNREACHABLE`. See [Backend CLAUDE.md — Heartbeat Monitor](https://github.com/xcomponent/appcontrol-release/blob/main/crates/backend/CLAUDE.md).
+The 60-second-interval message an agent sends to the gateway containing CPU, memory, and system info. Missing 3 consecutive heartbeats (default 180 s — `organizations.heartbeat_timeout_seconds`) marks the agent stale; the heartbeat monitor task transitions its managed components to `UNREACHABLE`. See [Backend CLAUDE.md — Heartbeat Monitor](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### High availability (HA)
 <a id="ha"></a>
@@ -245,7 +245,7 @@ A typed JSON payload alternative to a shell `check_cmd` / `start_cmd` / `stop_cm
 - `tcp` — TCP connect to host:port (planned, same column).
 - `process` — process-name match (planned, same column).
 
-Stored in `components.check_native` / `start_native` / `stop_native` (JSONB). When non-null, the agent uses the native spec instead of the shell command. See migration [`V053`](https://github.com/xcomponent/appcontrol-release/blob/main/migrations/V053__native_command_specs.sql).
+Stored in `components.check_native` / `start_native` / `stop_native` (JSONB). When non-null, the agent uses the native spec instead of the shell command. See migration [`V053`](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### NIS2
 <a id="nis2"></a>
@@ -316,11 +316,11 @@ Rebuild respects DAG order and skips components flagged with `rebuild_protected 
 
 ### Rebuild protection
 <a id="rebuild-protection"></a>
-The `rebuild_protected = true` flag on a component prevents the rebuild engine from touching it. Used for components whose data must never be regenerated by AppControl (databases of record, archive storage). A rebuild against a protected component returns HTTP 409. See [Backend CLAUDE.md — Rebuild Engine](https://github.com/xcomponent/appcontrol-release/blob/main/crates/backend/CLAUDE.md).
+The `rebuild_protected = true` flag on a component prevents the rebuild engine from touching it. Used for components whose data must never be regenerated by AppControl (databases of record, archive storage). A rebuild against a protected component returns HTTP 409. See [Backend CLAUDE.md — Rebuild Engine](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### Referenced app
 <a id="referenced-app"></a>
-A component of type `application` with a `referenced_app_id` pointing to another application. When the parent app starts, the referenced app is recursively started first; its state is derived from its components' aggregate state, not its own cached column. See [Backend CLAUDE.md — Application-Type Components](https://github.com/xcomponent/appcontrol-release/blob/main/crates/backend/CLAUDE.md).
+A component of type `application` with a `referenced_app_id` pointing to another application. When the parent app starts, the referenced app is recursively started first; its state is derived from its components' aggregate state, not its own cached column. See [Backend CLAUDE.md — Application-Type Components](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### Retention
 <a id="retention"></a>
@@ -363,7 +363,7 @@ Per-site customization of a component, stored in `site_overrides`. Lets the same
 
 ### State transition
 <a id="state-transition"></a>
-A row in the append-only `state_transitions` table recording a change of a component's FSM state. Includes `previous_state`, `next_state`, `trigger` (e.g. `health_check`, `sequencer`, `heartbeat_timeout`), and a JSON `details` blob. Used for DORA Article 16 audit. See [migrations/V005](https://github.com/xcomponent/appcontrol-release/blob/main/migrations/V005__event_tables.sql).
+A row in the append-only `state_transitions` table recording a change of a component's FSM state. Includes `previous_state`, `next_state`, `trigger` (e.g. `health_check`, `sequencer`, `heartbeat_timeout`), and a JSON `details` blob. Used for DORA Article 16 audit. See [migrations/V005](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ### Strong dependency
 <a id="strong-dependency"></a>
@@ -412,7 +412,7 @@ A [native command](#native-command) `kind` that attempts a TCP connect to a host
 
 ### UNREACHABLE
 <a id="unreachable"></a>
-The FSM state assigned to a component when its agent fails to send 3 consecutive heartbeats. The component's previous state is preserved in `state_transitions.details.previous_state` so the FSM can restore it on reconnect. See [Backend CLAUDE.md — Heartbeat Monitor](https://github.com/xcomponent/appcontrol-release/blob/main/crates/backend/CLAUDE.md).
+The FSM state assigned to a component when its agent fails to send 3 consecutive heartbeats. The component's previous state is preserved in `state_transitions.details.previous_state` so the FSM can restore it on reconnect. See [Backend CLAUDE.md — Heartbeat Monitor](https://xcomponent.github.io/appcontrol-release/reference/database/).
 
 ## V
 

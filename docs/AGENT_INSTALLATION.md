@@ -79,7 +79,7 @@ Rename-Item "$env:ProgramFiles\AppControl\appcontrol-agent-windows-amd64.exe" "a
 ### Docker (Linux only)
 
 ```bash
-docker pull ghcr.io/xcomponent/appcontrol-agent:latest
+docker pull registry.example.test/xcomponent/appcontrol-agent:latest
 ```
 
 ---
@@ -281,7 +281,7 @@ docker run -d \
   --restart unless-stopped \
   -v /etc/appcontrol:/etc/appcontrol:ro \
   -v /var/lib/appcontrol:/var/lib/appcontrol \
-  ghcr.io/xcomponent/appcontrol-agent:latest \
+  registry.example.test/xcomponent/appcontrol-agent:latest \
   --config /etc/appcontrol/agent.yaml
 ```
 

@@ -342,7 +342,7 @@ DATABASE_URL=postgres://appcontrol:appcontrol@localhost:5432/appcontrol \
 
 ### Step 3 — export from SQLite
 
-For each table in dependency order (see [migrations/CLAUDE.md](https://github.com/xcomponent/appcontrol-release/blob/main/migrations/CLAUDE.md)):
+For each table in dependency order (see [migrations/CLAUDE.md](https://xcomponent.github.io/appcontrol-release/reference/database/)):
 
 ```bash
 sqlite3 /var/lib/appcontrol/appcontrol.db <<EOF

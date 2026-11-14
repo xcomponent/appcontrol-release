@@ -8,9 +8,9 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.24.1**. Paquet : **Windows léger 1.24.1-1**.
+Produit : **AppControl 1.24.2**. Paquet : **Windows léger 1.24.2-1**.
 
-**AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La version 1.24.1 ajoute [l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications](../X4B-PLATEFORME.fr.md). Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
+**AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La plateforme inclut [l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications](../X4B-PLATEFORME.fr.md). Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
 
 La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
@@ -265,14 +265,14 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.24.1-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/appcontrol-openshift-windows-light-1.24.1-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/appcontrol-openshift-windows-light-1.24.1-1.zip.sha256)
+- [Paquet Windows léger 1.24.2-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.2/appcontrol-openshift-windows-light-1.24.2-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.2/appcontrol-openshift-windows-light-1.24.2-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.24.1-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.24.2-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
     throw 'Checksum mismatch: do not use this archive.'
@@ -630,13 +630,12 @@ installation n’est pas acceptée comme cible de suppression.
 | Projet et autres applications | Inchangés |
 | Dossier privé sur Windows | Conservé |
 
-Le script ne supprime pas les agents installés sur des machines externes ni
-une installation Helm. Pour un complément de simulation actif, retirer d’abord
-ce complément avec `Configurer-Simulation.ps1 -DossierEtat <dossier-prive> -Supprimer`,
-puis relancer la désinstallation. Le nettoyage conserve alors les services et
-la base nécessaires à cette opération ; il peut retirer des ressources
-indépendantes, comme l’agent de démonstration. Les éléments conservés sont
-identifiés dans le bilan.
+Depuis le kit 1.24.2, la désinstallation peut reprendre une installation
+1.24.1 avec le dossier privé d’origine. Elle retire d’abord le complément de
+simulation à travers l’API encore active, puis recalcule les ressources à
+supprimer. En cas de blocage, les ressources nécessaires à la reprise sont
+conservées. Le script ne retire pas les agents sur des machines externes ni
+les installations Helm.
 
 Pour remettre les services en conservant les données, relancer
 `Deployer-AppControl.ps1` avec le même kit, le même projet, le même nom et le
@@ -671,7 +670,7 @@ les autres applications et la base PostgreSQL externe restent inchangés.
 L’assistant affiche d’abord :
 
 ```text
-This can permanently delete stored data and registry credentials. Type DELETE DATA to confirm your backup or accept their loss
+This can permanently delete stored data. Type DELETE DATA to confirm your backup or accept their loss
 ```
 
 Saisir **`DELETE DATA`**, avec l’espace, puis Entrée. Saisir ensuite le nom
@@ -789,7 +788,7 @@ déployée. Ne pas supprimer son dossier d’état.
 
 ## Qualification et suite du POC
 
-La publication du kit 1.24.1-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.1-1.json` et `QUALIFICATION-EVALUATION-1.24.1-1.zip` identifient les images et le ZIP de cette recette.
+La publication du kit 1.24.2-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.2-1.json` et `QUALIFICATION-EVALUATION-1.24.2-1.zip` identifient les images et le ZIP de cette recette.
 
 ### Historique des qualifications
 
@@ -922,8 +921,12 @@ invocation. Copiez le `configuration.example.json` du kit en
 
 Ajoutez à ces commandes vos options habituelles de registre, de stockage,
 de base externe ou de route publique. `-SansDemo` installe le socle et
-applique votre JSON sans charger la démo bancaire intégrée. Sur une
-installation neuve, `-Verifier` valide le fichier et les prérequis
+applique votre JSON sans charger la démo bancaire intégrée. Si la première
+connexion via la Route HTTPS expire pendant une installation interactive avec
+`-Configuration`, le script applique le JSON via le tunnel OpenShift. La
+recette HTTPS et la démo restent en attente. Quand la Route répond depuis le
+poste Windows, utilisez la commande de reprise affichée par le script.
+Sur une installation neuve, `-Verifier` valide le fichier et les prérequis
 accessibles. La recette des gateways, des agents et de l’API AppControl a
 lieu une fois le socle disponible.
 
@@ -992,17 +995,24 @@ ambigus. Le script ne remplace pas un raccordement SSO et ne synchronise pas un 
 Pour le parcours X4B, ajoutez par exemple
 `"document_source": {"secret_name": "appcontrol-source-documentaire"}` à la
 racine du JSON. Le Secret est créé au préalable dans le projet OpenShift.
+Le fichier `configuration.example.json` omet cette option pour rester utilisable
+sans service externe. Avec le Secret référencé dans le JSON passé à
+`Deployer-AppControl.ps1 -Configuration`, le raccordement se fait dès
+l’installation.
 La configuration est injectée dans le backend, puis l’interface
 **Génération de maps** permet de tester le raccordement et de lancer la
 synchronisation. L’option `-SecretSourceDocumentaire` reste disponible
 pour passer la référence directement sur la ligne de commande.
+Pour saisir l’URL et le jeton dans l’interface, préparez le Secret avec
+`Preparer-SourceDocumentaire.ps1 -AutoriserReglagesUI`, puis référencez le
+Secret `appcontrol-reglages-generation` dans le même champ.
 [Guide de raccordement et de qualification du workflow X4B](../KNOWLEDGE-ENGINE-CONNECTOR.fr.md#preparer-et-rejouer-linstallation-openshift)
 
 Les ressources déjà créées sont retrouvées lors d’une reprise. La configuration
 n’est pas une transaction globale : conserver le fichier et le dossier privé puis
 relancer après correction d’un échec. Aucun secret n’est affiché dans l’aperçu.
 
-### Activer Embedded pour documentation
+### Activer Embedded pour un portail documentaire
 
 Ajoutez un site `SIM` avec une gateway et déclarez son code sous `embedded`.
 Le kit crée le site, la gateway et l’agent, retrouve les UUID après l’enrôlement
@@ -1155,7 +1165,7 @@ le domaine était la cause de l’erreur d’exposition.
 
 ## Démonstration bancaire complète
 
-**Le kit 1.24.1-1 installe automatiquement la démo bancaire lors d’une installation
+**Le kit 1.24.2-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut**, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. `-SansDemo` désactive les deux démonstrations ;
 une mise à jour avec `-MettreAJour` conserve les applications existantes sans en ajouter.

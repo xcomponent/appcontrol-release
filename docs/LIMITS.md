@@ -367,5 +367,5 @@ For `check_native = { "kind": "http", ... }`:
 - [High Availability](HIGH_AVAILABILITY.md) — pool sizing for multi-replica deployments
 - [Troubleshooting](TROUBLESHOOTING.md) — diagnostic flows when a limit is hit
 - [Hardening](HARDENING.md) — recommended retention and rate-limit values for production
-- [migrations/V005__event_tables.sql](https://github.com/xcomponent/appcontrol-release/blob/main/migrations/V005__event_tables.sql) — `check_events` partition definition
-- [migrations/V016__fsm_cache_notifications_locks.sql](https://github.com/xcomponent/appcontrol-release/blob/main/migrations/V016__fsm_cache_notifications_locks.sql) — operation lock schema
+- [migrations/V005__event_tables.sql](https://xcomponent.github.io/appcontrol-release/reference/database/) — `check_events` partition definition
+- [migrations/V016__fsm_cache_notifications_locks.sql](https://xcomponent.github.io/appcontrol-release/reference/database/) — operation lock schema

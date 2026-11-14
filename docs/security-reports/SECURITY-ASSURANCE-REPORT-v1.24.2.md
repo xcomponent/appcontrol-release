@@ -1,8 +1,8 @@
-# AppControl v1.24.1 — release qualification report
+# AppControl v1.24.2 — release qualification report
 
-Generated: 2026-11-12T23:21:15.677149+00:00
-Source commit: `4d56a844b1b4efd925c2794c18c556c5a1dd3db7`
-Release workflow: https://github.com/xcomponent/appcontrol-release/releases
+Generated: 2026-11-14T08:36:47.585270+00:00
+Source commit: `34dec78b5f687eae6154a58e1ca5d25c0ac9b33f`
+Release: https://github.com/xcomponent/appcontrol-release/releases/tag/vv1.24.2
 
 ## Scope and result
 
@@ -13,22 +13,22 @@ The OpenShift client kit targets Linux amd64. Its five images are backend, front
 ## Vulnerability scans and inventories
 
 Trivy 0.76.1 scans OS and application packages at all severities (UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL), including unfixed advisories. Image scans use comprehensive detection. A scan with missing inventory, known vulnerabilities or suppressed findings fails the release. Each image has its own CycloneDX SBOM. The locked Rust and npm dependencies have an additional SBOM including development dependencies.
-Source vulnerability database updated: 2026-11-12T18:57:38.498853214Z. Per-image scanner metadata records the database used for that scan.
+Source vulnerability database updated: 2026-11-14T01:05:40.480840314Z. Per-image scanner metadata records the database used for that scan.
 
-| Image | Delivered immutable reference | Findings | Scan timestamp |
+| Image | Qualified image and digest | Findings | Scan timestamp |
 |---|---|---:|---|
-| backend | `appcontrol-backend@sha256:1e78baf0002af142cbdba6a57ee4703643477d980e208917bca5fc85bbe2a37d` | 0 | 2026-11-12T23:05:28.871559135Z |
-| frontend | `appcontrol-frontend@sha256:9c6f432d8eee861dd9b58298d8d0b6fa408112d604a84a1ea263d8b3677b2174` | 0 | 2026-11-12T23:05:36.286395779Z |
-| gateway | `appcontrol-gateway@sha256:433b8612a1de429003da95c9bd5aaa6c0e4bb05db97877e6a2566cd087077236` | 0 | 2026-11-12T23:05:32.615164795Z |
-| agent | `appcontrol-agent@sha256:92a4b838c1edb70d5be900e1ce08db1293405ed224fa8cf7a6833406457f5534` | 0 | 2026-11-12T23:05:33.943443564Z |
-| postgresql | `appcontrol-postgresql@sha256:98c940a895a9dc13c22b3ec95f0a5368801c0391a66480a521ed7548a29be90a` | 0 | 2026-11-12T23:05:35.574809154Z |
-| init-certs | `appcontrol-init-certs@sha256:13ce79ced59562307eb09b695ffcd74d0bcf0401ad43d3fd03879d452e45b08c` | 0 | 2026-11-12T23:05:30.135243203Z |
-| azure-gateway | `appcontrol-azure-gateway@sha256:76cdbfbda363d348bea0345e2f3e32bfdccfb41efffd667ec8498bb57ea514bd` | 0 | 2026-11-12T23:05:39.095854304Z |
+| backend | `appcontrol-backend@sha256:212b9fa8ff0242d1a8423762cc4372144c2e03a17969cdbe2cb6179b46b6f9a4` | 0 | 2026-11-14T08:20:59.793199031Z |
+| frontend | `appcontrol-frontend@sha256:23d9df612b246200f961b9974055eb7b218e8e3e1fa5659e19ae8c45872a4529` | 0 | 2026-11-14T08:20:56.349961918Z |
+| gateway | `appcontrol-gateway@sha256:d7ee8e87ca652c4d7e3d63dbcb4b0f581f826b0283357264c7e72ebb28910a7b` | 0 | 2026-11-14T08:20:50.135532382Z |
+| agent | `appcontrol-agent@sha256:286240ff3eea7c324999e87ca0d05eea495e081d7fa12e3de93f81498fd88c4b` | 0 | 2026-11-14T08:20:53.27738538Z |
+| postgresql | `appcontrol-postgresql@sha256:840e69efdd3e3f4395f3616f4fc26a83456efa88f64bead754206de78477fdfa` | 0 | 2026-11-14T08:20:53.894349881Z |
+| init-certs | `appcontrol-init-certs@sha256:c8f07bfa8cb95349102f9f5b571ee8b44e2e3b3e9d01e4718065062b94d81312` | 0 | 2026-11-14T08:20:51.441516079Z |
+| azure-gateway | `appcontrol-azure-gateway@sha256:24064f5def2346ca65266afa37b4e6f832b083440f74bbf15f08e3fd4e25997c` | 0 | 2026-11-14T08:20:53.232874193Z |
 
 | Dependency scope | Inputs | Findings | Scan timestamp |
 |---|---|---:|---|
-| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-12T22:17:09.893167544Z |
-| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-12T22:17:21.871669284Z |
+| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-14T07:32:25.117518407Z |
+| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-14T07:32:37.230931474Z |
 
 RustSec: zero vulnerability advisories. Informational warnings, if any, remain in rustsec.json and are not reclassified as vulnerabilities.
 RustSec warning categories: unmaintained: 2, unsound: 1, yanked: 1.

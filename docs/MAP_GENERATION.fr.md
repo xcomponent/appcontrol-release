@@ -13,7 +13,7 @@ Un profil mock adressé à l'IA ne remplace pas cette isolation imposée côté 
 Voir [EMBEDDED.fr.md](EMBEDDED.fr.md).
 
 **Le parcours initial de publication existe depuis AppControl 1.21.1.** Les
-enrichissements décrits ici — prompt révision `7`, synchronisation du catalogue et
+enrichissements décrits ici — prompt révision `8`, synchronisation du catalogue et
 Embedded — nécessitent un serveur qui expose ces capacités. Vérifier la réponse
 du contrat et les routes de l'instance installée ; un script ou un kit récent ne
 met pas à jour les images du produit à lui seul.
@@ -56,10 +56,12 @@ La réponse JSON contient notamment :
 | `examples` | Exemples nommés : chacun contient un champ `map`. |
 | `capabilities` et `limitations` | Fonctionnalités du profil et limites à prendre en compte par l’intégration. Le schéma reste la référence pour les champs acceptés. |
 
-La révision actuelle des instructions est `prompt_revision: "7"`. L’IA reprend
-dans `source_site` le code ou le nom du site explicitement documenté pour un
-composant. Lorsque les hôtes sont inconnus, elle laisse `binding_profiles`
-et `host` absents. L'intégration peut fournir les placements autorisés.
+La révision actuelle des instructions est `prompt_revision: "8"`. L’IA reprend
+dans `source_sites` les codes ou noms de tous les sites explicitement documentés
+pour un composant, par exemple `"source_sites": ["Sirius", "Legac"]`. Le champ
+historique `source_site` reste accepté pour un seul site. Lorsque les hôtes sont
+inconnus, l’IA laisse `binding_profiles` et `host` absents. L’intégration peut
+fournir les placements autorisés.
 `contract_version: "1"` et `format_version: "4.2"` ne sont pas des numéros de
 révision du prompt. Conserver la réponse du contrat plutôt que coder ces
 instructions en dur.
@@ -274,7 +276,7 @@ Exemple de requête pour une application répartie :
 
 Remplacez les hôtes et l'identifiant d'équipe par ceux de votre instance, et utilisez la map issue des documents avec ses procédures relues. Cet exemple montre les affectations ; il ne contient volontairement aucune procédure de production. `ready` signifie que la préparation accepte la configuration, pas que les procédures sont éprouvées.
 
-Omettez `profile` dans cette enveloppe. L’import normal utilise `standard` par défaut et conserve les commandes fournies, y compris celles d’un prompt mock. L’écriture explicite `"profile": "standard"` reste compatible. Une entrée dans `placements` définit en priorité le site du composant. À défaut, AppControl rapproche `source_site` du code ou du nom d’un site de l’organisation, en ignorant la casse et les espaces en bordure. Une correspondance unique avec un site actif permet de préparer le placement. Une référence introuvable, inactive ou ambiguë demande une affectation explicite. En l’absence des deux champs, le `site_code` administratif de l’enveloppe sert de site par défaut.
+Omettez `profile` dans cette enveloppe. L’import normal utilise `standard` par défaut et conserve les commandes fournies, y compris celles d’un prompt mock. L’écriture explicite `"profile": "standard"` reste compatible. Une entrée dans `placements` définit en priorité le site d’exécution du composant. Avec un seul site documenté, AppControl le rapproche du code ou du nom d’un site actif de l’organisation, en ignorant la casse et les espaces en bordure. Plusieurs sites documentés ou une référence introuvable, inactive ou ambiguë demandent une affectation explicite. Sans placement ni site documenté, le `site_code` administratif de l’enveloppe sert de site par défaut. La liste des sites documentés reste attachée au composant après l’import.
 
 En `standard`, choisissez **soit** `agent_id`, **soit** `host` dans `placements`. À défaut, le `host` du composant sert de référence. AppControl recherche l’hôte ou l’IP exacte dans le site résolu. Un code de site seul laisse le choix de l’agent à compléter. Un agent enregistré mais hors ligne produit un avertissement. Vérifiez le rapport de préparation avant la publication.
 

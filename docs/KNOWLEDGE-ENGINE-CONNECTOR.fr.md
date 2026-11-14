@@ -59,7 +59,7 @@ concatène le prompt et le document dans un bloc délimité. Le corps du documen
 reste côté Knowledge Engine pendant le parcours nominal.
 
 La clé applicative reprend l’identifiant exact du référentiel, casse et zéros
-initiaux compris. Pour le portail documentaire, utiliser le CIA comme `application_key`.
+initiaux compris. Pour un portail documentaire externe, utiliser le CIA comme `application_key`.
 Un autre référentiel peut fournir sa propre clé. Calculer le SHA-256 sur
 les octets UTF-8 du JSON versionné et conserver ces octets pour la lecture
 et l’exécution. Servir une révision
@@ -75,8 +75,9 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.
    Un document sans changement réutilise son résultat pour la même configuration.
 2. **Générer.** Le traitement de fond limite le nombre d’appels simultanés et
    conserve l’état de chaque application dans PostgreSQL. Il identifie une
-   génération par la source, la clé applicative, l’empreinte du document et celle du
-   prompt envoyé. Un retour `429` déclenche une reprise différée. Un délai
+   génération par la source, la clé applicative, l’empreinte du document et le
+   contexte de génération, dont le prompt, les références du catalogue de
+   composants et les codes et noms des sites actifs. Un retour `429` déclenche une reprise différée. Un délai
    dépassé ou une coupure après envoi est signalé pour relance. Après un
    arrêt du backend pendant un appel, sa reprise peut consommer un deuxième
    appel à l’IA. La déduplication des générations et des maps est
@@ -91,6 +92,14 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.
    servir à reporter les changements choisis dans AppControl. X4B garde
    séparément l’empreinte source de la map publiée et celle de la dernière
    génération. Une disparition du catalogue est signalée et la map est conservée.
+
+Avec un catalogue de composants AppControl, X4B demande d’abord à l’IA de relever
+les briques et les indices techniques dans le document. Il compare ces éléments
+aux clés, libellés et alias du catalogue de l’organisation. Le prompt final est
+exécuté sur le même document et transmet les références pertinentes par composant,
+ainsi que les codes et noms des sites actifs. Les commandes, icônes et couleurs du
+catalogue restent dans AppControl. Sans catalogue de composants, X4B exécute
+directement le prompt final avec les sites disponibles.
 
 ## Préparer et rejouer l’installation OpenShift
 
@@ -115,24 +124,107 @@ raccorde avec leurs gateways et agents.
 
 ### Raccorder la source documentaire
 
-Le backend lit la configuration au démarrage. L’interface permet de tester
-et de synchroniser la source configurée. Sur OpenShift, créez un Secret de
-type `Opaque` dans le projet de l’installation, avec les clés suivantes.
+Le backend doit pouvoir joindre le connecteur en HTTPS. Avec Helm,
+`networkPolicy.backendHttpsCIDRs` permet de déclarer les CIDR approuvés sur le
+port 443. Avec le kit OpenShift natif, appliquez la politique de sortie
+approuvée pour le backend de cette installation.
+
+#### Renseigner l’URL et le jeton dans X4B
+
+Sur OpenShift, le script suivant prépare le Secret qui autorise les réglages
+dans l’interface. Donnez l’origine HTTPS approuvée du connecteur, sans le
+chemin `/api/v1`.
+
+```powershell
+.\Preparer-SourceDocumentaire.ps1 -Projet appcontrol-poc `
+  -AutoriserReglagesUI -OriginesAutorisees 'https://knowledge.example'
+```
+
+Référencez `appcontrol-reglages-generation` dans `document_source.secret_name`
+et appliquez le JSON avec `Deployer-AppControl.ps1 -Configuration` lors de
+l’installation ou avec `Configurer-AppControl.ps1` sur une instance existante.
+Si le projet héberge plusieurs instances, attribuez un nom distinct à chaque
+Secret avec `-Nom` et reportez ce nom dans le JSON de l’instance.
+Dans **Génération de maps → Paramètres**, renseignez ensuite l’URL complète
+terminée par `/api/v1`, le jeton et, si nécessaire, le nom de source utilisé
+pour rapprocher les fiches. La génération utilise les réglages enregistrés
+sans redémarrage du backend.
+
+Dans le formulaire, **Tester la connexion** vérifie l’accès HTTPS avec le
+jeton saisi et contrôle le format de la première page de
+`GET /knowledge-documents`. **Tester le prompt sur un document** appelle
+`POST /prompt-executions` sur le premier document accessible et vérifie
+la référence de la révision et la topologie AppControl renvoyée. Ce second
+test utilise l’IA du connecteur. Les tests ne sauvegardent aucun réglage,
+ne lancent aucun lot et ne publient aucune map. **Enregistrer** applique les
+paramètres.
+
+Pour les autres modes de déploiement, fournissez au backend
+`X4B_KNOWLEDGE_SETTINGS_KEY` (32 octets aléatoires encodés en base64) et
+`X4B_KNOWLEDGE_SETTINGS_ALLOWED_ORIGINS` (origines HTTPS exactes, séparées
+par des virgules). Conservez et sauvegardez cette clé avec le déploiement.
+Toutes les répliques utilisent la même clé pour lire les jetons chiffrés
+en base. Le script conserve la clé lors de ses relances.
+
+#### Fournir le connecteur au déploiement
+
+Pour une configuration automatisée, fournissez le connecteur au backend au
+démarrage. Cette configuration est prioritaire pour l’organisation concernée.
+Sur OpenShift, utilisez un Secret de type `Opaque` dans le projet de
+l’installation, avec les clés suivantes.
 
 | Clé | Valeur |
 | --- | --- |
-| `X4B_KNOWLEDGE_URL` | URL de base HTTPS de la source, avec le préfixe `/api/v1`. |
+| `X4B_KNOWLEDGE_URL` | URL de base de la source terminant par `/api/v1`, en HTTPS par défaut. |
 | `X4B_KNOWLEDGE_TOKEN` | Jeton de service autorisé à lister les documents et à exécuter les prompts pour le périmètre choisi. |
 | `X4B_KNOWLEDGE_ORGANIZATION_ID` | Pour une base vide initialisée par le kit, `00000000-0000-0000-0000-000000000001`. Pour une organisation existante, champ `user.organization_id` de `/api/v1/users/me` dans une session administrateur. |
-| `X4B_KNOWLEDGE_SOURCE` | Nom stable de la source, `documentation` par défaut. Pour le portail documentaire, utiliser la valeur configurée pour le rapprochement des fiches, par exemple `documentation`. |
+| `X4B_KNOWLEDGE_SOURCE` | Nom stable de la source, `documentation` par défaut. Pour un portail documentaire externe, utiliser la valeur configurée pour le rapprochement des fiches, par exemple `documentation`. |
 | `X4B_KNOWLEDGE_REFRESH_SECONDS` | Intervalle de synchronisation. `0` par défaut pour un déclenchement à la demande. |
 | `X4B_KNOWLEDGE_CONCURRENCY` | De 1 à 4 appels IA simultanés par backend, 2 par défaut. |
+| `X4B_KNOWLEDGE_HTTP_SERVICE` | Nom DNS exact du Service interne autorisé en HTTP, par exemple `ciascribe-api.appcontrol-poc.svc`. |
+| `X4B_KNOWLEDGE_TLS_SKIP_VERIFY` | `true` pour ignorer la vérification du certificat du connecteur HTTPS configuré au déploiement, en développement uniquement. |
 | `X4B_KNOWLEDGE_CA_FILE` | Chemin d’un fichier PEM déjà monté, si la source utilise une autorité interne. |
 
-Faites autoriser la sortie HTTPS du pod backend vers le service de la source.
-Avec Helm, `networkPolicy.backendHttpsCIDRs` permet de déclarer les CIDR
-approuvés sur le port 443. Avec le kit OpenShift natif, appliquez la politique
-de sortie approuvée pour le backend de cette installation.
+Pour créer ce Secret depuis un script PowerShell, lancez
+`Preparer-SourceDocumentaire.ps1` depuis le dossier du kit avant le déploiement.
+La commande utilise la connexion OpenShift active et demande le jeton en saisie
+masquée. En automatisation, injectez `X4B_KNOWLEDGE_TOKEN` depuis votre coffre et
+ajoutez `-NonInteractif`. Vous pouvez aussi fournir une valeur `SecureString`
+avec `-Jeton`.
+
+```powershell
+.\Preparer-SourceDocumentaire.ps1 -Projet appcontrol-poc `
+  -Url 'https://knowledge.example/api/v1' `
+  -Organisation '00000000-0000-0000-0000-000000000001' -Source documentation
+```
+
+Pour un Service interne au cluster, utilisez son nom DNS et le **port du
+Service**, généralement 80 en HTTP. Ajoutez `-AutoriserHttpInterne`.
+
+```powershell
+.\Preparer-SourceDocumentaire.ps1 -Projet appcontrol-poc `
+  -Url 'http://ciascribe-api.appcontrol-poc.svc/api/v1' `
+  -AutoriserHttpInterne -Organisation '00000000-0000-0000-0000-000000000001'
+```
+
+Si le connecteur utilise HTTPS avec un certificat interne non reconnu, montez
+de préférence le PEM de son autorité de certification et indiquez-le via
+`X4B_KNOWLEDGE_CA_FILE`. Pour un test temporaire, ajoutez
+`-IgnorerCertificatTls` à la commande HTTPS. Cette option désactive la
+vérification du certificat pour le seul connecteur fourni au déploiement.
+Relancez le préparateur sans l’option puis redémarrez le backend pour rétablir
+la vérification. En HTTP, le jeton et les documents circulent en clair.
+
+En cas d’échec, consultez les journaux du **backend**, par exemple
+`oc -n appcontrol-poc logs deployment/appcontrol-demo-backend --since=10m`.
+Cherchez `Knowledge source`. Le journal indique l’opération, l’hôte,
+le statut HTTP ou le type d’échec de transport. Si une NetworkPolicy limite
+les sorties, faites autoriser le flux du backend vers le pod de la source
+sur le port cible du Service.
+
+Le script crée `appcontrol-source-documentaire` par défaut. Il peut mettre à
+jour un Secret qu’il a créé et laisse un Secret préexistant intact. Ajoutez
+`-Intervalle 900` pour synchroniser la source toutes les quinze minutes.
 
 Ajoutez ce champ à la racine de `configuration.json` avec le nom du Secret
 existant.
@@ -167,14 +259,13 @@ redémarrage du backend pour recharger la valeur.
 2. Cliquez sur **Synchroniser les sources**. X4B met en file les documents
    nouveaux ou modifiés du périmètre autorisé et affiche l’état de chaque
    clé. Le premier lot peut être borné par le périmètre du compte de service.
-3. Examinez les candidates et les sites proposés par composant. Par exemple,
-   une source qui situe la base sur `Vega` et l’API sur `Sirius` affiche les
-   deux correspondances si ces sites sont configurés. La revue signale les
-   sites introuvables ou ambigus. Si tous les composants correspondent au
-   même site actif, le formulaire individuel le propose comme rattachement
-   de l’application. Les autres cas demandent un choix explicite. La
-   publication X4B crée la topologie, et l’import opérationnel utilise son
-   propre parcours pour résoudre les agents.
+3. Examinez les candidates et les sites proposés par composant. Si le document
+   situe une même API à `Sirius` et `Legac`, les deux sites apparaissent sur ce
+   composant et restent visibles sur la map publiée. La revue signale les sites
+   introuvables ou ambigus. Si chaque composant correspond au même site actif,
+   le formulaire individuel le propose comme rattachement administratif de
+   l’application. Les autres cas demandent un choix explicite. Les placements
+   d’exécution et les agents se configurent dans AppControl.
    Une publication groupée peut traiter jusqu’à
    100 candidates par appel API. Une fois les maps présentes, ajoutez les
    droits d’équipe dans AppControl ou renseignez `permissions` dans le
@@ -185,9 +276,13 @@ redémarrage du backend pour recharger la valeur.
    manuellement, ouvrez **Ouvrir la map publiée**, puis **Edit**. La
    proposition reste à comparer tant que l’intégration de la révision
    source n’a pas été enregistrée par une action dédiée.
-5. Ouvrez la map pour la qualifier dans AppControl. Le widget peut utiliser
-   sa copie de simulation quand les cibles dédiées et les origines
-   autorisées sont configurées. Le chart Helm sait configurer le backend
+5. Ouvrez la map dans le widget pour tester sa reconstruction. Avec un seul
+   site dédié dans `embedded.simulation_sites`, AppControl utilise l’agent et
+   la gateway enrôlés par le kit pour ce site. Toutes les maps publiées et
+   accessibles au portail peuvent être simulées ainsi, sans affectation par
+   composant. Avec plusieurs cibles, la session indique le site de simulation
+   choisi. Les sites documentés sur la map restent visibles dans le widget.
+   Le chart Helm sait configurer le backend
    et l’encadrement HTTP. Sur le kit natif, le bloc `embedded` de
    `configuration.json` sélectionne les origines autorisées et les codes des
    sites dédiés. L’exception d’encadrement est limitée aux routes de session
@@ -204,6 +299,7 @@ synchronisation.
 | --- | --- | --- |
 | Première génération | Le résultat validé attend dans **À publier**. | Un administrateur choisit le site et publie une map ou un lot. |
 | Même empreinte et même configuration | X4B réutilise la génération précédente. | Aucune action. |
+| Catalogue de composants ou sites actifs modifiés | La synchronisation recalcule les propositions concernées. | Relire les correspondances avant publication. |
 | Empreinte différente et map déjà publiée | X4B prépare une nouvelle candidate et affiche le diff dans **À comparer**. | L’utilisateur décide quels changements reporter dans la map existante. |
 | Source absente ou génération en erreur | L’état est visible dans la file et la map publiée reste disponible. | L’utilisateur corrige la source ou relance l’échec. |
 

@@ -146,6 +146,11 @@ sur loopback. Chaque cible doit correspondre à des identités enrôlées, activ
 connectées de la même organisation. Le serveur revalide les autorisations et le
 chemin d'exécution pendant les scénarios. Une configuration absente désactive l'accès.
 
+Avec une seule cible configurée, AppControl la sélectionne automatiquement pour
+les sessions Embedded. Avec plusieurs cibles, la création de session doit
+indiquer `simulation_site_id`. Les composants de la copie utilisent la cible de
+la session. Leurs sites documentés restent visibles dans l’architecture.
+
 Pour ouvrir aussi le widget depuis l'interface native, ajouter l'origine exacte
 d'AppControl à cette liste, séparée par une virgule. Par exemple :
 `https://wiki.banque.example,https://appcontrol.banque.example`. La page native
@@ -254,10 +259,10 @@ de service du portail pour créer l’un des profils suivants.
 | **Embedded portal — selected maps** | Une liste de maps, chacune avec `app:<id>:simulate`. |
 | **Embedded portal — all maps the account can view** | `simulate` sur les maps que le compte de service peut consulter. |
 
-Dans le POC, le portail documentaire est accessible sans authentification. Tous les visiteurs
+Dans le POC, un portail en mode POC peut être accessible sans authentification. Tous les visiteurs
 consultent les mêmes fiches et partagent le périmètre de la clé de service.
 Choisissez **Embedded portal — all maps the account can view** pour retrouver
-les maps publiées que ce compte peut consulter. Quand le portail documentaire identifiera
+les maps publiées que ce compte peut consulter. Quand le portail identifiera
 ses utilisateurs, le portail pourra vérifier leur périmètre applicatif avant
 chaque résolution et ouverture de session. Le profil **Import new application
 maps** sert à la publication.
@@ -308,7 +313,7 @@ Le gabarit renseigne `data-source-app-id` avec l’identifiant de la fiche coura
 L’API `/api/fiches/<identifiant>/session-appcontrol` appartient au portail. Elle
 résout la référence de la fiche, puis crée la session avec la clé de service.
 Un portail authentifié peut y appliquer les droits propres à chaque utilisateur.
-Le module n'impose ni React ni une dépendance métier à documentation.
+Le module n'impose ni React ni une dépendance métier au portail documentaire.
 
 Le Web Component encapsule un iframe et transmet le jeton par un handshake
 `postMessage` contrôlant l'origine, la fenêtre et l'identifiant de session. Il ne
@@ -385,7 +390,7 @@ les données et ne modifie pas le routage externe.
 
 ## Démonstration rejouable
 
-Le dossier [demo-rebuild/embedded](https://github.com/xcomponent/appcontrol-release/tree/main/demo-rebuild/embedded) fournit deux documents
+Le dossier [demo-rebuild/embedded](https://github.com/xcomponent/appcontrol-release/releases/latest) fournit deux documents
 synthétiques, un catalogue, un hôte documentaire et un runtime local avec trois
 chaînes d'exécution réelles : exploitation de démonstration, Paris simulation et
-Lyon simulation. Voir son [mode d'emploi](https://github.com/xcomponent/appcontrol-release/blob/main/demo-rebuild/embedded/README.fr.md).
+Lyon simulation. Voir son [mode d'emploi](https://github.com/xcomponent/appcontrol-release/releases/latest).

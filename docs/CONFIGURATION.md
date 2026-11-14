@@ -826,9 +826,9 @@ APPCONTROL_VERSION=0.2.0 docker compose -f docker/docker-compose.release.yaml up
 | Service | Image | Port | Description |
 |---------|-------|------|-------------|
 | `postgres` | `postgres:16-alpine` | 5432 | PostgreSQL database |
-| `backend` | `ghcr.io/xcomponent/appcontrol-backend` | 3000 | API server |
-| `frontend` | `ghcr.io/xcomponent/appcontrol-frontend` | 8080 | React SPA (nginx) |
-| `gateway` | `ghcr.io/xcomponent/appcontrol-gateway` | 4443 | Agent relay |
+| `backend` | `registry.example.test/xcomponent/appcontrol-backend` | 3000 | API server |
+| `frontend` | `registry.example.test/xcomponent/appcontrol-frontend` | 8080 | React SPA (nginx) |
+| `gateway` | `registry.example.test/xcomponent/appcontrol-gateway` | 4443 | Agent relay |
 
 **Default environment variables in docker-compose.release.yaml:**
 

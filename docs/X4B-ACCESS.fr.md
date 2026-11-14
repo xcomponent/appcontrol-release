@@ -44,7 +44,7 @@ chemin de la même origine.
 
 Les chemins relatifs des modules natifs se résolvent par rapport à l’URL publique
 de X4B configurée sur le serveur hôte. L’accueil X4B et les modules natifs
-partagent cette origine. documentation et les autres modules externes gardent leur
+partagent cette origine. Les modules externes gardent leur
 propre origine. L’adaptateur garde le secret et le jeton de
 session côté serveur et utilise une session hôte distincte. Les jetons de
 simulation Embedded gardent leurs droits et leur durée propres.

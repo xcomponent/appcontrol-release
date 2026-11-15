@@ -32,7 +32,7 @@ Les composants ordinaires restent dans une liste plate : le contrat actuel ne pe
 
 Cette fonctionnalité nécessite une version d’AppControl qui expose les routes décrites ci-dessous. Si la récupération retourne `404`, l’instance installée doit être mise à jour ; un prompt récupéré sur une autre version ne remplace pas cette mise à jour.
 
-**Pour essayer les appels sans écrire de client HTTP**, ouvrez **API documentation** dans AppControl, ou `/api-docs` sur la même instance. Le [parcours Swagger](SWAGGER.fr.md) détaille les clics, les identifiants à choisir et les droits nécessaires. Le schéma OpenAPI est disponible à `/api/v1/openapi.json` ; le schéma des **maps** est un autre document, contenu dans `json_schema` du contrat.
+**Pour essayer la validation et l’import**, ouvrez **API documentation** dans AppControl, ou `/api-docs` sur la même instance. Le schéma des **maps** est fourni dans `json_schema` par le contrat récupéré avec le client HTTP. [Parcours Swagger](SWAGGER.fr.md)
 
 ## 1. Récupérer le prompt et conserver un cache
 

@@ -103,13 +103,14 @@ les briques et les indices techniques dans le document. Il compare ces élément
 aux clés, libellés et alias du catalogue de l’organisation. Le prompt final est
 exécuté sur le même document avec l’ensemble des clés, libellés, descriptions et
 alias du catalogue, les suggestions par composant et les codes et noms des sites
-actifs. Un choix sémantique de l’IA non confirmé par le rapprochement déterministe
-est signalé pour revue. Une brique sans correspondance est marquée **À qualifier**
-dans le graphe. Dans **Rapprochements catalogue**, cliquez sur une suggestion
+actifs. Lorsque plusieurs variantes partagent une famille de produits, une
+version majeure compatible peut faire ressortir une candidate. Le graphe
+affiche la brique proposée avec **À vérifier** quand le rapprochement reste
+incertain, et marque **À qualifier** les composants sans choix proposé.
+Dans **Rapprochements catalogue**, confirmez le choix proposé ou cliquez sur une autre suggestion
 pour l’affecter au brouillon, ou ouvrez le sélecteur pour rechercher une autre
 brique. Si vous confirmez la publication d’une brique sans type, elle utilise le type générique
-`custom`. Ses commandes et son agent déjà configurés sont conservés. Pour une
-nouvelle brique, configurez ces éléments dans AppControl avant de l’exécuter.
+`custom`. Les commandes et agents des composants déjà configurés sont conservés.
 Les commandes, icônes et couleurs du catalogue restent dans AppControl.
 Sans catalogue de composants, X4B exécute directement le prompt final avec les
 sites disponibles.
@@ -120,9 +121,41 @@ pour rechercher une brique par libellé, description ou mot-clé. Vous pouvez
 aussi modifier son libellé, sa description et ses sites documentés, déplacer
 les composants ou ajuster leurs dépendances. Enregistrez la proposition, examinez les écarts
 et confirmez la publication. X4B refuse la publication si la proposition ou
-la map a changé depuis la revue et vous invite à recharger. Les sites
-documentés servent à décrire l’architecture. L’affectation des agents se fait
-dans AppControl.
+la map a changé depuis la revue et vous invite à recharger.
+
+Lors d’une publication individuelle, choisissez le site de rattachement puis
+vérifiez le site d’exécution et l’agent de chaque composant à affecter. Un
+agent peut être proposé automatiquement lorsque la correspondance est unique.
+Pour une mise à jour, le formulaire affiche les composants nouveaux et ceux
+qui attendent une affectation. La publication groupée produit des cartes
+descriptives. Les commandes d’exploitation se configurent dans AppControl.
+
+La génération initiale examine les rôles des composants, les flux documentés
+et les prérequis de démarrage. Elle recherche aussi des liens dans les
+paramètres de connexion et les procédures lorsque le document ne fournit pas
+de tableau des dépendances. Les nouvelles générations et les relances
+manuelles utilisent cette consigne sans déclencher de relance en masse.
+
+Dans l’écran d’examen, **Affiner la carte** lance une analyse à la demande. Le
+connecteur exécute le prompt avec la version du document de la proposition,
+la carte ouverte, le catalogue et les sites actifs. La revue peut suggérer
+une brique du catalogue, un rattachement à un groupe ou une modification de
+dépendance. Elle examine le rôle des composants et les flux documentés. Une
+dépendance est forte si le composant doit attendre un prérequis avant de
+démarrer, y compris lors d’une reprise. Un lien de routage peut être représenté
+par une dépendance faible.
+La revue peut proposer un lien faible déduit d’un indice précis de la source.
+La suggestion indique l’indice et ce qu’il faut vérifier avant de l’appliquer.
+La revue présente le motif, la source indiquée par l’IA et les points à
+confirmer. Les types de composants déjà confirmés par l’opérateur sont
+protégés. Sélectionnez les suggestions retenues, puis appliquez-les au
+brouillon. La publication suit sa validation habituelle.
+
+Une consigne facultative permet de cibler la revue, par exemple sur les
+dépendances d’un service ou sa procédure de démarrage. La consigne accompagne
+le même contexte documentaire. Les recommandations sur les commandes et les
+procédures restent consultables dans le résultat de l’analyse. Seules les
+modifications de topologie sélectionnées sont appliquées au brouillon.
 
 L’aperçu et la map publiée indiquent l’obsolescence renseignée par la source,
 avec le niveau s’il est fourni. Les états reconnus sont **À jour**, **Obsolète**

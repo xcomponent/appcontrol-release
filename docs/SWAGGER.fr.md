@@ -7,7 +7,7 @@ d'**AppControl 1.21.1**. Installer le serveur et l'interface de la même release
 sur Windows/OpenShift, le kit léger correspondant est **1.21.1-2**. Les anciens
 rapports de qualification ne remplacent pas ceux de cette livraison.
 
-La couverture de la documentation progresse par fonctionnalité : elle ne représente pas encore toutes les API du produit. Le parcours de génération de maps par une IA externe, sa validation et ses imports sont décrits avec leurs paramètres, corps de requête et réponses.
+Swagger décrit les opérations de validation et d’import des maps, avec leurs paramètres, corps de requête et réponses. Le [guide de génération](MAP_GENERATION.fr.md) couvre l’intégration avec une IA externe.
 
 ## 1. Se connecter
 
@@ -17,30 +17,14 @@ Pour tester avec une clé API, utilisez **Authorize**, puis le champ `apiKeyAuth
 
 | Appels | Accès avec une clé API |
 |---|---|
-| Contrat générique et validation | Clé valide, y compris une clé restreinte. |
-| Contrat avec catalogue de l’organisation | Portée globale `read`, `design` ou `*` ; une portée sur une seule application ne suffit pas. |
+| Validation | Clé valide, y compris une clé restreinte. |
 | Contexte standard et publication `/map-generation/prepare`, `/map-generation/import` | Portée `maps:import`, `*` ou session autorisée ; droits de site conservés. |
 | Contexte et imports dédiés à la simulation | Portée `mock:import`, `maps:import`, `*` ou session autorisée ; `mock:import` ne permet pas le standard. |
 | Inventaire et `/import/*` | Dans cette version : clé `*` avec les droits de son propriétaire, ou session utilisateur autorisée. Une clé restreinte à `design` n’ouvre pas ces routes. |
 
 La possession d’une clé ne remplace pas les droits sur les applications et les sites. Le compte qui publie doit être autorisé à importer dans le périmètre choisi.
 
-## 2. Obtenir les instructions pour votre IA
-
-Dépliez **Map generation → GET /map-generation/contract**. Cliquez sur **Try it out**, choisissez `standard`, `mock-linux` ou `mock-windows` dans `profile`, puis **Execute**. Ce choix concerne le prompt : les deux profils mock demandent à votre IA des commandes utilisant des fichiers témoins. Il ne change aucun réglage global ni aucun agent. L’URL affichée sous la requête inclut le préfixe `/api/v1`.
-
-La réponse `200` contient :
-
-- `system_prompt` : les instructions produit complètes à transmettre à votre moteur d’IA ;
-- `user_message_template` : le message dans lequel remplacer `{{input_documents}}` par les documents de l’application ;
-- `json_schema`, `examples`, `capabilities` et `limitations` : le contrat de génération et ses limites ;
-- `contract_version`, `prompt_revision`, `product_version` : les versions à conserver avec votre résultat.
-
-AppControl ne reçoit pas les documents sources et n’appelle pas d’IA dans cette opération. C’est votre moteur qui exécute les messages. Pour commencer sans modèle, un objet `map` de la liste `examples` peut servir à essayer la validation ; ses hôtes et procédures restent illustratifs.
-
-Pour vérifier le cache, copiez l’en-tête de réponse **ETag**, avec ses guillemets, dans le paramètre **If-None-Match** et relancez la même requête. Un `304` signifie « réutiliser le contrat conservé » et n’a pas de corps. Changez de cache si l’instance, l’identité, le profil ou la sélection du catalogue change.
-
-## 3. Vérifier le résultat sans créer d’application
+## 2. Vérifier le résultat sans créer d’application
 
 Dépliez **POST /maps/validate**, cliquez sur **Try it out**, puis remplacez l’exemple par :
 
@@ -69,7 +53,7 @@ Cliquez sur **Execute**, puis regardez **`valid`**, pas seulement le code HTTP. 
 
 La validation ne crée aucune map et n’exécute aucune commande. Elle ne vérifie pas la fidélité aux documents, la sécurité des procédures, la présence des agents ou leur disponibilité. Un `409` indique qu’il faut rafraîchir le contrat.
 
-## 4. Choisir l’environnement et publier
+## 3. Choisir l’environnement et publier
 
 Le parcours général est dans **Map generation** :
 
@@ -107,8 +91,6 @@ Après le retour `201`, conservez `application_id`, lisez les avertissements pui
 |---|---|---|
 | Swagger UI | `/api-docs` | Lire les API et effectuer des appels interactifs. |
 | OpenAPI JSON | `/api/v1/openapi.json` | Décrire les requêtes et réponses HTTP, pour vos outils d’intégration. |
-| Contrat de génération | `/api/v1/map-generation/contract` | Fournir le prompt et le format de map à l’IA du client. |
-| JSON Schema de map | Champ `json_schema` du contrat | Décrire précisément le JSON que l’IA doit produire. |
 | Guide d’intégration | [Génération de maps](MAP_GENERATION.fr.md) | Cache, profils, catalogue, rattachements et traitement par lots. |
 
 Si `/api-docs` ou les routes de génération sont absentes, mettre à jour

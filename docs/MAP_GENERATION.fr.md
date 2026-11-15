@@ -56,12 +56,15 @@ La réponse JSON contient notamment :
 | `examples` | Exemples nommés : chacun contient un champ `map`. |
 | `capabilities` et `limitations` | Fonctionnalités du profil et limites à prendre en compte par l’intégration. Le schéma reste la référence pour les champs acceptés. |
 
-La révision actuelle des instructions est `prompt_revision: "8"`. L’IA reprend
+La révision actuelle des instructions est `prompt_revision: "9"`. L’IA reprend
 dans `source_sites` les codes ou noms de tous les sites explicitement documentés
 pour un composant, par exemple `"source_sites": ["Sirius", "Legac"]`. Le champ
 historique `source_site` reste accepté pour un seul site. Lors d’une mise à
 jour dans X4B, une liste `source_sites: []` retire les sites documentés du
 composant. L’absence des deux champs laisse en place ses sites documentés.
+Le champ facultatif `obsolescence` contient un `status` (`up_to_date`, `obsolete`
+ou `unknown`) et, si la source le précise, le niveau documenté dans `level`.
+Le champ est omis si le document ne renseigne aucun statut ni niveau.
 Lorsque les hôtes sont
 inconnus, l’IA laisse `binding_profiles` et `host` absents. L’intégration peut
 fournir les placements autorisés.

@@ -44,11 +44,15 @@ fois. Pour un miroir volontairement aplati, le guide décrit
 
 ## Installer, démontrer, faire évoluer
 
+Si le kit contient `Gerer-AppControl.ps1`, son menu propose l’installation,
+la mise à jour et la désinstallation. Le guide donne aussi les
+[trois commandes directes](INSTALLATION-WINDOWS.fr.md#piloter-le-kit-windows-avec-un-seul-script).
+
 1. Télécharger le kit Windows léger et vérifier son empreinte SHA-256.
-2. Lancer `Deployer-AppControl.ps1`. Le script demande le projet et le mode PostgreSQL ; pour Artifactory, fournir les valeurs de la plateforme avec `-Registre` et éventuellement `-SecretImages`.
+2. Choisir **Installer** dans le menu, ou lancer `Deployer-AppControl.ps1` avec un kit sans menu. Le script demande le projet et le mode PostgreSQL. Pour Artifactory, renseigner `-Registre` et éventuellement `-SecretImages`.
 3. Ouvrir l’URL affichée. La recette crée un agent et une map synthétique pour vérifier les dépendances, le démarrage, l’arrêt, les droits et la persistance.
 4. Choisir une application pour le POC, préparer sa map avec l’IA du client et les guides ci-dessous, puis vérifier les commandes, les agents choisis et les droits avec son équipe d’exploitation. Commencer par des commandes simulées ou une application non critique selon le périmètre convenu.
-5. Pour une nouvelle version, récupérer son kit, sauvegarder PostgreSQL puis relancer **le même script avec `-MettreAJour`**. Le dossier privé de l’installation, ses paramètres et ses données sont conservés ; prévoir une interruption des services. Voir la [procédure de mise à jour](INSTALLATION-WINDOWS.fr.md#mettre-a-jour-le-poc).
+5. Pour une nouvelle version, récupérer son kit, sauvegarder PostgreSQL puis choisir **Mettre à jour** dans le menu ou lancer `Deployer-AppControl.ps1 -MettreAJour` avec un kit sans menu. Le dossier privé de l’installation, ses paramètres et ses données sont conservés. Prévoir une interruption des services. Voir la [procédure de mise à jour](INSTALLATION-WINDOWS.fr.md#mettre-a-jour-le-poc).
 
 La mise à jour conserve les maps et ne rejoue pas la démonstration. Elle met à
 jour les services AppControl et, en mode intégré, l’image PostgreSQL. Les agents

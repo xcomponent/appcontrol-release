@@ -8,7 +8,7 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.24.3**. Paquet : **Windows léger 1.24.3-1**.
+Produit : **AppControl 1.24.4**. Paquet : **Windows léger 1.24.4-1**.
 
 **AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La plateforme inclut [l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications](../X4B-PLATEFORME.fr.md). Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
 
@@ -265,14 +265,14 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.24.3-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.3/appcontrol-openshift-windows-light-1.24.3-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.3/appcontrol-openshift-windows-light-1.24.3-1.zip.sha256)
+- [Paquet Windows léger 1.24.4-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.4/appcontrol-openshift-windows-light-1.24.4-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.4/appcontrol-openshift-windows-light-1.24.4-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.24.3-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.24.4-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
     throw 'Checksum mismatch: do not use this archive.'
@@ -284,6 +284,37 @@ Utiliser **Extraire tout** dans l’Explorateur. Ouvrir le dossier contenant
 Le dossier `manifests` contient le YAML OpenShift consultable avant installation.
 Les autres fichiers PowerShell sont les fonctions utilisées par le script ;
 ce ne sont pas des logiciels supplémentaires à installer.
+
+## Piloter le kit Windows avec un seul script
+
+Si votre kit contient `Gerer-AppControl.ps1`, ouvrez PowerShell dans le
+dossier extrait et vérifiez la connexion avec `oc whoami`. Lancez
+`.\Gerer-AppControl.ps1` pour choisir une opération dans le menu, ou utilisez
+directement la commande correspondante.
+
+| Opération | Commande |
+|---|---|
+| Nouvelle installation | `.\Gerer-AppControl.ps1 -Action Installer -Projet 'projet-fourni'` |
+| Mise à jour depuis le nouveau kit | `.\Gerer-AppControl.ps1 -Action MettreAJour` |
+| Désinstallation en conservant les données | `.\Gerer-AppControl.ps1 -Action Desinstaller` |
+
+Pour l’installation, ajoutez `-Nom` pour donner un nom à l’instance,
+`-Registre` et éventuellement `-SecretImages` si votre plateforme utilise un
+miroir, et `-UrlPublique` si votre plateforme vous a fourni l’URL.
+Vous pouvez appliquer un fichier de configuration initial avec `-Configuration`.
+Le script de déploiement vous guide pour le choix de PostgreSQL.
+
+Pour mettre à jour ou désinstaller, la commande retrouve l’installation
+dans le dossier d’état standard. Si plusieurs installations sont détectées,
+sélectionnez celle à traiter. Pour un dossier d’état personnalisé, ajoutez
+`-DossierEtat 'C:\AppControl\Etat'`. Le projet et le nom sont relus dans ce
+dossier. Avant une mise à jour, sauvegardez PostgreSQL. La commande réutilise
+la configuration existante. Si le miroir ou le secret de téléchargement
+a changé, renseignez `-Registre` ou `-SecretImages` à la mise à jour.
+
+Les confirmations et les opérations avancées sont détaillées dans les
+sections [Mise à jour](#mettre-a-jour-le-poc) et
+[Désinstallation](#retirer-appcontrol-sans-supprimer-le-projet).
 
 ## 5. Lancer et choisir le projet et PostgreSQL
 
@@ -793,9 +824,19 @@ déployée. Ne pas supprimer son dossier d’état.
 | Nettoyage partiel ou objet déjà supprimé | Relancer la même commande de désinstallation ; les absences sont acceptées et les autres objets sont traités. Lire le bilan des objets ignorés/en échec. |
 | Dossier privé perdu ou endommagé | Afficher le plan avec `-WithoutState -Namespace ... -Name ... -Preview`, puis retirer `-Preview` si la cible est correcte. |
 
+### PostgreSQL reste bloqué après une correction de registre
+
+En mode intégré, comparer l’image du StatefulSet PostgreSQL à celle du pod
+`<nom>-postgresql-0` dans le projet. Si le StatefulSet contient déjà l’image
+corrigée et que son pod utilise encore l’ancienne image avec
+`ErrImagePull` ou `ImagePullBackOff`, supprimer uniquement ce pod depuis
+OpenShift. Le StatefulSet le recrée avec son modèle courant et son volume
+persistant. Attendre que le pod soit prêt, puis relancer le même kit cible avec
+le dossier d’état d’origine pour terminer la mise à jour.
+
 ## Qualification et suite du POC
 
-La publication du kit 1.24.3-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.3-1.json` et `QUALIFICATION-EVALUATION-1.24.3-1.zip` identifient les images et le ZIP de cette recette.
+La publication du kit 1.24.4-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.4-1.json` et `QUALIFICATION-EVALUATION-1.24.4-1.zip` identifient les images et le ZIP de cette recette.
 
 ### Historique des qualifications
 
@@ -1174,7 +1215,7 @@ le domaine était la cause de l’erreur d’exposition.
 
 ## Démonstration bancaire complète
 
-**Le kit 1.24.3-1 installe automatiquement la démo bancaire lors d’une installation
+**Le kit 1.24.4-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut**, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. `-SansDemo` désactive les deux démonstrations ;
 une mise à jour avec `-MettreAJour` conserve les applications existantes sans en ajouter.

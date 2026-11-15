@@ -3,11 +3,16 @@
 Le [contrat OpenAPI](knowledge-engine.openapi.yaml) décrit les opérations
 du connecteur. **Côté client, deux opérations suffisent au parcours de
 génération**. Lister les documents courants et exécuter un prompt sur la
-révision demandée. La lecture directe du JSON sert au diagnostic.
+révision demandée. La lecture directe du JSON est facultative.
 
 X4B fournit le prompt et le schéma AppControl. Le Knowledge Engine présente
-le document dans son format d’origine à l’IA interne. Le connecteur X4B
-traite uniquement les métadonnées de source et le JSON de map retourné.
+le document dans son format d’origine à l’IA interne. Pour vérifier une brique
+proposée que le premier inventaire n’a pas identifiée, X4B peut lire la révision
+exacte du document une fois. Il vérifie l’empreinte et cherche le nom du
+composant et le produit dans le même enregistrement JSON. Ce contrôle est
+facultatif et le document est traité en mémoire. Une source sans cette opération
+continue à générer des propositions dont les rapprochements incertains restent à
+confirmer.
 
 **Une URL de base** dessert le catalogue et l’exécution du prompt. Par
 exemple, avec `https://knowledge.example/api/v1`, X4B appelle
@@ -19,7 +24,7 @@ s’appelle **Génération de maps** et désigne ce raccordement comme la
 | Opération | Ce que le Knowledge Engine fournit |
 | --- | --- |
 | `GET /knowledge-documents` | Une liste paginée des clés applicatives autorisées et de l’empreinte SHA-256 de leur document courant. Le filtre `application_key` vérifie la révision courante d’une application. |
-| `GET /knowledge-documents/{application_key}/versions/{sha256}` | Le JSON d’une révision précise, pour la prévisualisation ou le diagnostic. |
+| `GET /knowledge-documents/{application_key}/versions/{sha256}` | Le JSON d’une révision précise, pour la prévisualisation, le diagnostic ou la vérification d’un rapprochement. |
 | `POST /prompt-executions` | L’exécution synchrone d’un prompt générique sur le document désigné par sa clé applicative et son empreinte. Le service renvoie le texte de l’IA et la référence effectivement utilisée. |
 
 ## Exemple de raccordement
@@ -99,11 +104,18 @@ aux clés, libellés et alias du catalogue de l’organisation. Le prompt final 
 exécuté sur le même document avec l’ensemble des clés, libellés, descriptions et
 alias du catalogue, les suggestions par composant et les codes et noms des sites
 actifs. Un choix sémantique de l’IA non confirmé par le rapprochement déterministe
-est signalé pour revue ; une clé inconnue est refusée. Les commandes, icônes et couleurs du
-catalogue restent dans AppControl. Sans catalogue de composants, X4B exécute
-directement le prompt final avec les sites disponibles.
+est signalé pour revue. Une brique sans correspondance est marquée **À qualifier**
+dans le graphe. Dans **Rapprochements catalogue**, cliquez sur une suggestion
+pour l’affecter au brouillon, ou ouvrez le sélecteur pour rechercher une autre
+brique. Si vous confirmez la publication d’une brique sans type, elle utilise le type générique
+`custom`. Ses commandes et son agent déjà configurés sont conservés. Pour une
+nouvelle brique, configurez ces éléments dans AppControl avant de l’exécuter.
+Les commandes, icônes et couleurs du catalogue restent dans AppControl.
+Sans catalogue de composants, X4B exécute directement le prompt final avec les
+sites disponibles.
 
-L’aperçu de la proposition permet d’ouvrir l’éditeur. Sélectionnez un composant
+L’aperçu de la proposition permet d’ouvrir l’éditeur. Le zoom et le bouton
+**Plein écran** sont disponibles dans les deux vues. Sélectionnez un composant
 pour rechercher une brique par libellé, description ou mot-clé. Vous pouvez
 aussi modifier son libellé, sa description et ses sites documentés, déplacer
 les composants ou ajuster leurs dépendances. Enregistrez la proposition, examinez les écarts
@@ -111,6 +123,13 @@ et confirmez la publication. X4B refuse la publication si la proposition ou
 la map a changé depuis la revue et vous invite à recharger. Les sites
 documentés servent à décrire l’architecture. L’affectation des agents se fait
 dans AppControl.
+
+L’aperçu et la map publiée indiquent l’obsolescence renseignée par la source,
+avec le niveau s’il est fourni. Les états reconnus sont **À jour**, **Obsolète**
+et **Obsolescence inconnue**. Une brique sans information documentée n’affiche aucun
+badge d’obsolescence. Pour récupérer l’information sur une proposition déjà
+générée, utilisez **Relancer la génération** et relisez le résultat avant de
+publier.
 
 Sur une map déjà publiée, X4B reconnaît les composants existants par leur nom.
 La mise à jour conserve leurs identifiants, leurs commandes et leurs agents,

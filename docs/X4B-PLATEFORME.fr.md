@@ -30,7 +30,12 @@ Pour un POC avec un portail documentaire, créer un compte administrateur de rev
 | `GET /fiches/<id>/status` | `POST /api/v1/x4b/embedded/status` avec `credentials` et `source_id`. Renvoie l’état agrégé, la dernière observation et l’indicateur de fraîcheur. Une map absente ou non autorisée donne `404`. |
 | `POST /fiches/<id>/simulation` | `POST /api/v1/x4b/embedded/simulation` avec les mêmes champs et éventuellement `simulation_site_id`. Affecter la réponse à la propriété JavaScript `session` du composant map. Vérifier l’origine du POST. |
 
-Après un `POST /x4b/logout` réussi, le bandeau dirige le navigateur vers la page de connexion X4B. La route de l'application hôte reste responsable de supprimer sa session locale et de révoquer la session partagée ; le bandeau ne peut pas effacer les cookies protégés de l'hôte. Si la révocation échoue, retourner une erreur HTTP plutôt qu'un succès. L'application doit également protéger ses propres pages et API.
+`GET /x4b/session` renvoie au bandeau les champs `user` et `modules` issus de
+la réponse serveur X4B. Chaque entrée de `modules` contient `key`, `name` et
+`entry_url`. X4B calcule la liste selon les droits du compte connecté. Le
+bandeau ajoute **Catalogue** lorsque **AppControl** figure dans cette liste.
+
+Le bandeau demande confirmation avant de déconnecter le compte. Après un `POST /x4b/logout` réussi, il dirige le navigateur vers la page de connexion X4B. La route de l'application hôte supprime sa session locale et révoque la session partagée. Si la révocation échoue, la route renvoie une erreur HTTP. L'application protège aussi ses propres pages et API.
 
 Pour les deux routes Embedded, `credentials` contient `client_id`, `client_secret` et `session_token`. La source de la map est résolue par `source_reference.system` égal à la clé du module et `source_reference.id` égal à l’identifiant de la fiche. La configuration [AppControl Embedded](EMBEDDED.fr.md) déclare en plus l’origine du portail et le site de simulation. Le jeton de simulation reste court et suit la validité de la session X4B qui l’a demandé.
 

@@ -2225,12 +2225,15 @@ Si le chemin fourni comporte déjà <code>xcomponent</code>, il n’est pas ajou
 fois. Pour un miroir volontairement aplati, le guide décrit
 <code>-CheminRegistreExact</code>.</p>
 <h2 id="installer-demontrer-faire-evoluer">Installer, démontrer, faire évoluer<a class="headerlink" href="#installer-demontrer-faire-evoluer" title="Permanent link">&para;</a></h2>
+<p>Si le kit contient <code>Gerer-AppControl.ps1</code>, son menu propose l’installation,
+la mise à jour et la désinstallation. Le guide donne aussi les
+<a href="../INSTALLATION-WINDOWS.fr/#piloter-le-kit-windows-avec-un-seul-script">trois commandes directes</a>.</p>
 <ol>
 <li>Télécharger le kit Windows léger et vérifier son empreinte SHA-256.</li>
-<li>Lancer <code>Deployer-AppControl.ps1</code>. Le script demande le projet et le mode PostgreSQL ; pour Artifactory, fournir les valeurs de la plateforme avec <code>-Registre</code> et éventuellement <code>-SecretImages</code>.</li>
+<li>Choisir <strong>Installer</strong> dans le menu, ou lancer <code>Deployer-AppControl.ps1</code> avec un kit sans menu. Le script demande le projet et le mode PostgreSQL. Pour Artifactory, renseigner <code>-Registre</code> et éventuellement <code>-SecretImages</code>.</li>
 <li>Ouvrir l’URL affichée. La recette crée un agent et une map synthétique pour vérifier les dépendances, le démarrage, l’arrêt, les droits et la persistance.</li>
 <li>Choisir une application pour le POC, préparer sa map avec l’IA du client et les guides ci-dessous, puis vérifier les commandes, les agents choisis et les droits avec son équipe d’exploitation. Commencer par des commandes simulées ou une application non critique selon le périmètre convenu.</li>
-<li>Pour une nouvelle version, récupérer son kit, sauvegarder PostgreSQL puis relancer <strong>le même script avec <code>-MettreAJour</code></strong>. Le dossier privé de l’installation, ses paramètres et ses données sont conservés ; prévoir une interruption des services. Voir la <a href="../INSTALLATION-WINDOWS.fr/#mettre-a-jour-le-poc">procédure de mise à jour</a>.</li>
+<li>Pour une nouvelle version, récupérer son kit, sauvegarder PostgreSQL puis choisir <strong>Mettre à jour</strong> dans le menu ou lancer <code>Deployer-AppControl.ps1 -MettreAJour</code> avec un kit sans menu. Le dossier privé de l’installation, ses paramètres et ses données sont conservés. Prévoir une interruption des services. Voir la <a href="../INSTALLATION-WINDOWS.fr/#mettre-a-jour-le-poc">procédure de mise à jour</a>.</li>
 </ol>
 <p>La mise à jour conserve les maps et ne rejoue pas la démonstration. Elle met à
 jour les services AppControl et, en mode intégré, l’image PostgreSQL. Les agents
@@ -2392,7 +2395,7 @@ avec l’exploitation.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T08:02:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T11:56:35+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
   </span>
 
     

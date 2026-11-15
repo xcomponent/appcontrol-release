@@ -2332,10 +2332,15 @@
 <p>Le <a href="../knowledge-engine.openapi.yaml">contrat OpenAPI</a> décrit les opérations
 du connecteur. <strong>Côté client, deux opérations suffisent au parcours de
 génération</strong>. Lister les documents courants et exécuter un prompt sur la
-révision demandée. La lecture directe du JSON sert au diagnostic.</p>
+révision demandée. La lecture directe du JSON est facultative.</p>
 <p>X4B fournit le prompt et le schéma AppControl. Le Knowledge Engine présente
-le document dans son format d’origine à l’IA interne. Le connecteur X4B
-traite uniquement les métadonnées de source et le JSON de map retourné.</p>
+le document dans son format d’origine à l’IA interne. Pour vérifier une brique
+proposée que le premier inventaire n’a pas identifiée, X4B peut lire la révision
+exacte du document une fois. Il vérifie l’empreinte et cherche le nom du
+composant et le produit dans le même enregistrement JSON. Ce contrôle est
+facultatif et le document est traité en mémoire. Une source sans cette opération
+continue à générer des propositions dont les rapprochements incertains restent à
+confirmer.</p>
 <p><strong>Une URL de base</strong> dessert le catalogue et l’exécution du prompt. Par
 exemple, avec <code>https://knowledge.example/api/v1</code>, X4B appelle
 <code>https://knowledge.example/api/v1/knowledge-documents</code> et
@@ -2356,7 +2361,7 @@ s’appelle <strong>Génération de maps</strong> et désigne ce raccordement co
 </tr>
 <tr>
 <td><code>GET /knowledge-documents/{application_key}/versions/{sha256}</code></td>
-<td>Le JSON d’une révision précise, pour la prévisualisation ou le diagnostic.</td>
+<td>Le JSON d’une révision précise, pour la prévisualisation, le diagnostic ou la vérification d’un rapprochement.</td>
 </tr>
 <tr>
 <td><code>POST /prompt-executions</code></td>
@@ -2432,10 +2437,17 @@ aux clés, libellés et alias du catalogue de l’organisation. Le prompt final 
 exécuté sur le même document avec l’ensemble des clés, libellés, descriptions et
 alias du catalogue, les suggestions par composant et les codes et noms des sites
 actifs. Un choix sémantique de l’IA non confirmé par le rapprochement déterministe
-est signalé pour revue ; une clé inconnue est refusée. Les commandes, icônes et couleurs du
-catalogue restent dans AppControl. Sans catalogue de composants, X4B exécute
-directement le prompt final avec les sites disponibles.</p>
-<p>L’aperçu de la proposition permet d’ouvrir l’éditeur. Sélectionnez un composant
+est signalé pour revue. Une brique sans correspondance est marquée <strong>À qualifier</strong>
+dans le graphe. Dans <strong>Rapprochements catalogue</strong>, cliquez sur une suggestion
+pour l’affecter au brouillon, ou ouvrez le sélecteur pour rechercher une autre
+brique. Si vous confirmez la publication d’une brique sans type, elle utilise le type générique
+<code>custom</code>. Ses commandes et son agent déjà configurés sont conservés. Pour une
+nouvelle brique, configurez ces éléments dans AppControl avant de l’exécuter.
+Les commandes, icônes et couleurs du catalogue restent dans AppControl.
+Sans catalogue de composants, X4B exécute directement le prompt final avec les
+sites disponibles.</p>
+<p>L’aperçu de la proposition permet d’ouvrir l’éditeur. Le zoom et le bouton
+<strong>Plein écran</strong> sont disponibles dans les deux vues. Sélectionnez un composant
 pour rechercher une brique par libellé, description ou mot-clé. Vous pouvez
 aussi modifier son libellé, sa description et ses sites documentés, déplacer
 les composants ou ajuster leurs dépendances. Enregistrez la proposition, examinez les écarts
@@ -2443,6 +2455,12 @@ et confirmez la publication. X4B refuse la publication si la proposition ou
 la map a changé depuis la revue et vous invite à recharger. Les sites
 documentés servent à décrire l’architecture. L’affectation des agents se fait
 dans AppControl.</p>
+<p>L’aperçu et la map publiée indiquent l’obsolescence renseignée par la source,
+avec le niveau s’il est fourni. Les états reconnus sont <strong>À jour</strong>, <strong>Obsolète</strong>
+et <strong>Obsolescence inconnue</strong>. Une brique sans information documentée n’affiche aucun
+badge d’obsolescence. Pour récupérer l’information sur une proposition déjà
+générée, utilisez <strong>Relancer la génération</strong> et relisez le résultat avant de
+publier.</p>
 <p>Sur une map déjà publiée, X4B reconnaît les composants existants par leur nom.
 La mise à jour conserve leurs identifiants, leurs commandes et leurs agents,
 ainsi que le site de rattachement de la map. Elle applique la topologie
@@ -2771,7 +2789,7 @@ reste responsable de la publication de la map.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T08:02:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T12:57:02+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
   </span>
 
     

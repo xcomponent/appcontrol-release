@@ -2240,6 +2240,7 @@
 </tr>
 </tbody>
 </table>
+<p>Après un <code>POST /x4b/logout</code> réussi, le bandeau dirige le navigateur vers la page de connexion X4B. La route de l'application hôte reste responsable de supprimer sa session locale et de révoquer la session partagée ; le bandeau ne peut pas effacer les cookies protégés de l'hôte. Si la révocation échoue, retourner une erreur HTTP plutôt qu'un succès. L'application doit également protéger ses propres pages et API.</p>
 <p>Pour les deux routes Embedded, <code>credentials</code> contient <code>client_id</code>, <code>client_secret</code> et <code>session_token</code>. La source de la map est résolue par <code>source_reference.system</code> égal à la clé du module et <code>source_reference.id</code> égal à l’identifiant de la fiche. La configuration <a href="../EMBEDDED.fr/">AppControl Embedded</a> déclare en plus l’origine du portail et le site de simulation. Le jeton de simulation reste court et suit la validité de la session X4B qui l’a demandé.</p>
 <p>Pour les maps générées depuis une source documentaire externe, renseigner <code>documentation</code> comme nom de source dans <strong>Génération de maps → Paramètres</strong>, ou définir <code>X4B_KNOWLEDGE_SOURCE=documentation</code> lors du déploiement. L’<code>application_key</code> exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple <code>PAI-042</code>.</p>
 <p>Le badge actualise les données toutes les 15 secondes quand la page est visible. Autoriser l’hôte AppControl dans <code>script-src</code>, <code>style-src</code> et <code>frame-src</code> du portail. Le navigateur interroge les routes du portail sous sa propre origine.</p>
@@ -2271,7 +2272,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:18:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-14T14:36:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-14</span>
   </span>
 
     

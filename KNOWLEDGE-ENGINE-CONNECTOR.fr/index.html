@@ -2420,19 +2420,40 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.</p>
    avec AppControl et conserve le résultat candidat. Il vérifie la révision
    courante avant publication. Pour une première map, il enregistre la
    référence externe <code>{"system":"documentation","id":"00142"}</code>, avec un nom de
-   source stable configuré côté X4B. Pour une map existante, il propose les
-   écarts de topologie entre la candidate et la map actuelle. La revue peut
-   servir à reporter les changements choisis dans AppControl. X4B garde
+   source stable configuré côté X4B. Pour une map existante, il affiche les
+   écarts entre la proposition et la version publiée et permet d’appliquer la
+   mise à jour après confirmation. X4B garde
    séparément l’empreinte source de la map publiée et celle de la dernière
    génération. Une disparition du catalogue est signalée et la map est conservée.</li>
 </ol>
 <p>Avec un catalogue de composants AppControl, X4B demande d’abord à l’IA de relever
 les briques et les indices techniques dans le document. Il compare ces éléments
 aux clés, libellés et alias du catalogue de l’organisation. Le prompt final est
-exécuté sur le même document et transmet les références pertinentes par composant,
-ainsi que les codes et noms des sites actifs. Les commandes, icônes et couleurs du
+exécuté sur le même document avec l’ensemble des clés, libellés, descriptions et
+alias du catalogue, les suggestions par composant et les codes et noms des sites
+actifs. Un choix sémantique de l’IA non confirmé par le rapprochement déterministe
+est signalé pour revue ; une clé inconnue est refusée. Les commandes, icônes et couleurs du
 catalogue restent dans AppControl. Sans catalogue de composants, X4B exécute
 directement le prompt final avec les sites disponibles.</p>
+<p>L’aperçu de la proposition permet d’ouvrir l’éditeur. Sélectionnez un composant
+pour rechercher une brique par libellé, description ou mot-clé. Vous pouvez
+aussi modifier son libellé, sa description et ses sites documentés, déplacer
+les composants ou ajuster leurs dépendances. Enregistrez la proposition, examinez les écarts
+et confirmez la publication. X4B refuse la publication si la proposition ou
+la map a changé depuis la revue et vous invite à recharger. Les sites
+documentés servent à décrire l’architecture. L’affectation des agents se fait
+dans AppControl.</p>
+<p>Sur une map déjà publiée, X4B reconnaît les composants existants par leur nom.
+La mise à jour conserve leurs identifiants, leurs commandes et leurs agents,
+ainsi que le site de rattachement de la map. Elle applique la topologie
+relue, dont les ajouts et changements de dépendances. Tout composant de la
+map publiée absent de la proposition bloque la publication. Réintégrez-le
+avec son nom d’origine dans la proposition ou retirez-le de la map dans
+AppControl après vérification.
+La relance manuelle remplace la proposition en attente, même si la source n’a
+pas changé ; elle ne modifie pas la map publiée.</p>
+<p>Le JSON de la proposition peut être téléchargé pour une revue Git manuelle.
+Cet export ne crée ni commit ni pull request et ne synchronise pas le dépôt.</p>
 <h2 id="preparer-et-rejouer-linstallation-openshift">Préparer et rejouer l’installation OpenShift<a class="headerlink" href="#preparer-et-rejouer-linstallation-openshift" title="Permanent link">&para;</a></h2>
 <p>Copiez <code>configuration.example.json</code> en <code>configuration.json</code>. Le fichier
 décrit les sites, hébergements, gateways, agents Linux persistants,
@@ -2476,27 +2497,34 @@ de passe masquée.</p>
 d’exécution logiques. Les datacenters réels sont des cibles que le client
 raccorde avec leurs gateways et agents.</p>
 <h3 id="raccorder-la-source-documentaire">Raccorder la source documentaire<a class="headerlink" href="#raccorder-la-source-documentaire" title="Permanent link">&para;</a></h3>
-<p>Le backend doit pouvoir joindre le connecteur en HTTPS. Avec Helm,
+<p>Le backend doit pouvoir joindre le connecteur. Avec Helm,
 <code>networkPolicy.backendHttpsCIDRs</code> permet de déclarer les CIDR approuvés sur le
-port 443. Avec le kit OpenShift natif, appliquez la politique de sortie
-approuvée pour le backend de cette installation.</p>
+port 443. Le kit OpenShift natif prépare la règle de sortie pour les Services
+HTTP internes. Pour une source HTTPS externe, appliquez la politique de
+sortie approuvée pour le backend de cette installation.</p>
 <h4 id="renseigner-lurl-et-le-jeton-dans-x4b">Renseigner l’URL et le jeton dans X4B<a class="headerlink" href="#renseigner-lurl-et-le-jeton-dans-x4b" title="Permanent link">&para;</a></h4>
-<p>Sur OpenShift, le script suivant prépare le Secret qui autorise les réglages
-dans l’interface. Donnez l’origine HTTPS approuvée du connecteur, sans le
-chemin <code>/api/v1</code>.</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  <span class="n">-AutoriserReglagesUI</span> <span class="n">-OriginesAutorisees</span> <span class="s1">&#39;https://knowledge.example&#39;</span>
-</span></code></pre></div>
-<p>Référencez <code>appcontrol-reglages-generation</code> dans <code>document_source.secret_name</code>
-et appliquez le JSON avec <code>Deployer-AppControl.ps1 -Configuration</code> lors de
-l’installation ou avec <code>Configurer-AppControl.ps1</code> sur une instance existante.
-Si le projet héberge plusieurs instances, attribuez un nom distinct à chaque
-Secret avec <code>-Nom</code> et reportez ce nom dans le JSON de l’instance.
-Dans <strong>Génération de maps → Paramètres</strong>, renseignez ensuite l’URL complète
-terminée par <code>/api/v1</code>, le jeton et, si nécessaire, le nom de source utilisé
-pour rapprocher les fiches. La génération utilise les réglages enregistrés
+<p>Un administrateur peut renseigner l’URL et le jeton directement dans
+<strong>Génération de maps → Paramètres</strong>. Saisissez l’URL complète terminée par
+<code>/api/v1</code>, le jeton et, si nécessaire, le nom de source utilisé pour rapprocher
+les fiches. L’activation et la désactivation du connecteur prennent effet
 sans redémarrage du backend.</p>
-<p>Dans le formulaire, <strong>Tester la connexion</strong> vérifie l’accès HTTPS avec le
+<p>Par défaut, l’interface accepte les URLs HTTPS vers les hôtes accessibles
+sur Internet et les URLs HTTP <code>service.projet.svc</code> dans le projet du backend
+sur OpenShift. Dans ce dernier cas, si la politique réseau ne permet pas
+déjà cette connexion, utilisez le préparateur pour créer la règle de sortie :</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  <span class="n">-NomInstallation</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  <span class="n">-ReseauSeulement</span> <span class="n">-OriginesAutorisees</span> <span class="s1">&#39;http://documentation.appcontrol-poc.svc&#39;</span>
+</span></code></pre></div>
+<p>Dans l’interface, saisissez ensuite <code>http://documentation.appcontrol-poc.svc/api/v1</code>.
+En HTTP, les données et le jeton circulent en clair. <code>-ReseauSeulement</code> crée une
+NetworkPolicy de sortie limitée aux pods sélectionnés par le Service et à son
+port cible. Le compte <code>oc</code> doit pouvoir lire le Service et gérer la règle. Le
+script détecte l’installation si elle est unique dans le projet. Sinon, ou
+avant son déploiement, utilisez <code>-NomInstallation</code>. Les Services sans
+sélecteur nécessitent une règle gérée par la plateforme. Une éventuelle
+politique d’entrée du service documentaire doit aussi autoriser le backend.</p>
+<p>Dans le formulaire, <strong>Tester la connexion</strong> vérifie l’accès avec le
 jeton saisi et contrôle le format de la première page de
 <code>GET /knowledge-documents</code>. <strong>Tester le prompt sur un document</strong> appelle
 <code>POST /prompt-executions</code> sur le premier document accessible et vérifie
@@ -2504,12 +2532,22 @@ la référence de la révision et la topologie AppControl renvoyée. Ce second
 test utilise l’IA du connecteur. Les tests ne sauvegardent aucun réglage,
 ne lancent aucun lot et ne publient aucune map. <strong>Enregistrer</strong> applique les
 paramètres.</p>
-<p>Pour les autres modes de déploiement, fournissez au backend
-<code>X4B_KNOWLEDGE_SETTINGS_KEY</code> (32 octets aléatoires encodés en base64) et
-<code>X4B_KNOWLEDGE_SETTINGS_ALLOWED_ORIGINS</code> (origines HTTPS exactes, séparées
-par des virgules). Conservez et sauvegardez cette clé avec le déploiement.
-Toutes les répliques utilisent la même clé pour lire les jetons chiffrés
-en base. Le script conserve la clé lors de ses relances.</p>
+<p>La plateforme peut désactiver les réglages de l’interface avec
+<code>X4B_KNOWLEDGE_SETTINGS_ENABLED=false</code>. Quand
+<code>X4B_KNOWLEDGE_SETTINGS_ALLOWED_ORIGINS</code> est renseigné, seules les origines
+exactes de la liste, séparées par des virgules, sont acceptées.
+Pour appliquer cette liste via un Secret OpenShift, utilisez
+<code>Preparer-SourceDocumentaire.ps1 -AutoriserReglagesUI -OriginesAutorisees …</code>,
+puis référencez le nom du Secret dans <code>document_source.secret_name</code> et
+appliquez le JSON avec <code>Deployer-AppControl.ps1 -Configuration</code> ou
+<code>Configurer-AppControl.ps1</code> sur une instance existante.</p>
+<p>Les jetons enregistrés dans l’interface sont chiffrés. Par défaut, la clé
+dérive du secret JWT du déploiement. Vous pouvez fournir une clé dédiée avec
+<code>X4B_KNOWLEDGE_SETTINGS_KEY</code> (32 octets aléatoires encodés en base64). Toutes
+les répliques doivent utiliser la même clé. Gardez la clé dédiée déjà
+configurée, ou gardez le secret JWT si vous utilisez la clé par défaut. En
+cas de changement de clé effective, saisissez de nouveau le jeton dans
+l’interface.</p>
 <h4 id="fournir-le-connecteur-au-deploiement">Fournir le connecteur au déploiement<a class="headerlink" href="#fournir-le-connecteur-au-deploiement" title="Permanent link">&para;</a></h4>
 <p>Pour une configuration automatisée, fournissez le connecteur au backend au
 démarrage. Cette configuration est prioritaire pour l’organisation concernée.
@@ -2549,7 +2587,7 @@ l’installation, avec les clés suivantes.</p>
 </tr>
 <tr>
 <td><code>X4B_KNOWLEDGE_HTTP_SERVICE</code></td>
-<td>Nom DNS exact du Service interne autorisé en HTTP, par exemple <code>ciascribe-api.appcontrol-poc.svc</code>.</td>
+<td>Nom DNS exact du Service interne autorisé en HTTP, par exemple <code>documentation.appcontrol-poc.svc</code>.</td>
 </tr>
 <tr>
 <td><code>X4B_KNOWLEDGE_TLS_SKIP_VERIFY</code></td>
@@ -2574,8 +2612,9 @@ avec <code>-Jeton</code>.</p>
 <p>Pour un Service interne au cluster, utilisez son nom DNS et le <strong>port du
 Service</strong>, généralement 80 en HTTP. Ajoutez <code>-AutoriserHttpInterne</code>.</p>
 <div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">-Url</span> <span class="s1">&#39;http://ciascribe-api.appcontrol-poc.svc/api/v1&#39;</span> <span class="p">`</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">-AutoriserHttpInterne</span> <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">-NomInstallation</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">-Url</span> <span class="s1">&#39;http://documentation.appcontrol-poc.svc/api/v1&#39;</span> <span class="p">`</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  <span class="n">-AutoriserHttpInterne</span> <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span>
 </span></code></pre></div>
 <p>Si le connecteur utilise HTTPS avec un certificat interne non reconnu, montez
 de préférence le PEM de son autorité de certification et indiquez-le via
@@ -2588,8 +2627,8 @@ la vérification. En HTTP, le jeton et les documents circulent en clair.</p>
 <code>oc -n appcontrol-poc logs deployment/appcontrol-demo-backend --since=10m</code>.
 Cherchez <code>Knowledge source</code>. Le journal indique l’opération, l’hôte,
 le statut HTTP ou le type d’échec de transport. Si une NetworkPolicy limite
-les sorties, faites autoriser le flux du backend vers le pod de la source
-sur le port cible du Service.</p>
+les sorties, vérifiez la NetworkPolicy créée et les éventuelles restrictions
+d’entrée sur les pods de la source.</p>
 <p>Le script crée <code>appcontrol-source-documentaire</code> par défaut. Il peut mettre à
 jour un Secret qu’il a créé et laisse un Secret préexistant intact. Ajoutez
 <code>-Intervalle 900</code> pour synchroniser la source toutes les quinze minutes.</p>
@@ -2632,11 +2671,10 @@ redémarrage du backend pour recharger la valeur.
    droits d’équipe dans AppControl ou renseignez <code>permissions</code> dans le
    JSON de configuration et relancez le script.</li>
 <li>Pour démontrer une évolution, modifiez un document source puis
-   resynchronisez. X4B génère une proposition pour la nouvelle empreinte
-   et affiche les écarts avec la map en service. Pour reporter un changement
-   manuellement, ouvrez <strong>Ouvrir la map publiée</strong>, puis <strong>Edit</strong>. La
-   proposition reste à comparer tant que l’intégration de la révision
-   source n’a pas été enregistrée par une action dédiée.</li>
+   resynchronisez. X4B génère une proposition pour la nouvelle empreinte.
+   Ouvrez le détail dans <strong>À comparer</strong>, relisez les écarts et utilisez
+   <strong>Modifier la carte</strong> pour ajuster la proposition. Cliquez sur
+   <strong>Publier la mise à jour</strong>, confirmez, puis ouvrez la map publiée.</li>
 <li>Ouvrez la map dans le widget pour tester sa reconstruction. Avec un seul
    site dédié dans <code>embedded.simulation_sites</code>, AppControl utilise l’agent et
    la gateway enrôlés par le kit pour ce site. Toutes les maps publiées et
@@ -2680,8 +2718,8 @@ synchronisation.</p>
 </tr>
 <tr>
 <td>Empreinte différente et map déjà publiée</td>
-<td>X4B prépare une nouvelle candidate et affiche le diff dans <strong>À comparer</strong>.</td>
-<td>L’utilisateur décide quels changements reporter dans la map existante.</td>
+<td>X4B prépare une proposition et affiche les écarts dans <strong>À comparer</strong>.</td>
+<td>Un administrateur relit et ajuste la proposition, puis confirme la mise à jour.</td>
 </tr>
 <tr>
 <td>Source absente ou génération en erreur</td>
@@ -2690,14 +2728,10 @@ synchronisation.</p>
 </tr>
 </tbody>
 </table>
-<p>Pour appliquer une révision depuis cette page, l’évolution à développer
-est une action de revue sur les changements proposés. Un premier périmètre
-peut appliquer les ajouts de composants et de dépendances sur le même UUID.
-La publication doit vérifier la version source et la version de la map
-relue, conserver les commandes et placements existants et écrire l’audit
-dans la même transaction. Une révision concurrente demande une nouvelle
-revue. Les suppressions et les modifications opérationnelles demandent
-une politique de fusion explicite.</p>
+<p>X4B vérifie la version source et la version de la map relue. L’application
+de la topologie, l’enregistrement de la révision publiée et l’écriture
+de l’audit se font dans la même transaction. Une modification concurrente
+demande une nouvelle revue.</p>
 <h3 id="evolution-vers-git">Évolution vers Git<a class="headerlink" href="#evolution-vers-git" title="Permanent link">&para;</a></h3>
 <p>Pour le POC, la décision humaine se prend dans AppControl. La proposition
 doit identifier la map, la version source, la version active relue et
@@ -2737,7 +2771,7 @@ reste responsable de la publication de la map.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:18:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T08:02:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
   </span>
 
     

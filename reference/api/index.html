@@ -2740,6 +2740,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#put-x4bmap-generationjobsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      PUT /x4b/map-generation/jobs/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#post-x4bmap-generationjobsidpublish" class="md-nav__link">
     <span class="md-ellipsis">
       POST /x4b/map-generation/jobs/{id}/publish
@@ -4010,6 +4019,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#put-x4bmap-generationjobsid" class="md-nav__link">
+    <span class="md-ellipsis">
+      PUT /x4b/map-generation/jobs/{id}
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#post-x4bmap-generationjobsidpublish" class="md-nav__link">
     <span class="md-ellipsis">
       POST /x4b/map-generation/jobs/{id}/publish
@@ -4114,7 +4132,7 @@
 <blockquote>
 <p>Auto-generated from the backend's code-derived OpenAPI spec (utoipa annotations on each handler). Run <code>scripts/docs/regen.py</code> to refresh — CI does this on every push. Open <code>/api-docs</code> on your AppControl instance for the bundled Swagger UI and see the <a href="../../SWAGGER.fr/">guided walkthrough (FR)</a>. The same spec is served at <code>GET /api/v1/openapi.json</code>, or exported offline with <code>appcontrol-backend --export-openapi &lt;path&gt;</code>.</p>
 </blockquote>
-<p><strong>API version:</strong> <code>1.24.2</code></p>
+<p><strong>API version:</strong> <code>1.24.3</code></p>
 <p><strong>Base URL:</strong> <code>/api/v1</code> (relative to the backend host)</p>
 <p>Enterprise platform for operational mastery and IT system resilience. Maps applications as dependency graphs (DAGs), monitors component health, orchestrates sequenced start/stop/restart operations, and manages DR site failover. </p>
 <p>This document is generated from the handler source — never hand-edited. Coverage is incremental: absence from this document does not mean an endpoint is unavailable. The external-AI map generation, validation and import workflow is documented here. In same-origin Swagger UI, the current AppControl login is used automatically. For another identity, authorize with either an AppControl JWT or <code>ApiKey &lt;key&gt;</code>; import permissions are separate from validation access.</p>
@@ -4237,6 +4255,7 @@
 <li><a href="#get-x4bmap-generation"><code>GET /x4b/map-generation</code></a></li>
 <li><a href="#get-x4bmap-generationconnection"><code>GET /x4b/map-generation/connection</code></a></li>
 <li><a href="#get-x4bmap-generationjobsid"><code>GET /x4b/map-generation/jobs/{id}</code></a></li>
+<li><a href="#put-x4bmap-generationjobsid"><code>PUT /x4b/map-generation/jobs/{id}</code></a></li>
 <li><a href="#post-x4bmap-generationjobsidpublish"><code>POST /x4b/map-generation/jobs/{id}/publish</code></a></li>
 <li><a href="#post-x4bmap-generationjobsidretry"><code>POST /x4b/map-generation/jobs/{id}/retry</code></a></li>
 <li><a href="#post-x4bmap-generationpublish"><code>POST /x4b/map-generation/publish</code></a></li>
@@ -5178,6 +5197,23 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
 <li><strong>200</strong> — Job and its validated candidate when available</li>
 <li><strong>404</strong> — Job unavailable or superseded</li>
 </ul>
+<h3 id="put-x4bmap-generationjobsid"><code>PUT /x4b/map-generation/jobs/{id}</code><a class="headerlink" href="#put-x4bmap-generationjobsid" title="Permanent link">&para;</a></h3>
+<p><em>Store only a reviewed descriptive map, using the same lock as publication.</em></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <em>(path, string, <strong>required</strong>)</em> — Current generation job ID</li>
+</ul>
+<p><strong>Request body</strong></p>
+<p><em>Content-Type: <code>application/json</code></em></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/CandidateEdit&quot;</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Responses</strong></p>
+<ul>
+<li><strong>200</strong> — Proposal saved without publication</li>
+<li><strong>409</strong> — Proposal changed or already published</li>
+</ul>
 <h3 id="post-x4bmap-generationjobsidpublish"><code>POST /x4b/map-generation/jobs/{id}/publish</code><a class="headerlink" href="#post-x4bmap-generationjobsidpublish" title="Permanent link">&para;</a></h3>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -5185,14 +5221,14 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
 </ul>
 <p><strong>Request body</strong></p>
 <p><em>Content-Type: <code>application/json</code></em></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/PublishRequest&quot;</span>
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/PublishRequest&quot;</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Responses</strong></p>
 <ul>
 <li><strong>200</strong> — Application ID of the published topology</li>
-<li><strong>409</strong> — Existing map or superseded candidate</li>
+<li><strong>409</strong> — Stale review, missing review, or superseded candidate</li>
 </ul>
 <h3 id="post-x4bmap-generationjobsidretry"><code>POST /x4b/map-generation/jobs/{id}/retry</code><a class="headerlink" href="#post-x4bmap-generationjobsidretry" title="Permanent link">&para;</a></h3>
 <p><strong>Parameters</strong></p>
@@ -5201,15 +5237,15 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
 </ul>
 <p><strong>Responses</strong></p>
 <ul>
-<li><strong>202</strong> — Failed job requeued</li>
+<li><strong>202</strong> — Generation requeued; any unpublished candidate is replaced</li>
 <li><strong>409</strong> — Job is no longer eligible for retry</li>
 </ul>
 <h3 id="post-x4bmap-generationpublish"><code>POST /x4b/map-generation/publish</code><a class="headerlink" href="#post-x4bmap-generationpublish" title="Permanent link">&para;</a></h3>
 <p><strong>Request body</strong></p>
 <p><em>Content-Type: <code>application/json</code></em></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/PublishBatchRequest&quot;</span>
-</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="p">{</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/PublishBatchRequest&quot;</span>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Responses</strong></p>
 <ul>
@@ -5231,9 +5267,9 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
 <h3 id="put-x4bmap-generationsettings"><code>PUT /x4b/map-generation/settings</code><a class="headerlink" href="#put-x4bmap-generationsettings" title="Permanent link">&para;</a></h3>
 <p><strong>Request body</strong></p>
 <p><em>Content-Type: <code>application/json</code></em></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="p">{</span>
-</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/SettingsUpdate&quot;</span>
-</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/SettingsUpdate&quot;</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Responses</strong></p>
 <ul>
@@ -5244,9 +5280,9 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
 <h3 id="post-x4bmap-generationsettingstest"><code>POST /x4b/map-generation/settings/test</code><a class="headerlink" href="#post-x4bmap-generationsettingstest" title="Permanent link">&para;</a></h3>
 <p><strong>Request body</strong></p>
 <p><em>Content-Type: <code>application/json</code></em></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span>
-</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/SettingsTest&quot;</span>
-</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="p">{</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">  </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/components/schemas/SettingsTest&quot;</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>Responses</strong></p>
 <ul>
@@ -5256,7 +5292,7 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
 </ul>
 <h2 id="error-responses">Error responses<a class="headerlink" href="#error-responses" title="Permanent link">&para;</a></h2>
 <p>Application errors use the following body shape. Malformed requests rejected by the HTTP framework, authentication middleware, or a reverse proxy may use a different response format:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;machine-readable code&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;human-readable&gt;&quot;</span><span class="w"> </span><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;machine-readable code&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;human-readable&gt;&quot;</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
 <p>The full mapping of <code>error</code> codes to HTTP statuses is in the <a href="../errors/">error reference</a>.</p>
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
@@ -5287,7 +5323,7 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-14T15:33:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T10:40:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
   </span>
 
     
@@ -5297,7 +5333,7 @@ their upstream prerequisites before restarting the stopped runtime branch.</em><
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-14T15:33:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T10:40:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
   </span>
 
     

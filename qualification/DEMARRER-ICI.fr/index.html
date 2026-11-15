@@ -2166,8 +2166,7 @@
 
 
 <h1 id="appcontrol-sur-openshift-demarrer-le-poc">AppControl sur OpenShift — démarrer le POC<a class="headerlink" href="#appcontrol-sur-openshift-demarrer-le-poc" title="Permanent link">&para;</a></h1>
-<p><strong>Parcours recommandé depuis Windows : le <a href="../INSTALLATION-WINDOWS.fr/">guide PowerShell + oc</a>,
-pour AppControl 1.21.1 et le kit léger 1.21.1-2.</strong>
+<p><strong>Pour installer ou mettre à jour AppControl depuis Windows, suivre le <a href="../INSTALLATION-WINDOWS.fr/">guide PowerShell + oc</a>.</strong>
 Le ZIP contient les scripts, les YAML et leurs guides. Il utilise la commande
 <code>oc</code> déjà approuvée sur le poste ; aucun Docker, Python, Helm ou outil de transfert
 d’images n’est à installer. Les nœuds OpenShift téléchargent les images.</p>
@@ -2177,23 +2176,10 @@ d’évaluation emploie les images <strong><code>ghcr.io/xcomponent/appcontrol-e
 compte GitHub ni mot de passe de téléchargement. Il peut être relayé par
 Artifactory selon les règles de la banque. Les anciens packages <code>appcontrol-*</code>
 restent privés ; le dépôt source n’est pas rendu public.</p>
-<blockquote>
-<p>La livraison du kit Windows léger est conditionnée au téléchargement anonyme
-des images et à la qualification du ZIP exact depuis Windows sur OpenShift.
-Les preuves attendues pour le kit 1.21.1-2 sont
-<code>PUBLICATION-EVALUATION-1.21.1-2.json</code> et <code>QUALIFICATION-EVALUATION-1.21.1-2.zip</code>,
-jointes à la même release lorsque les contrôles ont abouti. Ce guide ne vaut
-pas résultat de qualification. Les rapports de la release 1.20.4 et de ses
-kits restent des preuves historiques ; ils ne valident pas la livraison 1.21.1.</p>
-</blockquote>
-<p>Après publication :
-<a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip">kit léger 1.21.1-2</a>
-et <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip.sha256">empreinte SHA-256</a>.
-Les images de cette version utilisent les tags <code>appcontrol-eval-*:1.21.1</code> ;
-l’installation fixe leurs empreintes dans le verrou d’images du kit.
-La révision <strong>1.21.1-2</strong> modifie les scripts de déploiement, nettoyage et reprise,
-sans changer le produit 1.21.1 ni ses images. Les messages et confirmations sont
-en anglais ; les paramètres français des commandes existantes restent acceptés.</p>
+<p>La release joint le ZIP, son empreinte SHA-256 et les preuves de qualification
+correspondantes après validation du téléchargement anonyme des images et du ZIP
+exact depuis Windows sur OpenShift. Le guide indique les liens de téléchargement.
+Le verrou d’images du kit fixe les empreintes des images à déployer.</p>
 <h2 id="avant-le-premier-creneau">Avant le premier créneau<a class="headerlink" href="#avant-le-premier-creneau" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2266,7 +2252,7 @@ sans nouvelle compilation ni copie manuelle chez le client. L’installation
 reste fixée aux digests du kit choisi ; elle ne suit pas automatiquement
 <code>latest</code>.</p>
 <h2 id="nettoyer-ou-recommencer-sans-supprimer-le-projet">Nettoyer ou recommencer sans supprimer le projet<a class="headerlink" href="#nettoyer-ou-recommencer-sans-supprimer-le-projet" title="Permanent link">&para;</a></h2>
-<p>Depuis le kit 1.21.1-2, afficher d’abord la cible :</p>
+<p>Depuis le dossier du kit, afficher d’abord la cible :</p>
 <div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">.\</span><span class="n">Desinstaller-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Namespace</span> <span class="s1">&#39;projet-fourni&#39;</span> <span class="n">-Name</span> <span class="s1">&#39;appcontrol-evaluation&#39;</span> <span class="n">-Preview</span>
 </span></code></pre></div>
 <p>Retirer <code>-Preview</code> pour enlever les services tout en conservant la base et la
@@ -2406,7 +2392,7 @@ avec l’exploitation.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T16:28:16+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T08:02:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
   </span>
 
     

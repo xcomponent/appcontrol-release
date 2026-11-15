@@ -8,7 +8,7 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.24.2**. Paquet : **Windows léger 1.24.2-1**.
+Produit : **AppControl 1.24.3**. Paquet : **Windows léger 1.24.3-1**.
 
 **AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La plateforme inclut [l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications](../X4B-PLATEFORME.fr.md). Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
 
@@ -265,14 +265,14 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.24.2-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.2/appcontrol-openshift-windows-light-1.24.2-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.2/appcontrol-openshift-windows-light-1.24.2-1.zip.sha256)
+- [Paquet Windows léger 1.24.3-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.3/appcontrol-openshift-windows-light-1.24.3-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.3/appcontrol-openshift-windows-light-1.24.3-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.24.2-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.24.3-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
     throw 'Checksum mismatch: do not use this archive.'
@@ -548,6 +548,13 @@ Elle vérifie les identifiants des applications et agents, une empreinte de la
 configuration des maps (commandes, dépendances et paramètres), ainsi que la
 reconnexion des agents qui étaient connectés avant l’opération.
 
+La configuration de la source documentaire ajoutée au backend est conservée :
+ses variables `X4B_KNOWLEDGE_*`, leurs références aux Secrets existants et
+l’autorisation HTTP interne restent présentes. Le Secret et les données de
+configuration enregistrées dans PostgreSQL ne sont pas recréés. Après la mise à
+jour, utiliser « Tester la connexion » dans Génération de maps pour confirmer
+que le service documentaire reste accessible depuis le cluster.
+
 Les agents existants, dans le cluster ou sur des machines externes, ne sont
 **ni réenrôlés, ni redémarrés, ni mis à jour automatiquement** par ce parcours.
 Leur version reste inchangée. Une mise à jour d’agent se prépare séparément,
@@ -788,11 +795,11 @@ déployée. Ne pas supprimer son dossier d’état.
 
 ## Qualification et suite du POC
 
-La publication du kit 1.24.2-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.2-1.json` et `QUALIFICATION-EVALUATION-1.24.2-1.zip` identifient les images et le ZIP de cette recette.
+La publication du kit 1.24.3-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.3-1.json` et `QUALIFICATION-EVALUATION-1.24.3-1.zip` identifient les images et le ZIP de cette recette.
 
 ### Historique des qualifications
 
-La qualification complète Windows/OpenShift disponible concerne le kit `1.21.1-2`.
+Le kit historique `1.21.1-2` a fait l’objet d’une qualification complète Windows/OpenShift.
 Le correctif `1.21.1-3` conserve ses images et fait l’objet de tests ciblés des scripts
 et du packaging, sans nouvelle qualification complète sur cluster.
 
@@ -1003,9 +1010,11 @@ La configuration est injectée dans le backend, puis l’interface
 **Génération de maps** permet de tester le raccordement et de lancer la
 synchronisation. L’option `-SecretSourceDocumentaire` reste disponible
 pour passer la référence directement sur la ligne de commande.
-Pour saisir l’URL et le jeton dans l’interface, préparez le Secret avec
-`Preparer-SourceDocumentaire.ps1 -AutoriserReglagesUI`, puis référencez le
-Secret `appcontrol-reglages-generation` dans le même champ.
+Les administrateurs peuvent aussi saisir l’URL et le jeton directement dans
+**Génération de maps → Paramètres**. Pour un Service HTTP dans le même projet,
+`Preparer-SourceDocumentaire.ps1 -ReseauSeulement` peut préparer la règle réseau
+du backend. Utilisez `-AutoriserReglagesUI` si la plateforme veut définir
+explicitement la liste des origines approuvées par le déploiement.
 [Guide de raccordement et de qualification du workflow X4B](../KNOWLEDGE-ENGINE-CONNECTOR.fr.md#preparer-et-rejouer-linstallation-openshift)
 
 Les ressources déjà créées sont retrouvées lors d’une reprise. La configuration
@@ -1165,7 +1174,7 @@ le domaine était la cause de l’erreur d’exposition.
 
 ## Démonstration bancaire complète
 
-**Le kit 1.24.2-1 installe automatiquement la démo bancaire lors d’une installation
+**Le kit 1.24.3-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut**, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. `-SansDemo` désactive les deux démonstrations ;
 une mise à jour avec `-MettreAJour` conserve les applications existantes sans en ajouter.

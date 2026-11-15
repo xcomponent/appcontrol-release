@@ -1,7 +1,6 @@
 # AppControl sur OpenShift — démarrer le POC
 
-**Parcours recommandé depuis Windows : le [guide PowerShell + oc](INSTALLATION-WINDOWS.fr.md),
-pour AppControl 1.21.1 et le kit léger 1.21.1-2.**
+**Pour installer ou mettre à jour AppControl depuis Windows, suivre le [guide PowerShell + oc](INSTALLATION-WINDOWS.fr.md).**
 Le ZIP contient les scripts, les YAML et leurs guides. Il utilise la commande
 `oc` déjà approuvée sur le poste ; aucun Docker, Python, Helm ou outil de transfert
 d’images n’est à installer. Les nœuds OpenShift téléchargent les images.
@@ -13,22 +12,10 @@ compte GitHub ni mot de passe de téléchargement. Il peut être relayé par
 Artifactory selon les règles de la banque. Les anciens packages `appcontrol-*`
 restent privés ; le dépôt source n’est pas rendu public.
 
-> La livraison du kit Windows léger est conditionnée au téléchargement anonyme
-> des images et à la qualification du ZIP exact depuis Windows sur OpenShift.
-> Les preuves attendues pour le kit 1.21.1-2 sont
-> `PUBLICATION-EVALUATION-1.21.1-2.json` et `QUALIFICATION-EVALUATION-1.21.1-2.zip`,
-> jointes à la même release lorsque les contrôles ont abouti. Ce guide ne vaut
-> pas résultat de qualification. Les rapports de la release 1.20.4 et de ses
-> kits restent des preuves historiques ; ils ne valident pas la livraison 1.21.1.
-
-Après publication :
-[kit léger 1.21.1-2](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip)
-et [empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.21.1/appcontrol-openshift-windows-light-1.21.1-2.zip.sha256).
-Les images de cette version utilisent les tags `appcontrol-eval-*:1.21.1` ;
-l’installation fixe leurs empreintes dans le verrou d’images du kit.
-La révision **1.21.1-2** modifie les scripts de déploiement, nettoyage et reprise,
-sans changer le produit 1.21.1 ni ses images. Les messages et confirmations sont
-en anglais ; les paramètres français des commandes existantes restent acceptés.
+La release joint le ZIP, son empreinte SHA-256 et les preuves de qualification
+correspondantes après validation du téléchargement anonyme des images et du ZIP
+exact depuis Windows sur OpenShift. Le guide indique les liens de téléchargement.
+Le verrou d’images du kit fixe les empreintes des images à déployer.
 
 ## Avant le premier créneau
 
@@ -88,7 +75,7 @@ reste fixée aux digests du kit choisi ; elle ne suit pas automatiquement
 
 ## Nettoyer ou recommencer sans supprimer le projet
 
-Depuis le kit 1.21.1-2, afficher d’abord la cible :
+Depuis le dossier du kit, afficher d’abord la cible :
 
 ```powershell
 .\Desinstaller-AppControl.ps1 -Namespace 'projet-fourni' -Name 'appcontrol-evaluation' -Preview

@@ -59,7 +59,10 @@ La réponse JSON contient notamment :
 La révision actuelle des instructions est `prompt_revision: "8"`. L’IA reprend
 dans `source_sites` les codes ou noms de tous les sites explicitement documentés
 pour un composant, par exemple `"source_sites": ["Sirius", "Legac"]`. Le champ
-historique `source_site` reste accepté pour un seul site. Lorsque les hôtes sont
+historique `source_site` reste accepté pour un seul site. Lors d’une mise à
+jour dans X4B, une liste `source_sites: []` retire les sites documentés du
+composant. L’absence des deux champs laisse en place ses sites documentés.
+Lorsque les hôtes sont
 inconnus, l’IA laisse `binding_profiles` et `host` absents. L’intégration peut
 fournir les placements autorisés.
 `contract_version: "1"` et `format_version: "4.2"` ne sont pas des numéros de

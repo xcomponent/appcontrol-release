@@ -2454,22 +2454,36 @@ aussi modifier son libellé, sa description et ses sites documentés, déplacer
 les composants ou ajuster leurs dépendances. Enregistrez la proposition, examinez les écarts
 et confirmez la publication. X4B refuse la publication si la proposition ou
 la map a changé depuis la revue et vous invite à recharger.</p>
-<p>Lors d’une publication individuelle, choisissez le site de rattachement puis
-vérifiez le site d’exécution et l’agent de chaque composant à affecter. Un
-agent peut être proposé automatiquement lorsque la correspondance est unique.
-Pour une mise à jour, le formulaire affiche les composants nouveaux et ceux
-qui attendent une affectation. La publication groupée produit des cartes
-descriptives. Les commandes d’exploitation se configurent dans AppControl.</p>
-<p>La génération initiale examine les rôles des composants, les flux documentés
-et les prérequis de démarrage. Elle recherche aussi des liens dans les
+<p>La publication individuelle ouvre un assistant. Choisissez le site de
+rattachement, puis vérifiez le site d’exécution, la passerelle et l’agent de
+chaque composant à affecter. L’assistant peut proposer un agent lorsque la
+correspondance est unique. Le récapitulatif affiche les affectations avant
+confirmation. Pour une mise à jour, l’étape d’affectation présente les
+nouveaux composants et ceux qui attendent un agent. La publication groupée
+produit des cartes descriptives. Les commandes d’exploitation se configurent
+dans AppControl.</p>
+<p>La génération initiale s’appuie sur l’inventaire technique, l’architecture et
+les procédures de l’application demandée. Les applications citées uniquement
+dans les échanges inter-applications restent hors de sa carte d’exploitation.
+La génération examine les flux entre ses propres composants et leurs
+prérequis de démarrage. Elle recherche aussi des liens dans les
 paramètres de connexion et les procédures lorsque le document ne fournit pas
 de tableau des dépendances. Les nouvelles générations et les relances
 manuelles utilisent cette consigne sans déclencher de relance en masse.</p>
+<p>Quand la source documente plusieurs instances équivalentes d’un même
+service, la génération propose un seul composant cluster. La proposition
+et la map publiée conservent les hôtes, le site documenté pour chaque hôte
+et les dépendances du service. Des instances du même produit peuvent rester
+des composants distincts si leurs rôles ou leurs prérequis diffèrent.
+Ce cluster est descriptif. Le mode fan-out et les affectations des agents
+relèvent de la configuration d’exploitation.</p>
 <p>Dans l’écran d’examen, <strong>Affiner la carte</strong> lance une analyse à la demande. Le
 connecteur exécute le prompt avec la version du document de la proposition,
 la carte ouverte, le catalogue et les sites actifs. La revue peut suggérer
-une brique du catalogue, un rattachement à un groupe ou une modification de
-dépendance. Elle examine le rôle des composants et les flux documentés. Une
+une brique du catalogue, un rattachement à un groupe, une modification de
+dépendance ou le retrait d’un nœud qui représente uniquement une application
+externe. En acceptant ce retrait, vous retirez aussi les liens de ce nœud du
+brouillon. La revue examine le rôle des composants et les flux documentés. Une
 dépendance est forte si le composant doit attendre un prérequis avant de
 démarrer, y compris lors d’une reprise. Un lien de routage peut être représenté
 par une dépendance faible.
@@ -2477,8 +2491,13 @@ La revue peut proposer un lien faible déduit d’un indice précis de la source
 La suggestion indique l’indice et ce qu’il faut vérifier avant de l’appliquer.
 La revue présente le motif, la source indiquée par l’IA et les points à
 confirmer. Les types de composants déjà confirmés par l’opérateur sont
-protégés. Sélectionnez les suggestions retenues, puis appliquez-les au
-brouillon. La publication suit sa validation habituelle.</p>
+protégés. Les suggestions cochées apparaissent immédiatement sur le graphe.
+Cliquez sur <strong>Appliquer à la proposition</strong> pour enregistrer la sélection ou
+sur <strong>Appliquer et ouvrir l’éditeur</strong> pour poursuivre l’édition de la carte.</p>
+<p><strong>Tester la connexion</strong> vérifie l’accès au catalogue documentaire.
+<strong>Affiner la carte</strong> exécute un prompt sur la révision du document associée à
+la proposition. En cas d’échec, l’écran indique le motif de l’analyse et le
+bouton <strong>Relancer l’analyse</strong> permet de réessayer.</p>
 <p>Une consigne facultative permet de cibler la revue, par exemple sur les
 dépendances d’un service ou sa procédure de démarrage. La consigne accompagne
 le même contexte documentaire. Les recommandations sur les commandes et les
@@ -2818,7 +2837,7 @@ reste responsable de la publication de la map.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T22:45:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-16T11:20:00+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-16</span>
   </span>
 
     

@@ -130,8 +130,11 @@ Pour une mise à jour, le formulaire affiche les composants nouveaux et ceux
 qui attendent une affectation. La publication groupée produit des cartes
 descriptives. Les commandes d’exploitation se configurent dans AppControl.
 
-La génération initiale examine les rôles des composants, les flux documentés
-et les prérequis de démarrage. Elle recherche aussi des liens dans les
+La génération initiale s’appuie sur l’inventaire technique, l’architecture et
+les procédures de l’application demandée. Les applications citées uniquement
+dans les échanges inter-applications restent hors de sa carte d’exploitation.
+La génération examine les flux entre ses propres composants et leurs
+prérequis de démarrage. Elle recherche aussi des liens dans les
 paramètres de connexion et les procédures lorsque le document ne fournit pas
 de tableau des dépendances. Les nouvelles générations et les relances
 manuelles utilisent cette consigne sans déclencher de relance en masse.
@@ -139,8 +142,10 @@ manuelles utilisent cette consigne sans déclencher de relance en masse.
 Dans l’écran d’examen, **Affiner la carte** lance une analyse à la demande. Le
 connecteur exécute le prompt avec la version du document de la proposition,
 la carte ouverte, le catalogue et les sites actifs. La revue peut suggérer
-une brique du catalogue, un rattachement à un groupe ou une modification de
-dépendance. Elle examine le rôle des composants et les flux documentés. Une
+une brique du catalogue, un rattachement à un groupe, une modification de
+dépendance ou le retrait d’un nœud qui représente uniquement une application
+externe. En acceptant ce retrait, vous retirez aussi les liens de ce nœud du
+brouillon. La revue examine le rôle des composants et les flux documentés. Une
 dépendance est forte si le composant doit attendre un prérequis avant de
 démarrer, y compris lors d’une reprise. Un lien de routage peut être représenté
 par une dépendance faible.

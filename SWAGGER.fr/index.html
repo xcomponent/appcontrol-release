@@ -1809,27 +1809,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-obtenir-les-instructions-pour-votre-ia" class="md-nav__link">
+  <a href="#2-verifier-le-resultat-sans-creer-dapplication" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Obtenir les instructions pour votre IA
+      2. Vérifier le résultat sans créer d’application
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-verifier-le-resultat-sans-creer-dapplication" class="md-nav__link">
+  <a href="#3-choisir-lenvironnement-et-publier" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Vérifier le résultat sans créer d’application
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-choisir-lenvironnement-et-publier" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Choisir l’environnement et publier
+      3. Choisir l’environnement et publier
     </span>
   </a>
   
@@ -2191,27 +2182,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-obtenir-les-instructions-pour-votre-ia" class="md-nav__link">
+  <a href="#2-verifier-le-resultat-sans-creer-dapplication" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Obtenir les instructions pour votre IA
+      2. Vérifier le résultat sans créer d’application
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-verifier-le-resultat-sans-creer-dapplication" class="md-nav__link">
+  <a href="#3-choisir-lenvironnement-et-publier" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Vérifier le résultat sans créer d’application
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-choisir-lenvironnement-et-publier" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Choisir l’environnement et publier
+      3. Choisir l’environnement et publier
     </span>
   </a>
   
@@ -2256,7 +2238,7 @@
 d'<strong>AppControl 1.21.1</strong>. Installer le serveur et l'interface de la même release ;
 sur Windows/OpenShift, le kit léger correspondant est <strong>1.21.1-2</strong>. Les anciens
 rapports de qualification ne remplacent pas ceux de cette livraison.</p>
-<p>La couverture de la documentation progresse par fonctionnalité : elle ne représente pas encore toutes les API du produit. Le parcours de génération de maps par une IA externe, sa validation et ses imports sont décrits avec leurs paramètres, corps de requête et réponses.</p>
+<p>Swagger décrit les opérations de validation et d’import des maps, avec leurs paramètres, corps de requête et réponses. Le <a href="../MAP_GENERATION.fr/">guide de génération</a> couvre l’intégration avec une IA externe.</p>
 <h2 id="1-se-connecter">1. Se connecter<a class="headerlink" href="#1-se-connecter" title="Permanent link">&para;</a></h2>
 <p>Ouvrez AppControl et connectez-vous normalement, puis ouvrez <strong>API documentation</strong>. Sur la même instance, votre session de navigateur sert aux appels.</p>
 <p>Pour tester avec une clé API, utilisez <strong>Authorize</strong>, puis le champ <code>apiKeyAuth</code>. Saisissez <strong><code>ApiKey</code> suivi de la clé</strong>, par exemple <code>ApiKey &lt;votre-clé&gt;</code>. L’en-tête utilisé est <code>Authorization</code>, pas <code>X-API-Key</code>. L’option <code>bearerAuth</code> attend un JWT de session AppControl ; elle ne prend pas directement un jeton d’un fournisseur d’identité. Les identifiants saisis ne sont pas conservés après le rechargement de cette page.</p>
@@ -2269,12 +2251,8 @@ rapports de qualification ne remplacent pas ceux de cette livraison.</p>
 </thead>
 <tbody>
 <tr>
-<td>Contrat générique et validation</td>
+<td>Validation</td>
 <td>Clé valide, y compris une clé restreinte.</td>
-</tr>
-<tr>
-<td>Contrat avec catalogue de l’organisation</td>
-<td>Portée globale <code>read</code>, <code>design</code> ou <code>*</code> ; une portée sur une seule application ne suffit pas.</td>
 </tr>
 <tr>
 <td>Contexte standard et publication <code>/map-generation/prepare</code>, <code>/map-generation/import</code></td>
@@ -2291,18 +2269,7 @@ rapports de qualification ne remplacent pas ceux de cette livraison.</p>
 </tbody>
 </table>
 <p>La possession d’une clé ne remplace pas les droits sur les applications et les sites. Le compte qui publie doit être autorisé à importer dans le périmètre choisi.</p>
-<h2 id="2-obtenir-les-instructions-pour-votre-ia">2. Obtenir les instructions pour votre IA<a class="headerlink" href="#2-obtenir-les-instructions-pour-votre-ia" title="Permanent link">&para;</a></h2>
-<p>Dépliez <strong>Map generation → GET /map-generation/contract</strong>. Cliquez sur <strong>Try it out</strong>, choisissez <code>standard</code>, <code>mock-linux</code> ou <code>mock-windows</code> dans <code>profile</code>, puis <strong>Execute</strong>. Ce choix concerne le prompt : les deux profils mock demandent à votre IA des commandes utilisant des fichiers témoins. Il ne change aucun réglage global ni aucun agent. L’URL affichée sous la requête inclut le préfixe <code>/api/v1</code>.</p>
-<p>La réponse <code>200</code> contient :</p>
-<ul>
-<li><code>system_prompt</code> : les instructions produit complètes à transmettre à votre moteur d’IA ;</li>
-<li><code>user_message_template</code> : le message dans lequel remplacer <code>{{input_documents}}</code> par les documents de l’application ;</li>
-<li><code>json_schema</code>, <code>examples</code>, <code>capabilities</code> et <code>limitations</code> : le contrat de génération et ses limites ;</li>
-<li><code>contract_version</code>, <code>prompt_revision</code>, <code>product_version</code> : les versions à conserver avec votre résultat.</li>
-</ul>
-<p>AppControl ne reçoit pas les documents sources et n’appelle pas d’IA dans cette opération. C’est votre moteur qui exécute les messages. Pour commencer sans modèle, un objet <code>map</code> de la liste <code>examples</code> peut servir à essayer la validation ; ses hôtes et procédures restent illustratifs.</p>
-<p>Pour vérifier le cache, copiez l’en-tête de réponse <strong>ETag</strong>, avec ses guillemets, dans le paramètre <strong>If-None-Match</strong> et relancez la même requête. Un <code>304</code> signifie « réutiliser le contrat conservé » et n’a pas de corps. Changez de cache si l’instance, l’identité, le profil ou la sélection du catalogue change.</p>
-<h2 id="3-verifier-le-resultat-sans-creer-dapplication">3. Vérifier le résultat sans créer d’application<a class="headerlink" href="#3-verifier-le-resultat-sans-creer-dapplication" title="Permanent link">&para;</a></h2>
+<h2 id="2-verifier-le-resultat-sans-creer-dapplication">2. Vérifier le résultat sans créer d’application<a class="headerlink" href="#2-verifier-le-resultat-sans-creer-dapplication" title="Permanent link">&para;</a></h2>
 <p>Dépliez <strong>POST /maps/validate</strong>, cliquez sur <strong>Try it out</strong>, puis remplacez l’exemple par :</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;contract_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -2324,7 +2291,7 @@ rapports de qualification ne remplacent pas ceux de cette livraison.</p>
 <p>Utilisez le <code>contract_version</code> réellement retourné par votre instance. Ici, l’API dépend de la base ; les commandes et les agents sont volontairement absents.</p>
 <p>Cliquez sur <strong>Execute</strong>, puis regardez <strong><code>valid</code></strong>, pas seulement le code HTTP. Un <code>200</code> peut contenir <code>valid: false</code>. Les <code>errors</code> et <code>warnings</code> précisent le chemin JSON, un code et le message. Par exemple, remplacez la cible de la dépendance par <code>base-inconnue</code> pour observer un refus, puis remettez <code>base</code>.</p>
 <p>La validation ne crée aucune map et n’exécute aucune commande. Elle ne vérifie pas la fidélité aux documents, la sécurité des procédures, la présence des agents ou leur disponibilité. Un <code>409</code> indique qu’il faut rafraîchir le contrat.</p>
-<h2 id="4-choisir-lenvironnement-et-publier">4. Choisir l’environnement et publier<a class="headerlink" href="#4-choisir-lenvironnement-et-publier" title="Permanent link">&para;</a></h2>
+<h2 id="3-choisir-lenvironnement-et-publier">3. Choisir l’environnement et publier<a class="headerlink" href="#3-choisir-lenvironnement-et-publier" title="Permanent link">&para;</a></h2>
 <p>Le parcours général est dans <strong>Map generation</strong> :</p>
 <ol>
 <li><code>GET /map-generation/context</code> (ou <code>?profile=standard</code>) pour connaître les sites et agents accessibles.</li>
@@ -2386,16 +2353,6 @@ rapports de qualification ne remplacent pas ceux de cette livraison.</p>
 <td>Décrire les requêtes et réponses HTTP, pour vos outils d’intégration.</td>
 </tr>
 <tr>
-<td>Contrat de génération</td>
-<td><code>/api/v1/map-generation/contract</code></td>
-<td>Fournir le prompt et le format de map à l’IA du client.</td>
-</tr>
-<tr>
-<td>JSON Schema de map</td>
-<td>Champ <code>json_schema</code> du contrat</td>
-<td>Décrire précisément le JSON que l’IA doit produire.</td>
-</tr>
-<tr>
 <td>Guide d’intégration</td>
 <td><a href="../MAP_GENERATION.fr/">Génération de maps</a></td>
 <td>Cache, profils, catalogue, rattachements et traitement par lots.</td>
@@ -2429,7 +2386,7 @@ de version de l'OpenAPI est celui du serveur installé.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T16:28:16+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T21:48:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
   </span>
 
     

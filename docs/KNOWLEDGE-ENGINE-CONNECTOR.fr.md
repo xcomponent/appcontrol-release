@@ -123,12 +123,14 @@ les composants ou ajuster leurs dépendances. Enregistrez la proposition, examin
 et confirmez la publication. X4B refuse la publication si la proposition ou
 la map a changé depuis la revue et vous invite à recharger.
 
-Lors d’une publication individuelle, choisissez le site de rattachement puis
-vérifiez le site d’exécution et l’agent de chaque composant à affecter. Un
-agent peut être proposé automatiquement lorsque la correspondance est unique.
-Pour une mise à jour, le formulaire affiche les composants nouveaux et ceux
-qui attendent une affectation. La publication groupée produit des cartes
-descriptives. Les commandes d’exploitation se configurent dans AppControl.
+La publication individuelle ouvre un assistant. Choisissez le site de
+rattachement, puis vérifiez le site d’exécution, la passerelle et l’agent de
+chaque composant à affecter. L’assistant peut proposer un agent lorsque la
+correspondance est unique. Le récapitulatif affiche les affectations avant
+confirmation. Pour une mise à jour, l’étape d’affectation présente les
+nouveaux composants et ceux qui attendent un agent. La publication groupée
+produit des cartes descriptives. Les commandes d’exploitation se configurent
+dans AppControl.
 
 La génération initiale s’appuie sur l’inventaire technique, l’architecture et
 les procédures de l’application demandée. Les applications citées uniquement
@@ -138,6 +140,14 @@ prérequis de démarrage. Elle recherche aussi des liens dans les
 paramètres de connexion et les procédures lorsque le document ne fournit pas
 de tableau des dépendances. Les nouvelles générations et les relances
 manuelles utilisent cette consigne sans déclencher de relance en masse.
+
+Quand la source documente plusieurs instances équivalentes d’un même
+service, la génération propose un seul composant cluster. La proposition
+et la map publiée conservent les hôtes, le site documenté pour chaque hôte
+et les dépendances du service. Des instances du même produit peuvent rester
+des composants distincts si leurs rôles ou leurs prérequis diffèrent.
+Ce cluster est descriptif. Le mode fan-out et les affectations des agents
+relèvent de la configuration d’exploitation.
 
 Dans l’écran d’examen, **Affiner la carte** lance une analyse à la demande. Le
 connecteur exécute le prompt avec la version du document de la proposition,
@@ -153,8 +163,14 @@ La revue peut proposer un lien faible déduit d’un indice précis de la source
 La suggestion indique l’indice et ce qu’il faut vérifier avant de l’appliquer.
 La revue présente le motif, la source indiquée par l’IA et les points à
 confirmer. Les types de composants déjà confirmés par l’opérateur sont
-protégés. Sélectionnez les suggestions retenues, puis appliquez-les au
-brouillon. La publication suit sa validation habituelle.
+protégés. Les suggestions cochées apparaissent immédiatement sur le graphe.
+Cliquez sur **Appliquer à la proposition** pour enregistrer la sélection ou
+sur **Appliquer et ouvrir l’éditeur** pour poursuivre l’édition de la carte.
+
+**Tester la connexion** vérifie l’accès au catalogue documentaire.
+**Affiner la carte** exécute un prompt sur la révision du document associée à
+la proposition. En cas d’échec, l’écran indique le motif de l’analyse et le
+bouton **Relancer l’analyse** permet de réessayer.
 
 Une consigne facultative permet de cibler la revue, par exemple sur les
 dépendances d’un service ou sa procédure de démarrage. La consigne accompagne

@@ -38,9 +38,15 @@ chemin de la même origine.
 | Appel | Comportement |
 | --- | --- |
 | `GET /api/v1/x4b/authorize?client_id=…&state=…&code_challenge=…` | Le navigateur présente sa session X4B. X4B vérifie le compte et l’accès au module puis renvoie un code et l’état à l’URL de retour enregistrée. La méthode de défi est S256. |
-| `POST /api/v1/x4b/token` | Le serveur hôte vérifie l’état reçu puis envoie le JSON `{client_id,client_secret,code,code_verifier}`. Le code est valable une minute et s’utilise une seule fois. La réponse contient `session_token`, `expires_in` en secondes et `user` avec `user_id` et `email`. |
-| `POST /api/v1/x4b/session` | Le serveur hôte envoie le JSON `{client_id,client_secret,session_token}`. X4B vérifie le compte, l’accès au module, l’expiration et la session X4B d’origine. La réponse contient `user` et `modules`. |
+| `POST /api/v1/x4b/token` | Le serveur hôte vérifie l’état reçu puis envoie le JSON `{client_id,client_secret,code,code_verifier}`. Le code est valable une minute et s’utilise une seule fois. La réponse contient `session_token`, `expires_in` en secondes, `user` avec `user_id` et `email`, ainsi que `settings`. |
+| `POST /api/v1/x4b/session` | Le serveur hôte envoie le JSON `{client_id,client_secret,session_token}`. X4B vérifie le compte, l’accès au module, l’expiration et la session X4B d’origine. La réponse contient `user`, `modules` et `settings`. |
+| `POST /api/v1/x4b/session/settings` | Le serveur hôte ajoute `language` aux champs de la requête de session. X4B effectue les mêmes vérifications, enregistre la préférence de langue sur le compte et retourne `{"language":"fr"}` ou `{"language":"en"}`. |
 | `POST /api/v1/x4b/session/revoke` | Sur déconnexion explicite et protégée du site hôte, le serveur envoie les mêmes champs. X4B révoque la session d’origine et ses sessions associées. |
+
+Dans les réponses d’échange et de session, `settings.language` vaut `fr` ou
+`en` si le compte a enregistré une préférence. Le champ est absent tant
+qu’aucune langue n’a été enregistrée. Le [guide du bandeau](X4B-PLATEFORME.fr.md#langue-du-bandeau-et-de-lapplication-hôte)
+décrit les routes à exposer sur le portail hôte pour partager cette préférence.
 
 Les chemins relatifs des modules natifs se résolvent par rapport à l’URL publique
 de X4B configurée sur le serveur hôte. L’accueil X4B et les modules natifs

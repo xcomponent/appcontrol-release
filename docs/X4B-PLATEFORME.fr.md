@@ -25,12 +25,13 @@ Pour un POC avec un portail documentaire, créer un compte administrateur de rev
 
 | Route du portail | Appel serveur X4B/AppControl |
 | --- | --- |
-| `GET /x4b/session` | `POST /api/v1/x4b/session` retourne le compte et ses entrées de navigation. |
+| `GET /x4b/session` | `POST /api/v1/x4b/session` retourne le compte, ses entrées de navigation et la préférence de langue. |
+| `PUT /x4b/settings` | Le bandeau envoie `{"language":"fr"}` ou `{"language":"en"}`. Le portail vérifie l’origine et la session, puis appelle `POST /api/v1/x4b/session/settings` avec `client_id`, `client_secret`, `session_token` et `language`. Transmettre la réponse `{"language":"fr"}` ou `{"language":"en"}`. |
 | `POST /x4b/logout` | `POST /api/v1/x4b/session/revoke` révoque la session partagée, puis le portail efface sa session locale. Vérifier l’origine du POST. |
 | `GET /fiches/<id>/status` | `POST /api/v1/x4b/embedded/status` avec `credentials` et `source_id`. Renvoie l’état agrégé, la dernière observation et l’indicateur de fraîcheur. Une map absente ou non autorisée donne `404`. |
 | `POST /fiches/<id>/simulation` | `POST /api/v1/x4b/embedded/simulation` avec les mêmes champs et éventuellement `simulation_site_id`. Affecter la réponse à la propriété JavaScript `session` du composant map. Vérifier l’origine du POST. |
 
-`GET /x4b/session` renvoie au bandeau les champs `user` et `modules` issus de
+`GET /x4b/session` renvoie au bandeau les champs `user`, `modules` et `settings` issus de
 la réponse serveur X4B. Chaque entrée de `modules` contient `key`, `name` et
 `entry_url`. X4B calcule la liste selon les droits du compte connecté. Le
 bandeau ajoute **Catalogue** lorsque **AppControl** figure dans cette liste.
@@ -47,10 +48,45 @@ L’hôte de référence `demo-rebuild/embedded/x4b_host.py` contient deux fiche
 
 Si le certificat de X4B est signé par une autorité interne, configurer `X4B_CA_FILE` avec la chaîne de confiance PEM sur le serveur de l’hôte de référence. Le navigateur doit lui aussi faire confiance à l’autorité utilisée par les deux sites.
 
+### Langue du bandeau et de l’application hôte
+
+Le bandeau utilise la préférence `settings.language` du compte X4B dès qu’il
+reçoit la session. En l’absence de préférence, il utilise la langue déclarée
+dans l’attribut `lang` de la page hôte si elle est prise en charge, puis celle du
+navigateur. Le sélecteur change la langue du bandeau et enregistre le choix sur le
+compte pour les applications raccordées. Si la route locale porte un autre nom,
+indiquez son chemin de même origine dans l’attribut `settings-endpoint` de
+`<x4b-shell>`. Les identifiants et secrets de l’échange restent côté serveur.
+
+L’application hôte peut réutiliser son mécanisme de traduction en écoutant
+l’événement `x4b-language-change`. Le bandeau fournit `event.detail.language`
+à l’initialisation et lors des changements. La propriété en lecture seule
+`shell.language` permet de récupérer la valeur si le script est chargé après
+l’initialisation. Appliquez la valeur à vos propres traductions, puis mettez à
+jour la langue déclarée pour la page.
+
+```js
+const shell = document.querySelector('x4b-shell');
+function applyLanguage(language) {
+  setApplicationLanguage(language);
+  document.documentElement.lang = language;
+}
+shell?.addEventListener('x4b-language-change', (event) => {
+  applyLanguage(event.detail.language);
+});
+if (shell?.language) applyLanguage(shell.language);
+```
+
 ## Catalogue complet et génération
 
 Le catalogue appartient à AppControl. Les entrées acceptent `match_terms` (ou `keys` sur les exports existants). Le kit Windows envoie les entrées par lots. Chaque lot respecte les limites de la requête, sans plafond total sur le catalogue configuré. Pour enrichir une entrée déjà importée, utiliser le mode `upsert` de l’API catalogue avec une prévisualisation `dry_run` puis l’`expected_digest` obtenu. Le kit Windows conserve le mode ajout pour préserver les entrées existantes.
 
 Quand le catalogue est renseigné, X4B demande d’abord à l’IA du client les termes observés dans le document. X4B recherche ces termes dans toutes les entrées du catalogue. Le second appel utilise la même révision du document et reçoit les candidats par composant. Les commandes et variables du catalogue ne sont pas envoyées au moteur de génération. La revue indique les rapprochements ambigus et inconnus, avec les candidats trouvés. Ces propositions nécessitent une confirmation individuelle. Une modification du catalogue rend caduques les propositions fondées sur son état antérieur.
+
+Pour les ordonnanceurs, indiquez dans les sources le produit et le rôle précis de la brique, par exemple **Control-M Agent**. Le rapprochement reconnaît aussi les variantes du nom de produit, comme **VTOM** et **Visual TOM**. Lorsque le document nomme le produit et que le catalogue ne contient qu’une variante, X4B peut la suggérer pour confirmation. Le rôle d’ordonnancement aide à organiser le graphe. Les liens restent fondés sur les flux et prérequis documentés.
+
+Dans l’aperçu, utilisez **Organiser automatiquement** pour disposer les prérequis et les composants qui en dépendent. Vous pouvez aussi déplacer les composants à la souris et enregistrer leur disposition dans la proposition avant de la publier.
+
+Lors de la première publication, le site primaire sert de site par défaut pour les composants dont le site reste à déterminer. L’assistant propose un agent lorsqu’il trouve une correspondance unique ou un seul agent éligible. Si vous choisissez un site secondaire, renseignez les agents de chaque composant sur les deux sites. La publication enregistre un profil de secours inactif. Les commandes et les conditions de bascule restent à vérifier avant utilisation.
 
 Le contrat [Knowledge Engine](KNOWLEDGE-ENGINE-CONNECTOR.fr.md) est conservé. Le point de terminaison `prompt-executions` doit pouvoir appliquer le prompt reçu, y compris quand le résultat demandé est un inventaire de composants. Le moteur de génération reste celui du client.

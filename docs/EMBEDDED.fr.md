@@ -251,7 +251,8 @@ un portail documentaire** pour le fragment HTML et JavaScript.
 
 Le portail garde la clé dans sa configuration serveur. Le compte propriétaire
 de la clé doit pouvoir consulter la map et son site dans AppControl. Le profil
-choisi borne ce périmètre. Dans **API Keys → Create API Key**, utilisez le compte
+choisi borne ce périmètre. Dans le menu de compte du bandeau X4B, ouvrez
+**Clés API → Create API Key** et utilisez le compte
 de service du portail pour créer l’un des profils suivants.
 
 | Profil | Périmètre |

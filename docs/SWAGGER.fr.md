@@ -1,6 +1,6 @@
 # Essayer les API avec Swagger UI
 
-AppControl embarque une page de documentation interactive : **API documentation** dans le menu, ou **`https://<votre-instance>/api-docs`**. Elle affiche les routes décrites par la version installée et permet d’essayer les requêtes. Les fichiers de Swagger UI sont livrés avec l’interface ; aucune ressource Swagger hébergée à l’extérieur n’est nécessaire.
+Ouvrez **Documentation API** dans le menu de compte du bandeau X4B, ou accédez directement à **`https://<votre-instance>/api-docs`**. Swagger affiche les routes de la version installée et permet d’essayer les requêtes. Les fichiers de Swagger UI sont livrés avec l’interface.
 
 Le parcours de génération et de publication décrit ici est disponible à partir
 d'**AppControl 1.21.1**. Installer le serveur et l'interface de la même release ;
@@ -11,7 +11,7 @@ Swagger décrit les opérations de validation et d’import des maps, avec leurs
 
 ## 1. Se connecter
 
-Ouvrez AppControl et connectez-vous normalement, puis ouvrez **API documentation**. Sur la même instance, votre session de navigateur sert aux appels.
+Connectez-vous à X4B avec un compte qui a accès à AppControl, puis ouvrez **Documentation API**. Sur la même instance, votre session de navigateur sert aux appels.
 
 Pour tester avec une clé API, utilisez **Authorize**, puis le champ `apiKeyAuth`. Saisissez **`ApiKey ` suivi de la clé**, par exemple `ApiKey <votre-clé>`. L’en-tête utilisé est `Authorization`, pas `X-API-Key`. L’option `bearerAuth` attend un JWT de session AppControl ; elle ne prend pas directement un jeton d’un fournisseur d’identité. Les identifiants saisis ne sont pas conservés après le rechargement de cette page.
 

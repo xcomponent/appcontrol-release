@@ -32,7 +32,7 @@ Les composants ordinaires restent dans une liste plate : le contrat actuel ne pe
 
 Cette fonctionnalité nécessite une version d’AppControl qui expose les routes décrites ci-dessous. Si la récupération retourne `404`, l’instance installée doit être mise à jour ; un prompt récupéré sur une autre version ne remplace pas cette mise à jour.
 
-**Pour essayer la validation et l’import**, ouvrez **API documentation** dans AppControl, ou `/api-docs` sur la même instance. Le schéma des **maps** est fourni dans `json_schema` par le contrat récupéré avec le client HTTP. [Parcours Swagger](SWAGGER.fr.md)
+**Pour essayer la validation et l’import**, ouvrez **Documentation API** dans le menu de compte du bandeau X4B, ou `/api-docs` sur la même instance. Le schéma des **maps** est fourni dans `json_schema` par le contrat récupéré avec le client HTTP. [Parcours Swagger](SWAGGER.fr.md)
 
 ## 1. Récupérer le prompt et conserver un cache
 
@@ -316,7 +316,7 @@ Chaque élément du lot est une enveloppe complète comme l'exemple précédent.
 
 ### Créer les équipes et attribuer les applications
 
-Dans **Teams**, créez par exemple « Exploitation Paiements », ajoutez ses membres, puis ouvrez son onglet **Applications** pour attribuer une application et choisir le niveau `view`, `operate`, `edit`, `manage` ou `owner`. Le partage depuis la fiche de l'application reste disponible. Gérer une équipe ne donne pas automatiquement le droit de partager toutes les applications : l'acteur doit avoir au moins `manage` sur l'application et ne peut accorder un niveau supérieur au sien.
+Ouvrez **Équipes** dans le menu de compte du bandeau X4B. Créez par exemple « Exploitation Paiements », ajoutez ses membres, puis ouvrez son onglet **Applications** pour attribuer une application et choisir le niveau `view`, `operate`, `edit`, `manage` ou `owner`. Pour partager une application depuis cet écran ou depuis sa fiche, l’acteur doit avoir au moins `manage` sur l’application. Il peut accorder un niveau jusqu’au sien.
 
 Pour automatiser, créez l'équipe et ses membres une fois via `/teams` et `/teams/{id}/members`, avec une identité autorisée. Conservez son UUID côté intégration. L'enveloppe `team_grants` associe ensuite les nouvelles applications aux équipes au moment de l'import, avec un niveau explicite et une expiration facultative. Les équipes ne sont ni des groupes graphiques, ni des champs de la map générée par l'IA. Une application peut être attribuée à plusieurs équipes.
 

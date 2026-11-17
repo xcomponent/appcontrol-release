@@ -8,7 +8,7 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.24.7**. Paquet : **Windows léger 1.24.7-1**.
+Produit : **AppControl 1.24.9**. Paquet : **Windows léger 1.24.9-1**.
 
 **AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La plateforme inclut [l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications](../X4B-PLATEFORME.fr.md). Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
 
@@ -265,14 +265,14 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.24.7-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.7/appcontrol-openshift-windows-light-1.24.7-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.7/appcontrol-openshift-windows-light-1.24.7-1.zip.sha256)
+- [Paquet Windows léger 1.24.9-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.9/appcontrol-openshift-windows-light-1.24.9-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.9/appcontrol-openshift-windows-light-1.24.9-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.24.7-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.24.9-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
     throw 'Checksum mismatch: do not use this archive.'
@@ -836,7 +836,7 @@ le dossier d’état d’origine pour terminer la mise à jour.
 
 ## Qualification et suite du POC
 
-La publication du kit 1.24.7-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.7-1.json` et `QUALIFICATION-EVALUATION-1.24.7-1.zip` identifient les images et le ZIP de cette recette.
+La publication du kit 1.24.9-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.9-1.json` et `QUALIFICATION-EVALUATION-1.24.9-1.zip` identifient les images et le ZIP de cette recette.
 
 ### Historique des qualifications
 
@@ -1215,7 +1215,7 @@ le domaine était la cause de l’erreur d’exposition.
 
 ## Démonstration bancaire complète
 
-**Le kit 1.24.7-1 installe automatiquement la démo bancaire lors d’une installation
+**Le kit 1.24.9-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut**, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. `-SansDemo` désactive les deux démonstrations ;
 une mise à jour avec `-MettreAJour` conserve les applications existantes sans en ajouter.

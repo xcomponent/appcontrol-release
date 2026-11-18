@@ -2233,14 +2233,14 @@
 
 
 <h1 id="essayer-les-api-avec-swagger-ui">Essayer les API avec Swagger UI<a class="headerlink" href="#essayer-les-api-avec-swagger-ui" title="Permanent link">&para;</a></h1>
-<p>AppControl embarque une page de documentation interactive : <strong>API documentation</strong> dans le menu, ou <strong><code>https://&lt;votre-instance&gt;/api-docs</code></strong>. Elle affiche les routes décrites par la version installée et permet d’essayer les requêtes. Les fichiers de Swagger UI sont livrés avec l’interface ; aucune ressource Swagger hébergée à l’extérieur n’est nécessaire.</p>
+<p>Ouvrez <strong>Documentation API</strong> dans le menu de compte du bandeau X4B, ou accédez directement à <strong><code>https://&lt;votre-instance&gt;/api-docs</code></strong>. Swagger affiche les routes de la version installée et permet d’essayer les requêtes. Les fichiers de Swagger UI sont livrés avec l’interface.</p>
 <p>Le parcours de génération et de publication décrit ici est disponible à partir
 d'<strong>AppControl 1.21.1</strong>. Installer le serveur et l'interface de la même release ;
 sur Windows/OpenShift, le kit léger correspondant est <strong>1.21.1-2</strong>. Les anciens
 rapports de qualification ne remplacent pas ceux de cette livraison.</p>
 <p>Swagger décrit les opérations de validation et d’import des maps, avec leurs paramètres, corps de requête et réponses. Le <a href="../MAP_GENERATION.fr/">guide de génération</a> couvre l’intégration avec une IA externe.</p>
 <h2 id="1-se-connecter">1. Se connecter<a class="headerlink" href="#1-se-connecter" title="Permanent link">&para;</a></h2>
-<p>Ouvrez AppControl et connectez-vous normalement, puis ouvrez <strong>API documentation</strong>. Sur la même instance, votre session de navigateur sert aux appels.</p>
+<p>Connectez-vous à X4B avec un compte qui a accès à AppControl, puis ouvrez <strong>Documentation API</strong>. Sur la même instance, votre session de navigateur sert aux appels.</p>
 <p>Pour tester avec une clé API, utilisez <strong>Authorize</strong>, puis le champ <code>apiKeyAuth</code>. Saisissez <strong><code>ApiKey</code> suivi de la clé</strong>, par exemple <code>ApiKey &lt;votre-clé&gt;</code>. L’en-tête utilisé est <code>Authorization</code>, pas <code>X-API-Key</code>. L’option <code>bearerAuth</code> attend un JWT de session AppControl ; elle ne prend pas directement un jeton d’un fournisseur d’identité. Les identifiants saisis ne sont pas conservés après le rechargement de cette page.</p>
 <table>
 <thead>
@@ -2386,7 +2386,7 @@ de version de l'OpenAPI est celui du serveur installé.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T21:48:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-16T16:01:12+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-16</span>
   </span>
 
     

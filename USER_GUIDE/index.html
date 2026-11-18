@@ -1576,6 +1576,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#map-builder-dossier-ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map Builder dossier ownership
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#embedded-architecture-and-reconstruction" class="md-nav__link">
     <span class="md-ellipsis">
       Embedded architecture and reconstruction
@@ -3284,6 +3293,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#map-builder-dossier-ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map Builder dossier ownership
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#embedded-architecture-and-reconstruction" class="md-nav__link">
     <span class="md-ellipsis">
       Embedded architecture and reconstruction
@@ -4117,7 +4135,72 @@ choice and is not the normal import path for maps generated with a mock prompt.<
 <h2 id="x4b-platform-and-publisher-identity">X4B platform and publisher identity<a class="headerlink" href="#x4b-platform-and-publisher-identity" title="Permanent link">&para;</a></h2>
 <p>X4B (XComponent for Business) is the INVIVOO software platform. AppControl is its application operations module. The login page and navigation display this hierarchy; existing application URLs, REST APIs, agent protocols and permissions retain their AppControl names.</p>
 <p>The interface starts in a dark theme. Use the theme button in the header or Settings to select light mode. This browser preference is retained across reloads. Brand assets are bundled with the application and require no Internet access.</p>
-<p>The X4B identity provides a common home for future connectors and transformation modules. This release does not add or advertise unimplemented connectors as available modules.</p>
+<p>The <strong>Home</strong> page at <code>/x4b</code> groups the applications available to the signed-in account:</p>
+<ul>
+<li><strong>Knowledge Collect &amp; Store (KCS)</strong> groups knowledge sources and reference
+  resources. Administrators configure and synchronize the document connector
+  here. Its resources link to the component
+  catalog, agent discovery, and repository review for accounts with AppControl access.</li>
+<li><strong>Knowledge Transform &amp; Refine (KTR)</strong> opens <strong>Map Builder</strong> (AppGraphGen) to generate, refine, review and
+  publish map proposals. Existing links to <code>/map-generation</code> still open Map Builder.</li>
+<li><strong>Knowledge Graph &amp; Act (KGA)</strong> opens <strong>App Explorer</strong> (AppExplore) for read-only browsing of accessible
+  application maps, or <strong>AppControl</strong> for operational work. App Explorer can
+  search by application name or published source key and open the map in AppControl.</li>
+</ul>
+<h3 id="map-builder-dossier-ownership">Map Builder dossier ownership<a class="headerlink" href="#map-builder-dossier-ownership" title="Permanent link">&para;</a></h3>
+<p>A document synchronization creates a durable <strong>mapping dossier</strong> for each source and
+application key before an AppControl map exists. New dossiers enter <strong>To assign</strong>. A
+delegated portfolio manager assigns one responsible team, an optional contact from that
+team, any contributor or reviewer teams, a priority and an optional target date. The
+assignment belongs to the dossier, not to one temporary AI generation job, and therefore
+survives retries and later source revisions.</p>
+<p>Administrators expand <strong>Portfolio managers</strong> in Map Builder to delegate this role to a
+user or team. Removing that delegation removes the portfolio-wide view; it does not
+change dossiers already assigned to the person's teams or any AppControl map permission.</p>
+<p>Portfolio managers and administrators can use <strong>Portfolio</strong> and <strong>To assign</strong>; ordinary
+users see only dossiers granted to one of their teams under <strong>My team</strong>. A team lead or
+the named contact accepts the assignment. A team that cannot own it returns the dossier
+with a reason, and a portfolio manager can reassign it. Assignment changes are revision
+checked so a stale browser cannot overwrite a more recent distribution decision.</p>
+<p>The business workflow — <strong>To assign</strong>, <strong>Assigned</strong>, <strong>Accepted</strong>, <strong>In progress</strong>,
+<strong>In review</strong>, <strong>Ready to publish</strong>, <strong>Published</strong>, or <strong>Blocked</strong> — is shown separately
+from the technical generation state. A ready AI result does not mean that the team has
+completed its review, and a failed generation does not by itself change ownership.</p>
+<p>Dossier <code>view</code>, <code>edit</code>, and <code>manage</code> are Map Builder collaboration rights. They do not
+grant AppControl <code>operate</code>, Start, Stop, or Reconstruction. On first publication, the
+publisher and dossier teams receive safe view access to the map. Reassigning an already
+published dossier also gives its new teams safe view access. This synchronization is
+additive: it never removes or downgrades existing application grants, which may have
+been explicitly granted or elevated in AppControl. Grant any higher application
+permission explicitly in AppControl. Site and workspace access is still
+validated for publication.
+Map Builder can be granted to non-administrators, but module access alone never exposes
+another team's dossiers. Connector settings and global synchronization remain
+administrator-only.</p>
+<p>When a published source changes, the new proposal returns as <strong>Assigned</strong> to the same
+dossier and responsible team, which accepts it again before review. If no valid
+responsible team remains, it returns to <strong>To assign</strong> as an
+exception. The currently published map remains available until the update is explicitly
+reviewed and published.</p>
+<p>Administrators can choose the home section for each connected application
+under <strong>Connected applications</strong>. The placement applies to accounts that have
+access to that application. Previously registered applications start in Operations.</p>
+<p>The header also opens <strong>AI service</strong>, <strong>AI agents</strong>, and <strong>Integrations</strong>. Administrators can
+inspect the existing document connector and run a sample AI test for settings
+managed from X4B. For a deployment-managed connector, refine a map to verify
+the AI call. Integrations provides example previews for the shared header, map
+and status badge. <strong>AI agents</strong> links to downloadable skills, a catalogue URL
+and an optional local MCP setup for Kilo Code. A downloaded skill can be used
+without MCP. For a local MCP connection, install the <code>appcontrol-mcp</code> binary
+on the assistant’s workstation and manage its separately scoped key in
+<strong>API Keys</strong>. The generated configuration is disabled by default and takes
+effect when installed in Kilo Code.</p>
+<p><img alt="x4b-home" src="../screenshots/x4b-home.png" /></p>
+<p><img alt="x4b-knowledge" src="../screenshots/x4b-knowledge.png" /></p>
+<p><img alt="x4b-explorer" src="../screenshots/x4b-explorer.png" /></p>
+<p><img alt="x4b-ai" src="../screenshots/x4b-ai.png" /></p>
+<p><img alt="x4b-integrations" src="../screenshots/x4b-integrations.png" /></p>
+<p><img alt="x4b-agents" src="../screenshots/x4b-agents.png" /></p>
 <h3 id="embedded-architecture-and-reconstruction">Embedded architecture and reconstruction<a class="headerlink" href="#embedded-architecture-and-reconstruction" title="Permanent link">&para;</a></h3>
 <p>AppControl Embedded presents a documentary map and executes isolated reconstruction
 scenarios using the existing Rust runtime and dedicated agents. Open <strong>Simulation workspace</strong>
@@ -4159,7 +4242,7 @@ optional fields are cleared. Imports are atomic and do not rewrite existing maps
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-11T12:18:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-17T21:50:46+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-17</span>
   </span>
 
     

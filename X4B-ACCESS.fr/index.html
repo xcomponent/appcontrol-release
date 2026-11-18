@@ -1068,6 +1068,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#acces-au-map-builder-et-distribution-des-dossiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accès au Map Builder et distribution des dossiers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accès au Map Builder et distribution des dossiers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#separer-collaboration-et-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Séparer collaboration et exploitation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#raccorder-une-application-externe" class="md-nav__link">
     <span class="md-ellipsis">
       Raccorder une application externe
@@ -2146,6 +2170,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#acces-au-map-builder-et-distribution-des-dossiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accès au Map Builder et distribution des dossiers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accès au Map Builder et distribution des dossiers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#separer-collaboration-et-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Séparer collaboration et exploitation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#raccorder-une-application-externe" class="md-nav__link">
     <span class="md-ellipsis">
       Raccorder une application externe
@@ -2183,8 +2231,104 @@
 les modules visibles et accessibles pour chaque personne. Les comptes existants
 conservent leur accès AppControl jusqu’à la première modification explicite de
 leurs accès. Un compte non administrateur créé dans X4B commence sans module.
-Les droits sur les maps, les équipes et les opérations restent gérés dans AppControl.
-La génération de maps est accessible aux administrateurs de l’organisation.</p>
+Les droits opérationnels sur les maps et les équipes restent gérés dans AppControl.
+Le module <strong>Map Builder</strong> est inclus pour les administrateurs et peut être accordé
+aux autres comptes. Son accès ne donne pas accès à tout le portefeuille : chaque
+dossier de cartographie conserve son propre périmètre d’équipe.</p>
+<p>Pour accorder le module à un compte non administrateur, ouvrez <strong>Comptes et accès</strong>,
+choisissez <strong>Accès aux applications</strong> sur ce compte, cochez <strong>Map Builder</strong>, puis
+enregistrez. Cette opération rend le module disponible ; elle ne fait pas de ce compte
+un gestionnaire de portefeuille et ne lui attribue aucun dossier.</p>
+<h2 id="acces-au-map-builder-et-distribution-des-dossiers">Accès au Map Builder et distribution des dossiers<a class="headerlink" href="#acces-au-map-builder-et-distribution-des-dossiers" title="Permanent link">&para;</a></h2>
+<p>Une synchronisation documentaire crée d’abord un <strong>dossier de cartographie</strong> pour
+la source et la clé applicative. Ce dossier existe avant la map AppControl et reste
+le même au fil des générations et des updates. Les réglages du connecteur, le test
+de connexion et la synchronisation globale restent réservés aux administrateurs.
+Le travail de construction et de revue peut être délégué sans donner de rôle
+d’administration de la plateforme.</p>
+<p>L’administrateur peut désigner des <strong>gestionnaires de portefeuille</strong>, directement
+ou par équipe. Ils voient les vues <strong>À répartir</strong> et <strong>Portefeuille</strong>, affectent un
+dossier ou un lot, et peuvent modifier une affectation. Cette délégation concerne
+uniquement la distribution des dossiers ; elle n’accorde aucun accès opérationnel
+aux maps publiées.</p>
+<p>Dans <strong>Map Builder</strong>, l’administrateur ouvre <strong>Gestionnaires du portefeuille</strong>, choisit
+<strong>Une équipe</strong> ou <strong>Un utilisateur</strong>, puis clique sur <strong>Ajouter le gestionnaire</strong>. Le
+retrait de cette délégation ferme la vue transverse, mais ne modifie ni les dossiers
+déjà affectés à ses équipes ni les permissions des maps AppControl.</p>
+<p>Pour chaque dossier, l’affectation comprend :</p>
+<ul>
+<li>une <strong>équipe responsable</strong> unique, qui porte la création ou l’update ;</li>
+<li>un <strong>référent</strong> facultatif, choisi parmi les membres de cette équipe ;</li>
+<li>des équipes <strong>contributrices</strong>, autorisées à modifier la proposition ;</li>
+<li>des équipes <strong>relectrices</strong>, autorisées à consulter la proposition pour relecture ;</li>
+<li>une priorité et, si nécessaire, une date cible.</li>
+</ul>
+<p>Le lead de l’équipe responsable ou le référent nommé accepte l’affectation. Si
+l’équipe ne peut pas prendre le dossier, elle le renvoie dans <strong>À répartir</strong> avec un
+motif. Le gestionnaire peut aussi le réaffecter à une autre équipe. Ces actions et
+leurs auteurs sont audités. Les vues sont filtrées : un utilisateur ordinaire voit
+les dossiers accordés à ses équipes dans <strong>Mon équipe</strong>, tandis que la file sans
+responsable et la vue transverse restent limitées aux gestionnaires et administrateurs.
+L’affectation, l’acceptation, le retour et le changement d’avancement demandent une
+session utilisateur ; une clé API ne peut pas prendre ces décisions de gouvernance.</p>
+<p>Le statut d’avancement — <strong>À répartir</strong>, <strong>Affecté</strong>, <strong>Pris en charge</strong>, <strong>En cours</strong>,
+<strong>En révision</strong>, <strong>Prêt à publier</strong>, <strong>Publié</strong> ou <strong>Bloqué</strong> — est distinct de l’état
+technique de l’IA et de la synchronisation. Cette séparation permet par exemple de
+conserver un dossier en révision même si sa génération est terminée, ou d’indiquer un
+blocage métier sans masquer l’état technique.</p>
+<h3 id="separer-collaboration-et-exploitation">Séparer collaboration et exploitation<a class="headerlink" href="#separer-collaboration-et-exploitation" title="Permanent link">&para;</a></h3>
+<p>Les niveaux <code>view</code>, <code>edit</code> et <code>manage</code> d’un dossier sont des droits de collaboration
+propres au Map Builder. Ils ne correspondent pas aux permissions de même nom dans la
+hiérarchie opérationnelle AppControl, où <code>edit</code> et <code>manage</code> incluent notamment
+<code>operate</code>. Le tableau suivant résume cette séparation.</p>
+<table>
+<thead>
+<tr>
+<th>Droit sur le dossier</th>
+<th>Capacité dans le Map Builder</th>
+<th>Ce qu’il ne donne pas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>view</code></td>
+<td>Consulter la proposition pour relecture.</td>
+<td>Aucune commande sur la map.</td>
+</tr>
+<tr>
+<td><code>edit</code></td>
+<td>Modifier et affiner la proposition.</td>
+<td>Ni Start, ni Stop, ni Reconstruction.</td>
+</tr>
+<tr>
+<td><code>manage</code></td>
+<td>Piloter le dossier et publier lorsque les contrôles sont satisfaits.</td>
+<td>Aucun droit d’exploitation implicite.</td>
+</tr>
+<tr>
+<td>Gestionnaire de portefeuille</td>
+<td>Affecter ou transférer les dossiers du portefeuille.</td>
+<td>Aucun accès implicite aux applications publiées.</td>
+</tr>
+</tbody>
+</table>
+<p>À la première publication, son auteur et les équipes associées au dossier reçoivent un
+accès de consultation à la map. Lorsqu’une map déjà publiée est réaffectée, les nouvelles
+équipes reçoivent aussi cet accès. La synchronisation est additive : elle ne retire ni ne
+réduit les droits applicatifs existants, car ceux-ci peuvent avoir été accordés ou élevés
+explicitement. Accordez ensuite dans AppControl toute permission plus élevée nécessaire.
+L’affectation d’un dossier ne doit jamais produire
+automatiquement <code>operate</code>. Les restrictions de workspace et de site, ainsi que les
+passerelles et agents choisis, sont contrôlées séparément au moment de la publication.</p>
+<p>L’accès au module et l’accès aux données sont également distincts. Accorder le module
+<strong>Map Builder</strong> permet d’ouvrir l’outil, mais n’expose pas les dossiers des autres
+équipes. À l’inverse, l’accès à un dossier rend le Map Builder disponible pour ce
+travail sans donner accès à la configuration globale du connecteur.</p>
+<p>Quand la source d’une map publiée évolue, l’update revient dans le même dossier et à
+la même équipe responsable avec le statut <strong>Affecté</strong> ; elle doit reprendre le dossier
+avant sa revue. Si cette équipe n’existe plus ou si aucun responsable
+valide ne subsiste, le dossier rejoint <strong>À répartir</strong>. La map publiée et ses droits
+AppControl restent inchangés jusqu’à la publication explicite de l’update.</p>
 <h2 id="raccorder-une-application-externe">Raccorder une application externe<a class="headerlink" href="#raccorder-une-application-externe" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Enregistrez son identifiant, son nom, son URL d’entrée et son URL de retour dans
@@ -2224,11 +2368,15 @@ chemin de la même origine.</p>
 </tr>
 <tr>
 <td><code>POST /api/v1/x4b/token</code></td>
-<td>Le serveur hôte vérifie l’état reçu puis envoie le JSON <code>{client_id,client_secret,code,code_verifier}</code>. Le code est valable une minute et s’utilise une seule fois. La réponse contient <code>session_token</code>, <code>expires_in</code> en secondes et <code>user</code> avec <code>user_id</code> et <code>email</code>.</td>
+<td>Le serveur hôte vérifie l’état reçu puis envoie le JSON <code>{client_id,client_secret,code,code_verifier}</code>. Le code est valable une minute et s’utilise une seule fois. La réponse contient <code>session_token</code>, <code>expires_in</code> en secondes, <code>user</code> avec <code>user_id</code> et <code>email</code>, ainsi que <code>settings</code>.</td>
 </tr>
 <tr>
 <td><code>POST /api/v1/x4b/session</code></td>
-<td>Le serveur hôte envoie le JSON <code>{client_id,client_secret,session_token}</code>. X4B vérifie le compte, l’accès au module, l’expiration et la session X4B d’origine. La réponse contient <code>user</code> et <code>modules</code>.</td>
+<td>Le serveur hôte envoie le JSON <code>{client_id,client_secret,session_token}</code>. X4B vérifie le compte, l’accès au module, l’expiration et la session X4B d’origine. La réponse contient <code>user</code>, <code>modules</code> et <code>settings</code>.</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/x4b/session/settings</code></td>
+<td>Le serveur hôte ajoute <code>language</code> aux champs de la requête de session. X4B effectue les mêmes vérifications, enregistre la préférence de langue sur le compte et retourne <code>{"language":"fr"}</code> ou <code>{"language":"en"}</code>.</td>
 </tr>
 <tr>
 <td><code>POST /api/v1/x4b/session/revoke</code></td>
@@ -2236,6 +2384,10 @@ chemin de la même origine.</p>
 </tr>
 </tbody>
 </table>
+<p>Dans les réponses d’échange et de session, <code>settings.language</code> vaut <code>fr</code> ou
+<code>en</code> si le compte a enregistré une préférence. Le champ est absent tant
+qu’aucune langue n’a été enregistrée. Le <a href="../X4B-PLATEFORME.fr/#langue-du-bandeau-et-de-lapplication-hôte">guide du bandeau</a>
+décrit les routes à exposer sur le portail hôte pour partager cette préférence.</p>
 <p>Les chemins relatifs des modules natifs se résolvent par rapport à l’URL publique
 de X4B configurée sur le serveur hôte. L’accueil X4B et les modules natifs
 partagent cette origine. Les modules externes gardent leur
@@ -2271,7 +2423,7 @@ nouveau secret côté serveur.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:18:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-17T21:17:40+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-17</span>
   </span>
 
     

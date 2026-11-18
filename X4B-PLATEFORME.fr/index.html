@@ -1047,6 +1047,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#travailler-avec-un-assistant-externe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Travailler avec un assistant externe
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comptes-et-acces" class="md-nav__link">
     <span class="md-ellipsis">
       Comptes et accès
@@ -1061,6 +1070,21 @@
       Intégration d’un portail documentaire
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Intégration d’un portail documentaire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#langue-du-bandeau-et-de-lapplication-hote" class="md-nav__link">
+    <span class="md-ellipsis">
+      Langue du bandeau et de l’application hôte
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2155,6 +2179,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#travailler-avec-un-assistant-externe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Travailler avec un assistant externe
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comptes-et-acces" class="md-nav__link">
     <span class="md-ellipsis">
       Comptes et accès
@@ -2169,6 +2202,21 @@
       Intégration d’un portail documentaire
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Intégration d’un portail documentaire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#langue-du-bandeau-et-de-lapplication-hote" class="md-nav__link">
+    <span class="md-ellipsis">
+      Langue du bandeau et de l’application hôte
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2197,14 +2245,45 @@
 
 
 <h1 id="x4b-raccorder-une-application">X4B — Raccorder une application<a class="headerlink" href="#x4b-raccorder-une-application" title="Permanent link">&para;</a></h1>
-<p>X4B, édité par Invivoo, réunit AppControl, Génération de maps et les applications enregistrées. L’accueil est à <code>/x4b</code>. Le menu du compte donne accès à <strong>Comptes et accès</strong> et <strong>Applications raccordées</strong> pour les administrateurs. AppControl conserve ses liens directs, notamment <code>/apps/&lt;id&gt;</code>.</p>
+<p>X4B, édité par Invivoo, organise l’accueil <code>/x4b</code> en trois colonnes. Dans <strong>Connaissance</strong> (Knowledge Collect &amp; Store, KCS), <strong>Sources de connaissance</strong> (CapabilityCatalog) donne accès aux réglages documentaires et aux ressources, dont le catalogue de composants. <strong>Transformation</strong> (Knowledge Transform &amp; Refine, KTR) ouvre l’<strong>Atelier de cartographie</strong> (AppGraphGen) pour générer, affiner et publier les propositions. <strong>Exploitation</strong> (Knowledge Graph &amp; Act, KGA) donne accès à <strong>App Explorer</strong> (AppExplore) pour consulter les fiches des applications accessibles et à <strong>AppControl</strong> pour exploiter leurs cartes. Le menu du compte donne aux administrateurs accès à <strong>Comptes et accès</strong> et <strong>Applications raccordées</strong>. Les liens directs, notamment <code>/map-generation</code> et <code>/apps/&lt;id&gt;</code>, restent valides.</p>
+<p>Le bandeau donne accès au <strong>Service d’IA</strong>, à <strong>Agents IA</strong> et à <strong>Intégrations</strong> selon les droits de l’utilisateur. L’espace Intégrations présente un aperçu du bandeau, de la carte embarquée et du badge d’état. L’écran <strong>Agents IA</strong> regroupe les skills à télécharger et l’adresse du catalogue.</p>
+<h2 id="travailler-avec-un-assistant-externe">Travailler avec un assistant externe<a class="headerlink" href="#travailler-avec-un-assistant-externe" title="Permanent link">&para;</a></h2>
+<p>Sans MCP, téléchargez les fichiers du skill depuis <strong>Agents IA</strong>. Dans le
+projet, placez-les dans <code>.agents/skills/&lt;nom-du-skill&gt;/</code> pour Kilo Code
+ou dans <code>.claude/skills/&lt;nom-du-skill&gt;/</code> pour Claude Code. Placez <code>SKILL.md</code>
+à la racine du dossier du skill et les fichiers complémentaires dans
+<code>references/</code>. Kilo Code peut également télécharger ces fichiers depuis
+le catalogue configuré dans <code>skills.urls</code>. <a href="https://code.claude.com/docs/en/skills">Skills dans Claude Code</a></p>
+<p>Le skill <code>appcontrol-map-from-repository</code> fournit le schéma JSON AppControl
+et un exemple importable. Demandez à l’assistant de construire <code>map.json</code>
+dans le dépôt ouvert et de relever les preuves des composants et des
+dépendances dans une note. La création et la validation par le schéma
+peuvent se faire sans connexion à AppControl. L’instance cible vérifie
+ensuite les règles du contrat avant la revue des affectations.</p>
+<p>Les skills de cartographie guident la validation du JSON, la vérification des
+affectations et la recette sur une cible de test. Le skill
+<code>appcontrol-deployment-verification</code> couvre l’installation ou la mise à jour,
+la disponibilité du backend et de l’interface, la reconnexion des agents et
+la reprise des intégrations. Pour exécuter ces contrôles, l’assistant utilise
+les accès AppControl et les outils d’administration disponibles dans
+l’environnement cible. Il rend compte des vérifications effectuées et de
+celles qui restent à réaliser.</p>
+<p>Pour utiliser MCP, installez le binaire <code>appcontrol-mcp</code> sur le poste qui
+exécute Kilo Code. Préparez la configuration locale dans <strong>Agents IA</strong>.
+L’exécutable lit <code>APPCONTROL_API_KEY</code> dans l’environnement du processus.
+Créez une clé dédiée dans <strong>Clés API</strong>, limitée à l’application et au droit
+requis. La lecture suffit au premier essai. La conception permet de
+préparer une proposition pour revue. Installez la configuration dans Kilo
+Code et activez le connecteur dans ses paramètres MCP. Pour couper l’accès
+de cet assistant à AppControl, révoquez sa clé dédiée.
+<a href="https://kilo.ai/docs/automate/mcp/using-in-kilo-code">Configuration MCP dans Kilo Code</a> · <a href="https://kilo.ai/docs/customize/skills">Découverte des skills</a></p>
 <h2 id="comptes-et-acces">Comptes et accès<a class="headerlink" href="#comptes-et-acces" title="Permanent link">&para;</a></h2>
-<p>L’administrateur réutilise les comptes locaux AppControl. Les comptes existants gardent leur accès AppControl après mise à jour. Les nouveaux comptes créés dans X4B reçoivent les accès choisis dans l’administration. La génération et la publication par lots restent réservées aux administrateurs dans cette version. Les autorisations AppControl sur les maps, les sites et les opérations s’appliquent en plus de l’accès au module.</p>
+<p>L’administrateur réutilise les comptes locaux AppControl. Les comptes existants gardent leur accès AppControl après mise à jour. L’accès à l’Atelier, l’affectation d’un dossier et les droits sur une carte publiée sont distincts. Les équipes autorisées peuvent travailler sur un dossier et le faire passer en revue. La synchronisation de la source et la publication par lots restent réservées aux administrateurs. Un dossier hérité peut suivre le parcours de publication administrateur jusqu’à sa première affectation. Les autorisations AppControl sur les cartes et leurs sites s’appliquent aux cartes déjà publiées. <a href="../X4B-ACCESS.fr/">Droits et affectations X4B</a></p>
 <p>Pour un POC avec un portail documentaire, créer un compte administrateur de revue et un compte de consultation. Donner à ce dernier accès au portail, puis un droit de lecture sur la map et les sites nécessaires, dont le site de simulation. Le compte peut ouvrir une simulation isolée. Les opérations sur une map réelle nécessitent les droits d’exploitation AppControl.</p>
 <h2 id="integration-dun-portail-documentaire">Intégration d’un portail documentaire<a class="headerlink" href="#integration-dun-portail-documentaire" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Conserver les URL HTTPS du portail et d’AppControl. L’accueil X4B peut utiliser le même hôte qu’AppControl avec le chemin <code>/x4b</code>.</li>
-<li>Dans <strong>Applications raccordées</strong>, enregistrer <code>documentation</code>. Pour l’hôte de référence, utiliser <code>https://documentation.example.test/</code> comme URL d’entrée et <code>https://documentation.example.test/x4b/callback</code> comme URL de retour, avec le domaine réel de l’hôte. Copier le secret affiché à la création dans le gestionnaire de secrets du serveur du portail.</li>
+<li>Dans <strong>Applications raccordées</strong>, enregistrer <code>documentation</code> et choisir son <strong>Pilier de l’accueil</strong>. Le placement est modifiable sans recréer l’application. Les applications précédemment raccordées figurent dans <strong>Exploitation</strong> par défaut. Pour l’hôte de référence, utiliser <code>https://documentation.example.test/</code> comme URL d’entrée et <code>https://documentation.example.test/x4b/callback</code> comme URL de retour, avec le domaine réel de l’hôte. Copier le secret affiché à la création dans le gestionnaire de secrets du serveur du portail.</li>
 <li>Protéger les fiches et les API du portail avec la session X4B. Lors d’un accès direct, conserver le chemin de la fiche côté serveur, effectuer l’échange d’autorisation et revenir à ce chemin. Le serveur du portail vérifie aussi ses propres droits de consultation de fiche. Voir <a href="../X4B-ACCESS.fr/">le contrat d’accès</a>.</li>
 <li>Ajouter les composants à la mise en page et à la fiche. Le serveur du portail expose les routes locales ci-dessous. Les données d’identité restent sur les canaux serveur à serveur.</li>
 </ol>
@@ -2224,7 +2303,11 @@
 <tbody>
 <tr>
 <td><code>GET /x4b/session</code></td>
-<td><code>POST /api/v1/x4b/session</code> retourne le compte et ses entrées de navigation.</td>
+<td><code>POST /api/v1/x4b/session</code> retourne le compte, ses entrées de navigation et la préférence de langue.</td>
+</tr>
+<tr>
+<td><code>PUT /x4b/settings</code></td>
+<td>Le bandeau envoie <code>{"language":"fr"}</code> ou <code>{"language":"en"}</code>. Le portail vérifie l’origine et la session, puis appelle <code>POST /api/v1/x4b/session/settings</code> avec <code>client_id</code>, <code>client_secret</code>, <code>session_token</code> et <code>language</code>. Transmettre la réponse <code>{"language":"fr"}</code> ou <code>{"language":"en"}</code>.</td>
 </tr>
 <tr>
 <td><code>POST /x4b/logout</code></td>
@@ -2240,19 +2323,47 @@
 </tr>
 </tbody>
 </table>
-<p><code>GET /x4b/session</code> renvoie au bandeau les champs <code>user</code> et <code>modules</code> issus de
+<p><code>GET /x4b/session</code> renvoie au bandeau les champs <code>user</code>, <code>modules</code> et <code>settings</code> issus de
 la réponse serveur X4B. Chaque entrée de <code>modules</code> contient <code>key</code>, <code>name</code> et
 <code>entry_url</code>. X4B calcule la liste selon les droits du compte connecté. Le
-bandeau ajoute <strong>Catalogue</strong> lorsque <strong>AppControl</strong> figure dans cette liste.</p>
+bandeau ajoute <strong>Connaissance</strong> lorsque le compte dispose d’AppControl ou de
+l’Atelier de cartographie, et <strong>App Explorer</strong> lorsque le compte dispose d’AppControl.</p>
 <p>Le bandeau demande confirmation avant de déconnecter le compte. Après un <code>POST /x4b/logout</code> réussi, il dirige le navigateur vers la page de connexion X4B. La route de l'application hôte supprime sa session locale et révoque la session partagée. Si la révocation échoue, la route renvoie une erreur HTTP. L'application protège aussi ses propres pages et API.</p>
 <p>Pour les deux routes Embedded, <code>credentials</code> contient <code>client_id</code>, <code>client_secret</code> et <code>session_token</code>. La source de la map est résolue par <code>source_reference.system</code> égal à la clé du module et <code>source_reference.id</code> égal à l’identifiant de la fiche. La configuration <a href="../EMBEDDED.fr/">AppControl Embedded</a> déclare en plus l’origine du portail et le site de simulation. Le jeton de simulation reste court et suit la validité de la session X4B qui l’a demandé.</p>
-<p>Pour les maps générées depuis une source documentaire externe, renseigner <code>documentation</code> comme nom de source dans <strong>Génération de maps → Paramètres</strong>, ou définir <code>X4B_KNOWLEDGE_SOURCE=documentation</code> lors du déploiement. L’<code>application_key</code> exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple <code>PAI-042</code>.</p>
+<p>Pour les maps générées depuis une source documentaire externe, renseigner <code>documentation</code> comme nom de source dans <strong>Connaissance → Source documentaire → Paramètres</strong>, ou définir <code>X4B_KNOWLEDGE_SOURCE=documentation</code> lors du déploiement. L’<code>application_key</code> exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple <code>PAI-042</code>.</p>
 <p>Le badge actualise les données toutes les 15 secondes quand la page est visible. Autoriser l’hôte AppControl dans <code>script-src</code>, <code>style-src</code> et <code>frame-src</code> du portail. Le navigateur interroge les routes du portail sous sa propre origine.</p>
 <p>L’hôte de référence <code>demo-rebuild/embedded/x4b_host.py</code> contient deux fiches fictives, dont <code>PAI-042</code>. Il est livré dans l’archive <a href="https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.1/demo-rebuild.tar.gz">demo-rebuild.tar.gz de la release</a>. Le placer derrière un proxy HTTPS qui transmet le <code>Host</code> public. Configurer <code>X4B_URL=https://appcontrol.example.test</code>, <code>X4B_HOST_ORIGIN=https://documentation.example.test</code> et <code>X4B_MODULE_KEY=documentation</code> avec les valeurs de l’installation, puis injecter le secret client dans <code>X4B_CLIENT_SECRET</code>. Si plusieurs sites de simulation sont configurés, préciser <code>X4B_SIMULATION_SITE_ID</code>. L’hôte écoute en boucle locale sur le port <code>8081</code> par défaut. Le modèle de production doit s’appuyer sur les sessions du framework du portail et vérifier les droits de chaque fiche.</p>
 <p>Si le certificat de X4B est signé par une autorité interne, configurer <code>X4B_CA_FILE</code> avec la chaîne de confiance PEM sur le serveur de l’hôte de référence. Le navigateur doit lui aussi faire confiance à l’autorité utilisée par les deux sites.</p>
+<h3 id="langue-du-bandeau-et-de-lapplication-hote">Langue du bandeau et de l’application hôte<a class="headerlink" href="#langue-du-bandeau-et-de-lapplication-hote" title="Permanent link">&para;</a></h3>
+<p>Le bandeau utilise la préférence <code>settings.language</code> du compte X4B dès qu’il
+reçoit la session. En l’absence de préférence, il utilise la langue déclarée
+dans l’attribut <code>lang</code> de la page hôte si elle est prise en charge, puis celle du
+navigateur. Le sélecteur change la langue du bandeau et enregistre le choix sur le
+compte pour les applications raccordées. Si la route locale porte un autre nom,
+indiquez son chemin de même origine dans l’attribut <code>settings-endpoint</code> de
+<code>&lt;x4b-shell&gt;</code>. Les identifiants et secrets de l’échange restent côté serveur.</p>
+<p>L’application hôte peut réutiliser son mécanisme de traduction en écoutant
+l’événement <code>x4b-language-change</code>. Le bandeau fournit <code>event.detail.language</code>
+à l’initialisation et lors des changements. La propriété en lecture seule
+<code>shell.language</code> permet de récupérer la valeur si le script est chargé après
+l’initialisation. Appliquez la valeur à vos propres traductions, puis mettez à
+jour la langue déclarée pour la page.</p>
+<div class="language-js highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">shell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;x4b-shell&#39;</span><span class="p">);</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">applyLanguage</span><span class="p">(</span><span class="nx">language</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nx">setApplicationLanguage</span><span class="p">(</span><span class="nx">language</span><span class="p">);</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">lang</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">language</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nx">shell</span><span class="o">?</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;x4b-language-change&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nx">applyLanguage</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">language</span><span class="p">);</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">});</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">shell</span><span class="o">?</span><span class="p">.</span><span class="nx">language</span><span class="p">)</span><span class="w"> </span><span class="nx">applyLanguage</span><span class="p">(</span><span class="nx">shell</span><span class="p">.</span><span class="nx">language</span><span class="p">);</span>
+</span></code></pre></div>
 <h2 id="catalogue-complet-et-generation">Catalogue complet et génération<a class="headerlink" href="#catalogue-complet-et-generation" title="Permanent link">&para;</a></h2>
 <p>Le catalogue appartient à AppControl. Les entrées acceptent <code>match_terms</code> (ou <code>keys</code> sur les exports existants). Le kit Windows envoie les entrées par lots. Chaque lot respecte les limites de la requête, sans plafond total sur le catalogue configuré. Pour enrichir une entrée déjà importée, utiliser le mode <code>upsert</code> de l’API catalogue avec une prévisualisation <code>dry_run</code> puis l’<code>expected_digest</code> obtenu. Le kit Windows conserve le mode ajout pour préserver les entrées existantes.</p>
 <p>Quand le catalogue est renseigné, X4B demande d’abord à l’IA du client les termes observés dans le document. X4B recherche ces termes dans toutes les entrées du catalogue. Le second appel utilise la même révision du document et reçoit les candidats par composant. Les commandes et variables du catalogue ne sont pas envoyées au moteur de génération. La revue indique les rapprochements ambigus et inconnus, avec les candidats trouvés. Ces propositions nécessitent une confirmation individuelle. Une modification du catalogue rend caduques les propositions fondées sur son état antérieur.</p>
+<p>Pour les ordonnanceurs, indiquez dans les sources le produit et le rôle précis de la brique, par exemple <strong>Control-M Agent</strong>. Le rapprochement reconnaît aussi les variantes du nom de produit, comme <strong>VTOM</strong> et <strong>Visual TOM</strong>. Lorsque le document nomme le produit et que le catalogue ne contient qu’une variante, X4B peut la suggérer pour confirmation. Le rôle d’ordonnancement aide à organiser le graphe. Les liens restent fondés sur les flux et prérequis documentés.</p>
+<p>Dans l’aperçu, utilisez <strong>Organiser automatiquement</strong> pour disposer les prérequis et les composants qui en dépendent. Vous pouvez aussi déplacer les composants à la souris et enregistrer leur disposition dans la proposition avant de la publier.</p>
+<p>Lors de la première publication, le site primaire sert de site par défaut pour les composants dont le site reste à déterminer. L’assistant propose un agent lorsqu’il trouve une correspondance unique ou un seul agent éligible. Si vous choisissez un site secondaire, renseignez les agents de chaque composant sur les deux sites. La publication enregistre un profil de secours inactif. Les commandes et les conditions de bascule restent à vérifier avant utilisation.</p>
 <p>Le contrat <a href="../KNOWLEDGE-ENGINE-CONNECTOR.fr/">Knowledge Engine</a> est conservé. Le point de terminaison <code>prompt-executions</code> doit pouvoir appliquer le prompt reçu, y compris quand le résultat demandé est un inventaire de composants. Le moteur de génération reste celui du client.</p>
 
 
@@ -2276,7 +2387,7 @@ bandeau ajoute <strong>Catalogue</strong> lorsque <strong>AppControl</strong> fi
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-15T13:11:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-17T21:17:40+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-17</span>
   </span>
 
     

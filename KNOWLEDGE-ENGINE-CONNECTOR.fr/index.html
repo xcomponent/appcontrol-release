@@ -1448,11 +1448,35 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mettre-a-jour-le-service-client-pour-laffinage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mettre à jour le service client pour l’affinage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cycle-de-mise-a-jour-cote-x4b" class="md-nav__link">
     <span class="md-ellipsis">
       Cycle de mise à jour côté X4B
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Cycle de mise à jour côté X4B">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repartir-et-suivre-les-dossiers-de-cartographie" class="md-nav__link">
+    <span class="md-ellipsis">
+      Répartir et suivre les dossiers de cartographie
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1518,9 +1542,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#evolution-vers-git" class="md-nav__link">
+  <a href="#revue-avec-git" class="md-nav__link">
     <span class="md-ellipsis">
-      Évolution vers Git
+      Revue avec Git
     </span>
   </a>
   
@@ -2230,11 +2254,35 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mettre-a-jour-le-service-client-pour-laffinage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mettre à jour le service client pour l’affinage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cycle-de-mise-a-jour-cote-x4b" class="md-nav__link">
     <span class="md-ellipsis">
       Cycle de mise à jour côté X4B
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Cycle de mise à jour côté X4B">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repartir-et-suivre-les-dossiers-de-cartographie" class="md-nav__link">
+    <span class="md-ellipsis">
+      Répartir et suivre les dossiers de cartographie
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2300,9 +2348,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#evolution-vers-git" class="md-nav__link">
+  <a href="#revue-avec-git" class="md-nav__link">
     <span class="md-ellipsis">
-      Évolution vers Git
+      Revue avec Git
     </span>
   </a>
   
@@ -2330,7 +2378,8 @@
 
 <h1 id="raccorder-une-source-documentaire-a-x4b">Raccorder une source documentaire à X4B<a class="headerlink" href="#raccorder-une-source-documentaire-a-x4b" title="Permanent link">&para;</a></h1>
 <p>Le <a href="../knowledge-engine.openapi.yaml">contrat OpenAPI</a> décrit les opérations
-du connecteur. <strong>Côté client, deux opérations suffisent au parcours de
+du connecteur dans le profil d’intégration X4B pour l’exécution de prompts.
+<strong>Côté client, deux opérations suffisent au parcours de
 génération</strong>. Lister les documents courants et exécuter un prompt sur la
 révision demandée. La lecture directe du JSON est facultative.</p>
 <p>X4B fournit le prompt et le schéma AppControl. Le Knowledge Engine présente
@@ -2344,9 +2393,9 @@ confirmer.</p>
 <p><strong>Une URL de base</strong> dessert le catalogue et l’exécution du prompt. Par
 exemple, avec <code>https://knowledge.example/api/v1</code>, X4B appelle
 <code>https://knowledge.example/api/v1/knowledge-documents</code> et
-<code>https://knowledge.example/api/v1/prompt-executions</code>. L’interface X4B
-s’appelle <strong>Génération de maps</strong> et désigne ce raccordement comme la
-<strong>source documentaire</strong>.</p>
+<code>https://knowledge.example/api/v1/prompt-executions</code>. Le raccordement est
+accessible dans <strong>Connaissance → Source documentaire</strong>. Les propositions
+générées se trouvent dans l’<strong>Atelier de cartographie</strong>.</p>
 <table>
 <thead>
 <tr>
@@ -2365,7 +2414,7 @@ s’appelle <strong>Génération de maps</strong> et désigne ce raccordement co
 </tr>
 <tr>
 <td><code>POST /prompt-executions</code></td>
-<td>L’exécution synchrone d’un prompt générique sur le document désigné par sa clé applicative et son empreinte. Le service renvoie le texte de l’IA et la référence effectivement utilisée.</td>
+<td>L’exécution synchrone d’un prompt générique, avec une révision documentaire ou sans document, et avec une pièce jointe facultative. Le service renvoie le résultat textuel et les références des entrées utilisées.</td>
 </tr>
 </tbody>
 </table>
@@ -2405,12 +2454,77 @@ et l’exécution. Servir une révision
 indisponible en <code>404</code>. La rétention des versions doit couvrir la durée des
 lots et de leurs reprises. Le profil d’authentification utilise un
 jeton de service sur HTTPS, limité aux opérations et documents autorisés.</p>
+<h2 id="mettre-a-jour-le-service-client-pour-laffinage">Mettre à jour le service client pour l’affinage<a class="headerlink" href="#mettre-a-jour-le-service-client-pour-laffinage" title="Permanent link">&para;</a></h2>
+<p>Le profil OpenAPI 1.1 conserve l’URL, le jeton de service et le format
+utilisé jusqu’ici pour les générations et les affinages avec document.
+Le service continue de vérifier le droit d’exécuter un prompt et, si une
+révision est fournie, le droit de consulter cette révision précise.</p>
+<p>Le champ <code>document</code> reste requis. Une référence <code>{application_key, sha256}</code>
+demande le document exact. La valeur explicite <code>null</code> demande d’exécuter
+le prompt avec le contexte fourni dans la requête. Dans les deux cas,
+le service renvoie le champ <code>document</code> avec la valeur utilisée.</p>
+<p>Le champ facultatif <code>attachment</code> accepte un seul fichier. Il contient
+<code>filename</code>, le nom sans chemin limité à 255 octets UTF-8, <code>media_type</code> et <code>content_base64</code>,
+les octets d’origine en base64 standard. Le plafond est de 512 Kio
+(524 288 octets) après décodage. Les types admis sont <code>image/png</code>,
+<code>image/jpeg</code>, <code>application/pdf</code> et <code>text/plain</code> en UTF-8. Le service
+valide le fichier, puis le joint au contexte de l’IA. Pour une image, il
+doit l’envoyer comme entrée visuelle à un modèle capable de l’analyser.
+Un retour de succès avec pièce jointe inclut <code>attachment_sha256</code> calculé
+sur les octets décodés, après inclusion du fichier dans le contexte. X4B
+vérifie cette empreinte. Si le type ou l’entrée visuelle n’est pas pris en
+charge, le service peut répondre <code>415</code>. Utilisez <code>400</code> pour une requête
+mal formée et <code>413</code> si le fichier dépasse le plafond.</p>
+<p>Le service traite le document de référence, les extraits Git présents
+dans le prompt et le fichier joint comme des données de contexte. Il
+préserve les limites du compte de service et évite de journaliser le
+contenu des sources, le prompt ou le jeton.</p>
+<p>Exemple minimal avec un fichier texte et sans document de référence.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;document&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Relève le prérequis mentionné dans la pièce jointe.&quot;</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">&quot;attachment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">&quot;filename&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;demarrage.txt&quot;</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">&quot;media_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text/plain&quot;</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">&quot;content_base64&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;QVBJIGF2YW50IGJhc2UuCg==&quot;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Le service retourne par exemple ce corps en <code>200</code>.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;document&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;La pièce jointe indique de démarrer l’API avant la base.&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;attachment_sha256&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;663ea86279bfc5cd7f471964514cf17a2c36ac182c6fd350f778c68d27d84a4c&quot;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Vérifiez le service avant de l’utiliser depuis l’Atelier de cartographie.</p>
+<ol>
+<li>Rejouez la demande historique sur une révision accessible et sans fichier.
+   Vérifiez le <code>200</code>, la référence retournée et le résultat textuel.</li>
+<li>Envoyez <code>document: null</code> sans fichier. Vérifiez que le service conserve
+   l’autorisation d’exécution et renvoie <code>document: null</code> sans lire le document.</li>
+<li>Rejouez l’exemple avec pièce jointe et comparez l’empreinte du fichier décodé.
+   Pour vérifier le chemin visuel, envoyez aussi un petit PNG ou JPEG et
+   demandez à l’IA de décrire un élément visible dans l’image.</li>
+<li>Essayez du base64 mal formé, un type non admis, un fichier trop volumineux
+   et un jeton hors périmètre. Vérifiez les refus avant l’appel à l’IA.
+   Côté X4B, vérifiez qu’une réponse avec référence ou empreinte manquante
+   ou incorrecte produit une erreur d’affinage.</li>
+</ol>
 <h2 id="cycle-de-mise-a-jour-cote-x4b">Cycle de mise à jour côté X4B<a class="headerlink" href="#cycle-de-mise-a-jour-cote-x4b" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Synchroniser le catalogue.</strong> À la demande ou selon une planification, X4B
    parcourt les pages et compare, par source et clé applicative, les empreintes observées
-   à celles des générations précédentes. Il met en file les nouvelles révisions.
-   Un document sans changement réutilise son résultat pour la même configuration.</li>
+   à celles des générations précédentes. La première observation crée un <strong>dossier de
+   cartographie</strong> durable, avant qu’une map AppControl existe. Une nouvelle empreinte
+   actualise ce même dossier : son affectation et son historique ne sont pas recréés
+   à chaque génération. Un document sans changement réutilise son
+   résultat pour la même configuration.</li>
+<li><strong>Répartir le dossier.</strong> Une nouvelle clé apparaît dans <strong>À répartir</strong>. Un
+   gestionnaire de portefeuille lui attribue une équipe responsable et peut nommer un
+   référent, ajouter des équipes contributrices ou relectrices, fixer une priorité et
+   une date cible. L’affectation porte sur le dossier identifié par la source et la clé
+   applicative, jamais sur une exécution technique temporaire.</li>
 <li><strong>Générer.</strong> Le traitement de fond limite le nombre d’appels simultanés et
    conserve l’état de chaque application dans PostgreSQL. Il identifie une
    génération par la source, la clé applicative, l’empreinte du document et le
@@ -2431,6 +2545,90 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.</p>
    séparément l’empreinte source de la map publiée et celle de la dernière
    génération. Une disparition du catalogue est signalée et la map est conservée.</li>
 </ol>
+<h3 id="repartir-et-suivre-les-dossiers-de-cartographie">Répartir et suivre les dossiers de cartographie<a class="headerlink" href="#repartir-et-suivre-les-dossiers-de-cartographie" title="Permanent link">&para;</a></h3>
+<p>Le connecteur documentaire reste partagé au niveau de l’organisation. Sa configuration,
+le test de connexion et la synchronisation globale relèvent de l’administration de la
+source. La distribution quotidienne est distincte : l’administrateur peut déléguer la
+fonction de <strong>gestionnaire de portefeuille</strong> à une personne ou à une équipe. Cette
+fonction permet de voir le portefeuille et la file <strong>À répartir</strong>, d’affecter un dossier
+ou un lot, et de transférer un dossier. Elle n’accorde aucun droit de démarrage, d’arrêt
+ou d’exploitation dans AppControl.</p>
+<p>L’affectation distingue les responsabilités suivantes :</p>
+<table>
+<thead>
+<tr>
+<th>Responsabilité</th>
+<th>Rôle dans le dossier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Équipe responsable</strong></td>
+<td>Porte la création ou la mise à jour, accepte la prise en charge et conduit le dossier jusqu’à la publication. Une seule équipe est responsable à la fois.</td>
+</tr>
+<tr>
+<td><strong>Référent</strong></td>
+<td>Membre facultatif de l’équipe responsable, identifié comme point de contact. L’équipe reste responsable si aucun référent n’est nommé ou si celui-ci change.</td>
+</tr>
+<tr>
+<td><strong>Équipe contributrice</strong></td>
+<td>Modifie la proposition dans le périmètre du dossier.</td>
+</tr>
+<tr>
+<td><strong>Équipe relectrice</strong></td>
+<td>Consulte la proposition pour relecture sans devenir responsable du dossier.</td>
+</tr>
+<tr>
+<td><strong>Gestionnaire de portefeuille</strong></td>
+<td>Affecte, réaffecte ou transfère les dossiers et traite les exceptions de distribution.</td>
+</tr>
+</tbody>
+</table>
+<p>Les vues <strong>À répartir</strong>, <strong>Mon équipe</strong> et <strong>Portefeuille</strong> donnent respectivement accès
+aux dossiers sans responsable, aux dossiers des équipes de l’utilisateur et à la vue
+transverse réservée aux gestionnaires et administrateurs. Le statut métier suit le
+parcours <strong>À répartir → Affecté → Pris en charge → En cours → En révision → Prêt à
+publier → Publié</strong>. <strong>Bloqué</strong> signale un obstacle à traiter sans perdre l’affectation.
+Ce statut est indépendant du statut technique de génération, par exemple en attente,
+en cours, proposition prête, échec ou source absente. Une génération réussie ne signifie
+donc pas que l’équipe a terminé sa revue, et un incident technique ne redistribue pas le
+dossier.</p>
+<p>Après l’affectation, un lead de l’équipe responsable ou le référent nommé <strong>accepte</strong>
+le dossier pour matérialiser sa prise en charge. Si l’équipe ne peut pas en être
+responsable, elle le <strong>renvoie à la répartition</strong> avec un motif. Le gestionnaire peut
+aussi le transférer directement à une autre équipe. L’acceptation, le retour, le
+transfert et les changements de priorité ou d’échéance sont audités avec leur auteur et,
+le cas échéant, leur motif. Une modification concurrente de l’affectation demande de
+recharger le dossier avant de confirmer, afin de ne pas écraser une décision plus récente.</p>
+<p>Les documents et les réponses de l’IA peuvent alimenter la revue, mais ne peuvent jamais
+désigner une équipe ni accorder un droit.</p>
+<p>Les droits du dossier sont des droits de <strong>collaboration</strong> : consulter, modifier la
+proposition, ou gérer et publier le dossier. Ils sont séparés des permissions
+de la map AppControl. À la première publication, l’auteur de la publication et les
+équipes du dossier reçoivent un accès de consultation à la map afin de pouvoir la
+retrouver. Si une map publiée est réaffectée, les nouvelles équipes reçoivent aussi cet
+accès. Cette synchronisation est additive : elle ne retire ni ne réduit les droits
+applicatifs existants, qui peuvent avoir été accordés ou élevés explicitement dans
+AppControl. Toute permission AppControl plus élevée, notamment <code>operate</code>, reste une
+décision explicite dans le partage de la map. Une personne autorisée à construire ou
+publier un dossier ne reçoit donc pas
+implicitement les commandes Start, Stop ou Reconstruction. Les sites, workspaces,
+passerelles et agents sont également revérifiés au moment de la publication.</p>
+<blockquote>
+<p><strong>Prolongement de conception — commentaires de révision.</strong> Le modèle cible prévoit
+des fils de commentaires attachés au dossier pour signaler une brique technique, une
+information ou une preuve manquante, avec conservation lors d’une update ou d’un
+transfert. Le workflow décrit ici ne fournit pas encore cette capacité de commentaire
+« comme dans Word » ; les motifs de retour et l’historique d’affectation sont les traces
+collaboratives disponibles dans ce contrat.</p>
+</blockquote>
+<p>Lorsqu’une source déjà publiée change, X4B rattache la nouvelle proposition au même
+dossier et la renvoie à l’équipe qui en est responsable avec le statut <strong>Affecté</strong>. Cette
+équipe reprend explicitement le dossier avant de relire l’update. L’historique et les
+participants sont conservés ; une nouvelle répartition n’est pas demandée. Si l’équipe
+responsable n’existe plus ou si le dossier n’a plus de responsable valide,
+l’update rejoint <strong>À répartir</strong> comme exception. La map publiée reste disponible tant
+que sa mise à jour n’a pas été relue et confirmée.</p>
 <p>Avec un catalogue de composants AppControl, X4B demande d’abord à l’IA de relever
 les briques et les indices techniques dans le document. Il compare ces éléments
 aux clés, libellés et alias du catalogue de l’organisation. Le prompt final est
@@ -2477,10 +2675,25 @@ et les dépendances du service. Des instances du même produit peuvent rester
 des composants distincts si leurs rôles ou leurs prérequis diffèrent.
 Ce cluster est descriptif. Le mode fan-out et les affectations des agents
 relèvent de la configuration d’exploitation.</p>
-<p>Dans l’écran d’examen, <strong>Affiner la carte</strong> lance une analyse à la demande. Le
-connecteur exécute le prompt avec la version du document de la proposition,
-la carte ouverte, le catalogue et les sites actifs. La revue peut suggérer
-une brique du catalogue, un rattachement à un groupe, une modification de
+<p>Dans l’écran d’examen de l’<strong>Atelier de cartographie</strong>, l’affinage utilise
+la carte ouverte, le catalogue et les sites actifs. En haut de la
+proposition, cliquez sur <strong>Choisir les sources</strong> pour régler les entrées de
+cette analyse. <strong>Inclure le document source</strong> est présélectionné avec la
+révision associée à la proposition. Vous pouvez décocher cette option ou
+sélectionner des <strong>Fichiers du dépôt</strong>. La connexion documentaire se règle
+dans <strong>Connaissance → Source documentaire → Paramètres</strong>.</p>
+<p>Les fichiers Git sont proposés pour une application déjà associée à une
+map AppControl disposant de fichiers texte indexés dans <strong>Connaissance</strong>.
+La liste affiche des révisions précises. La sélection est liée au dépôt,
+au commit, au chemin et à l’empreinte du fichier. X4B joint au prompt les
+extraits sélectionnés et leur provenance. Vous pouvez sélectionner jusqu’à
+huit fichiers, dans la limite de 32 Kio de texte UTF-8 au total. La revue
+utilise les fichiers déjà indexés dans le périmètre de la map.</p>
+<p>Ouvrez <strong>Préciser l’analyse</strong> pour ajouter une consigne, renseigner
+<strong>Composants à exclure</strong> ou ajouter une <strong>Pièce jointe</strong>. Les composants
+exclus restent sur la carte. Les suggestions de l’analyse ciblée portent
+sur les composants retenus.</p>
+<p>La revue peut suggérer une brique du catalogue, un rattachement à un groupe, une modification de
 dépendance ou le retrait d’un nœud qui représente uniquement une application
 externe. En acceptant ce retrait, vous retirez aussi les liens de ce nœud du
 brouillon. La revue examine le rôle des composants et les flux documentés. Une
@@ -2495,14 +2708,26 @@ protégés. Les suggestions cochées apparaissent immédiatement sur le graphe.
 Cliquez sur <strong>Appliquer à la proposition</strong> pour enregistrer la sélection ou
 sur <strong>Appliquer et ouvrir l’éditeur</strong> pour poursuivre l’édition de la carte.</p>
 <p><strong>Tester la connexion</strong> vérifie l’accès au catalogue documentaire.
-<strong>Affiner la carte</strong> exécute un prompt sur la révision du document associée à
-la proposition. En cas d’échec, l’écran indique le motif de l’analyse et le
-bouton <strong>Relancer l’analyse</strong> permet de réessayer.</p>
+<strong>Affiner la carte</strong> exécute un prompt avec le contexte sélectionné.
+<strong>Entrées utilisées</strong> indique le document, les fichiers Git, les composants exclus
+et la pièce jointe qui ont servi à la demande, selon la sélection. Il
+présente le nom, le type et l’empreinte de la pièce jointe. En cas d’échec,
+l’écran indique le motif de l’analyse et le bouton <strong>Relancer l’analyse</strong>
+permet de réessayer.</p>
 <p>Une consigne facultative permet de cibler la revue, par exemple sur les
 dépendances d’un service ou sa procédure de démarrage. La consigne accompagne
-le même contexte documentaire. Les recommandations sur les commandes et les
+le contexte choisi pour cette analyse. Les recommandations sur les commandes et les
 procédures restent consultables dans le résultat de l’analyse. Seules les
 modifications de topologie sélectionnées sont appliquées au brouillon.</p>
+<p>L’interface native utilise <code>GET /api/v1/x4b/map-generation/jobs/{id}/review-sources</code>
+pour lire la référence documentaire et les fichiers indexés sélectionnables, puis <code>POST /api/v1/x4b/map-generation/jobs/{id}/review</code>
+pour demander l’analyse. Le corps accepte <code>instruction</code>, <code>include_document</code>
+(vrai par défaut), <code>repository_sources</code> (paires <code>revision</code> et <code>path</code>),
+<code>excluded_components</code> (noms des composants de la proposition) et <code>attachment</code>.
+Le résultat de la revue expose <code>inputs</code>, avec le document, les métadonnées des
+fichiers Git, les noms des composants exclus et les métadonnées de
+la pièce jointe. Le connecteur du client reçoit quant à lui les champs du
+profil <code>POST /prompt-executions</code> décrit ci-dessus.</p>
 <p>L’aperçu et la map publiée indiquent l’obsolescence renseignée par la source,
 avec le niveau s’il est fourni. Les états reconnus sont <strong>À jour</strong>, <strong>Obsolète</strong>
 et <strong>Obsolescence inconnue</strong>. Une brique sans information documentée n’affiche aucun
@@ -2570,7 +2795,7 @@ HTTP internes. Pour une source HTTPS externe, appliquez la politique de
 sortie approuvée pour le backend de cette installation.</p>
 <h4 id="renseigner-lurl-et-le-jeton-dans-x4b">Renseigner l’URL et le jeton dans X4B<a class="headerlink" href="#renseigner-lurl-et-le-jeton-dans-x4b" title="Permanent link">&para;</a></h4>
 <p>Un administrateur peut renseigner l’URL et le jeton directement dans
-<strong>Génération de maps → Paramètres</strong>. Saisissez l’URL complète terminée par
+<strong>Connaissance → Source documentaire → Paramètres</strong>. Saisissez l’URL complète terminée par
 <code>/api/v1</code>, le jeton et, si nécessaire, le nom de source utilisé pour rapprocher
 les fiches. L’activation et la désactivation du connecteur prennent effet
 sans redémarrage du backend.</p>
@@ -2578,9 +2803,9 @@ sans redémarrage du backend.</p>
 sur Internet et les URLs HTTP <code>service.projet.svc</code> dans le projet du backend
 sur OpenShift. Dans ce dernier cas, si la politique réseau ne permet pas
 déjà cette connexion, utilisez le préparateur pour créer la règle de sortie :</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  <span class="n">-NomInstallation</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  <span class="n">-ReseauSeulement</span> <span class="n">-OriginesAutorisees</span> <span class="s1">&#39;http://documentation.appcontrol-poc.svc&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">-NomInstallation</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">-ReseauSeulement</span> <span class="n">-OriginesAutorisees</span> <span class="s1">&#39;http://documentation.appcontrol-poc.svc&#39;</span>
 </span></code></pre></div>
 <p>Dans l’interface, saisissez ensuite <code>http://documentation.appcontrol-poc.svc/api/v1</code>.
 En HTTP, les données et le jeton circulent en clair. <code>-ReseauSeulement</code> crée une
@@ -2671,16 +2896,16 @@ La commande utilise la connexion OpenShift active et demande le jeton en saisie
 masquée. En automatisation, injectez <code>X4B_KNOWLEDGE_TOKEN</code> depuis votre coffre et
 ajoutez <code>-NonInteractif</code>. Vous pouvez aussi fournir une valeur <code>SecureString</code>
 avec <code>-Jeton</code>.</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  <span class="n">-Url</span> <span class="s1">&#39;https://knowledge.example/api/v1&#39;</span> <span class="p">`</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span> <span class="n">-Source</span> <span class="n">documentation</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  <span class="n">-Url</span> <span class="s1">&#39;https://knowledge.example/api/v1&#39;</span> <span class="p">`</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span> <span class="n">-Source</span> <span class="n">documentation</span>
 </span></code></pre></div>
 <p>Pour un Service interne au cluster, utilisez son nom DNS et le <strong>port du
 Service</strong>, généralement 80 en HTTP. Ajoutez <code>-AutoriserHttpInterne</code>.</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">-NomInstallation</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">-Url</span> <span class="s1">&#39;http://documentation.appcontrol-poc.svc/api/v1&#39;</span> <span class="p">`</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  <span class="n">-AutoriserHttpInterne</span> <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.\</span><span class="n">Preparer-SourceDocumentaire</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="p">`</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="n">-NomInstallation</span> <span class="n">appcontrol-evaluation</span> <span class="p">`</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="n">-Url</span> <span class="s1">&#39;http://documentation.appcontrol-poc.svc/api/v1&#39;</span> <span class="p">`</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  <span class="n">-AutoriserHttpInterne</span> <span class="n">-Organisation</span> <span class="s1">&#39;00000000-0000-0000-0000-000000000001&#39;</span>
 </span></code></pre></div>
 <p>Si le connecteur utilise HTTPS avec un certificat interne non reconnu, montez
 de préférence le PEM de son autorité de certification et indiquez-le via
@@ -2700,14 +2925,14 @@ jour un Secret qu’il a créé et laisse un Secret préexistant intact. Ajoutez
 <code>-Intervalle 900</code> pour synchroniser la source toutes les quinze minutes.</p>
 <p>Ajoutez ce champ à la racine de <code>configuration.json</code> avec le nom du Secret
 existant.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;document_source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;secret_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;appcontrol-source-documentaire&quot;</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;document_source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&quot;secret_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;appcontrol-source-documentaire&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="n">-Nom</span> <span class="n">appcontrol-demo</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span> <span class="n">-SansDemo</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.\</span><span class="n">Deployer-AppControl</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Projet</span> <span class="n">appcontrol-poc</span> <span class="n">-Nom</span> <span class="n">appcontrol-demo</span> <span class="n">-ModePostgreSQL</span> <span class="n">Integre</span> <span class="p">`</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="n">-Configuration</span> <span class="p">.\</span><span class="n">configuration</span><span class="p">.</span><span class="n">json</span> <span class="n">-SansDemo</span>
 </span></code></pre></div>
 <p>Ici, <code>-SansDemo</code> laisse le portefeuille libre pour votre scénario.
 La commande accepte <code>-Verifier</code> pour contrôler la configuration et les
@@ -2718,14 +2943,21 @@ redémarrage du backend pour recharger la valeur.
 <a href="../qualification/INSTALLATION-WINDOWS.fr/#configuration-apres-installation-equipes-et-topologie">Procédure du kit Windows</a></p>
 <h3 id="verifier-le-parcours-dans-x4b">Vérifier le parcours dans X4B<a class="headerlink" href="#verifier-le-parcours-dans-x4b" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Ouvrez <strong>Génération de maps</strong> en tant qu’administrateur et cliquez sur
+<li>Ouvrez <strong>Connaissance</strong> en tant qu’administrateur et cliquez sur
    <strong>Tester la connexion</strong>. X4B lit une page du catalogue. Ce test sert à
    vérifier l’accès réseau et l’authentification de lecture avant la
    génération.</li>
 <li>Cliquez sur <strong>Synchroniser les sources</strong>. X4B met en file les documents
    nouveaux ou modifiés du périmètre autorisé et affiche l’état de chaque
    clé. Le premier lot peut être borné par le périmètre du compte de service.</li>
-<li>Examinez les candidates et les sites proposés par composant. Si le document
+<li>Ouvrez l’<strong>Atelier de cartographie</strong> en tant qu’administrateur ou gestionnaire
+   de portefeuille. Dans <strong>À répartir</strong>, affectez les nouveaux dossiers à leur équipe
+   responsable. Ajoutez si nécessaire un référent, des équipes contributrices ou
+   relectrices, une priorité et une date cible. L’équipe responsable accepte ensuite
+   le dossier dans <strong>Mon équipe</strong>, ou le renvoie avec un motif si elle ne peut pas le
+   prendre en charge.</li>
+<li>Examinez la proposition et les sites
+   proposés par composant. Si le document
    situe une même API à <code>Sirius</code> et <code>Legac</code>, les deux sites apparaissent sur ce
    composant et restent visibles sur la map publiée. La revue signale les sites
    introuvables ou ambigus. Si chaque composant correspond au même site actif,
@@ -2733,12 +2965,16 @@ redémarrage du backend pour recharger la valeur.
    l’application. Les autres cas demandent un choix explicite. Les placements
    d’exécution et les agents se configurent dans AppControl.
    Une publication groupée peut traiter jusqu’à
-   100 candidates par appel API. Une fois les maps présentes, ajoutez les
-   droits d’équipe dans AppControl ou renseignez <code>permissions</code> dans le
-   JSON de configuration et relancez le script.</li>
+   100 candidates par appel API et reste une action d’administration transverse. Une
+   personne disposant du droit de gestion du dossier peut publier sa proposition
+   individuellement. Une fois les maps présentes, ajoutez les
+   éventuels droits d’exploitation dans AppControl ou renseignez <code>permissions</code> dans le
+   JSON de configuration et relancez le script. Les droits de collaboration du dossier
+   ne donnent jamais implicitement <code>operate</code>.</li>
 <li>Pour démontrer une évolution, modifiez un document source puis
    resynchronisez. X4B génère une proposition pour la nouvelle empreinte.
-   Ouvrez le détail dans <strong>À comparer</strong>, relisez les écarts et utilisez
+   Le dossier reste attribué à la même équipe, qui le reprend en charge. Ouvrez le détail
+   dans <strong>À comparer</strong>, relisez les écarts et utilisez
    <strong>Modifier la carte</strong> pour ajuster la proposition. Cliquez sur
    <strong>Publier la mise à jour</strong>, confirmez, puis ouvrez la map publiée.</li>
 <li>Ouvrez la map dans le widget pour tester sa reconstruction. Avec un seul
@@ -2768,9 +3004,14 @@ synchronisation.</p>
 </thead>
 <tbody>
 <tr>
-<td>Première génération</td>
+<td>Nouvelle clé applicative</td>
+<td>X4B crée un dossier durable dans <strong>À répartir</strong> ; la génération technique peut progresser séparément.</td>
+<td>Un gestionnaire de portefeuille choisit l’équipe responsable et les participants.</td>
+</tr>
+<tr>
+<td>Première génération affectée</td>
 <td>Le résultat validé attend dans <strong>À publier</strong>.</td>
-<td>Un administrateur choisit le site et publie une map ou un lot.</td>
+<td>L’équipe responsable accepte, relit et prépare le dossier ; une personne disposant du droit de gestion choisit le site et publie la map. Un administrateur peut publier un lot éligible.</td>
 </tr>
 <tr>
 <td>Même empreinte et même configuration</td>
@@ -2784,13 +3025,18 @@ synchronisation.</p>
 </tr>
 <tr>
 <td>Empreinte différente et map déjà publiée</td>
-<td>X4B prépare une proposition et affiche les écarts dans <strong>À comparer</strong>.</td>
-<td>Un administrateur relit et ajuste la proposition, puis confirme la mise à jour.</td>
+<td>X4B prépare une proposition dans le même dossier, la restitue à son équipe responsable et affiche les écarts dans <strong>À comparer</strong>.</td>
+<td>L’équipe relit et ajuste la proposition, puis une personne autorisée confirme la mise à jour.</td>
+</tr>
+<tr>
+<td>Responsable devenu invalide</td>
+<td>X4B conserve le dossier et le place dans <strong>À répartir</strong> comme exception.</td>
+<td>Un gestionnaire de portefeuille choisit une nouvelle équipe.</td>
 </tr>
 <tr>
 <td>Source absente ou génération en erreur</td>
-<td>L’état est visible dans la file et la map publiée reste disponible.</td>
-<td>L’utilisateur corrige la source ou relance l’échec.</td>
+<td>L’état technique est visible dans la file et la map publiée reste disponible.</td>
+<td>L’utilisateur autorisé corrige la source ou relance l’échec.</td>
 </tr>
 </tbody>
 </table>
@@ -2798,12 +3044,12 @@ synchronisation.</p>
 de la topologie, l’enregistrement de la révision publiée et l’écriture
 de l’audit se font dans la même transaction. Une modification concurrente
 demande une nouvelle revue.</p>
-<h3 id="evolution-vers-git">Évolution vers Git<a class="headerlink" href="#evolution-vers-git" title="Permanent link">&para;</a></h3>
-<p>Pour le POC, la décision humaine se prend dans AppControl. La proposition
+<h3 id="revue-avec-git">Revue avec Git<a class="headerlink" href="#revue-avec-git" title="Permanent link">&para;</a></h3>
+<p>Dans le workflow direct, la décision humaine se prend dans AppControl. La proposition
 doit identifier la map, la version source, la version active relue et
 l’empreinte des changements approuvés. L’audit enregistre l’auteur de la
 décision et la révision appliquée.</p>
-<p>Dans une étape suivante, X4B peut ouvrir une pull request contenant ces
+<p>Si l’organisation choisit une gouvernance par Git, X4B peut ouvrir une pull request contenant ces
 mêmes références et le diff. X4B calcule les écarts sur des clés de
 composant stables et sur les dépendances entre ces clés. La revue
 porte sur les ajouts, modifications et retraits identifiés. Une
@@ -2837,7 +3083,7 @@ reste responsable de la publication de la map.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-16T11:20:00+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-17T21:17:40+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-17</span>
   </span>
 
     

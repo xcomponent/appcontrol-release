@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
-  title: Source documentaire — catalogue et exécution de prompts
-  version: 1.0.0
+  title: Profil d’intégration X4B pour l’exécution de prompts
+  version: 1.1.0
   description: >
-    Contrat HTTP proposé pour le service fourni par le client. Le service expose
-    ses documents versionnés et transmet les demandes de génération à son IA.
-    Le consommateur pilote le traitement en lot et la publication des résultats.
+    Contrat HTTP du service fourni par le client. Le service expose ses documents
+    versionnés et exécute des prompts pour les consommateurs autorisés, dont X4B.
+    X4B pilote le traitement en lot, la revue et la publication des résultats.
 servers:
   - url: /api/v1
 security:
@@ -107,13 +107,17 @@ paths:
   /prompt-executions:
     post:
       operationId: executePrompt
-      summary: Exécuter un prompt sur une révision précise
+      summary: Exécuter un prompt avec des sources facultatives
       description: >
-        Le service vérifie les droits sur le document et résout la paire formée par la clé
-        applicative et son SHA-256. Il transmet le prompt à son IA en utilisant le contenu de cette
-        révision comme donnée d’entrée. La réponse est synchrone et contient le
-        résultat textuel de l’IA, y compris lorsque le prompt demande du JSON.
-        Une révision absente donne 404 avant tout appel à l’IA.
+        Le service autorise l’exécution pour le compte de service. Quand document
+        contient une clé applicative et son SHA-256, il vérifie les droits sur
+        cette révision exacte et charge le document. Une révision indisponible
+        donne 404 avant tout appel à l’IA. Avec document à null, il exécute le
+        prompt sans charger de document de référence.
+        Le service valide et joint, le cas échéant, la pièce jointe à l’entrée
+        de l’IA. Le résultat synchrone reste un texte, y compris quand le prompt
+        demande du JSON. Les documents, extraits de sources et pièces jointes
+        constituent des données de contexte à traiter comme non fiables.
       requestBody:
         required: true
         content:
@@ -138,15 +142,19 @@ paths:
                   sha256: 5c7a066fce3161f2ac727f983aa1c877a646c2f7b27608d8ff244e7cc4b6f982
                 result: '{"components":["API","PostgreSQL"]}'
         '400':
-          description: Corps de requête invalide.
+          description: Corps de requête invalide, par exemple document absent ou base64 de la pièce jointe mal formé.
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/VersionNotFound'
+        '413':
+          description: Pièce jointe trop volumineuse après décodage.
+        '415':
+          description: Type de pièce jointe non pris en charge ou contenu incompatible avec le type déclaré.
         '422':
-          description: Prompt et document incompatibles avec les limites de traitement configurées.
+          description: Les entrées dépassent les limites de traitement configurées pour l’IA.
         '429':
           $ref: '#/components/responses/RateLimited'
         '503':
@@ -174,7 +182,7 @@ components:
     Sha256:
       type: string
       pattern: '^[0-9a-f]{64}$'
-      description: SHA-256 des octets UTF-8 conservés pour cette révision.
+      description: Empreinte SHA-256 des octets d’origine, écrite en hexadécimal minuscule.
     DocumentReference:
       type: object
       required: [application_key, sha256]
@@ -201,20 +209,56 @@ components:
       required: [document, prompt]
       properties:
         document:
-          $ref: '#/components/schemas/DocumentReference'
+          description: Révision à utiliser ou null pour exécuter sans document de référence.
+          oneOf:
+            - $ref: '#/components/schemas/DocumentReference'
+            - type: 'null'
         prompt:
           type: string
           minLength: 1
           description: Instructions rédigées par le consommateur, en un seul champ texte.
+        attachment:
+          $ref: '#/components/schemas/PromptAttachment'
+    PromptAttachment:
+      type: object
+      additionalProperties: false
+      required: [filename, media_type, content_base64]
+      properties:
+        filename:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Nom du fichier sans chemin, limité à 255 octets UTF-8.
+        media_type:
+          type: string
+          enum: [image/png, image/jpeg, application/pdf, text/plain]
+          description: Type du contenu d’origine. Le texte brut est encodé en UTF-8.
+        content_base64:
+          type: string
+          contentEncoding: base64
+          minLength: 4
+          maxLength: 699052
+          description: >
+            Octets du fichier d’origine en base64 standard, sans préfixe
+            data:. Maximum de 512 Kio (524288 octets) après décodage.
     PromptResult:
       type: object
       required: [document, result]
       properties:
         document:
-          $ref: '#/components/schemas/DocumentReference'
+          description: Référence effectivement utilisée, ou null si la requête a exclu le document.
+          oneOf:
+            - $ref: '#/components/schemas/DocumentReference'
+            - type: 'null'
         result:
           type: string
           description: Texte de sortie du modèle, à interpréter et valider par le consommateur.
+        attachment_sha256:
+          $ref: '#/components/schemas/Sha256'
+          description: >
+            Empreinte calculée sur les octets de la pièce jointe après décodage.
+            Obligatoire si la requête fournit une pièce jointe. Le service la
+            renvoie après avoir inclus le fichier dans le contexte d’exécution.
         request_id:
           type: string
           description: Identifiant facultatif de corrélation pour le support.
@@ -224,7 +268,7 @@ components:
     Forbidden:
       description: Opération hors du périmètre du compte de service.
     VersionNotFound:
-      description: Révision demandée indisponible pour ce clé applicative.
+      description: Révision demandée indisponible pour cette clé applicative.
     RateLimited:
       description: Requête refusée avant traitement en raison d’une limite de débit.
       headers:

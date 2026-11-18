@@ -13,6 +13,7 @@
 - [Application Management](#application-management)
   - [Creating an Application (Onboarding Wizard)](#creating-an-application)
   - [Importing Applications](#importing-applications)
+  - [Starting a Map Builder draft from scratch](#starting-a-map-builder-draft-from-scratch)
   - [Auto-Discovery](#auto-discovery)
 - [Map View](#map-view)
   - [Interactive DAG Visualization](#interactive-dag-visualization)
@@ -111,6 +112,9 @@ For teams that prefer infrastructure-as-code, AppControl supports **YAML and JSO
 4. The application is created with full version tracking in `config_versions`
 
 You can also import from **existing AppControl v3 configurations** — the importer automatically maps legacy component types and command formats.
+
+To design a map by hand and review it before creating an application, use
+[Map Builder](#starting-a-map-builder-draft-from-scratch).
 
 ![import](screenshots/import.png)
 *Import page — upload YAML/JSON application definitions*
@@ -796,10 +800,30 @@ The **Home** page at `/x4b` groups the applications available to the signed-in a
   application maps, or **AppControl** for operational work. App Explorer can
   search by application name or published source key and open the map in AppControl.
 
+### Starting a Map Builder draft from scratch
+
+With an administrator account, open **Map Builder** (**Atelier de cartographie**
+in French) and select **Create a map → Start from scratch**
+(**Créer une carte → Partir de zéro**). Enter the application name to open the
+editor. You can create and save an empty draft without a document connector
+or an AI service. AppControl receives the map when you publish it.
+
+1. Add components, select their types from the catalog, and draw their
+   dependencies. Save the proposal as you work.
+2. Review the saved draft. When the map has at least one component and passes
+   validation, follow the dossier’s review and publication workflow.
+3. Use the publication wizard to review the target sites and agent assignments.
+   Confirm publication to create the map in AppControl.
+
+**Create a map** in the AppControl application catalog opens the same chooser
+for administrators with both modules. **Import a file** opens the AppControl
+import wizard for a YAML or JSON definition. The existing **Onboarding Wizard**
+remains available for other AppControl accounts.
+
 ### Map Builder dossier ownership
 
-A document synchronization creates a durable **mapping dossier** for each source and
-application key before an AppControl map exists. New dossiers enter **To assign**. A
+Document synchronization creates a durable **mapping dossier** for each source and
+application key before an AppControl map exists. New source dossiers enter **To assign**. A
 delegated portfolio manager assigns one responsible team, an optional contact from that
 team, any contributor or reviewer teams, a priority and an optional target date. The
 assignment belongs to the dossier, not to one temporary AI generation job, and therefore

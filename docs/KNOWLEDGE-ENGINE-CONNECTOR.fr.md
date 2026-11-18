@@ -164,10 +164,25 @@ Vérifiez le service avant de l’utiliser depuis l’Atelier de cartographie.
    arrêt du backend pendant un appel, sa reprise peut consommer un deuxième
    appel à l’IA. La déduplication des générations et des maps est
    gérée dans X4B. Une ancienne révision devenue indisponible déclenche une
-   nouvelle lecture du catalogue.
+   nouvelle lecture du catalogue. Pendant une nouvelle tentative et après un
+   échec, le dossier affiche la carte publiée et, s’il existe, le dernier
+   brouillon enregistré. Ces aperçus sont en lecture seule. Une relance sur
+   la même révision conserve le brouillon jusqu’à ce qu’une nouvelle
+   proposition soit prête.
 4. **Valider et publier.** X4B vérifie la référence retournée, valide le JSON
    avec AppControl et conserve le résultat candidat. Il vérifie la révision
-   courante avant publication. Pour une première map, il enregistre la
+   courante avant d’ouvrir l’assistant de publication, puis à la confirmation.
+   En cas de rejet de la carte générée, le dossier distingue une réponse
+   illisible comme JSON d’un écart au format AppControl. Pour un écart de
+   format, il indique le premier motif et, si possible, son emplacement
+   dans la structure du document.
+   Après synchronisation, ouvrez **Comparer avec le brouillon précédent** si
+   la base IA de ce brouillon est connue. X4B prépare la reprise des retouches
+   compatibles et indique les écarts à arbitrer manuellement. Enregistrez
+   explicitement les retouches à reprendre, puis relisez le résultat avant
+   de le valider. Les versions antérieures restent disponibles dans
+   **Historique des versions**.
+   Pour une première map, X4B enregistre la
    référence externe `{"system":"documentation","id":"00142"}`, avec un nom de
    source stable configuré côté X4B. Pour une map existante, il affiche les
    écarts entre la proposition et la version publiée et permet d’appliquer la
@@ -197,13 +212,19 @@ L’affectation distingue les responsabilités suivantes :
 
 Les vues **À répartir**, **Mon équipe** et **Portefeuille** donnent respectivement accès
 aux dossiers sans responsable, aux dossiers des équipes de l’utilisateur et à la vue
-transverse réservée aux gestionnaires et administrateurs. Le statut métier suit le
-parcours **À répartir → Affecté → Pris en charge → En cours → En révision → Prêt à
-publier → Publié**. **Bloqué** signale un obstacle à traiter sans perdre l’affectation.
-Ce statut est indépendant du statut technique de génération, par exemple en attente,
-en cours, proposition prête, échec ou source absente. Une génération réussie ne signifie
-donc pas que l’équipe a terminé sa revue, et un incident technique ne redistribue pas le
-dossier.
+transverse réservée aux gestionnaires et administrateurs. La génération fournit
+une **Base IA**. Après l’affectation et la prise en charge, le dossier passe par
+**Brouillon en cours → En relecture → Validé → Publié**. **Bloqué** signale un
+obstacle à traiter dans le dossier. Le bouton de publication est visible en
+haut du dossier validé. Le statut technique indique séparément l’avancement
+ou l’erreur de la dernière génération.
+
+**Historique des versions** liste les bases IA, les brouillons enregistrés,
+les changements de statut et les publications. Un brouillon enregistré peut
+être consulté dans le graphe et téléchargé. L’Atelier indique la date et
+l’auteur de la dernière retouche connue. Les anciennes propositions déjà
+enregistrées sont reprises lors de la mise à jour, avec les métadonnées
+disponibles à cette date.
 
 Après l’affectation, un lead de l’équipe responsable ou le référent nommé **accepte**
 le dossier pour matérialiser sa prise en charge. Si l’équipe ne peut pas en être
@@ -253,9 +274,11 @@ actifs. Lorsque plusieurs variantes partagent une famille de produits, une
 version majeure compatible peut faire ressortir une candidate. Le graphe
 affiche la brique proposée avec **À vérifier** quand le rapprochement reste
 incertain, et marque **À qualifier** les composants sans choix proposé.
-Dans **Rapprochements catalogue**, confirmez le choix proposé ou cliquez sur une autre suggestion
-pour l’affecter au brouillon, ou ouvrez le sélecteur pour rechercher une autre
-brique. Si vous confirmez la publication d’une brique sans type, elle utilise le type générique
+En **Mode édition**, utilisez **Rapprochements catalogue** pour choisir ou
+confirmer une brique, puis enregistrez le brouillon. Le mode édition permet aussi
+de modifier la disposition du graphe, les composants et les dépendances. Dans
+la vue intégrée, la molette fait défiler la page et la combinaison Ctrl/Cmd avec
+la molette zoome sur le graphe. Si vous confirmez la publication d’une brique sans type, elle utilise le type générique
 `custom`. Les commandes et agents des composants déjà configurés sont conservés.
 Les commandes, icônes et couleurs du catalogue restent dans AppControl.
 Sans catalogue de composants, X4B exécute directement le prompt final avec les

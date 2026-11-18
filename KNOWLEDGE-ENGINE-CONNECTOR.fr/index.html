@@ -2534,10 +2534,25 @@ contenu des sources, le prompt ou le jeton.</p>
    arrêt du backend pendant un appel, sa reprise peut consommer un deuxième
    appel à l’IA. La déduplication des générations et des maps est
    gérée dans X4B. Une ancienne révision devenue indisponible déclenche une
-   nouvelle lecture du catalogue.</li>
+   nouvelle lecture du catalogue. Pendant une nouvelle tentative et après un
+   échec, le dossier affiche la carte publiée et, s’il existe, le dernier
+   brouillon enregistré. Ces aperçus sont en lecture seule. Une relance sur
+   la même révision conserve le brouillon jusqu’à ce qu’une nouvelle
+   proposition soit prête.</li>
 <li><strong>Valider et publier.</strong> X4B vérifie la référence retournée, valide le JSON
    avec AppControl et conserve le résultat candidat. Il vérifie la révision
-   courante avant publication. Pour une première map, il enregistre la
+   courante avant d’ouvrir l’assistant de publication, puis à la confirmation.
+   En cas de rejet de la carte générée, le dossier distingue une réponse
+   illisible comme JSON d’un écart au format AppControl. Pour un écart de
+   format, il indique le premier motif et, si possible, son emplacement
+   dans la structure du document.
+   Après synchronisation, ouvrez <strong>Comparer avec le brouillon précédent</strong> si
+   la base IA de ce brouillon est connue. X4B prépare la reprise des retouches
+   compatibles et indique les écarts à arbitrer manuellement. Enregistrez
+   explicitement les retouches à reprendre, puis relisez le résultat avant
+   de le valider. Les versions antérieures restent disponibles dans
+   <strong>Historique des versions</strong>.
+   Pour une première map, X4B enregistre la
    référence externe <code>{"system":"documentation","id":"00142"}</code>, avec un nom de
    source stable configuré côté X4B. Pour une map existante, il affiche les
    écarts entre la proposition et la version publiée et permet d’appliquer la
@@ -2586,13 +2601,18 @@ ou d’exploitation dans AppControl.</p>
 </table>
 <p>Les vues <strong>À répartir</strong>, <strong>Mon équipe</strong> et <strong>Portefeuille</strong> donnent respectivement accès
 aux dossiers sans responsable, aux dossiers des équipes de l’utilisateur et à la vue
-transverse réservée aux gestionnaires et administrateurs. Le statut métier suit le
-parcours <strong>À répartir → Affecté → Pris en charge → En cours → En révision → Prêt à
-publier → Publié</strong>. <strong>Bloqué</strong> signale un obstacle à traiter sans perdre l’affectation.
-Ce statut est indépendant du statut technique de génération, par exemple en attente,
-en cours, proposition prête, échec ou source absente. Une génération réussie ne signifie
-donc pas que l’équipe a terminé sa revue, et un incident technique ne redistribue pas le
-dossier.</p>
+transverse réservée aux gestionnaires et administrateurs. La génération fournit
+une <strong>Base IA</strong>. Après l’affectation et la prise en charge, le dossier passe par
+<strong>Brouillon en cours → En relecture → Validé → Publié</strong>. <strong>Bloqué</strong> signale un
+obstacle à traiter dans le dossier. Le bouton de publication est visible en
+haut du dossier validé. Le statut technique indique séparément l’avancement
+ou l’erreur de la dernière génération.</p>
+<p><strong>Historique des versions</strong> liste les bases IA, les brouillons enregistrés,
+les changements de statut et les publications. Un brouillon enregistré peut
+être consulté dans le graphe et téléchargé. L’Atelier indique la date et
+l’auteur de la dernière retouche connue. Les anciennes propositions déjà
+enregistrées sont reprises lors de la mise à jour, avec les métadonnées
+disponibles à cette date.</p>
 <p>Après l’affectation, un lead de l’équipe responsable ou le référent nommé <strong>accepte</strong>
 le dossier pour matérialiser sa prise en charge. Si l’équipe ne peut pas en être
 responsable, elle le <strong>renvoie à la répartition</strong> avec un motif. Le gestionnaire peut
@@ -2638,9 +2658,11 @@ actifs. Lorsque plusieurs variantes partagent une famille de produits, une
 version majeure compatible peut faire ressortir une candidate. Le graphe
 affiche la brique proposée avec <strong>À vérifier</strong> quand le rapprochement reste
 incertain, et marque <strong>À qualifier</strong> les composants sans choix proposé.
-Dans <strong>Rapprochements catalogue</strong>, confirmez le choix proposé ou cliquez sur une autre suggestion
-pour l’affecter au brouillon, ou ouvrez le sélecteur pour rechercher une autre
-brique. Si vous confirmez la publication d’une brique sans type, elle utilise le type générique
+En <strong>Mode édition</strong>, utilisez <strong>Rapprochements catalogue</strong> pour choisir ou
+confirmer une brique, puis enregistrez le brouillon. Le mode édition permet aussi
+de modifier la disposition du graphe, les composants et les dépendances. Dans
+la vue intégrée, la molette fait défiler la page et la combinaison Ctrl/Cmd avec
+la molette zoome sur le graphe. Si vous confirmez la publication d’une brique sans type, elle utilise le type générique
 <code>custom</code>. Les commandes et agents des composants déjà configurés sont conservés.
 Les commandes, icônes et couleurs du catalogue restent dans AppControl.
 Sans catalogue de composants, X4B exécute directement le prompt final avec les
@@ -3083,7 +3105,7 @@ reste responsable de la publication de la map.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-17T21:17:40+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-18T18:49:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-18</span>
   </span>
 
     

@@ -1576,6 +1576,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#starting-a-map-builder-draft-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starting a Map Builder draft from scratch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#map-builder-dossier-ownership" class="md-nav__link">
     <span class="md-ellipsis">
       Map Builder dossier ownership
@@ -3293,6 +3302,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#starting-a-map-builder-draft-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starting a Map Builder draft from scratch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#map-builder-dossier-ownership" class="md-nav__link">
     <span class="md-ellipsis">
       Map Builder dossier ownership
@@ -3344,6 +3362,7 @@ Map your applications as dependency graphs, monitor health in real time, orchest
 <li><a href="#application-management">Application Management</a></li>
 <li><a href="#creating-an-application">Creating an Application (Onboarding Wizard)</a></li>
 <li><a href="#importing-applications">Importing Applications</a></li>
+<li><a href="#starting-a-map-builder-draft-from-scratch">Starting a Map Builder draft from scratch</a></li>
 <li><a href="#auto-discovery">Auto-Discovery</a></li>
 <li><a href="#map-view">Map View</a></li>
 <li><a href="#interactive-dag-visualization">Interactive DAG Visualization</a></li>
@@ -3423,6 +3442,8 @@ Map your applications as dependency graphs, monitor health in real time, orchest
 <li>The application is created with full version tracking in <code>config_versions</code></li>
 </ol>
 <p>You can also import from <strong>existing AppControl v3 configurations</strong> — the importer automatically maps legacy component types and command formats.</p>
+<p>To design a map by hand and review it before creating an application, use
+<a href="#starting-a-map-builder-draft-from-scratch">Map Builder</a>.</p>
 <p><img alt="import" src="../screenshots/import.png" />
 <em>Import page — upload YAML/JSON application definitions</em></p>
 <h3 id="auto-discovery">Auto-Discovery<a class="headerlink" href="#auto-discovery" title="Permanent link">&para;</a></h3>
@@ -4147,9 +4168,27 @@ choice and is not the normal import path for maps generated with a mock prompt.<
   application maps, or <strong>AppControl</strong> for operational work. App Explorer can
   search by application name or published source key and open the map in AppControl.</li>
 </ul>
+<h3 id="starting-a-map-builder-draft-from-scratch">Starting a Map Builder draft from scratch<a class="headerlink" href="#starting-a-map-builder-draft-from-scratch" title="Permanent link">&para;</a></h3>
+<p>With an administrator account, open <strong>Map Builder</strong> (<strong>Atelier de cartographie</strong>
+in French) and select <strong>Create a map → Start from scratch</strong>
+(<strong>Créer une carte → Partir de zéro</strong>). Enter the application name to open the
+editor. You can create and save an empty draft without a document connector
+or an AI service. AppControl receives the map when you publish it.</p>
+<ol>
+<li>Add components, select their types from the catalog, and draw their
+   dependencies. Save the proposal as you work.</li>
+<li>Review the saved draft. When the map has at least one component and passes
+   validation, follow the dossier’s review and publication workflow.</li>
+<li>Use the publication wizard to review the target sites and agent assignments.
+   Confirm publication to create the map in AppControl.</li>
+</ol>
+<p><strong>Create a map</strong> in the AppControl application catalog opens the same chooser
+for administrators with both modules. <strong>Import a file</strong> opens the AppControl
+import wizard for a YAML or JSON definition. The existing <strong>Onboarding Wizard</strong>
+remains available for other AppControl accounts.</p>
 <h3 id="map-builder-dossier-ownership">Map Builder dossier ownership<a class="headerlink" href="#map-builder-dossier-ownership" title="Permanent link">&para;</a></h3>
-<p>A document synchronization creates a durable <strong>mapping dossier</strong> for each source and
-application key before an AppControl map exists. New dossiers enter <strong>To assign</strong>. A
+<p>Document synchronization creates a durable <strong>mapping dossier</strong> for each source and
+application key before an AppControl map exists. New source dossiers enter <strong>To assign</strong>. A
 delegated portfolio manager assigns one responsible team, an optional contact from that
 team, any contributor or reviewer teams, a priority and an optional target date. The
 assignment belongs to the dossier, not to one temporary AI generation job, and therefore
@@ -4242,7 +4281,7 @@ optional fields are cleared. Imports are atomic and do not rewrite existing maps
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-17T21:50:46+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-18T18:49:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-18</span>
   </span>
 
     

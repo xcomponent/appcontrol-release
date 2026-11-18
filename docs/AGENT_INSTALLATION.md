@@ -39,6 +39,68 @@ expertise required.
 | Network | Agent must reach the gateway on port **4443** (TCP, outbound) |
 | OS | Linux (x86_64, aarch64), macOS (x86_64, arm64), Windows (x86_64, arm64) |
 
+### Connect a Linux machine from the site
+
+Open **Gateways**, find the site and choose **Connect a machine**. Select a
+connected gateway, confirm its HTTPS or WSS address as seen from the Linux
+machine, and enter the agent name. AppControl prepares a single-use code
+valid for one hour and checks that the name is available.
+
+Run the displayed command on the Linux machine, then enter the code at the
+hidden prompt. The machine needs systemd, administrator access for initial
+setup, and HTTPS access to the AppControl interface and to its binary
+repository. The installer checks the gateway's TLS certificate against the
+organization's CA and verifies the gateway's connection to the backend. It
+selects the Linux binary for the machine architecture from the installed
+AppControl version, checks its SHA-256, and sets up a dedicated service.
+The agent and the commands it runs use the dedicated `appcontrol-agent`
+system account.
+
+Keep the dialog open to see the agent obtain its certificate and send its
+first heartbeat through the selected gateway. **Connected** confirms both.
+If the network check fails, fix the address or trust chain and retry with the
+same valid code. The installer keeps the machine's local agent identity when
+resuming its own installation. Use `systemctl status appcontrol-agent` and
+`journalctl -u appcontrol-agent` to diagnose startup errors on the machine.
+
+Use the manual enrollment below for Windows, macOS, machines without access
+to any binary repository, or a custom CA for the gateway's HTTPS certificate.
+
+### Use an internal HTTPS repository
+
+For a network with no direct Internet access, prepare the Linux binaries and
+their published SHA-256 values with the synchronization tool. Run this on an
+authorized publishing machine or in the release pipeline.
+
+```bash
+python3 scripts/qualification/mirror-linux-agent.py \
+  --version 1.24.9 --output-dir /srv/x4b-agents
+```
+
+The tool verifies both architectures against the official release checksum
+file. It prepares a complete, versioned directory `v1.24.9`. To stage
+already downloaded release files, add `--source-dir /path/to/release`; that
+mode works without Internet access. Publish the directory unchanged to the
+HTTPS repository. If your pipeline uploads individual files, upload the
+binaries before `checksums-sha256.txt`. Use a versioned repository with
+write access limited to the publishing pipeline.
+
+Set `APPCONTROL_AGENT_BINARY_MIRROR` on the AppControl **backend** to the
+repository root, for example `https://repo.example.com/repository/x4b-agents`.
+AppControl appends the installed version to prepare the guided Linux command.
+For Helm, use `backend.env.APPCONTROL_AGENT_BINARY_MIRROR`. For Compose, add
+this environment variable to the backend service. With the Windows/OpenShift
+kit, set it on the existing backend Deployment. The updater retains it.
+
+The guided installer downloads the checksum file and binary directly from
+the configured mirror. It stops if the repository redirects the request,
+the asset is unavailable or the checksum is wrong. The Linux host must
+trust the mirror certificate through its system trust store. For a private
+mirror that uses HTTP authentication, the installer accepts
+`--netrc-file /path/to/private.netrc` in its arguments. Place the file on the
+target host with mode `0600` and make it readable by the installer. Store
+the credentials there through your normal secrets process.
+
 ---
 
 ## 2. Download the agent binary

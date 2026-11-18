@@ -8,7 +8,7 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.24.9**. Paquet : **Windows léger 1.24.9-1**.
+Produit : **AppControl 1.25.2**. Paquet : **Windows léger 1.25.2-1**.
 
 **AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La plateforme inclut [l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications](../X4B-PLATEFORME.fr.md). Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
 
@@ -265,14 +265,14 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.24.9-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.9/appcontrol-openshift-windows-light-1.24.9-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.24.9/appcontrol-openshift-windows-light-1.24.9-1.zip.sha256)
+- [Paquet Windows léger 1.25.2-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.25.2/appcontrol-openshift-windows-light-1.25.2-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.25.2/appcontrol-openshift-windows-light-1.25.2-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.24.9-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.25.2-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
     throw 'Checksum mismatch: do not use this archive.'
@@ -579,12 +579,31 @@ Elle vérifie les identifiants des applications et agents, une empreinte de la
 configuration des maps (commandes, dépendances et paramètres), ainsi que la
 reconnexion des agents qui étaient connectés avant l’opération.
 
-La configuration de la source documentaire ajoutée au backend est conservée :
-ses variables `X4B_KNOWLEDGE_*`, leurs références aux Secrets existants et
-l’autorisation HTTP interne restent présentes. Le Secret et les données de
-configuration enregistrées dans PostgreSQL ne sont pas recréés. Après la mise à
-jour, utiliser « Tester la connexion » dans Génération de maps pour confirmer
-que le service documentaire reste accessible depuis le cluster.
+Le kit reprend la configuration de la source documentaire, qu’elle soit
+enregistrée dans PostgreSQL ou fournie au backend par le déploiement. Il
+réutilise les références aux Secrets et les autorisations réseau existantes,
+et ajoute les valeurs par défaut du manifeste cible lorsque le réglage
+correspondant est absent. Le déplacement des réglages vers **Connaissance →
+Source documentaire → Paramètres** utilise le même connecteur. Les références
+documentaires, les brouillons et les révisions Git indexées restent dans la base
+de l’installation.
+Aucun réglage supplémentaire n’est requis pour **Choisir les sources**.
+La migration classe les modules externes existants dans **Exploitation** par
+défaut. Elle conserve leurs URL et leurs droits d’accès.
+
+La mise à jour compare les réglages effectifs du connecteur et les
+enregistrements des modules externes avant et après déploiement. Elle vérifie
+également que le backend reconnaît toujours la configuration du connecteur.
+Ces contrôles interrogent X4B et ne déclenchent aucune requête IA.
+Le rapport privé `update-verification.json` indique les contrôles effectués.
+Une ancienne version sans l’API correspondante, ou une reprise dont
+l’inventaire initial ne couvrait pas ces réglages, est signalée dans le rapport.
+
+Après la mise à jour, **Connaissance → Source documentaire → Tester la
+connexion** vérifie l’accès réseau au catalogue depuis le backend. Pour
+l’affinage sans document d’origine ou avec une pièce jointe, vérifier le profil
+1.1 sur le service appelé par le connecteur.
+[Guide du connecteur](../KNOWLEDGE-ENGINE-CONNECTOR.fr.md#mettre-à-jour-le-service-client-pour-laffinage)
 
 Les agents existants, dans le cluster ou sur des machines externes, ne sont
 **ni réenrôlés, ni redémarrés, ni mis à jour automatiquement** par ce parcours.
@@ -604,6 +623,30 @@ diagnostic ; cela **ne signifie pas que les anciens pods ou l’ancienne base on
 été restaurés**. Le script bloque la reprise normale et demande de relancer
 **le même kit cible avec `-MettreAJour`** pour terminer. Garder le dossier privé
 et la sauvegarde PostgreSQL ; ne pas modifier les verrous à la main.
+
+### Miroir interne des binaires Linux
+
+Pour le parcours **Passerelles → Connecter une machine**, publiez d’abord
+les binaires Linux de la version cible dans un dépôt HTTPS interne. Le
+[script de synchronisation](../AGENT_INSTALLATION.md#use-an-internal-https-repository)
+prépare les deux architectures et leurs empreintes officielles à partir
+de la release ou de fichiers déjà téléchargés. Pour la version `1.25.2`,
+le dépôt doit servir directement
+`v1.25.2/checksums-sha256.txt`, `v1.25.2/appcontrol-agent-linux-amd64` et
+`v1.25.2/appcontrol-agent-linux-arm64`.
+
+Configurez la racine du dépôt une fois sur le déploiement backend existant.
+Réutilisez le projet et le nom d’installation habituels.
+
+```powershell
+oc -n $Projet set env "deployment/${Nom}-backend" "APPCONTROL_AGENT_BINARY_MIRROR=https://repo.example.com/repository/x4b-agents"
+oc -n $Projet rollout status "deployment/${Nom}-backend"
+```
+
+Le script de mise à jour reprend cette variable. Publiez la version cible
+dans le même dépôt avant de déployer le nouveau kit. L’assistant ajoute
+automatiquement le répertoire de la version en cours. La machine Linux utilise
+les adresses d’AppControl, du dépôt interne et de la passerelle choisie.
 
 ## Retirer AppControl sans supprimer le projet
 
@@ -836,7 +879,7 @@ le dossier d’état d’origine pour terminer la mise à jour.
 
 ## Qualification et suite du POC
 
-La publication du kit 1.24.9-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.24.9-1.json` et `QUALIFICATION-EVALUATION-1.24.9-1.zip` identifient les images et le ZIP de cette recette.
+La publication du kit 1.25.2-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.25.2-1.json` et `QUALIFICATION-EVALUATION-1.25.2-1.zip` identifient les images et le ZIP de cette recette.
 
 ### Historique des qualifications
 
@@ -1048,11 +1091,11 @@ sans service externe. Avec le Secret référencé dans le JSON passé à
 `Deployer-AppControl.ps1 -Configuration`, le raccordement se fait dès
 l’installation.
 La configuration est injectée dans le backend, puis l’interface
-**Génération de maps** permet de tester le raccordement et de lancer la
+**Connaissance** permet de tester le raccordement et de lancer la
 synchronisation. L’option `-SecretSourceDocumentaire` reste disponible
 pour passer la référence directement sur la ligne de commande.
 Les administrateurs peuvent aussi saisir l’URL et le jeton directement dans
-**Génération de maps → Paramètres**. Pour un Service HTTP dans le même projet,
+**Connaissance → Source documentaire → Paramètres**. Pour un Service HTTP dans le même projet,
 `Preparer-SourceDocumentaire.ps1 -ReseauSeulement` peut préparer la règle réseau
 du backend. Utilisez `-AutoriserReglagesUI` si la plateforme veut définir
 explicitement la liste des origines approuvées par le déploiement.
@@ -1215,7 +1258,7 @@ le domaine était la cause de l’erreur d’exposition.
 
 ## Démonstration bancaire complète
 
-**Le kit 1.24.9-1 installe automatiquement la démo bancaire lors d’une installation
+**Le kit 1.25.2-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut**, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. `-SansDemo` désactive les deux démonstrations ;
 une mise à jour avec `-MettreAJour` conserve les applications existantes sans en ajouter.

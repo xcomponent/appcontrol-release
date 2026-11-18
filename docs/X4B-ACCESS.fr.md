@@ -4,8 +4,92 @@ X4B réutilise les comptes locaux AppControl. L’administration des comptes att
 les modules visibles et accessibles pour chaque personne. Les comptes existants
 conservent leur accès AppControl jusqu’à la première modification explicite de
 leurs accès. Un compte non administrateur créé dans X4B commence sans module.
-Les droits sur les maps, les équipes et les opérations restent gérés dans AppControl.
-La génération de maps est accessible aux administrateurs de l’organisation.
+Les droits opérationnels sur les maps et les équipes restent gérés dans AppControl.
+Le module **Map Builder** est inclus pour les administrateurs et peut être accordé
+aux autres comptes. Son accès ne donne pas accès à tout le portefeuille : chaque
+dossier de cartographie conserve son propre périmètre d’équipe.
+
+Pour accorder le module à un compte non administrateur, ouvrez **Comptes et accès**,
+choisissez **Accès aux applications** sur ce compte, cochez **Map Builder**, puis
+enregistrez. Cette opération rend le module disponible ; elle ne fait pas de ce compte
+un gestionnaire de portefeuille et ne lui attribue aucun dossier.
+
+## Accès au Map Builder et distribution des dossiers
+
+Une synchronisation documentaire crée d’abord un **dossier de cartographie** pour
+la source et la clé applicative. Ce dossier existe avant la map AppControl et reste
+le même au fil des générations et des updates. Les réglages du connecteur, le test
+de connexion et la synchronisation globale restent réservés aux administrateurs.
+Le travail de construction et de revue peut être délégué sans donner de rôle
+d’administration de la plateforme.
+
+L’administrateur peut désigner des **gestionnaires de portefeuille**, directement
+ou par équipe. Ils voient les vues **À répartir** et **Portefeuille**, affectent un
+dossier ou un lot, et peuvent modifier une affectation. Cette délégation concerne
+uniquement la distribution des dossiers ; elle n’accorde aucun accès opérationnel
+aux maps publiées.
+
+Dans **Map Builder**, l’administrateur ouvre **Gestionnaires du portefeuille**, choisit
+**Une équipe** ou **Un utilisateur**, puis clique sur **Ajouter le gestionnaire**. Le
+retrait de cette délégation ferme la vue transverse, mais ne modifie ni les dossiers
+déjà affectés à ses équipes ni les permissions des maps AppControl.
+
+Pour chaque dossier, l’affectation comprend :
+
+- une **équipe responsable** unique, qui porte la création ou l’update ;
+- un **référent** facultatif, choisi parmi les membres de cette équipe ;
+- des équipes **contributrices**, autorisées à modifier la proposition ;
+- des équipes **relectrices**, autorisées à consulter la proposition pour relecture ;
+- une priorité et, si nécessaire, une date cible.
+
+Le lead de l’équipe responsable ou le référent nommé accepte l’affectation. Si
+l’équipe ne peut pas prendre le dossier, elle le renvoie dans **À répartir** avec un
+motif. Le gestionnaire peut aussi le réaffecter à une autre équipe. Ces actions et
+leurs auteurs sont audités. Les vues sont filtrées : un utilisateur ordinaire voit
+les dossiers accordés à ses équipes dans **Mon équipe**, tandis que la file sans
+responsable et la vue transverse restent limitées aux gestionnaires et administrateurs.
+L’affectation, l’acceptation, le retour et le changement d’avancement demandent une
+session utilisateur ; une clé API ne peut pas prendre ces décisions de gouvernance.
+
+Le statut d’avancement — **À répartir**, **Affecté**, **Pris en charge**, **En cours**,
+**En révision**, **Prêt à publier**, **Publié** ou **Bloqué** — est distinct de l’état
+technique de l’IA et de la synchronisation. Cette séparation permet par exemple de
+conserver un dossier en révision même si sa génération est terminée, ou d’indiquer un
+blocage métier sans masquer l’état technique.
+
+### Séparer collaboration et exploitation
+
+Les niveaux `view`, `edit` et `manage` d’un dossier sont des droits de collaboration
+propres au Map Builder. Ils ne correspondent pas aux permissions de même nom dans la
+hiérarchie opérationnelle AppControl, où `edit` et `manage` incluent notamment
+`operate`. Le tableau suivant résume cette séparation.
+
+| Droit sur le dossier | Capacité dans le Map Builder | Ce qu’il ne donne pas |
+| --- | --- | --- |
+| `view` | Consulter la proposition pour relecture. | Aucune commande sur la map. |
+| `edit` | Modifier et affiner la proposition. | Ni Start, ni Stop, ni Reconstruction. |
+| `manage` | Piloter le dossier et publier lorsque les contrôles sont satisfaits. | Aucun droit d’exploitation implicite. |
+| Gestionnaire de portefeuille | Affecter ou transférer les dossiers du portefeuille. | Aucun accès implicite aux applications publiées. |
+
+À la première publication, son auteur et les équipes associées au dossier reçoivent un
+accès de consultation à la map. Lorsqu’une map déjà publiée est réaffectée, les nouvelles
+équipes reçoivent aussi cet accès. La synchronisation est additive : elle ne retire ni ne
+réduit les droits applicatifs existants, car ceux-ci peuvent avoir été accordés ou élevés
+explicitement. Accordez ensuite dans AppControl toute permission plus élevée nécessaire.
+L’affectation d’un dossier ne doit jamais produire
+automatiquement `operate`. Les restrictions de workspace et de site, ainsi que les
+passerelles et agents choisis, sont contrôlées séparément au moment de la publication.
+
+L’accès au module et l’accès aux données sont également distincts. Accorder le module
+**Map Builder** permet d’ouvrir l’outil, mais n’expose pas les dossiers des autres
+équipes. À l’inverse, l’accès à un dossier rend le Map Builder disponible pour ce
+travail sans donner accès à la configuration globale du connecteur.
+
+Quand la source d’une map publiée évolue, l’update revient dans le même dossier et à
+la même équipe responsable avec le statut **Affecté** ; elle doit reprendre le dossier
+avant sa revue. Si cette équipe n’existe plus ou si aucun responsable
+valide ne subsiste, le dossier rejoint **À répartir**. La map publiée et ses droits
+AppControl restent inchangés jusqu’à la publication explicite de l’update.
 
 ## Raccorder une application externe
 

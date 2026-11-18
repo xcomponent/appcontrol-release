@@ -784,7 +784,86 @@ X4B (XComponent for Business) is the INVIVOO software platform. AppControl is it
 
 The interface starts in a dark theme. Use the theme button in the header or Settings to select light mode. This browser preference is retained across reloads. Brand assets are bundled with the application and require no Internet access.
 
-The X4B identity provides a common home for future connectors and transformation modules. This release does not add or advertise unimplemented connectors as available modules.
+The **Home** page at `/x4b` groups the applications available to the signed-in account:
+
+- **Knowledge Collect & Store (KCS)** groups knowledge sources and reference
+  resources. Administrators configure and synchronize the document connector
+  here. Its resources link to the component
+  catalog, agent discovery, and repository review for accounts with AppControl access.
+- **Knowledge Transform & Refine (KTR)** opens **Map Builder** (AppGraphGen) to generate, refine, review and
+  publish map proposals. Existing links to `/map-generation` still open Map Builder.
+- **Knowledge Graph & Act (KGA)** opens **App Explorer** (AppExplore) for read-only browsing of accessible
+  application maps, or **AppControl** for operational work. App Explorer can
+  search by application name or published source key and open the map in AppControl.
+
+### Map Builder dossier ownership
+
+A document synchronization creates a durable **mapping dossier** for each source and
+application key before an AppControl map exists. New dossiers enter **To assign**. A
+delegated portfolio manager assigns one responsible team, an optional contact from that
+team, any contributor or reviewer teams, a priority and an optional target date. The
+assignment belongs to the dossier, not to one temporary AI generation job, and therefore
+survives retries and later source revisions.
+
+Administrators expand **Portfolio managers** in Map Builder to delegate this role to a
+user or team. Removing that delegation removes the portfolio-wide view; it does not
+change dossiers already assigned to the person's teams or any AppControl map permission.
+
+Portfolio managers and administrators can use **Portfolio** and **To assign**; ordinary
+users see only dossiers granted to one of their teams under **My team**. A team lead or
+the named contact accepts the assignment. A team that cannot own it returns the dossier
+with a reason, and a portfolio manager can reassign it. Assignment changes are revision
+checked so a stale browser cannot overwrite a more recent distribution decision.
+
+The business workflow — **To assign**, **Assigned**, **Accepted**, **In progress**,
+**In review**, **Ready to publish**, **Published**, or **Blocked** — is shown separately
+from the technical generation state. A ready AI result does not mean that the team has
+completed its review, and a failed generation does not by itself change ownership.
+
+Dossier `view`, `edit`, and `manage` are Map Builder collaboration rights. They do not
+grant AppControl `operate`, Start, Stop, or Reconstruction. On first publication, the
+publisher and dossier teams receive safe view access to the map. Reassigning an already
+published dossier also gives its new teams safe view access. This synchronization is
+additive: it never removes or downgrades existing application grants, which may have
+been explicitly granted or elevated in AppControl. Grant any higher application
+permission explicitly in AppControl. Site and workspace access is still
+validated for publication.
+Map Builder can be granted to non-administrators, but module access alone never exposes
+another team's dossiers. Connector settings and global synchronization remain
+administrator-only.
+
+When a published source changes, the new proposal returns as **Assigned** to the same
+dossier and responsible team, which accepts it again before review. If no valid
+responsible team remains, it returns to **To assign** as an
+exception. The currently published map remains available until the update is explicitly
+reviewed and published.
+
+Administrators can choose the home section for each connected application
+under **Connected applications**. The placement applies to accounts that have
+access to that application. Previously registered applications start in Operations.
+
+The header also opens **AI service**, **AI agents**, and **Integrations**. Administrators can
+inspect the existing document connector and run a sample AI test for settings
+managed from X4B. For a deployment-managed connector, refine a map to verify
+the AI call. Integrations provides example previews for the shared header, map
+and status badge. **AI agents** links to downloadable skills, a catalogue URL
+and an optional local MCP setup for Kilo Code. A downloaded skill can be used
+without MCP. For a local MCP connection, install the `appcontrol-mcp` binary
+on the assistant’s workstation and manage its separately scoped key in
+**API Keys**. The generated configuration is disabled by default and takes
+effect when installed in Kilo Code.
+
+![x4b-home](screenshots/x4b-home.png)
+
+![x4b-knowledge](screenshots/x4b-knowledge.png)
+
+![x4b-explorer](screenshots/x4b-explorer.png)
+
+![x4b-ai](screenshots/x4b-ai.png)
+
+![x4b-integrations](screenshots/x4b-integrations.png)
+
+![x4b-agents](screenshots/x4b-agents.png)
 
 
 ### Embedded architecture and reconstruction

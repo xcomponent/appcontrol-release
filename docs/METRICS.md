@@ -1,6 +1,6 @@
 # Component Metrics
 
-AppControl supports **generic metrics extraction** from check commands. Any check script (health, integrity, infrastructure) can return structured JSON data that gets stored, visualized, and used for dashboards.
+AppControl extracts structured JSON metrics from stdout of the agent's scheduled health check. On-demand diagnosis and reconstruction record their commands' outputs as operation evidence.
 
 ## Overview
 
@@ -278,7 +278,7 @@ Response:
 ### Get Metrics History
 
 ```bash
-GET /api/v1/components/{id}/metrics/history?limit=100
+GET /api/v1/components/{id}/metrics/history
 
 Response:
 {
@@ -466,7 +466,7 @@ exit 0
 
 ### 1. Keep Metrics Small
 
-Metrics are stored with every check execution (default: every 30 seconds). Keep the JSON payload small:
+The agent sends a new observation when the exit code or metrics change and refreshes unchanged results periodically. Keep the JSON payload small:
 
 ```json
 // Good - focused metrics
@@ -574,7 +574,7 @@ Default retention: 30 days. Configure via `CHECK_EVENTS_RETENTION_DAYS` environm
 
 ### Large Metrics Causing Issues
 
-If metrics are too large (>64KB), they may be truncated. Solutions:
+The agent captures up to 4 KiB per stream for synchronous shell checks. Larger output may be truncated before parsing. Solutions:
 - Reduce metric granularity
 - Remove verbose nested structures
 - Use summary statistics instead of raw data

@@ -1,7 +1,8 @@
 # Raccorder une source documentaire à X4B
 
 Le [contrat OpenAPI](knowledge-engine.openapi.yaml) décrit les opérations
-du connecteur. **Côté client, deux opérations suffisent au parcours de
+du connecteur dans le profil d’intégration X4B pour l’exécution de prompts.
+**Côté client, deux opérations suffisent au parcours de
 génération**. Lister les documents courants et exécuter un prompt sur la
 révision demandée. La lecture directe du JSON est facultative.
 
@@ -17,15 +18,15 @@ confirmer.
 **Une URL de base** dessert le catalogue et l’exécution du prompt. Par
 exemple, avec `https://knowledge.example/api/v1`, X4B appelle
 `https://knowledge.example/api/v1/knowledge-documents` et
-`https://knowledge.example/api/v1/prompt-executions`. L’interface X4B
-s’appelle **Génération de maps** et désigne ce raccordement comme la
-**source documentaire**.
+`https://knowledge.example/api/v1/prompt-executions`. Le raccordement est
+accessible dans **Connaissance → Source documentaire**. Les propositions
+générées se trouvent dans l’**Atelier de cartographie**.
 
 | Opération | Ce que le Knowledge Engine fournit |
 | --- | --- |
 | `GET /knowledge-documents` | Une liste paginée des clés applicatives autorisées et de l’empreinte SHA-256 de leur document courant. Le filtre `application_key` vérifie la révision courante d’une application. |
 | `GET /knowledge-documents/{application_key}/versions/{sha256}` | Le JSON d’une révision précise, pour la prévisualisation, le diagnostic ou la vérification d’un rapprochement. |
-| `POST /prompt-executions` | L’exécution synchrone d’un prompt générique sur le document désigné par sa clé applicative et son empreinte. Le service renvoie le texte de l’IA et la référence effectivement utilisée. |
+| `POST /prompt-executions` | L’exécution synchrone d’un prompt générique, avec une révision documentaire ou sans document, et avec une pièce jointe facultative. Le service renvoie le résultat textuel et les références des entrées utilisées. |
 
 ## Exemple de raccordement
 
@@ -72,13 +73,89 @@ indisponible en `404`. La rétention des versions doit couvrir la durée des
 lots et de leurs reprises. Le profil d’authentification utilise un
 jeton de service sur HTTPS, limité aux opérations et documents autorisés.
 
+## Mettre à jour le service client pour l’affinage
+
+Le profil OpenAPI 1.1 conserve l’URL, le jeton de service et le format
+utilisé jusqu’ici pour les générations et les affinages avec document.
+Le service continue de vérifier le droit d’exécuter un prompt et, si une
+révision est fournie, le droit de consulter cette révision précise.
+
+Le champ `document` reste requis. Une référence `{application_key, sha256}`
+demande le document exact. La valeur explicite `null` demande d’exécuter
+le prompt avec le contexte fourni dans la requête. Dans les deux cas,
+le service renvoie le champ `document` avec la valeur utilisée.
+
+Le champ facultatif `attachment` accepte un seul fichier. Il contient
+`filename`, le nom sans chemin limité à 255 octets UTF-8, `media_type` et `content_base64`,
+les octets d’origine en base64 standard. Le plafond est de 512 Kio
+(524 288 octets) après décodage. Les types admis sont `image/png`,
+`image/jpeg`, `application/pdf` et `text/plain` en UTF-8. Le service
+valide le fichier, puis le joint au contexte de l’IA. Pour une image, il
+doit l’envoyer comme entrée visuelle à un modèle capable de l’analyser.
+Un retour de succès avec pièce jointe inclut `attachment_sha256` calculé
+sur les octets décodés, après inclusion du fichier dans le contexte. X4B
+vérifie cette empreinte. Si le type ou l’entrée visuelle n’est pas pris en
+charge, le service peut répondre `415`. Utilisez `400` pour une requête
+mal formée et `413` si le fichier dépasse le plafond.
+
+Le service traite le document de référence, les extraits Git présents
+dans le prompt et le fichier joint comme des données de contexte. Il
+préserve les limites du compte de service et évite de journaliser le
+contenu des sources, le prompt ou le jeton.
+
+Exemple minimal avec un fichier texte et sans document de référence.
+
+```json
+{
+  "document": null,
+  "prompt": "Relève le prérequis mentionné dans la pièce jointe.",
+  "attachment": {
+    "filename": "demarrage.txt",
+    "media_type": "text/plain",
+    "content_base64": "QVBJIGF2YW50IGJhc2UuCg=="
+  }
+}
+```
+
+Le service retourne par exemple ce corps en `200`.
+
+```json
+{
+  "document": null,
+  "result": "La pièce jointe indique de démarrer l’API avant la base.",
+  "attachment_sha256": "663ea86279bfc5cd7f471964514cf17a2c36ac182c6fd350f778c68d27d84a4c"
+}
+```
+
+Vérifiez le service avant de l’utiliser depuis l’Atelier de cartographie.
+
+1. Rejouez la demande historique sur une révision accessible et sans fichier.
+   Vérifiez le `200`, la référence retournée et le résultat textuel.
+2. Envoyez `document: null` sans fichier. Vérifiez que le service conserve
+   l’autorisation d’exécution et renvoie `document: null` sans lire le document.
+3. Rejouez l’exemple avec pièce jointe et comparez l’empreinte du fichier décodé.
+   Pour vérifier le chemin visuel, envoyez aussi un petit PNG ou JPEG et
+   demandez à l’IA de décrire un élément visible dans l’image.
+4. Essayez du base64 mal formé, un type non admis, un fichier trop volumineux
+   et un jeton hors périmètre. Vérifiez les refus avant l’appel à l’IA.
+   Côté X4B, vérifiez qu’une réponse avec référence ou empreinte manquante
+   ou incorrecte produit une erreur d’affinage.
+
 ## Cycle de mise à jour côté X4B
 
 1. **Synchroniser le catalogue.** À la demande ou selon une planification, X4B
    parcourt les pages et compare, par source et clé applicative, les empreintes observées
-   à celles des générations précédentes. Il met en file les nouvelles révisions.
-   Un document sans changement réutilise son résultat pour la même configuration.
-2. **Générer.** Le traitement de fond limite le nombre d’appels simultanés et
+   à celles des générations précédentes. La première observation crée un **dossier de
+   cartographie** durable, avant qu’une map AppControl existe. Une nouvelle empreinte
+   actualise ce même dossier : son affectation et son historique ne sont pas recréés
+   à chaque génération. Un document sans changement réutilise son
+   résultat pour la même configuration.
+2. **Répartir le dossier.** Une nouvelle clé apparaît dans **À répartir**. Un
+   gestionnaire de portefeuille lui attribue une équipe responsable et peut nommer un
+   référent, ajouter des équipes contributrices ou relectrices, fixer une priorité et
+   une date cible. L’affectation porte sur le dossier identifié par la source et la clé
+   applicative, jamais sur une exécution technique temporaire.
+3. **Générer.** Le traitement de fond limite le nombre d’appels simultanés et
    conserve l’état de chaque application dans PostgreSQL. Il identifie une
    génération par la source, la clé applicative, l’empreinte du document et le
    contexte de génération, dont le prompt, les références du catalogue de
@@ -88,7 +165,7 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.
    appel à l’IA. La déduplication des générations et des maps est
    gérée dans X4B. Une ancienne révision devenue indisponible déclenche une
    nouvelle lecture du catalogue.
-3. **Valider et publier.** X4B vérifie la référence retournée, valide le JSON
+4. **Valider et publier.** X4B vérifie la référence retournée, valide le JSON
    avec AppControl et conserve le résultat candidat. Il vérifie la révision
    courante avant publication. Pour une première map, il enregistre la
    référence externe `{"system":"documentation","id":"00142"}`, avec un nom de
@@ -97,6 +174,75 @@ jeton de service sur HTTPS, limité aux opérations et documents autorisés.
    mise à jour après confirmation. X4B garde
    séparément l’empreinte source de la map publiée et celle de la dernière
    génération. Une disparition du catalogue est signalée et la map est conservée.
+
+### Répartir et suivre les dossiers de cartographie
+
+Le connecteur documentaire reste partagé au niveau de l’organisation. Sa configuration,
+le test de connexion et la synchronisation globale relèvent de l’administration de la
+source. La distribution quotidienne est distincte : l’administrateur peut déléguer la
+fonction de **gestionnaire de portefeuille** à une personne ou à une équipe. Cette
+fonction permet de voir le portefeuille et la file **À répartir**, d’affecter un dossier
+ou un lot, et de transférer un dossier. Elle n’accorde aucun droit de démarrage, d’arrêt
+ou d’exploitation dans AppControl.
+
+L’affectation distingue les responsabilités suivantes :
+
+| Responsabilité | Rôle dans le dossier |
+| --- | --- |
+| **Équipe responsable** | Porte la création ou la mise à jour, accepte la prise en charge et conduit le dossier jusqu’à la publication. Une seule équipe est responsable à la fois. |
+| **Référent** | Membre facultatif de l’équipe responsable, identifié comme point de contact. L’équipe reste responsable si aucun référent n’est nommé ou si celui-ci change. |
+| **Équipe contributrice** | Modifie la proposition dans le périmètre du dossier. |
+| **Équipe relectrice** | Consulte la proposition pour relecture sans devenir responsable du dossier. |
+| **Gestionnaire de portefeuille** | Affecte, réaffecte ou transfère les dossiers et traite les exceptions de distribution. |
+
+Les vues **À répartir**, **Mon équipe** et **Portefeuille** donnent respectivement accès
+aux dossiers sans responsable, aux dossiers des équipes de l’utilisateur et à la vue
+transverse réservée aux gestionnaires et administrateurs. Le statut métier suit le
+parcours **À répartir → Affecté → Pris en charge → En cours → En révision → Prêt à
+publier → Publié**. **Bloqué** signale un obstacle à traiter sans perdre l’affectation.
+Ce statut est indépendant du statut technique de génération, par exemple en attente,
+en cours, proposition prête, échec ou source absente. Une génération réussie ne signifie
+donc pas que l’équipe a terminé sa revue, et un incident technique ne redistribue pas le
+dossier.
+
+Après l’affectation, un lead de l’équipe responsable ou le référent nommé **accepte**
+le dossier pour matérialiser sa prise en charge. Si l’équipe ne peut pas en être
+responsable, elle le **renvoie à la répartition** avec un motif. Le gestionnaire peut
+aussi le transférer directement à une autre équipe. L’acceptation, le retour, le
+transfert et les changements de priorité ou d’échéance sont audités avec leur auteur et,
+le cas échéant, leur motif. Une modification concurrente de l’affectation demande de
+recharger le dossier avant de confirmer, afin de ne pas écraser une décision plus récente.
+
+Les documents et les réponses de l’IA peuvent alimenter la revue, mais ne peuvent jamais
+désigner une équipe ni accorder un droit.
+
+Les droits du dossier sont des droits de **collaboration** : consulter, modifier la
+proposition, ou gérer et publier le dossier. Ils sont séparés des permissions
+de la map AppControl. À la première publication, l’auteur de la publication et les
+équipes du dossier reçoivent un accès de consultation à la map afin de pouvoir la
+retrouver. Si une map publiée est réaffectée, les nouvelles équipes reçoivent aussi cet
+accès. Cette synchronisation est additive : elle ne retire ni ne réduit les droits
+applicatifs existants, qui peuvent avoir été accordés ou élevés explicitement dans
+AppControl. Toute permission AppControl plus élevée, notamment `operate`, reste une
+décision explicite dans le partage de la map. Une personne autorisée à construire ou
+publier un dossier ne reçoit donc pas
+implicitement les commandes Start, Stop ou Reconstruction. Les sites, workspaces,
+passerelles et agents sont également revérifiés au moment de la publication.
+
+> **Prolongement de conception — commentaires de révision.** Le modèle cible prévoit
+> des fils de commentaires attachés au dossier pour signaler une brique technique, une
+> information ou une preuve manquante, avec conservation lors d’une update ou d’un
+> transfert. Le workflow décrit ici ne fournit pas encore cette capacité de commentaire
+> « comme dans Word » ; les motifs de retour et l’historique d’affectation sont les traces
+> collaboratives disponibles dans ce contrat.
+
+Lorsqu’une source déjà publiée change, X4B rattache la nouvelle proposition au même
+dossier et la renvoie à l’équipe qui en est responsable avec le statut **Affecté**. Cette
+équipe reprend explicitement le dossier avant de relire l’update. L’historique et les
+participants sont conservés ; une nouvelle répartition n’est pas demandée. Si l’équipe
+responsable n’existe plus ou si le dossier n’a plus de responsable valide,
+l’update rejoint **À répartir** comme exception. La map publiée reste disponible tant
+que sa mise à jour n’a pas été relue et confirmée.
 
 Avec un catalogue de composants AppControl, X4B demande d’abord à l’IA de relever
 les briques et les indices techniques dans le document. Il compare ces éléments
@@ -149,10 +295,28 @@ des composants distincts si leurs rôles ou leurs prérequis diffèrent.
 Ce cluster est descriptif. Le mode fan-out et les affectations des agents
 relèvent de la configuration d’exploitation.
 
-Dans l’écran d’examen, **Affiner la carte** lance une analyse à la demande. Le
-connecteur exécute le prompt avec la version du document de la proposition,
-la carte ouverte, le catalogue et les sites actifs. La revue peut suggérer
-une brique du catalogue, un rattachement à un groupe, une modification de
+Dans l’écran d’examen de l’**Atelier de cartographie**, l’affinage utilise
+la carte ouverte, le catalogue et les sites actifs. En haut de la
+proposition, cliquez sur **Choisir les sources** pour régler les entrées de
+cette analyse. **Inclure le document source** est présélectionné avec la
+révision associée à la proposition. Vous pouvez décocher cette option ou
+sélectionner des **Fichiers du dépôt**. La connexion documentaire se règle
+dans **Connaissance → Source documentaire → Paramètres**.
+
+Les fichiers Git sont proposés pour une application déjà associée à une
+map AppControl disposant de fichiers texte indexés dans **Connaissance**.
+La liste affiche des révisions précises. La sélection est liée au dépôt,
+au commit, au chemin et à l’empreinte du fichier. X4B joint au prompt les
+extraits sélectionnés et leur provenance. Vous pouvez sélectionner jusqu’à
+huit fichiers, dans la limite de 32 Kio de texte UTF-8 au total. La revue
+utilise les fichiers déjà indexés dans le périmètre de la map.
+
+Ouvrez **Préciser l’analyse** pour ajouter une consigne, renseigner
+**Composants à exclure** ou ajouter une **Pièce jointe**. Les composants
+exclus restent sur la carte. Les suggestions de l’analyse ciblée portent
+sur les composants retenus.
+
+La revue peut suggérer une brique du catalogue, un rattachement à un groupe, une modification de
 dépendance ou le retrait d’un nœud qui représente uniquement une application
 externe. En acceptant ce retrait, vous retirez aussi les liens de ce nœud du
 brouillon. La revue examine le rôle des composants et les flux documentés. Une
@@ -168,15 +332,28 @@ Cliquez sur **Appliquer à la proposition** pour enregistrer la sélection ou
 sur **Appliquer et ouvrir l’éditeur** pour poursuivre l’édition de la carte.
 
 **Tester la connexion** vérifie l’accès au catalogue documentaire.
-**Affiner la carte** exécute un prompt sur la révision du document associée à
-la proposition. En cas d’échec, l’écran indique le motif de l’analyse et le
-bouton **Relancer l’analyse** permet de réessayer.
+**Affiner la carte** exécute un prompt avec le contexte sélectionné.
+**Entrées utilisées** indique le document, les fichiers Git, les composants exclus
+et la pièce jointe qui ont servi à la demande, selon la sélection. Il
+présente le nom, le type et l’empreinte de la pièce jointe. En cas d’échec,
+l’écran indique le motif de l’analyse et le bouton **Relancer l’analyse**
+permet de réessayer.
 
 Une consigne facultative permet de cibler la revue, par exemple sur les
 dépendances d’un service ou sa procédure de démarrage. La consigne accompagne
-le même contexte documentaire. Les recommandations sur les commandes et les
+le contexte choisi pour cette analyse. Les recommandations sur les commandes et les
 procédures restent consultables dans le résultat de l’analyse. Seules les
 modifications de topologie sélectionnées sont appliquées au brouillon.
+
+L’interface native utilise `GET /api/v1/x4b/map-generation/jobs/{id}/review-sources`
+pour lire la référence documentaire et les fichiers indexés sélectionnables, puis `POST /api/v1/x4b/map-generation/jobs/{id}/review`
+pour demander l’analyse. Le corps accepte `instruction`, `include_document`
+(vrai par défaut), `repository_sources` (paires `revision` et `path`),
+`excluded_components` (noms des composants de la proposition) et `attachment`.
+Le résultat de la revue expose `inputs`, avec le document, les métadonnées des
+fichiers Git, les noms des composants exclus et les métadonnées de
+la pièce jointe. Le connecteur du client reçoit quant à lui les champs du
+profil `POST /prompt-executions` décrit ci-dessus.
 
 L’aperçu et la map publiée indiquent l’obsolescence renseignée par la source,
 avec le niveau s’il est fourni. Les états reconnus sont **À jour**, **Obsolète**
@@ -230,7 +407,7 @@ sortie approuvée pour le backend de cette installation.
 #### Renseigner l’URL et le jeton dans X4B
 
 Un administrateur peut renseigner l’URL et le jeton directement dans
-**Génération de maps → Paramètres**. Saisissez l’URL complète terminée par
+**Connaissance → Source documentaire → Paramètres**. Saisissez l’URL complète terminée par
 `/api/v1`, le jeton et, si nécessaire, le nom de source utilisé pour rapprocher
 les fiches. L’activation et la désactivation du connecteur prennent effet
 sans redémarrage du backend.
@@ -369,14 +546,21 @@ redémarrage du backend pour recharger la valeur.
 
 ### Vérifier le parcours dans X4B
 
-1. Ouvrez **Génération de maps** en tant qu’administrateur et cliquez sur
+1. Ouvrez **Connaissance** en tant qu’administrateur et cliquez sur
    **Tester la connexion**. X4B lit une page du catalogue. Ce test sert à
    vérifier l’accès réseau et l’authentification de lecture avant la
    génération.
 2. Cliquez sur **Synchroniser les sources**. X4B met en file les documents
    nouveaux ou modifiés du périmètre autorisé et affiche l’état de chaque
    clé. Le premier lot peut être borné par le périmètre du compte de service.
-3. Examinez les candidates et les sites proposés par composant. Si le document
+3. Ouvrez l’**Atelier de cartographie** en tant qu’administrateur ou gestionnaire
+   de portefeuille. Dans **À répartir**, affectez les nouveaux dossiers à leur équipe
+   responsable. Ajoutez si nécessaire un référent, des équipes contributrices ou
+   relectrices, une priorité et une date cible. L’équipe responsable accepte ensuite
+   le dossier dans **Mon équipe**, ou le renvoie avec un motif si elle ne peut pas le
+   prendre en charge.
+4. Examinez la proposition et les sites
+   proposés par composant. Si le document
    situe une même API à `Sirius` et `Legac`, les deux sites apparaissent sur ce
    composant et restent visibles sur la map publiée. La revue signale les sites
    introuvables ou ambigus. Si chaque composant correspond au même site actif,
@@ -384,15 +568,19 @@ redémarrage du backend pour recharger la valeur.
    l’application. Les autres cas demandent un choix explicite. Les placements
    d’exécution et les agents se configurent dans AppControl.
    Une publication groupée peut traiter jusqu’à
-   100 candidates par appel API. Une fois les maps présentes, ajoutez les
-   droits d’équipe dans AppControl ou renseignez `permissions` dans le
-   JSON de configuration et relancez le script.
-4. Pour démontrer une évolution, modifiez un document source puis
+   100 candidates par appel API et reste une action d’administration transverse. Une
+   personne disposant du droit de gestion du dossier peut publier sa proposition
+   individuellement. Une fois les maps présentes, ajoutez les
+   éventuels droits d’exploitation dans AppControl ou renseignez `permissions` dans le
+   JSON de configuration et relancez le script. Les droits de collaboration du dossier
+   ne donnent jamais implicitement `operate`.
+5. Pour démontrer une évolution, modifiez un document source puis
    resynchronisez. X4B génère une proposition pour la nouvelle empreinte.
-   Ouvrez le détail dans **À comparer**, relisez les écarts et utilisez
+   Le dossier reste attribué à la même équipe, qui le reprend en charge. Ouvrez le détail
+   dans **À comparer**, relisez les écarts et utilisez
    **Modifier la carte** pour ajuster la proposition. Cliquez sur
    **Publier la mise à jour**, confirmez, puis ouvrez la map publiée.
-5. Ouvrez la map dans le widget pour tester sa reconstruction. Avec un seul
+6. Ouvrez la map dans le widget pour tester sa reconstruction. Avec un seul
    site dédié dans `embedded.simulation_sites`, AppControl utilise l’agent et
    la gateway enrôlés par le kit pour ce site. Toutes les maps publiées et
    accessibles au portail peuvent être simulées ainsi, sans affectation par
@@ -413,25 +601,27 @@ synchronisation.
 
 | Situation | Automatisation | Décision humaine |
 | --- | --- | --- |
-| Première génération | Le résultat validé attend dans **À publier**. | Un administrateur choisit le site et publie une map ou un lot. |
+| Nouvelle clé applicative | X4B crée un dossier durable dans **À répartir** ; la génération technique peut progresser séparément. | Un gestionnaire de portefeuille choisit l’équipe responsable et les participants. |
+| Première génération affectée | Le résultat validé attend dans **À publier**. | L’équipe responsable accepte, relit et prépare le dossier ; une personne disposant du droit de gestion choisit le site et publie la map. Un administrateur peut publier un lot éligible. |
 | Même empreinte et même configuration | X4B réutilise la génération précédente. | Aucune action. |
 | Catalogue de composants ou sites actifs modifiés | La synchronisation recalcule les propositions concernées. | Relire les correspondances avant publication. |
-| Empreinte différente et map déjà publiée | X4B prépare une proposition et affiche les écarts dans **À comparer**. | Un administrateur relit et ajuste la proposition, puis confirme la mise à jour. |
-| Source absente ou génération en erreur | L’état est visible dans la file et la map publiée reste disponible. | L’utilisateur corrige la source ou relance l’échec. |
+| Empreinte différente et map déjà publiée | X4B prépare une proposition dans le même dossier, la restitue à son équipe responsable et affiche les écarts dans **À comparer**. | L’équipe relit et ajuste la proposition, puis une personne autorisée confirme la mise à jour. |
+| Responsable devenu invalide | X4B conserve le dossier et le place dans **À répartir** comme exception. | Un gestionnaire de portefeuille choisit une nouvelle équipe. |
+| Source absente ou génération en erreur | L’état technique est visible dans la file et la map publiée reste disponible. | L’utilisateur autorisé corrige la source ou relance l’échec. |
 
 X4B vérifie la version source et la version de la map relue. L’application
 de la topologie, l’enregistrement de la révision publiée et l’écriture
 de l’audit se font dans la même transaction. Une modification concurrente
 demande une nouvelle revue.
 
-### Évolution vers Git
+### Revue avec Git
 
-Pour le POC, la décision humaine se prend dans AppControl. La proposition
+Dans le workflow direct, la décision humaine se prend dans AppControl. La proposition
 doit identifier la map, la version source, la version active relue et
 l’empreinte des changements approuvés. L’audit enregistre l’auteur de la
 décision et la révision appliquée.
 
-Dans une étape suivante, X4B peut ouvrir une pull request contenant ces
+Si l’organisation choisit une gouvernance par Git, X4B peut ouvrir une pull request contenant ces
 mêmes références et le diff. X4B calcule les écarts sur des clés de
 composant stables et sur les dépendances entre ces clés. La revue
 porte sur les ajouts, modifications et retraits identifiés. Une

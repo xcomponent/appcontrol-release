@@ -1,8 +1,8 @@
-# AppControl v1.24.9 — release qualification report
+# AppControl v1.25.2 — release qualification report
 
-Generated: 2026-11-17T06:10:26.527695+00:00
-Source commit: `4ae2617e77fc871fc8d86d49df0d37c4c22455cc`
-Release: https://github.com/xcomponent/appcontrol-release/releases/tag/vv1.24.9
+Generated: 2026-11-18T10:37:03.295350+00:00
+Source commit: `c30b0ee95405c250d794d1ebd8f2a4d0452c4a6c`
+Release: https://github.com/xcomponent/appcontrol-release/releases/tag/vv1.25.2
 
 ## Scope and result
 
@@ -12,26 +12,32 @@ The OpenShift client kit targets Linux amd64. Its five images are backend, front
 
 ## Vulnerability scans and inventories
 
-Trivy 0.76.1 scans OS and application packages at all severities (UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL), including unfixed advisories. Image scans use comprehensive detection. A scan with missing inventory, known vulnerabilities or suppressed findings fails the release. Each image has its own CycloneDX SBOM. The locked Rust and npm dependencies have an additional SBOM including development dependencies.
-Source vulnerability database updated: 2026-11-16T18:50:18.311537747Z. Per-image scanner metadata records the database used for that scan.
+Trivy 0.76.1 scans OS and application packages at all severities (UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL), including unfixed advisories. Image scans use comprehensive detection. A scan with missing inventory, unresolved vulnerabilities or suppressed findings fails the release. Each image has its own CycloneDX SBOM. The locked Rust and npm dependencies have an additional SBOM including development dependencies.
+Source vulnerability database updated: 2026-11-18T07:15:21.579242117Z. Per-image scanner metadata records the database used for that scan.
 
 | Image | Qualified image and digest | Findings | Scan timestamp |
 |---|---|---:|---|
-| backend | `appcontrol-backend@sha256:37a8cb129280a96d1decdee95d0c0c7fa2a21f5a974e465269aecc7db539cd2a` | 0 | 2026-11-17T06:02:59.080344292Z |
-| frontend | `appcontrol-frontend@sha256:bd9059138acc90ec83bf2100a4f35e2eac5b5c03105f1731198ab1b79f80c1e6` | 0 | 2026-11-17T06:02:55.862886585Z |
-| gateway | `appcontrol-gateway@sha256:fde95c7901daf375b2806ee61c2cedc572fba339b38f01e356f9b5abc188103e` | 0 | 2026-11-17T06:02:56.375193917Z |
-| agent | `appcontrol-agent@sha256:e3f9a43710a9678b05f01c7eb778e586eabfa2ae40315daacdce2bed71c43054` | 0 | 2026-11-17T06:02:57.527351363Z |
-| postgresql | `appcontrol-postgresql@sha256:c1f63ec5f6b4e3a1ff76e55dc04cfa420081440ce44063b40438a7ba48bac871` | 0 | 2026-11-17T06:03:04.466524296Z |
-| init-certs | `appcontrol-init-certs@sha256:2094ea60650ed67cf16e1835103a0510f8af38c849a1ca02103bb237fd18037e` | 0 | 2026-11-17T06:02:57.996814052Z |
-| azure-gateway | `appcontrol-azure-gateway@sha256:8e50d4e20b22cf58b5fcd2e06c0b6b11f5228321685524d34ac5ac36a6f90e2a` | 0 | 2026-11-17T06:03:00.021609702Z |
+| backend | `appcontrol-backend@sha256:7b2713c6235697387d618c4b90003abfd2f6b33bffea7501c7f69c1dcab8da40` | 0 | 2026-11-18T09:52:40.407194445Z |
+| frontend | `appcontrol-frontend@sha256:7cb0dfc055f71fb5a7bcd059eb77afbc397847ae5e1bb0667f0de8c6429b3f86` | 0 | 2026-11-18T09:52:39.35552805Z |
+| gateway | `appcontrol-gateway@sha256:dbaa816e56e14a44f332007465c0fe8aa38fa1f97733aea1494986082c352466` | 0 | 2026-11-18T09:52:41.645446194Z |
+| agent | `appcontrol-agent@sha256:24bd45211eb6c2cca0c7ea38fcdffdbfb1d50505bc45ccbb2a2a01848186e906` | 0 | 2026-11-18T09:52:46.480226357Z |
+| postgresql | `appcontrol-postgresql@sha256:d0166cbced561956065265e63bfd09473e2e93e4aa049056ce98c71b2fad3c02` | 0 | 2026-11-18T09:52:44.062351972Z |
+| init-certs | `appcontrol-init-certs@sha256:646a2735491310de2257b7c3a7ecdfafe931abd67a7ef5b4bf5560f3258f62ae` | 0 | 2026-11-18T09:52:31.032577283Z |
+| azure-gateway | `appcontrol-azure-gateway@sha256:99a1ba686dc98b248a4ef3f3075b851c046c927a7283006f28de40956a554afe` | 0 | 2026-11-18T09:52:39.815847571Z |
 
-| Dependency scope | Inputs | Findings | Scan timestamp |
+| Dependency scope | Inputs | Unresolved findings | Scan timestamp |
 |---|---|---:|---|
-| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-16T23:29:31.289585482Z |
-| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-16T23:29:44.555999993Z |
+| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-18T09:26:41.468894459Z |
+| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-18T09:26:45.67268414Z |
+
+The raw development scan flags the upstream version numbers below. X4B verifies that all installed copies use the local archives that remove the affected syntax. These archives are used by frontend build and test tooling.
+- `picomatch@2.3.2` — `CVE-2026-112366`, verified local mitigation.
+- `picomatch@4.0.7` — `CVE-2026-112366`, verified local mitigation.
+
+The local patches, upstream references and archive checksums are included in `picomatch-backport/`.
 
 RustSec: zero vulnerability advisories. Informational warnings, if any, remain in rustsec.json and are not reclassified as vulnerabilities.
-RustSec warning categories: unmaintained: 2, unsound: 1, yanked: 1.
+RustSec warning categories: unmaintained: 4, unsound: 1, yanked: 1.
 
 ## Executed checks
 

@@ -1,17 +1,54 @@
 # X4B — Raccorder une application
 
-X4B, édité par Invivoo, réunit AppControl, Génération de maps et les applications enregistrées. L’accueil est à `/x4b`. Le menu du compte donne accès à **Comptes et accès** et **Applications raccordées** pour les administrateurs. AppControl conserve ses liens directs, notamment `/apps/<id>`.
+X4B, édité par Invivoo, organise l’accueil `/x4b` en trois colonnes. Dans **Connaissance** (Knowledge Collect & Store, KCS), **Sources de connaissance** (CapabilityCatalog) donne accès aux réglages documentaires et aux ressources, dont le catalogue de composants. **Transformation** (Knowledge Transform & Refine, KTR) ouvre l’**Atelier de cartographie** (AppGraphGen) pour générer, affiner et publier les propositions. **Exploitation** (Knowledge Graph & Act, KGA) donne accès à **App Explorer** (AppExplore) pour consulter les fiches des applications accessibles et à **AppControl** pour exploiter leurs cartes. Le menu du compte donne aux administrateurs accès à **Comptes et accès** et **Applications raccordées**. Les liens directs, notamment `/map-generation` et `/apps/<id>`, restent valides.
+
+Le bandeau donne accès au **Service d’IA**, à **Agents IA** et à **Intégrations** selon les droits de l’utilisateur. L’espace Intégrations présente un aperçu du bandeau, de la carte embarquée et du badge d’état. L’écran **Agents IA** regroupe les skills à télécharger et l’adresse du catalogue.
+
+## Travailler avec un assistant externe
+
+Sans MCP, téléchargez les fichiers du skill depuis **Agents IA**. Dans le
+projet, placez-les dans `.agents/skills/<nom-du-skill>/` pour Kilo Code
+ou dans `.claude/skills/<nom-du-skill>/` pour Claude Code. Placez `SKILL.md`
+à la racine du dossier du skill et les fichiers complémentaires dans
+`references/`. Kilo Code peut également télécharger ces fichiers depuis
+le catalogue configuré dans `skills.urls`. [Skills dans Claude Code](https://code.claude.com/docs/en/skills)
+
+Le skill `appcontrol-map-from-repository` fournit le schéma JSON AppControl
+et un exemple importable. Demandez à l’assistant de construire `map.json`
+dans le dépôt ouvert et de relever les preuves des composants et des
+dépendances dans une note. La création et la validation par le schéma
+peuvent se faire sans connexion à AppControl. L’instance cible vérifie
+ensuite les règles du contrat avant la revue des affectations.
+
+Les skills de cartographie guident la validation du JSON, la vérification des
+affectations et la recette sur une cible de test. Le skill
+`appcontrol-deployment-verification` couvre l’installation ou la mise à jour,
+la disponibilité du backend et de l’interface, la reconnexion des agents et
+la reprise des intégrations. Pour exécuter ces contrôles, l’assistant utilise
+les accès AppControl et les outils d’administration disponibles dans
+l’environnement cible. Il rend compte des vérifications effectuées et de
+celles qui restent à réaliser.
+
+Pour utiliser MCP, installez le binaire `appcontrol-mcp` sur le poste qui
+exécute Kilo Code. Préparez la configuration locale dans **Agents IA**.
+L’exécutable lit `APPCONTROL_API_KEY` dans l’environnement du processus.
+Créez une clé dédiée dans **Clés API**, limitée à l’application et au droit
+requis. La lecture suffit au premier essai. La conception permet de
+préparer une proposition pour revue. Installez la configuration dans Kilo
+Code et activez le connecteur dans ses paramètres MCP. Pour couper l’accès
+de cet assistant à AppControl, révoquez sa clé dédiée.
+[Configuration MCP dans Kilo Code](https://kilo.ai/docs/automate/mcp/using-in-kilo-code) · [Découverte des skills](https://kilo.ai/docs/customize/skills)
 
 ## Comptes et accès
 
-L’administrateur réutilise les comptes locaux AppControl. Les comptes existants gardent leur accès AppControl après mise à jour. Les nouveaux comptes créés dans X4B reçoivent les accès choisis dans l’administration. La génération et la publication par lots restent réservées aux administrateurs dans cette version. Les autorisations AppControl sur les maps, les sites et les opérations s’appliquent en plus de l’accès au module.
+L’administrateur réutilise les comptes locaux AppControl. Les comptes existants gardent leur accès AppControl après mise à jour. L’accès à l’Atelier, l’affectation d’un dossier et les droits sur une carte publiée sont distincts. Les équipes autorisées peuvent travailler sur un dossier et le faire passer en revue. La synchronisation de la source et la publication par lots restent réservées aux administrateurs. Un dossier hérité peut suivre le parcours de publication administrateur jusqu’à sa première affectation. Les autorisations AppControl sur les cartes et leurs sites s’appliquent aux cartes déjà publiées. [Droits et affectations X4B](X4B-ACCESS.fr.md)
 
 Pour un POC avec un portail documentaire, créer un compte administrateur de revue et un compte de consultation. Donner à ce dernier accès au portail, puis un droit de lecture sur la map et les sites nécessaires, dont le site de simulation. Le compte peut ouvrir une simulation isolée. Les opérations sur une map réelle nécessitent les droits d’exploitation AppControl.
 
 ## Intégration d’un portail documentaire
 
 1. Conserver les URL HTTPS du portail et d’AppControl. L’accueil X4B peut utiliser le même hôte qu’AppControl avec le chemin `/x4b`.
-2. Dans **Applications raccordées**, enregistrer `documentation`. Pour l’hôte de référence, utiliser `https://documentation.example.test/` comme URL d’entrée et `https://documentation.example.test/x4b/callback` comme URL de retour, avec le domaine réel de l’hôte. Copier le secret affiché à la création dans le gestionnaire de secrets du serveur du portail.
+2. Dans **Applications raccordées**, enregistrer `documentation` et choisir son **Pilier de l’accueil**. Le placement est modifiable sans recréer l’application. Les applications précédemment raccordées figurent dans **Exploitation** par défaut. Pour l’hôte de référence, utiliser `https://documentation.example.test/` comme URL d’entrée et `https://documentation.example.test/x4b/callback` comme URL de retour, avec le domaine réel de l’hôte. Copier le secret affiché à la création dans le gestionnaire de secrets du serveur du portail.
 3. Protéger les fiches et les API du portail avec la session X4B. Lors d’un accès direct, conserver le chemin de la fiche côté serveur, effectuer l’échange d’autorisation et revenir à ce chemin. Le serveur du portail vérifie aussi ses propres droits de consultation de fiche. Voir [le contrat d’accès](X4B-ACCESS.fr.md).
 4. Ajouter les composants à la mise en page et à la fiche. Le serveur du portail expose les routes locales ci-dessous. Les données d’identité restent sur les canaux serveur à serveur.
 
@@ -34,13 +71,14 @@ Pour un POC avec un portail documentaire, créer un compte administrateur de rev
 `GET /x4b/session` renvoie au bandeau les champs `user`, `modules` et `settings` issus de
 la réponse serveur X4B. Chaque entrée de `modules` contient `key`, `name` et
 `entry_url`. X4B calcule la liste selon les droits du compte connecté. Le
-bandeau ajoute **Catalogue** lorsque **AppControl** figure dans cette liste.
+bandeau ajoute **Connaissance** lorsque le compte dispose d’AppControl ou de
+l’Atelier de cartographie, et **App Explorer** lorsque le compte dispose d’AppControl.
 
 Le bandeau demande confirmation avant de déconnecter le compte. Après un `POST /x4b/logout` réussi, il dirige le navigateur vers la page de connexion X4B. La route de l'application hôte supprime sa session locale et révoque la session partagée. Si la révocation échoue, la route renvoie une erreur HTTP. L'application protège aussi ses propres pages et API.
 
 Pour les deux routes Embedded, `credentials` contient `client_id`, `client_secret` et `session_token`. La source de la map est résolue par `source_reference.system` égal à la clé du module et `source_reference.id` égal à l’identifiant de la fiche. La configuration [AppControl Embedded](EMBEDDED.fr.md) déclare en plus l’origine du portail et le site de simulation. Le jeton de simulation reste court et suit la validité de la session X4B qui l’a demandé.
 
-Pour les maps générées depuis une source documentaire externe, renseigner `documentation` comme nom de source dans **Génération de maps → Paramètres**, ou définir `X4B_KNOWLEDGE_SOURCE=documentation` lors du déploiement. L’`application_key` exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple `PAI-042`.
+Pour les maps générées depuis une source documentaire externe, renseigner `documentation` comme nom de source dans **Connaissance → Source documentaire → Paramètres**, ou définir `X4B_KNOWLEDGE_SOURCE=documentation` lors du déploiement. L’`application_key` exposée par le connecteur doit correspondre à l’identifiant utilisé sur la fiche, par exemple `PAI-042`.
 
 Le badge actualise les données toutes les 15 secondes quand la page est visible. Autoriser l’hôte AppControl dans `script-src`, `style-src` et `frame-src` du portail. Le navigateur interroge les routes du portail sous sa propre origine.
 

@@ -69,6 +69,7 @@ services:
       # ── Public URLs for enrollment commands (optional) ──
       # PUBLIC_GATEWAY_URL: wss://gateway.company.com:4443
       # PUBLIC_BACKEND_URL: wss://backend.company.com/ws/gateway
+      # APPCONTROL_AGENT_BINARY_MIRROR: https://repo.company.com/repository/x4b-agents
     volumes:
       - certs:/certs
     depends_on:

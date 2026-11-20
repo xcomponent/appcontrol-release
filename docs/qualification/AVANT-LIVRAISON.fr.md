@@ -1,12 +1,19 @@
 # Première installation client et limites à qualifier
 
-La version 1.21.1 réunit les évolutions du produit et les démonstrations.
-Son kit OpenShift vise une première installation isolée, puis un POC cadré.
-Le numéro de release stable ne constitue pas une certification de production bancaire.
-Pour Windows, le parcours recommandé est le kit léger **1.21.1-2**, avec
-PowerShell et le client `oc` existant. Les résultats à retenir sont ceux des
-preuves de cette livraison, une fois sa qualification terminée ; les rapports
-1.20.4 restent historiques.
+Cette procédure vise **X4B / AppControl 1.27.0** et le kit Windows léger
+**1.27.0-1**, avec PowerShell et le client `oc` existant. Le kit OpenShift
+vise une installation isolée ou la mise à jour d’un POC cadré. Le numéro de
+release stable ne constitue pas une certification de production bancaire.
+Les résultats applicables sont ceux des preuves du kit exact, après leur
+production par la chaîne de qualification. Les rapports 1.20.4 et 1.21.1
+restent historiques et ne doivent pas être réétiquetés pour cette livraison.
+
+Le périmètre comprend les sources Knowledge nommées et la bibliothèque de
+documents, le catalogue avec faits de support sourcés, la Discovery par skills
+et plans approuvés, le durcissement IAM et les correctifs Rust de suivi des
+commandes, de persistance des résultats et de reprise des connexions. La
+collecte native reste limitée aux agents Linux explicitement autorisés et aux
+plans approuvés. Elle ne qualifie pas les commandes métier d’une application.
 
 ## Contrôles exigés pour publier le kit
 
@@ -19,7 +26,7 @@ effectif de cette version ; les rapports d'octobre du dépôt restent historique
 
 Le parcours utilise quatre services : frontend, backend, gateway et PostgreSQL.
 Un agent supplémentaire sert aux tests synthétiques. TLS/mTLS, droits,
-ordre des dépendances, reconnexions et persistance sont éprouvés par la recette.
+ordre des dépendances, reconnexions et persistance doivent être éprouvés par la recette de cette livraison.
 Un scan sans alerte est daté ; il ne démontre pas l'absence de toute faille.
 
 ## Points à traiter avec le client
@@ -30,11 +37,11 @@ Un scan sans alerte est daté ; il ne démontre pas l'absence de toute faille.
 | Installation | Projet dédié, stockage, deux Routes, quotas et confiance TLS à préparer. Aucun besoin de compilation chez le client. |
 | Agents extérieurs | Gateway incluse, WSS sortant sur 443, jeton à usage unique et certificat public de CA. Tester le DNS, les pare-feu, le système et le compte OS réels. |
 | Haute disponibilité | Backend mono-instance/Recreate : interruption pour maintenance. Ne pas augmenter le nombre de répliques en supposant une HA qualifiée. |
-| PKI, jetons, SSO et base client | La PKI générée sert à l'évaluation. Certificats de service 90 jours, jeton gateway 30 jours ; renouvellement explicite. Les raccordements client demandent leur propre recette. |
+| PKI, jetons, SSO et base client | La PKI générée sert à l'évaluation. Certificats de service 90 jours, jeton gateway 30 jours ; renouvellement explicite. Vérifier le précontrôle SSO, l’issuer SAML/OIDC, les callbacks et les références Secret avant application du manifeste ; qualifier le véritable fournisseur client. La MFA dépend de sa politique, sans attestation automatique par X4B. Voir [IAM](../IAM.md). |
 | Sauvegarde et reprise | La persistance après redémarrage n'est pas un test de restauration. Vérifier une sauvegarde restaurable avant de dépendre des données. |
-| Mise à jour existante | Tester sur une copie restaurée. Helm ne restaure ni les migrations ni les données. Voir [UPGRADE](../UPGRADE.md). |
+| Mise à jour existante | Tester sur une copie restaurée, préserver les paramètres et références Secret, puis vérifier les migrations V080–V086. Mettre à jour et vérifier le backend avant les agents pour les acquittements persistants. Restaurer une sauvegarde compatible en cas de retour à une version antérieure. Voir [UPGRADE](../UPGRADE.md). |
 | Reconstruction applicative | Qualifier les procédures et la restauration de chaque application sur un périmètre non critique. Les commandes synthétiques de démo ne constituent pas cette qualification. |
-| IA et automatisation | Conserver les périmètres de clés, contrôles serveur et revues indépendantes requis ; une confirmation technique n'est pas une approbation métier. |
+| IA et automatisation | Sélectionner la source du dossier et le contexte d’affinage ; valider les propositions avant publication. Pour la Discovery native, configurer la clé dédiée et le consentement local sur l’agent Linux, puis approuver le plan exact. Une confirmation technique n'est pas une approbation métier. |
 
 ## Travaux de sûreté toujours nécessaires pour l'automatisation critique
 

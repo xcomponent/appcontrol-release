@@ -99,7 +99,10 @@ For automated setup, use the provisioning script:
 
 ```bash
 # Individual commands
-./appcontrol.sh create-user --email alice@corp.com --name "Alice" --password changeme
+IFS= read -r -s -p "New account password (12 characters minimum): " NEW_USER_PASSWORD
+printf '\n'
+./appcontrol.sh create-user --email alice@corp.com --name "Alice" --password "$NEW_USER_PASSWORD"
+unset NEW_USER_PASSWORD
 ./appcontrol.sh create-team --name "Equipe Prod"
 ./appcontrol.sh add-member --team "Equipe Prod" --email alice@corp.com
 ./appcontrol.sh grant-access --app "Core Banking" --team "Equipe Prod" --level operate
@@ -113,8 +116,8 @@ For automated setup, use the provisioning script:
 ```json
 {
   "users": [
-    { "email": "alice@corp.com", "name": "Alice", "role": "operator", "password": "changeme" },
-    { "email": "bob@corp.com",   "name": "Bob",   "role": "operator", "password": "changeme" }
+    { "email": "alice@corp.com", "name": "Alice", "role": "operator", "password": "<per-user-secret>" },
+    { "email": "bob@corp.com",   "name": "Bob",   "role": "operator", "password": "<per-user-secret>" }
   ],
   "teams": [
     {
@@ -129,6 +132,11 @@ For automated setup, use the provisioning script:
   ]
 }
 ```
+
+`<per-user-secret>` is a placeholder, not a shared password. Supply a unique
+secret for each local account when preparing a protected provisioning file,
+then remove that file after use. New passwords require at least 12 characters
+and at most 72 UTF-8 bytes.
 
 ### Environment Variables
 

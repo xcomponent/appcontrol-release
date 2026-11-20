@@ -2,9 +2,12 @@
 
 > **Depuis Windows, commencer par le [parcours léger PowerShell + oc](INSTALLATION-WINDOWS.fr.md).** Cette page concerne le kit Linux/macOS avec archives OCI. Le parcours Windows léger utilise les images publiques d’évaluation téléchargées par le cluster, via le registre autorisé ; il n’exige aucun import d’images depuis le poste.
 
-Version produit **1.21.1**. Consulter `VALIDATION.fr.md` et
-`provenance.json` pour le commit, les digests, la date et les contrôles réellement
-exécutés par la CI de cette release. Les rapports bruts sont dans `evidence/`.
+Cette procédure vise **X4B / AppControl 1.27.0**. Le kit Windows léger associé
+porte la révision **1.27.0-1**. Pour le kit effectivement publié, consulter
+`VALIDATION.fr.md`, `provenance.json` et `evidence/` : ces fichiers doivent
+identifier son commit, ses digests et les contrôles réellement exécutés.
+La présente procédure ne constitue pas une preuve de qualification ; les
+rapports d’une version précédente ne qualifient pas cette livraison.
 
 Ce kit Linux AMD64 contient les cinq images OCI, les exécutables déjà compilés,
 le frontend, les migrations, le chart Helm, les scripts, les rapports et les
@@ -15,6 +18,22 @@ Sandbox. Ce n’est pas une qualification de production bancaire.
 
 **Toutes les commandes ci-dessous se lancent depuis la racine du kit extrait**,
 où se trouvent `images-oci/`, `images.source.lock.json`, `SHA256SUMS` et `scripts/`.
+
+La version 1.27.0 regroupe les sources documentaires nommées et leur bibliothèque
+Knowledge, le catalogue des composants avec informations de support sourcées,
+la Discovery par skills et plans approuvés, les contrôles IAM et les correctifs
+de persistance des résultats et de reconnexion des agents. Les propositions IA
+et les nouvelles observations restent soumises à revue avant consolidation ou
+publication. La collecte native exige un agent Linux explicitement autorisé ;
+elle n’est pas activée par la mise à jour.
+
+Pour une installation existante, sauvegarder les données et la configuration,
+mettre à jour le backend et les services de contrôle, puis vérifier leur
+fonctionnement **avant de mettre à jour les agents**. Le nouveau backend doit
+pouvoir acquitter les résultats persistés par les agents. Les migrations
+**V080 à V086** sont appliquées au démarrage ; un ancien binaire ne constitue
+pas un retour arrière de la base. Voir [la mise à jour](../UPGRADE.md) et
+[le guide IAM](../IAM.md) pour les paramètres SSO requis et leur précontrôle.
 
 ## 1. Préparer le créneau avec l’équipe plateforme
 
@@ -51,7 +70,7 @@ Remplacer le préfixe de registre ci-dessous ; le tag d’import doit être rés
 ```sh
 python3 scripts/qualification/transfer-images.py import \
   --lock images.source.lock.json --archive-dir images-oci \
-  --target-prefix registre.banque/appcontrol --version 1.21.1 \
+  --target-prefix registre.banque/appcontrol --version 1.27.0 \
   --output-lock images.lock.json --execute
 ```
 

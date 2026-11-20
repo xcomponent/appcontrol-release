@@ -37,6 +37,7 @@ param(
     [int]$PostgresPort = 5432,
     [string]$AdminEmail = "admin@localhost",
     [string]$AdminPassword,
+    [Security.SecureString]$NewUserPassword,
     [int]$BackendPort = 3000,
 
     [string]$InstallDir = "$env:ProgramFiles\AppControl",
@@ -452,7 +453,9 @@ function Invoke-AdminCommand {
     $arguments = @($Command)
     if ($Arg1) { $arguments += $Arg1 }
     if ($Arg2) { $arguments += $Arg2 }
-    & $AdminScriptPath @arguments
+    $parameters = @{}
+    if ($null -ne $NewUserPassword) { $parameters.NewUserPassword = $NewUserPassword }
+    & $AdminScriptPath @arguments @parameters
     if (-not $?) {
         throw "Administration command '$Command' failed with exit code $LASTEXITCODE."
     }

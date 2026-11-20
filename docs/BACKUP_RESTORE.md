@@ -25,9 +25,10 @@ For DR scenarios that consume these backups, see [Disaster Recovery](DISASTER_RE
 | Asset | Storage | Recovery if lost |
 |-------|---------|------------------|
 | PostgreSQL data directory | `/var/lib/postgresql/data/` (or managed service) | From backup |
-| Append-only audit (`action_log`, `state_transitions`, `check_events`, `switchover_log`, `config_versions`) | PostgreSQL tables | From backup — **no other source** |
-| CA private key | `pki_authorities` table (encrypted) | From backup — losing it forces re-enrollment of every agent |
-| `JWT_SECRET` | Kubernetes secret `appcontrol-jwt` | Can be regenerated (invalidates all sessions) |
+| Audit and recovery records | PostgreSQL tables, including `application_procedure_*`, `procedure_run_commands` and `application_command_proposals` | Restore the database and compare a retained approval, revision, run and evidence record |
+| CA key, certificate and pending rotation | `organizations.ca_*_pem` and `pending_ca_*_pem` | Restore the matching database backup and preserve the current trust chain |
+| `JWT_SECRET` | Kubernetes secret `appcontrol-jwt` | Restore the original secret to recover sessions and connector tokens that use the derived key |
+| `X4B_KNOWLEDGE_SETTINGS_KEY`, when configured | Backend environment or Kubernetes Secret | Restore this specific key to read saved connector tokens |
 | `DATABASE_URL` | Kubernetes secret `appcontrol-db` | Known config |
 | OIDC / SAML client secrets | env vars or Kubernetes secrets | Re-issue from your IdP |
 | Gateway certs | Kubernetes secret `appcontrol-gateway-tls` | Re-issue with `appctl pki issue-gateway` |
@@ -398,22 +399,23 @@ Use the [restore validation queries](#restore-validation) above.
 
 ### CA private key
 
-The per-organization CA is stored encrypted in the `pki_authorities` table. If you lose this row:
+The organization row contains the current CA certificate and private key in
+`ca_cert_pem` and `ca_key_pem`, along with any pending rotation. Back up the
+organization rows and transport and store the backup with encryption. Keep the
+database readable only by the authorized recovery team.
 
-- **Every agent must be re-enrolled** with a new CA — there is no other way.
-- Plan for this by including `pki_authorities` in your DB backup (it is part of the `pg_dump`).
+### Backend and connector secrets
 
-!!! note "Roadmap: external CA"
-    Delegating CA signing to HashiCorp Vault PKI or AWS KMS so the private key never lives in the backend database is on the roadmap. It is not yet implemented (see [Hardening](HARDENING.md#pki-and-certificate-hygiene)). Today the CA lives encrypted in `organizations.ca_private_key`; protect it via PostgreSQL TDE or volume-level encryption (LUKS, EBS encryption) and a hardened Kubernetes secret-access policy.
+Restore `JWT_SECRET` from the vault used by the deployment. The backend also
+uses it to derive the connector encryption key when
+`X4B_KNOWLEDGE_SETTINGS_KEY` is unset. If a dedicated key is configured,
+restore that key with the same version of the database. Verify the recovery
+workspace and an authorized document connector in the isolated instance before
+it is put back in service.
 
-### `JWT_SECRET`
-
-Stored in the Kubernetes secret `appcontrol-jwt`. Back it up the same way you back up other Kubernetes secrets (Sealed Secrets, HashiCorp Vault, AWS Secrets Manager). Losing it forces every user to re-authenticate.
-
-```bash
-kubectl get secret -n appcontrol appcontrol-jwt -o yaml > appcontrol-jwt.yaml.enc
-# Store encrypted in your secret store
-```
+Keep the encrypted dossiers for approved revisions in storage accessible from
+the recovery site. Store their keys separately in the vault. Test reading an
+export on a workstation with no network access to X4B or its connectors.
 
 ### Agent client certificates
 
@@ -434,10 +436,10 @@ In a future release the backend will be able to delegate CA signing to a KMS or 
 - Help satisfy DORA Article 9 (cryptographic key management).
 - Allow hardware-backed key rotation.
 
-This is not yet implemented. The CA private key is currently held encrypted in the database. Until KMS integration ships, mitigate by:
+The current backend holds the CA private key in the organization row. Protect it by:
 
 - enabling at-rest encryption on the PostgreSQL volume (PostgreSQL TDE, LUKS, AWS EBS encryption);
-- restricting `SELECT` on `pki_authorities` / `organizations.ca_private_key` to the backend service account only;
+- restricting `SELECT` on `organizations.ca_key_pem` and `organizations.pending_ca_key_pem` to the backend service account only;
 - rotating the CA on a regular cadence (see [PKI rotation](HARDENING.md#pki-and-certificate-hygiene)).
 
 ---

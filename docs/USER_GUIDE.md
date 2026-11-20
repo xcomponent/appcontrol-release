@@ -121,6 +121,51 @@ To design a map by hand and review it before creating an application, use
 
 ### Auto-Discovery
 
+For investigations driven by Markdown skills, open **Knowledge → Agentic
+discovery**, or use the discovery action on an application, component type or
+installed agent. This opens one shared **Missions / Skills / Agents** workspace.
+The existing inventory/correlation workflow remains available separately.
+
+An organization administrator can write a free Markdown skill, associate it with
+applications, catalog types or servers, and save a reusable discovery agent
+configuration. A mission snapshots its selected skills, parameters and resolved
+targets, including cluster members. Preparing a plan through the selected client
+AI connector does not execute it. Inspect its exact commands, consulted files,
+permissions and limits before approving that immutable version. A changed plan
+requires a new approval; an unsuccessful generation retains previous versions.
+
+Choose **Manual script** or **Installed AppControl agents** before generating the
+plan. The execution mode and collector runtime are part of the immutable plan.
+Selecting a different mode for a future plan does not change a plan already
+approved; generate and approve a new version instead.
+
+For **Manual script**, download the script for each target, review it, and run it
+yourself under a non-root Linux account with Python 3.8 or later using
+`python3 -I -S appcontrol-discovery.py > discovery-result.json`. Import its JSON
+result. Imported files do not authenticate a machine or prove execution.
+
+For **Installed AppControl agents**, check the readiness of each target. A
+connected agent alone is insufficient: the Linux agent must explicitly enable
+Discovery, run without root, advertise compatible native collectors and trust
+the server approval signing key. Older or incompatible agents are shown as
+unavailable with a reason. This mode never falls back to shell commands.
+After approval, **Prepare execution through installed agents** creates the run
+without starting collection. Review its targets, confirm the authorization and
+choose **Run the approved plan on installed agents**. Only that explicit action
+requests collection. Results refresh while the run is active; each target shows
+its progress or error. An uncertain result requires investigation before a new
+execution; the interface does not silently retry dispatch.
+
+Both modes retain their results and provenance. Inspect the observations, then
+explicitly validate and add them to Knowledge. Receiving an agent result does
+not validate its content. Conflicting facts retain their evidence and require
+reconciliation; consolidation does not publish a map or change operational
+commands. Neither AI generation nor plan approval starts collection by itself.
+SSH/WinRM and other runners remain unavailable.
+
+See [Agentic Discovery](AGENTIC_DISCOVERY.md) for the Tomcat walkthrough,
+supported collectors, approval signing and result limits.
+
 The **Discovery** feature automatically detects running processes on monitored servers and suggests application topologies.
 
 **How it works:**
@@ -662,13 +707,16 @@ For critical operations in regulated environments:
 
 ### Break-Glass Emergency Access
 
-Bypass normal permissions in emergencies:
+Login policy uses `AUTH_MODE`: `hybrid`, `sso_only` or `local_only`. An IdP outage
+requires a pre-provisioned active local administrator explicitly allowed through
+`AUTH_LOCAL_EMERGENCY_USER_IDS` when SSO-only policy is selected.
 
-- Immediate access with justification required
-- High-priority alert sent to all administrators
-- Time-limited window (default: 30 minutes)
-- Every action logged with break-glass flag
-- Mandatory post-incident review
+The separate emergency activation endpoint verifies a dedicated bcrypt account,
+requires a reason, and records a session and its audit event together. Its
+response contains session metadata; it does not issue a login token. The default
+recording window is 60 minutes, bounded to 5–120 minutes. Ending it appends a
+termination record. Store emergency passwords in the approved vault and follow
+the client's incident review procedure. See the [IAM guide](IAM.md).
 
 ---
 
@@ -791,14 +839,104 @@ The interface starts in a dark theme. Use the theme button in the header or Sett
 The **Home** page at `/x4b` groups the applications available to the signed-in account:
 
 - **Knowledge Collect & Store (KCS)** groups knowledge sources and reference
-  resources. Administrators configure and synchronize the document connector
-  here. Its resources link to the component
+  resources. Administrators add named document sources and configure and
+  synchronize each connection here. Its resources link to the component
   catalog, agent discovery, and repository review for accounts with AppControl access.
 - **Knowledge Transform & Refine (KTR)** opens **Map Builder** (AppGraphGen) to generate, refine, review and
   publish map proposals. Existing links to `/map-generation` still open Map Builder.
 - **Knowledge Graph & Act (KGA)** opens **App Explorer** (AppExplore) for read-only browsing of accessible
   application maps, or **AppControl** for operational work. App Explorer can
   search by application name or published source key and open the map in AppControl.
+
+### Browsing the component catalog
+
+Open **Component catalog** from Knowledge to browse component types as cards.
+Search by name, category, description or matching keyword, or filter by category.
+The grid shows twelve cards per page. Select **View details** to read the complete
+description, matching keywords and default command templates in a side panel.
+Administrators can then select **Edit**, or **Add a component type** above the
+grid. Other accounts retain read access without editing controls. A failed save
+keeps the entered values available for correction and retry.
+
+<!-- SCREENSHOT:component-catalog -->
+
+### Tracking component support and lifecycle
+
+Open a component type's details in the catalog to read its **Versions and
+support** records and the applications that use it. Each record identifies a
+version, a documented support status, optional support deadlines, the source,
+its observation time and evidence. Standard support ends after the inclusive
+end date. An announced extended-support deadline does not establish that the
+organization has purchased that support. Lifecycle information is separate from
+installed patch levels, vulnerabilities and operational component state.
+
+An administrator can **Import lifecycle data** as versioned JSON, inspect the
+preview and apply the reviewed records. Imports preserve unrelated sources and
+do not change map drafts or operational commands. When sources disagree, their
+records remain visible. The impact view uses the component's explicitly recorded
+`obsolescence.version`; missing versions remain **Version to qualify**. An exact
+match is the default. A release-prefix match requires an explicit rule in the
+import. Application names and counts respect application permissions and API-key
+scope. The [lifecycle protocol](CATALOG-LIFECYCLE.fr.md) defines the payload,
+preview digest, source identities, limits and examples for an internal feed.
+
+In **Knowledge → Source documents**, open a document and choose **Analyze
+lifecycle** to request an AI extraction from that exact source and SHA-256.
+This action can call the AI service even if the connector does not support
+direct document reading. It returns proposals and questions, with provenance
+assigned by X4B. The excerpts remain to be checked against the source. Select
+the proposals, preview their import and explicitly apply them before they enter
+the catalog. Synchronizing sources does not silently perform this analysis or
+replace accepted facts. A failed analysis or import keeps the displayed
+proposals available for review.
+
+### Managing named document sources
+
+In **Knowledge**, administrators can add several document sources using the
+existing X4B connector contract. Each source card shows its display name,
+technical identifier, known document count and last successful synchronization.
+Open its settings, test its connection, synchronize it or pause it independently.
+The document count comes from local synchronized metadata; a configured
+connection is not a live availability check.
+
+The display name can change. The technical identifier remains stable because
+maps and embedded widgets use it in their source references. Updating an
+existing installation retains its current connection as the default source,
+including its URL, technical identifier and server token. Deployment-managed
+settings remain deployment-managed.
+
+Choose the document source in Map Builder to work on its portfolio. Each
+source currently exposes both its own document catalog and prompt execution
+service. Adding another source does not automatically merge documents from
+independent services into one AI request. The existing refinement controls
+select the proposal's original document, indexed repository files and an
+optional attachment.
+
+### Browsing synchronized source documents
+
+Administrators with Map Builder access can browse **Source documents** directly
+in **Knowledge**, independently of map generation. The list shows the source,
+application key, document revision, presence in the last synchronized catalog,
+and last observation time. This time records synchronization, not the document's
+creation or modification date. Search by application key or source, filter by an
+exact source identifier or presence, and use the paginated results.
+
+The list reads metadata already synchronized into X4B. It includes documents
+without a generated map and remains available when map generation or the source
+connector fails. Manual map drafts are not source documents. **Refresh list**
+(**Actualiser la liste**) rereads local metadata; use **Synchronize** in the
+source card to request a new source synchronization.
+
+Select **Read** (**Consulter**) to request that exact document revision. The
+connector must implement the optional version-reading endpoint in its existing
+integration contract. X4B verifies the returned bytes against the selected
+SHA-256 before displaying their content. A text field is shown as escaped text;
+other documents are shown as formatted JSON. The full revision can be copied
+from the viewer. Reading does not invoke AI or modify a map. If the version
+cannot be read or verified, the catalog remains available. Closing the viewer
+removes its content from the application query cache.
+
+<!-- SCREENSHOT:x4b-knowledge -->
 
 ### Starting a Map Builder draft from scratch
 
@@ -867,8 +1005,9 @@ under **Connected applications**. The placement applies to accounts that have
 access to that application. Previously registered applications start in Operations.
 
 The header also opens **AI service**, **AI agents**, and **Integrations**. Administrators can
-inspect the existing document connector and run a sample AI test for settings
-managed from X4B. For a deployment-managed connector, refine a map to verify
+inspect a document connector and run a sample AI test for settings
+managed from X4B. Each source uses its connector's prompt execution service.
+For a deployment-managed connector, refine a map to verify
 the AI call. Integrations provides example previews for the shared header, map
 and status badge. **AI agents** links to downloadable skills, a catalogue URL
 and an optional local MCP setup for Kilo Code. A downloaded skill can be used

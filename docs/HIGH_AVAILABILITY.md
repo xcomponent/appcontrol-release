@@ -246,31 +246,37 @@ The agent maintains:
 - **Component config snapshot** — last `UpdateConfig` from the backend, kept in memory.
 - **Local scheduler** — runs checks autonomously based on the snapshot; does not poll the backend.
 - **Delta tracking** — for each component, the last `exit_code` sent. A new `CheckResult` is only sent when the exit code changes.
-- **Offline buffer** — sled DB at `/var/lib/appcontrol/buffer-{agent-id}`, ≤ 100 MB, FIFO rotation.
+- **Durable outbox** — redb at `/var/lib/appcontrol/buffer-{agent-id}`; a default 100 MiB serialized-entry budget protects pending command results from telemetry eviction. Database file overhead is additional.
 
 ### Reconnect sequence
 
 1. WebSocket close detected.
 2. Agent enters reconnect loop:
    - Try `gateway.urls[0]`. If failure, wait `reconnect_interval_secs` and try `[1]`, etc.
-   - Exponential backoff on repeated failure: 1, 2, 4, 8, 16, 32, 60 (max) seconds.
+   - Exponential backoff on repeated failure: 1, 2, 4, 8, 10 (max) seconds.
 3. On successful connect, agent sends `Register { agent_id, hostname, ip_addresses, labels, version }`.
-4. Agent replays the offline buffer in chronological order before resuming real-time deltas.
+4. Agent replays persisted entries in chronological order while processing incoming messages. Unacknowledged command results retry every 15 seconds and on reconnect. This retransmits results; it never re-executes their commands.
 
 ### Results and ACKs
 
-Command results are correlated by request UUID; real backend/gateway/agent tests verify matching results and ACKs. This is a transport/persistence proof, not an exactly-once guarantee for an external effect or a durable reconstruction-resume mechanism. Inspect the recorded command and provider job before repeating an ambiguous action. See the [process and ACK evidence](../demo-rebuild/media/output/validation/reconstruction-v2/executor-e2e/summary.json) and improvement-plan R02/R03.
+Command results are correlated by request UUID and sequence. They are persisted on the agent before sending and retained until a matching backend ACK. The backend acknowledges after the command result is committed to the database. Repeated identical results are acknowledged without changing the completion timestamp or broadcasting a second completion event. The persisted command record supplies the agent identity when an in-memory request mapping was lost. An unknown command or database error does not receive a persistence ACK.
+
+New cross-site probes also record their dispatch before sending. Their results commit before the waiting callback is notified, and a late result can still be acknowledged after that callback expires or the backend restarts. Older probes dispatched without a command record use only bounded, short-lived in-memory compatibility receipts; those receipts do not survive a backend restart. An unknown result is never acknowledged as durably persisted evidence.
+
+These are delivery and persistence controls, not an exactly-once guarantee for an external effect or automatic reconstruction resumption. Reconcile an ambiguous command with the external provider before repeating it. The gateway keeps a bounded in-memory replay buffer; process loss or overflow can discard telemetry. Agent command results can be replayed until acknowledged.
 
 ### Buffer-on-disk during disconnect
 
 While disconnected:
 
 - Agent continues running checks.
-- Each `CheckResult` is written to the local sled DB with a nanosecond-precision timestamp key.
-- Buffer is FIFO bounded at 100 MB by default (override with the `BUFFER_MAX_BYTES` environment variable on the agent process; value in bytes, `0` or unparseable value falls back to the default). When the cap is exceeded, the oldest entries are evicted in order until the buffer fits again.
-- On reconnect, the buffer is drained in order, then the agent resumes real-time mode.
+- Checks and command results are written to the local redb outbox before transmission, including while connected.
+- `BUFFER_MAX_BYTES` bounds serialized entries and keys, excluding redb file overhead. Its default is 100 MiB; invalid or zero values use that default.
+- Telemetry is evicted FIFO when necessary. Unacknowledged command results are protected. If they alone exhaust the budget, or storage fails, new evidence is refused with a local error.
+- Entries are read progressively. Telemetry is removed only after a successful socket write; command results only after a matching backend ACK. Failed socket writes leave their entries available to retry.
+- Live terminal output, output chunks and log streaming use a bounded memory queue and are not replayable evidence.
 
-This means a 1 h disconnect on a 50-component agent at 30 s check interval produces ≈ 6000 buffered events × 200 bytes = ~1.2 MB — well under the buffer cap.
+Capacity must include actual serialized payload sizes and the expected outage length. Upgrade the backend before agents so it can acknowledge replayed command results from their database record. Retained data does not prove that a managed process or external job is currently healthy.
 
 ---
 

@@ -52,6 +52,8 @@ services:
       DATABASE_URL: postgres://appcontrol:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/appcontrol
       PORT: "3000"
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      # Optional dedicated Ed25519 approval seed; never reuse JWT or PKI keys.
+      APPCONTROL_DISCOVERY_SIGNING_SEED: ${APPCONTROL_DISCOVERY_SIGNING_SEED:-}
       RUST_LOG: info,appcontrol_backend=debug
       CERT_EXPORT_PATH: /certs
       # ── Initial admin user (created on first start) ──
@@ -61,11 +63,29 @@ services:
       SEED_ADMIN_DISPLAY_NAME: ${SEED_ADMIN_DISPLAY_NAME:-Admin}
       SEED_ORG_NAME: ${SEED_ORG_NAME:-Default Organization}
       SEED_ORG_SLUG: ${SEED_ORG_SLUG:-default}
-      # ── SSO (optional) ──
-      # OIDC_DISCOVERY_URL: https://login.example.com/.well-known/openid-configuration
-      # OIDC_CLIENT_ID: appcontrol
-      # OIDC_CLIENT_SECRET: your-secret
-      # SAML_IDP_SSO_URL: https://idp.example.com/sso
+      # Login policy and optional SSO. Blank provider URLs disable the provider.
+      AUTH_MODE: ${AUTH_MODE:-hybrid}
+      AUTH_LOCAL_EMERGENCY_USER_IDS: ${AUTH_LOCAL_EMERGENCY_USER_IDS:-}
+      OIDC_DISCOVERY_URL: ${OIDC_DISCOVERY_URL:-}
+      OIDC_ISSUER: ${OIDC_ISSUER:-}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:-}
+      OIDC_REDIRECT_URI: ${OIDC_REDIRECT_URI:-}
+      OIDC_SCOPES: ${OIDC_SCOPES:-openid,profile,email}
+      OIDC_ORGANIZATION_ID: ${OIDC_ORGANIZATION_ID:-}
+      OIDC_LEGACY_LINK_ISSUER: ${OIDC_LEGACY_LINK_ISSUER:-}
+      SAML_IDP_SSO_URL: ${SAML_IDP_SSO_URL:-}
+      SAML_IDP_ENTITY_ID: ${SAML_IDP_ENTITY_ID:-}
+      SAML_IDP_CERT: ${SAML_IDP_CERT:-}
+      SAML_SP_ENTITY_ID: ${SAML_SP_ENTITY_ID:-}
+      SAML_SP_ACS_URL: ${SAML_SP_ACS_URL:-}
+      SAML_GROUP_ATTRIBUTE: ${SAML_GROUP_ATTRIBUTE:-memberOf}
+      SAML_EMAIL_ATTRIBUTE: ${SAML_EMAIL_ATTRIBUTE:-email}
+      SAML_NAME_ATTRIBUTE: ${SAML_NAME_ATTRIBUTE:-displayName}
+      SAML_ADMIN_GROUP: ${SAML_ADMIN_GROUP:-}
+      SAML_WANT_ASSERTIONS_SIGNED: ${SAML_WANT_ASSERTIONS_SIGNED:-true}
+      SAML_ORGANIZATION_ID: ${SAML_ORGANIZATION_ID:-}
+      SAML_LEGACY_LINK_ISSUER: ${SAML_LEGACY_LINK_ISSUER:-}
       # ── Public URLs for enrollment commands (optional) ──
       # PUBLIC_GATEWAY_URL: wss://gateway.company.com:4443
       # PUBLIC_BACKEND_URL: wss://backend.company.com/ws/gateway

@@ -41,7 +41,7 @@ SEC=$(kubectl get secret -n appcontrol appcontrol-jwt -o jsonpath='{.data.jwt-se
 
 ### `APP_ENV=production`
 
-**Rationale.** Setting `APP_ENV=production` toggles strict mode: insecure-default warnings become fatal errors, dev login endpoints are disabled, CORS becomes restrictive.
+**Rationale.** `APP_ENV=production` enables production configuration checks. It does not choose the login policy or disable local passwords; configure `AUTH_MODE` separately.
 
 **Verify.**
 
@@ -77,21 +77,23 @@ curl -i -H "Origin: https://attacker.example" https://appcontrol.example.com/api
 
 - [ ] **CORS restricted and verified.**
 
-### OIDC or SAML configured; local auth disabled in production
+### Explicit SSO and local emergency policy
 
-**Rationale.** Local-password authentication is appropriate for development but should not be the production door. SSO centralizes account lifecycle, MFA enforcement, and SSO-level auditing.
+Configure and qualify OIDC or SAML per [Configuration §Users](CONFIGURATION.md#users--authentication).
+Set `AUTH_MODE=sso_only` to restrict password login. Its only local exceptions
+are UUIDs explicitly listed in `AUTH_LOCAL_EMERGENCY_USER_IDS`, whose accounts
+must remain active local administrators. Keep credentials in the client's
+approved vault. Use `hybrid` only when both password and SSO access are intended.
 
-**Set.** Configure OIDC or SAML per [Configuration §Users](CONFIGURATION.md#users--authentication).
+`APP_ENV=production` alone does not block `/auth/login`. Confirm the configured
+policy and verify a real, ordinary local account is refused under `sso_only`;
+an empty malformed request only tests input validation. Verify a permitted
+emergency account and an ordinary non-admin account separately in qualification.
 
-**Verify.**
+MFA enforcement and assurance belong to the IdP configuration. AppControl does
+not attest MFA from the presence of an SSO connection or a provider name.
 
-```bash
-# In production, /auth/login returns 404
-curl -is https://appcontrol.example.com/api/v1/auth/login -X POST -d '{}'
-# Expect: HTTP/2 404
-```
-
-- [ ] **SSO configured, local auth disabled.**
+- [ ] **Login mode, explicit emergency identities and IdP MFA policy reviewed.**
 
 ### API key rotation policy
 
@@ -441,7 +443,7 @@ kubectl exec -n appcontrol deploy/appcontrol-backend -- sh -c 'which gcc gdb str
 
 **Rationale.** Unsigned SAML assertions can be tampered with. Without signature verification, an attacker who can MITM the assertion can impersonate any user.
 
-**Set.** This is the default in production; verify it is not overridden.
+**Set.** Configure the pinned signing certificate and exact `SAML_IDP_ENTITY_ID`. Use `SAML_WANT_ASSERTIONS_SIGNED=true` to require a directly signed Assertion. Setting `false` permits a verified signed Response covering the Assertion; it never accepts unsigned claims. Check audience, ACS URL and IdP clock synchronization in the qualification environment.
 
 **Verify.**
 
@@ -473,20 +475,21 @@ SELECT name, settings->'approvals' AS approvals FROM applications;
 
 - [ ] **Approval policy configured for production apps.**
 
-### Break-glass accounts pre-provisioned
+### Emergency access prepared and verified
 
-**Rationale.** When OIDC is down or all tokens have expired, you still need a way in. Pre-provisioned break-glass accounts with passwords sealed in an external vault meet this need.
+For password access during an IdP outage, pre-provision active local admin
+accounts and explicitly list their UUIDs in `AUTH_LOCAL_EMERGENCY_USER_IDS` when
+using `sso_only`. Verify this path before changing the login mode.
 
-**Set.** See [Security Architecture §10](SECURITY_ARCHITECTURE.md).
+The separate `/break-glass/activate` endpoint records an audited emergency
+session. Its current response is session metadata and does not issue a login
+JWT or bypass application permissions. V084 disables legacy XOR/base64
+credentials; an authenticated administrator must recreate each affected
+username with a new password. New credentials use bcrypt at cost 12, require
+12 characters and reject more than 72 UTF-8 bytes. Session termination appends
+a separate record; the original activation remains intact.
 
-**Verify.**
-
-```sql
-SELECT username, is_active FROM break_glass_accounts;
--- Expect: at least 2 active accounts
-```
-
-- [ ] **Break-glass procedure tested annually.**
+- [ ] **Emergency login and incident recording tested with fictitious credentials.**
 
 ---
 

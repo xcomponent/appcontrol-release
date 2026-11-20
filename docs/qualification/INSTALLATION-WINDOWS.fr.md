@@ -8,11 +8,31 @@ léger ne contient **aucune image ni aucun exécutable**. Il n’installe pas `o
 ne modifie pas le PATH du poste. Aucun Helm, Docker, Python, WSL, OpenSSL ou outil
 de transfert d’images n’est nécessaire sur le poste client.
 
-Produit : **AppControl 1.25.2**. Paquet : **Windows léger 1.25.2-1**.
+Produit : **AppControl 1.27.0**. Paquet : **Windows léger 1.27.0-1**.
 
-**AppControl est le module d’exploitation de X4B — XComponent for Business, édité par INVIVOO.** La plateforme inclut [l’accueil X4B, les comptes et accès, le badge de supervision et le raccordement des applications](../X4B-PLATEFORME.fr.md). Le module de génération rapproche les composants du catalogue complet. Le kit conserve le choix de l’URL publique, du compte administrateur et du projet, ainsi que le secret de téléchargement des images.
+**AppControl est le module d’exploitation de X4B — XComponent for Business,
+édité par INVIVOO.** Cette livraison réunit les sources Knowledge nommées et
+leur bibliothèque documentaire, le catalogue des composants et les faits de
+support sourcés, la Discovery par skills et plans approuvés, le durcissement
+IAM et les correctifs de persistance des résultats et de reconnexion Rust.
+Les propositions IA et observations restent à relire avant consolidation ou
+publication. La collecte native requiert un agent Linux explicitement autorisé.
 
-La version 1.21.1 ajoute le contrat de génération pour l'IA du client, la
+Le kit conserve le choix de l’URL publique, du compte administrateur, du projet
+et du secret de téléchargement des images. Pour une mise à jour, préparer une
+sauvegarde restaurable, les paramètres SSO complets et les références Secret.
+**Mettre à jour et vérifier le backend avant les agents** pour les nouveaux
+acquittements persistants. Les migrations V080–V084 sont appliquées au démarrage.
+Voir [la procédure de mise à jour](#mettre-a-jour-le-poc) et
+[le guide IAM](../IAM.md). La mise à jour ne vaut pas activation de la Discovery.
+
+Les résultats de la qualification 1.27.0-1 doivent être lus dans les preuves
+jointes à ce ZIP après sa publication. Les notes historiques ci-dessous ne
+constituent pas des résultats de qualification de ce nouveau kit.
+
+### Repères des anciens kits
+
+La version historique 1.21.1 a ajouté le contrat de génération pour l'IA du client, la
 publication de maps réparties sur plusieurs sites et l'attribution
 d'applications aux équipes. Le choix mock dans le prompt produit une map
 ordinaire, importée sur les agents choisis sans préparation de simulation
@@ -176,7 +196,7 @@ démonstration utilise le nouveau secret, mais crée une nouvelle identité d’
 et une nouvelle map synthétique. Les services AppControl utilisent le secret
 fourni à la reprise.
 
-Exemples de résolution avec le kit 1.21.1-3 :
+Exemples de résolution conservés dans ce kit :
 
 | Valeur de `-Registre` | Préfixe obtenu avant `appcontrol-eval-*` |
 |---|---|
@@ -265,14 +285,18 @@ avec `-ModePostgreSQL Externe` et sa chaîne de connexion.
 
 ## 4. Télécharger les petits fichiers de déploiement
 
-- [Paquet Windows léger 1.25.2-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.25.2/appcontrol-openshift-windows-light-1.25.2-1.zip)
-- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.25.2/appcontrol-openshift-windows-light-1.25.2-1.zip.sha256)
+Après publication de **v1.27.0**, récupérer le ZIP **1.27.0-1** et son empreinte
+sur cette release. Ne pas remplacer une archive absente par le kit d’une autre
+version ; les liens ci-dessous désignent les fichiers attendus.
+
+- [Paquet Windows léger 1.27.0-1 — scripts et YAML](https://github.com/xcomponent/appcontrol-release/releases/download/v1.27.0/appcontrol-openshift-windows-light-1.27.0-1.zip)
+- [Empreinte SHA-256](https://github.com/xcomponent/appcontrol-release/releases/download/v1.27.0/appcontrol-openshift-windows-light-1.27.0-1.zip.sha256)
 
 Le ZIP est uniquement un moyen pratique de transporter les fichiers texte.
 Après téléchargement ou transfert approuvé, vérifier l’archive dans PowerShell :
 
 ```powershell
-$archive = 'appcontrol-openshift-windows-light-1.25.2-1.zip'
+$archive = 'appcontrol-openshift-windows-light-1.27.0-1.zip'
 $attendu = ((Get-Content "$archive.sha256" -Raw).Trim() -split '\s+')[0]
 if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne $attendu) {
     throw 'Checksum mismatch: do not use this archive.'
@@ -512,6 +536,16 @@ La première installation et les versions suivantes utilisent **le même script
 PowerShell**. Chaque livraison apporte un nouveau kit et son `images.lock.json` ;
 il n’y a ni image à transporter sur le poste, ni compte GitHub à créer.
 
+Pour 1.27.0, vérifier avant le déploiement les paramètres de confiance SSO :
+`SAML_IDP_ENTITY_ID`, SSO, certificat, entity ID du service et ACS pour SAML ;
+discovery, client, Secret et callback HTTPS absolu pour OIDC. Le précontrôle
+contrôle les réglages disponibles et les références Secret sans afficher leur
+contenu, avant toute écriture puis avant application du manifeste. Corriger un
+réglage incomplet avant de relancer ; ne pas désactiver le SSO pour contourner
+ce contrôle. Les anciens libellés `AUTH_MODE=local|oidc|saml` conservent le
+comportement historique `hybrid` ; `sso_only` est un choix explicite. Qualifier
+le fournisseur réel et les comptes de secours selon [IAM](../IAM.md).
+
 1. Télécharger le **nouveau kit** depuis les releases XComponent, vérifier son empreinte et l’extraire dans un nouveau dossier. Conserver le dossier privé de l’installation existante.
 2. Faire approuver les nouvelles images dans le registre bancaire si sa politique l’exige.
 3. **Sauvegarder PostgreSQL avant la mise à jour** et disposer d’une procédure de restauration. Pour une base externe, obtenir la confirmation de l’équipe base de données. Pour la base intégrée, appliquer la procédure de sauvegarde retenue pour le POC. Le script ne crée pas cette sauvegarde et un PVC n’en tient pas lieu.
@@ -612,6 +646,15 @@ avec conservation de son identité et vérification de sa compatibilité avec
 la nouvelle version des services. L’image agent du nouveau kit sert aux
 nouvelles démonstrations ; elle ne remplace pas silencieusement un agent en cours.
 
+Mettre à jour le backend et vérifier ses services **avant de mettre à jour
+séparément les agents**. Les nouveaux agents conservent leurs résultats de
+commande jusqu’à acquittement par le backend. Préserver le dossier d’identité,
+les certificats et le répertoire de données de chaque agent. L’exécution d’un
+plan de Discovery native exige en plus une configuration locale explicite et
+une clé publique d’approbation ; un ancien agent reste utilisable pour ses
+fonctions existantes mais n’est pas déclaré capable de ce nouveau parcours.
+
+
 Le changement des images exige `-MettreAJour` ; une simple reprise ne le déclenche
 jamais. Le script ne met pas automatiquement le POC sur la dernière version
 publiée : vous choisissez et validez le kit à déployer. Il ne réalise pas de
@@ -624,16 +667,25 @@ diagnostic ; cela **ne signifie pas que les anciens pods ou l’ancienne base on
 **le même kit cible avec `-MettreAJour`** pour terminer. Garder le dossier privé
 et la sauvegarde PostgreSQL ; ne pas modifier les verrous à la main.
 
+Si la version cible inclut V085 et V086, le backend ajoute les dossiers de
+reprise versionnés et les propositions de commandes. Après intégration de
+preuves (`recovery`) ou de documentation revue (`generated`) dans la Knowledge,
+un retour vers une version qui ignore ces origines nécessite de restaurer la
+sauvegarde d’avant mise à jour avec la configuration de la version
+correspondante. Conserver une copie de la base mise à jour pour préserver les
+révisions et les preuves ajoutées depuis.
+Consulter le [guide de la boucle de connaissance](../KNOWLEDGE-LOOP.fr.md).
+
 ### Miroir interne des binaires Linux
 
 Pour le parcours **Passerelles → Connecter une machine**, publiez d’abord
 les binaires Linux de la version cible dans un dépôt HTTPS interne. Le
 [script de synchronisation](../AGENT_INSTALLATION.md#use-an-internal-https-repository)
 prépare les deux architectures et leurs empreintes officielles à partir
-de la release ou de fichiers déjà téléchargés. Pour la version `1.25.2`,
+de la release ou de fichiers déjà téléchargés. Pour la version `1.27.0`,
 le dépôt doit servir directement
-`v1.25.2/checksums-sha256.txt`, `v1.25.2/appcontrol-agent-linux-amd64` et
-`v1.25.2/appcontrol-agent-linux-arm64`.
+`v1.27.0/checksums-sha256.txt`, `v1.27.0/appcontrol-agent-linux-amd64` et
+`v1.27.0/appcontrol-agent-linux-arm64`.
 
 Configurez la racine du dépôt une fois sur le déploiement backend existant.
 Réutilisez le projet et le nom d’installation habituels.
@@ -832,7 +884,7 @@ et reprendre avec la commande indiquée par le script. Pour reprendre les
 services en conservant la démonstration existante, ajouter `-SansDemo`. Sans
 cette option, la recette peut créer une nouvelle démonstration.
 
-Le kit corrigé 1.21.1-3 peut remplacer le kit 1.21.1-1 sans changer les images
+**Repère historique :** le kit corrigé 1.21.1-3 pouvait remplacer le kit 1.21.1-1 sans changer les images
 du produit. Un préfixe Artifactory erroné ou un nouveau nom de secret de lecture
 peuvent être fournis à cette relance. Le contrôle porte sur les noms et
 empreintes des images, pas sur la seule adresse du miroir.
@@ -855,7 +907,7 @@ déployée. Ne pas supprimer son dossier d’état.
 | `SeSecurityPrivilege` dans `Windows-Common.ps1` / `Set-Acl` | Utiliser le kit léger 1.20.4-5 ou ultérieur. Ce correctif protège les fichiers locaux sans demander le privilège d’audit Windows. Conserver le dossier d’état et les paramètres de l’installation ; ne pas relancer en administrateur ni retirer la protection des fichiers pour contourner cette erreur. |
 | Secret d’images absent | Pour Artifactory privé, faire créer le secret dans le bon projet. Le canal public GHCR `appcontrol-eval-*` n’en demande pas. |
 | `ImagePullBackOff` | Chemin `appcontrol-eval-*`, droits OpenShift → registre interne, accès amont Artifactory → GHCR et confiance TLS des nœuds. Si PostgreSQL utilise un dépôt distinct, vérifier aussi `-RegistrePostgreSQL` et les droits sur ce dépôt. |
-| `xcomponent` absent du chemin Artifactory | Utiliser le kit 1.21.1-3 et fournir le préfixe de lecture corrigé avec `-Registre`. Le namespace source est conservé, sauf option explicite `-CheminRegistreExact`. |
+| `xcomponent` absent du chemin Artifactory | Utiliser le kit 1.27.0-1 et fournir le préfixe de lecture corrigé avec `-Registre`. Le namespace source est conservé, sauf option explicite `-CheminRegistreExact`. |
 | Changement d’images refusé en reprise | Si les noms/digests ou le produit changent, utiliser `-MettreAJour` après sauvegarde. Une simple correction du miroir à contenu identique est acceptée en reprise ; ne pas modifier les verrous manuellement. |
 | Mise à jour interrompue ou incomplète | Garder le dossier privé et relancer le même kit cible avec `-MettreAJour`. Le journal `update.json` signale l’opération incomplète ; aucun retour arrière de la base n’est réalisé. |
 | Inventaire inaccessible avant une nouvelle mise à jour | Restaurer les services avec le kit de la version installée, le dossier d’état d’origine et `-SansDemo`, puis revenir au nouveau kit pour `-MettreAJour`. Aucun nouveau journal de mise à jour n’est créé si cet inventaire initial échoue. |
@@ -879,7 +931,12 @@ le dossier d’état d’origine pour terminer la mise à jour.
 
 ## Qualification et suite du POC
 
-La publication du kit 1.25.2-1 suit sa qualification Windows/OpenShift. Les fichiers `PUBLICATION-EVALUATION-1.25.2-1.json` et `QUALIFICATION-EVALUATION-1.25.2-1.zip` identifient les images et le ZIP de cette recette.
+Le kit **1.27.0-1** ne peut être remis comme qualifié qu’après sa recette
+Windows/OpenShift. Les fichiers attendus
+`PUBLICATION-EVALUATION-1.27.0-1.json` et
+`QUALIFICATION-EVALUATION-1.27.0-1.zip` doivent identifier les images, le ZIP exact
+et les résultats de cette recette. Lire ces preuves sur la release publiée ;
+ce guide et les rapports historiques ne prouvent pas leur succès.
 
 ### Historique des qualifications
 
@@ -914,8 +971,9 @@ sans identifiants GHCR et la conservation des données lors d’une mise à jour
 Le rapport 1.20.4-3 utilisait le miroir privé et un jeton temporaire de CI. Pour
 chaque nouvelle version, les images du canal public doivent conserver les
 digests qualifiés de cette même release ; une publication par copie n'est pas
-une nouvelle compilation. Ne pas associer les scripts 1.21.1 au verrou d'images
-1.20.4 : le serveur ancien n'expose pas les nouvelles routes.
+une nouvelle compilation. Exemple historique : les scripts 1.21.1 ne devaient
+pas être associés au verrou d’images 1.20.4, dont le serveur n’exposait pas les
+nouvelles routes. La même exigence de correspondance s’applique à 1.27.0.
 
 Le test du parcours léger reste distinct de celui du kit hors ligne : les
 images sont téléchargées par le cluster et aucun Helm n’est appelé sur le poste
@@ -932,8 +990,8 @@ renouvellement reste explicite.
 
 La gateway incluse permet aussi de raccorder un agent extérieur via sa connexion
 sortante WSS 443. La [procédure historique d'enrôlement](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-CLIENT-v1.20.4.fr/#5-ajouter-un-agent-exterieur-au-cluster)
-explique le principe ; utiliser les binaires ou images et la CA de l'instance
-1.21.1 effectivement installée.
+explique le principe ; utiliser les binaires ou images de la version retenue
+et la CA de l’instance effectivement installée.
 
 Pour un environnement qui impose de transporter les images sans accès à un
 registre amont, le [kit hors ligne](https://xcomponent.github.io/appcontrol-release/qualification/INSTALLATION-WINDOWS-HORS-LIGNE.fr/) reste une
@@ -941,13 +999,24 @@ option distincte. Ce n’est pas le parcours recommandé ci-dessus.
 
 ## Après l'installation : publier les applications du client
 
-À partir d'AppControl **1.21.1**, récupérer le contrat de génération, transmettre
-ses instructions et les documents au moteur d'IA du client, puis vérifier la
-map retournée. Les documents restent côté client et AppControl n'appelle aucun
-modèle dans ce parcours. Le [guide général](../MAP_GENERATION.fr.md) et le
-[parcours Swagger](../SWAGGER.fr.md) décrivent la validation, les placements
-par composant, les droits d'équipe et l'import. Le kit contient aussi le helper
-`map-publication-client.ps1` pour préparer et publier des lots depuis PowerShell.
+Dans **Connaissance**, configurer les sources documentaires nommées et consulter
+les documents synchronisés et le catalogue des composants. Dans **Atelier de
+cartographie**, choisir la source du dossier et les éléments de contexte d’un
+affinage, puis relire les propositions. Le contexte sélectionné est transmis au
+service d’IA configuré par le client. Vérifier les composants, les liens, les
+commandes et les placements avant validation et publication.
+
+Le parcours distinct de génération avec une IA externe, validation et import
+par API reste disponible. Le [guide général](../MAP_GENERATION.fr.md) et le
+[parcours Swagger](../SWAGGER.fr.md) décrivent les placements par composant, les
+droits d’équipe et l’import. Le kit contient `map-publication-client.ps1` pour
+préparer et publier des lots depuis PowerShell.
+
+La Discovery utilise des skills Markdown pour préparer un plan inspectable et
+approuvé, recueillir des observations puis les proposer à la consolidation
+Knowledge. La collecte peut être manuelle ou confiée à un agent Linux
+explicitement autorisé. Elle ne publie pas automatiquement une map et ne
+remplace pas la qualification des procédures de reconstruction du client.
 
 Le prompt `standard` conserve les procédures réelles fournies. Un prompt
 `mock-linux` ou `mock-windows` produit des commandes de fichiers témoins ; la
@@ -991,10 +1060,51 @@ sont encore présents ou que leur absence ne peut pas être vérifiée. Avec un 
 client, si des pods sont encore en cours de terminaison, attendre puis relancer la
 même commande de désinstallation.
 
-Ce correctif est inclus dans le ZIP Windows 1.21.1-3. Les images AppControl sont
+**Historique du correctif :** il était inclus dans le ZIP Windows 1.21.1-3. Les images AppControl étaient
 identiques au kit 1.21.1-2. Validation ciblée locale : 86 contrôles de désinstallation
 et 68 contrôles de reprise ; pas de nouvelle qualification complète sur OpenShift.
 
+
+## Politique de connexion et conservation SSO
+
+`APP_ENV=production` ne désactive pas les mots de passe. Le mode par défaut
+`AUTH_MODE=hybrid` conserve les connexions locales et les fournisseurs SSO
+configurés. Choisir explicitement `sso_only` pour imposer le SSO, ou `local_only`
+pour désactiver les parcours SSO. Les anciennes valeurs `local`, `oidc` et `saml`
+étaient ignorées : elles deviennent `hybrid` avec un avertissement pour conserver
+le comportement existant. Une valeur inconnue bloque la préparation.
+
+L’exception `AUTH_LOCAL_EMERGENCY_USER_IDS` contient des UUID de comptes locaux
+actifs et administrateurs. Elle permet leur connexion par mot de passe sous
+`sso_only` sans promouvoir ni réactiver un compte. Le MFA doit être imposé et
+qualifié côté fournisseur ; la présence du SSO ne constitue pas une attestation.
+
+La mise à jour conserve les variables backend `AUTH_*`, `OIDC_*`, `SAML_*` et les
+références explicites à leurs Secrets. Un secret client OIDC en clair doit être
+placé dans un Secret avant la mise à jour. Préserver les issuer/entity ID, les
+UUID d’organisation et les identifiants stables ; aucune correspondance par
+email ne réattribue un compte. Les nouveaux mots de passe exigent 12 caractères
+et au plus 72 octets UTF-8. Les comptes d’urgence anciens au format XOR sont
+désactivés par V084 et doivent être recréés par un administrateur authentifié.
+
+Le précontrôle du manifeste fusionné vérifie les paramètres SAML/OIDC requis
+avant toute écriture de ressource ou de Secret, puis juste avant son application.
+Un raccordement incomplet bloque la mise à jour sans bascule vers une connexion
+locale. Les URL de retour littérales doivent être HTTPS et absolues. Les
+références explicites et non facultatives aux Secrets sont conservées et
+contrôlées structurellement ; leur contenu n’est ni lu ni affiché. Le backend
+valide leur valeur au démarrage. Les configurations `envFrom` doivent être
+rendues explicites. Une installation Helm avec SSO personnalisé doit utiliser
+ses valeurs Helm revues et sa procédure de maintenance.
+
+Les anciens comptes SAML restés `auth_provider=local` nécessitent une liaison
+administrateur après revue de l’issuer/NameID et de l’autorité des rôles.
+Cette liaison permet leur authentification externe et conserve l’autorité locale
+des rôles ; elle ne la délègue pas au fournisseur SAML.
+
+Le guide [Identités et accès](../IAM.md) décrit les paramètres, la migration et
+les contrôles sur données fictives. Le JSON de configuration ci-dessous ne
+configure pas la confiance du fournisseur d’identité.
 
 ## Configuration après installation : équipes et topologie
 
@@ -1215,10 +1325,13 @@ Avec `-NonInteractif` et sans mot de passe fourni, un mot de passe aléatoire es
 généré et enregistré dans ce même fichier privé. Ne mettez pas de mot de passe
 en clair dans le fichier de configuration.
 
-Le kit 1.21.1-6 conserve les images 1.21.1. Ses tests ciblés de scripts ne
+**Repère historique :** le kit 1.21.1-6 conservait les images 1.21.1. Ses tests ciblés de scripts ne
 remplacent pas une nouvelle qualification complète sur le cluster du client.
 
-## Fournir explicitement l’URL publique (kit 1.21.1-7)
+## Fournir explicitement l’URL publique
+
+Cette option, introduite par le kit historique 1.21.1-7, est conservée en
+1.27.0-1. Les preuves de cet ancien kit ne qualifient pas la livraison actuelle.
 
 Sans option supplémentaire, le domaine reste détecté automatiquement comme
 avant. À la première installation ou après un retrait volontaire complet,
@@ -1258,7 +1371,7 @@ le domaine était la cause de l’erreur d’exposition.
 
 ## Démonstration bancaire complète
 
-**Le kit 1.25.2-1 installe automatiquement la démo bancaire lors d’une installation
+**Le kit 1.27.0-1 installe automatiquement la démo bancaire lors d’une installation
 par défaut**, après la vérification technique et l’enrôlement de l’agent Linux.
 Aucune seconde commande n’est nécessaire. `-SansDemo` désactive les deux démonstrations ;
 une mise à jour avec `-MettreAJour` conserve les applications existantes sans en ajouter.

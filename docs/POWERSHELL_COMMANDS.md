@@ -148,6 +148,12 @@ and remote agents using [Agent installation](AGENT_INSTALLATION.md).
 For enterprise authentication, create or synchronize identities through the
 configured OIDC/SAML provider and review [permissions](PERMISSIONS.md).
 
+`create-user` prompts securely for a password of at least 12 characters and at
+most 72 UTF-8 bytes. It has no shared default password. For unattended creation,
+pass a `SecureString` supplied by your secret manager using `-NewUserPassword`;
+this option is supported by both PowerShell entrypoints. Do not put real
+passwords in scripts or command history.
+
 ## Application maps and examples
 
 ```powershell

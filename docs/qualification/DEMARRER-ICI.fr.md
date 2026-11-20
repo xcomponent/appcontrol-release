@@ -5,6 +5,10 @@ Le ZIP contient les scripts, les YAML et leurs guides. Il utilise la commande
 `oc` déjà approuvée sur le poste ; aucun Docker, Python, Helm ou outil de transfert
 d’images n’est à installer. Les nœuds OpenShift téléchargent les images.
 
+Ce guide vise **X4B / AppControl 1.27.0** et le kit Windows léger **1.27.0-1**.
+Lire les preuves de cette révision après sa publication ; les procédures et
+rapports historiques conservent leurs numéros et ne qualifient pas ce kit.
+
 Le [dépôt public de livraison XComponent](https://github.com/xcomponent/appcontrol-release/releases)
 centralise les kits versionnés, les procédures et les rapports. Le canal public
 d’évaluation emploie les images **`ghcr.io/xcomponent/appcontrol-eval-*`**, sans
@@ -12,9 +16,10 @@ compte GitHub ni mot de passe de téléchargement. Il peut être relayé par
 Artifactory selon les règles de la banque. Les anciens packages `appcontrol-*`
 restent privés ; le dépôt source n’est pas rendu public.
 
-La release joint le ZIP, son empreinte SHA-256 et les preuves de qualification
-correspondantes après validation du téléchargement anonyme des images et du ZIP
-exact depuis Windows sur OpenShift. Le guide indique les liens de téléchargement.
+La publication doit joindre le ZIP, son empreinte SHA-256 et les preuves de
+qualification correspondantes, après validation du téléchargement anonyme des
+images et du ZIP exact depuis Windows sur OpenShift. Le guide indique les liens
+attendus ; leur présence et les résultats sont à vérifier sur la release publiée.
 Le verrou d’images du kit fixe les empreintes des images à déployer.
 
 ## Avant le premier créneau
@@ -57,7 +62,16 @@ la mise à jour et la désinstallation. Le guide donne aussi les
 La mise à jour conserve les maps et ne rejoue pas la démonstration. Elle met à
 jour les services AppControl et, en mode intégré, l’image PostgreSQL. Les agents
 existants gardent leur version et leur identité ; leur mise à jour est une
-opération distincte.
+opération distincte. **Mettre à jour et vérifier le backend avant les agents** :
+il doit pouvoir acquitter leurs résultats persistés. Les agents de Discovery
+native demandent en plus une autorisation locale et une clé publique dédiée ;
+la mise à jour ne les active pas.
+
+Le précontrôle du kit vérifie les réglages SSO conservés avant d’appliquer le
+manifeste. Préparer l’issuer/entity ID exact, les URL de retour HTTPS et les
+références Secret selon [le guide IAM](../IAM.md). Une liaison historique par
+adresse e-mail n’est pas une identité SSO validée. Qualifier la connexion réelle
+et les comptes de secours convenus avant d’imposer le SSO.
 
 Si l’interface ou le backend a été supprimé à la main, remettre d’abord les
 services avec **le kit de la version déjà installée**, le dossier privé d’origine
@@ -114,13 +128,25 @@ notamment le choix du dossier privé personnalisé et les confirmations.
 
 ## Publier les applications du client
 
-La version 1.21.1 fournit un contrat de génération à transmettre, avec les
-documents de l’application, au **moteur d’IA du client**. AppControl n’appelle
-aucun modèle dans ce parcours. Relire la map produite, la valider, choisir
-les agents et préparer l’import avant de la publier. Le
-[guide de génération et publication](../MAP_GENERATION.fr.md) et le
-[parcours Swagger](../SWAGGER.fr.md) détaillent ces étapes ; le kit fournit
-aussi `map-publication-client.ps1` pour les lots PowerShell.
+Dans **Connaissance**, configurer les sources documentaires nommées et consulter
+leurs documents synchronisés ainsi que le catalogue des composants. Dans
+**Atelier de cartographie**, choisir la source du dossier, préparer la carte,
+sélectionner le contexte d’un affinage, puis relire les propositions. Les
+éléments du contexte sélectionné sont transmis au service d’IA configuré par le
+client. Une proposition n’est pas une map publiée : vérifier les composants,
+les liens, les commandes et les placements, puis valider avant publication.
+
+Le [guide de génération et publication](../MAP_GENERATION.fr.md) et le
+[parcours Swagger](../SWAGGER.fr.md) décrivent aussi le parcours distinct où une
+map est préparée avec une IA externe puis validée et importée par API. Le kit
+fournit `map-publication-client.ps1` pour les lots PowerShell.
+
+La **Discovery** peut préparer un plan à partir de skills Markdown, faire
+approuver ses opérations exactes et recueillir des observations manuellement ou
+sur un agent Linux explicitement autorisé. Les résultats sont revus avant leur
+consolidation dans la Knowledge ; ils ne publient pas automatiquement une map.
+Le catalogue conserve les informations de support/obsolescence avec leur
+provenance et leurs incertitudes. Ce n’est pas un scanner de vulnérabilités.
 
 Une application peut répartir ses composants sur **plusieurs sites en même
 temps**, avec des placements explicites. Dans **Teams → Applications**,

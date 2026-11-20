@@ -536,7 +536,7 @@ cmd_delete_catalog() {
 # Expected format:
 # {
 #   "users": [
-#     { "email": "alice@corp.com", "name": "Alice", "role": "operator", "password": "changeme" }
+#     { "email": "alice@corp.com", "name": "Alice", "role": "operator", "password": "<per-user-secret>" }
 #   ],
 #   "teams": [
 #     { "name": "Prod Team", "description": "...", "members": ["alice@corp.com"] }
@@ -667,7 +667,7 @@ Environment variables:
 
 Examples:
   # Create a user
-  appcontrol.sh create-user --email alice@corp.com --name "Alice Martin" --password changeme
+  appcontrol.sh create-user --email alice@corp.com --name "Alice Martin" --password "\$NEW_USER_PASSWORD"
 
   # Create a team and add members
   appcontrol.sh create-team --name "Equipe Prod"

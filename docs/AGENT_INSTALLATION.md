@@ -669,8 +669,11 @@ Agent-level high availability (active/passive on the same host) is
 3. **Seamless reconnection.** On restart, the agent re-registers with the same
    UUID and mTLS certificate. The backend updates its metadata (version, IPs,
    heartbeat) — no re-enrollment needed.
-4. **No state loss.** The agent uses an on-disk offline buffer. Messages
-   queued during disconnection are replayed on reconnection.
+4. **Persisted evidence.** Checks and command results enter a bounded redb
+   outbox before transmission. Command results remain until the backend
+   acknowledges persistence and are replayed after reconnect. Storage failure
+   or an exhausted budget can refuse new evidence; live output is best effort.
+   See [the delivery boundaries](HIGH_AVAILABILITY.md#results-and-acks).
 
 The backend marks an agent `UNREACHABLE` only after `heartbeat_timeout_seconds`
 (default 180s) of silence. With systemd auto-restart, the agent recovers well

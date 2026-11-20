@@ -10,6 +10,7 @@ param(
     [string]$Arg2,
     [string]$Email = "admin@localhost",
     [string]$Password = "admin",
+    [Security.SecureString]$NewUserPassword,
     [string]$BackendPort = "3000",
     [string]$ReleasesBase = "https://github.com/xcomponent/appcontrol-release/releases/latest/download"
 )
@@ -1588,7 +1589,8 @@ function Do-CreateUser {
     $userEmail = $Arg1
     if (-not $userEmail) {
         Write-Err "Usage: appcontrol.ps1 create-user <email> [display-name]"
-        Write-Host "  Creates a user account. Password defaults to 'changeme'."
+        Write-Host "  Prompts securely for the new account password (12 characters minimum)."
+        Write-Host "  For automation, pass -NewUserPassword as a SecureString."
         Write-Host "  Examples:"
         Write-Host "    .\appcontrol.ps1 create-user alice@corp.com ""Alice Martin"""
         return
@@ -1612,13 +1614,32 @@ function Do-CreateUser {
         return
     }
 
-    $body = @{
-        email        = $userEmail
-        display_name = $displayName
-        role         = "operator"
-        password     = "changeme"
+    $accountPassword = $NewUserPassword
+    $prompted = $null -eq $accountPassword
+    if ($prompted) { $accountPassword = Read-Host "Password for the new account (12 characters minimum)" -AsSecureString }
+    $passwordPointer = [IntPtr]::Zero
+    $plainPassword = $null
+    $body = $null
+    try {
+        $passwordPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($accountPassword)
+        $plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPointer)
+        if (([Text.Encoding]::UTF32.GetByteCount($plainPassword) / 4) -lt 12 -or
+            [Text.Encoding]::UTF8.GetByteCount($plainPassword) -gt 72 -or $plainPassword.Contains([char]0)) {
+            throw "New user passwords require at least 12 characters, at most 72 UTF-8 bytes and no null characters."
+        }
+        $body = @{
+            email        = $userEmail
+            display_name = $displayName
+            role         = "operator"
+            password     = $plainPassword
+        }
+        $created = Invoke-Api -Method "POST" -Uri ($baseUrl + "/users") -Body $body -Token $token
+    } finally {
+        if ($passwordPointer -ne [IntPtr]::Zero) { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPointer) }
+        if ($body) { $body.password = $null }
+        $plainPassword = $null
+        if ($prompted -and $accountPassword) { $accountPassword.Dispose() }
     }
-    $created = Invoke-Api -Method "POST" -Uri ($baseUrl + "/users") -Body $body -Token $token
     if ($created -and $created.id) {
         Write-Ok ("User created: " + $userEmail + " (id: " + $created.id + ")")
     } else {
@@ -1945,6 +1966,7 @@ function Do-Help {
     Write-Host "Options:" -ForegroundColor Yellow
     Write-Host "  -Email <email>          Admin email (default: admin@localhost)"
     Write-Host "  -Password <pass>        Admin password (default: admin)"
+    Write-Host "  -NewUserPassword <secure-string>  Password for create-user (otherwise prompted)"
     Write-Host "  -BackendPort <port>     Backend port (default: 3000)"
     Write-Host "  -ReleasesBase <url>     Override the release download URL (CI/offline mirror)"
     Write-Host ""

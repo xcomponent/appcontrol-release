@@ -6,14 +6,32 @@
 
 Pour le parcours court et le choix d’architecture, commencer par [Démarrer ici](DEMARRER-ICI.fr.md).
 
-La version **1.21.1** prévoit un kit d'installation versionné.
+Cette procédure vise le kit d’installation **X4B / AppControl 1.27.0**.
+Le parcours Windows léger correspondant porte la révision **1.27.0-1**.
 Ses preuves exactes sont dans `VALIDATION.fr.md`, `provenance.json` et `evidence/`
 du kit. La publication exige une recette OpenShift réelle et les scans des
-images livrées ; les rapports datés d'anciens candidats sont des historiques.
+images livrées. Cette procédure ne prouve pas que ces contrôles ont abouti :
+lire les rapports du kit effectivement publié. Les rapports d’anciens
+candidats restent historiques.
 
 L'installation comprend l'interface web, le backend, une gateway et PostgreSQL. Un agent supplémentaire exécute les commandes de la démonstration. Le backend est mono-instance ; prévoir une interruption pour les mises à jour.
 
 Pour une banque imposant ses propres images, consulter les [principes d'installation](DEMARRER-ICI.fr.md). Les binaires peuvent être reconditionnés sur les bases approuvées ; les recettes sont dans `docker/corporate/`. Une image reconstruite doit être scannée et testée à nouveau.
+
+La version 1.27.0 ajoute les sources Knowledge nommées, la consultation des
+documents et des composants, les informations de support sourcées, la Discovery
+par plans approuvés et les contrôles IAM. Les correctifs de suivi des commandes
+et de persistance des résultats demandent de **mettre à jour le backend avant
+les agents**. La collecte native reste désactivée tant que l’agent Linux et sa
+clé publique d’approbation n’ont pas été configurés explicitement.
+
+Avant une mise à jour existante, préparer une sauvegarde restaurable et vérifier
+les paramètres SSO selon [le guide IAM](../IAM.md) : issuer/entity ID exact,
+URL de retour HTTPS et références Secret. Le précontrôle Windows vérifie les
+réglages disponibles avant d’appliquer le manifeste ; pour ce parcours Helm,
+contrôler également les valeurs et Secrets fournis au chart. Une erreur ne se
+résout pas en désactivant le SSO. Les migrations V080–V084 ne sont pas annulées
+par une rétrogradation d’image. Voir [UPGRADE](../UPGRADE.md).
 
 ## Prérequis
 

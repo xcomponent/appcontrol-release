@@ -1,8 +1,8 @@
-# AppControl v1.26.0 — release qualification report
+# AppControl v1.27.0 — release qualification report
 
-Generated: 2026-11-18T20:09:32.322388+00:00
-Source commit: `37e8a956e452dd5ec653dd0842f524340d1abc64`
-Release: https://github.com/xcomponent/appcontrol-release/releases/tag/vv1.26.0
+Generated: 2026-11-20T20:55:19.244643+00:00
+Source commit: `e9eafd55b45d7aa29308da845c0e755e5de4e547`
+Release: https://github.com/xcomponent/appcontrol-release/releases/tag/vv1.27.0
 
 ## Scope and result
 
@@ -13,28 +13,22 @@ The OpenShift client kit targets Linux amd64. Its five images are backend, front
 ## Vulnerability scans and inventories
 
 Trivy 0.76.1 scans OS and application packages at all severities (UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL), including unfixed advisories. Image scans use comprehensive detection. A scan with missing inventory, unresolved vulnerabilities or suppressed findings fails the release. Each image has its own CycloneDX SBOM. The locked Rust and npm dependencies have an additional SBOM including development dependencies.
-Source vulnerability database updated: 2026-11-18T13:03:23.615586156Z. Per-image scanner metadata records the database used for that scan.
+Source vulnerability database updated: 2026-11-20T13:11:33.075919767Z. Per-image scanner metadata records the database used for that scan.
 
 | Image | Qualified image and digest | Findings | Scan timestamp |
 |---|---|---:|---|
-| backend | `appcontrol-backend@sha256:2de5a5f88b90a76e3705a49b9ce78c4ab9276df7abe7b6929fd069c907abae8a` | 0 | 2026-11-18T19:35:16.644037325Z |
-| frontend | `appcontrol-frontend@sha256:74a60b2a39376cedc2796b28c53d0c074aa67cf750e682b9dd97cab84bcf3cbe` | 0 | 2026-11-18T19:35:16.762202972Z |
-| gateway | `appcontrol-gateway@sha256:4933e3122304c02bf4c11a868db5c3be0266a83ac4a57d5ce634609b3876a63b` | 0 | 2026-11-18T19:35:08.981183644Z |
-| agent | `appcontrol-agent@sha256:a7971c241c1271f769779c9e886e07e343a4032c8a553f19a63b6f2f0617b722` | 0 | 2026-11-18T19:35:08.705533319Z |
-| postgresql | `appcontrol-postgresql@sha256:842feed502626129905960196d6346e35f7aa2e7b37c377803a00dcad102a45f` | 0 | 2026-11-18T19:35:14.394044251Z |
-| init-certs | `appcontrol-init-certs@sha256:cd3d197abb63c75cee63e37674692592506c4c1336ed95ce32ba900daa31732d` | 0 | 2026-11-18T19:35:13.96233289Z |
-| azure-gateway | `appcontrol-azure-gateway@sha256:347ff1c8552dd3a715c3f594082ff1f77880c07db7c3421b15a6a3beeece8f8d` | 0 | 2026-11-18T19:35:14.724357067Z |
+| backend | `appcontrol-backend@sha256:07928dac6e70d55046d80ce1b34cbec59e79f6b58bde37b947f677520838c41a` | 0 | 2026-11-20T20:23:17.3105361Z |
+| frontend | `appcontrol-frontend@sha256:7b63ac81fc59a8d5618fd548002bbe7bd566d7ae799a81a9253e812bd88299a9` | 0 | 2026-11-20T20:23:28.890812382Z |
+| gateway | `appcontrol-gateway@sha256:31ecde4a6b18cb7c2934d8ec496d00fafb9abed730038f720ec22176d6215596` | 0 | 2026-11-20T20:23:23.149478267Z |
+| agent | `appcontrol-agent@sha256:f73ba69fe0bf1c2fe5e36bfd8df673d5b1dc93a14f6f049e566a059304452642` | 0 | 2026-11-20T20:23:15.105744994Z |
+| postgresql | `appcontrol-postgresql@sha256:8c6ba094a3e12d319153e9594586f41c8bad19645dca78583e805f135ca54fab` | 0 | 2026-11-20T20:23:22.920564942Z |
+| init-certs | `appcontrol-init-certs@sha256:62f9bce9724118ac240cd62f717efd0732068ea5c53e76df05bd3daec0e57d10` | 0 | 2026-11-20T20:23:23.373216848Z |
+| azure-gateway | `appcontrol-azure-gateway@sha256:1e206756974cd48e6fa4b368e88902ad2a9ae3f236cc490a4468f66f6fb42507` | 0 | 2026-11-20T20:23:24.305842684Z |
 
 | Dependency scope | Inputs | Unresolved findings | Scan timestamp |
 |---|---|---:|---|
-| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-18T19:12:45.124006694Z |
-| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-18T19:12:57.076000027Z |
-
-The raw development scan flags the upstream version numbers below. X4B verifies that all installed copies use the local archives that remove the affected syntax. These archives are used by frontend build and test tooling.
-- `picomatch@2.3.2` — `CVE-2026-112366`, verified local mitigation.
-- `picomatch@4.0.7` — `CVE-2026-112366`, verified local mitigation.
-
-The local patches, upstream references and archive checksums are included in `picomatch-backport/`.
+| Production dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-20T19:56:45.518991059Z |
+| Production and development dependencies | Cargo.lock + frontend/package-lock.json | 0 | 2026-11-20T19:56:58.993729047Z |
 
 RustSec: zero vulnerability advisories. Informational warnings, if any, remain in rustsec.json and are not reclassified as vulnerabilities.
 RustSec warning categories: unmaintained: 4, unsound: 1, yanked: 1.

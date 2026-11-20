@@ -88,6 +88,9 @@ standalone script:
 
 See the canonical [PowerShell command reference](POWERSHELL_COMMANDS.md) for
 sites, hosting groups, permissions, maps and the component catalog.
+Creating a local user prompts for that account's password using secure input;
+there is no default password. Automated administration can pass
+`-NewUserPassword` as a `SecureString` from the approved secret manager.
 
 ## Existing PostgreSQL
 

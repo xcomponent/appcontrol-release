@@ -1,7 +1,7 @@
 # Docker Compose for AppControl Production
 #
 # Uses local authentication with bcrypt password hashing.
-# A default admin user is created by migration V018.
+# Bootstrap administrator creation requires explicit SEED_* configuration.
 #
 # Usage:
 #   # Copy and customize the environment file
@@ -14,7 +14,7 @@
 #   # Access via HTTPS (self-signed cert on first start)
 #   open https://localhost
 #
-# For SSO (OIDC/SAML), set AUTH_MODE=oidc or AUTH_MODE=saml and configure the provider.
+# Set AUTH_MODE=sso_only to require configured SSO; hybrid also permits local passwords.
 
 services:
   postgres:
@@ -44,22 +44,34 @@ services:
       KNOWLEDGE_ANTHROPIC_MODEL: ${KNOWLEDGE_ANTHROPIC_MODEL:-}
       DATABASE_URL: postgres://${POSTGRES_USER:-appcontrol}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-appcontrol}
       PORT: "3000"
-      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required (use: openssl rand -base64 48)}
+      JWT_SECRET: "${JWT_SECRET:?JWT_SECRET is required (use: openssl rand -base64 48)}"
       JWT_ISSUER: ${JWT_ISSUER:-appcontrol}
       # Certificate export path
       CERT_EXPORT_PATH: /certs
-      # Authentication mode: local (password), oidc, or saml
-      AUTH_MODE: ${AUTH_MODE:-local}
+      # Policy is independent of APP_ENV. Review docs/IAM.md before sso_only.
+      AUTH_MODE: ${AUTH_MODE:-hybrid}
+      AUTH_LOCAL_EMERGENCY_USER_IDS: ${AUTH_LOCAL_EMERGENCY_USER_IDS:-}
       APP_ENV: production
-      # OIDC configuration (if AUTH_MODE=oidc)
       OIDC_DISCOVERY_URL: ${OIDC_DISCOVERY_URL:-}
+      OIDC_ISSUER: ${OIDC_ISSUER:-}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:-}
       OIDC_REDIRECT_URI: ${OIDC_REDIRECT_URI:-}
-      # SAML configuration (if AUTH_MODE=saml)
+      OIDC_SCOPES: ${OIDC_SCOPES:-openid,profile,email}
+      OIDC_ORGANIZATION_ID: ${OIDC_ORGANIZATION_ID:-}
+      OIDC_LEGACY_LINK_ISSUER: ${OIDC_LEGACY_LINK_ISSUER:-}
       SAML_IDP_SSO_URL: ${SAML_IDP_SSO_URL:-}
+      SAML_IDP_ENTITY_ID: ${SAML_IDP_ENTITY_ID:-}
       SAML_IDP_CERT: ${SAML_IDP_CERT:-}
       SAML_SP_ENTITY_ID: ${SAML_SP_ENTITY_ID:-}
+      SAML_SP_ACS_URL: ${SAML_SP_ACS_URL:-}
+      SAML_GROUP_ATTRIBUTE: ${SAML_GROUP_ATTRIBUTE:-memberOf}
+      SAML_EMAIL_ATTRIBUTE: ${SAML_EMAIL_ATTRIBUTE:-email}
+      SAML_NAME_ATTRIBUTE: ${SAML_NAME_ATTRIBUTE:-displayName}
+      SAML_ADMIN_GROUP: ${SAML_ADMIN_GROUP:-}
+      SAML_WANT_ASSERTIONS_SIGNED: ${SAML_WANT_ASSERTIONS_SIGNED:-true}
+      SAML_ORGANIZATION_ID: ${SAML_ORGANIZATION_ID:-}
+      SAML_LEGACY_LINK_ISSUER: ${SAML_LEGACY_LINK_ISSUER:-}
       # CORS
       CORS_ORIGINS: ${CORS_ORIGINS:-}
       # Logging

@@ -15,11 +15,12 @@ facultatif et le document est traité en mémoire. Une source sans cette opérat
 continue à générer des propositions dont les rapprochements incertains restent à
 confirmer.
 
-**Une URL de base** dessert le catalogue et l’exécution du prompt. Par
+**Chaque source possède une URL de base** qui dessert son catalogue et
+l’exécution de ses prompts. Par
 exemple, avec `https://knowledge.example/api/v1`, X4B appelle
 `https://knowledge.example/api/v1/knowledge-documents` et
 `https://knowledge.example/api/v1/prompt-executions`. Le raccordement est
-accessible dans **Connaissance → Source documentaire**. Les propositions
+accessible dans **Connaissance → Sources**. Les propositions
 générées se trouvent dans l’**Atelier de cartographie**.
 
 | Opération | Ce que le Knowledge Engine fournit |
@@ -27,6 +28,44 @@ générées se trouvent dans l’**Atelier de cartographie**.
 | `GET /knowledge-documents` | Une liste paginée des clés applicatives autorisées et de l’empreinte SHA-256 de leur document courant. Le filtre `application_key` vérifie la révision courante d’une application. |
 | `GET /knowledge-documents/{application_key}/versions/{sha256}` | Le JSON d’une révision précise, pour la prévisualisation, le diagnostic ou la vérification d’un rapprochement. |
 | `POST /prompt-executions` | L’exécution synchrone d’un prompt générique, avec une révision documentaire ou sans document, et avec une pièce jointe facultative. Le service renvoie le résultat textuel et les références des entrées utilisées. |
+
+## Plusieurs sources nommées
+
+Un administrateur peut ajouter plusieurs sources dans **Connaissance**.
+Chaque source a un **nom affiché** modifiable et un **identifiant technique**
+stable. Par exemple, deux connexions au même protocole peuvent représenter
+deux référentiels documentaires distincts. Chaque connexion conserve son URL,
+son jeton serveur, son activation et son intervalle de synchronisation.
+Ajouter une connexion ne modifie pas les autres.
+
+Les tuiles de source permettent d’ouvrir leurs paramètres, de tester la
+connexion, de lancer leur synchronisation ou de les mettre en pause. Elles
+affichent le nombre de documents connus de X4B et la dernière synchronisation
+réussie. Ce nombre décrit les métadonnées synchronisées, pas un comptage
+en direct chez le fournisseur. Un réglage configuré ne prouve pas à lui seul
+que le service distant est actuellement accessible.
+
+L’identifiant technique est celui des références externes des maps, par
+exemple `{"system":"documentation","id":"00142"}`. Changer le nom affiché
+ne change ni cet identifiant, ni le rattachement des maps et des widgets.
+Lors d’une mise à jour, la connexion déjà installée reste la source par défaut
+avec son URL, son identifiant et son jeton existants. Une connexion gérée dans
+le déploiement reste gérée dans le déploiement.
+
+Dans l’Atelier de cartographie, le choix de la source détermine le portefeuille
+documentaire à examiner. Une génération ou un affinage utilisant le document
+d’origine appelle le connecteur associé à ce document. Chaque service fournit
+actuellement son propre catalogue et son exécuteur de prompts : l’ajout de
+sources ne croise pas automatiquement leurs documents dans un même appel IA.
+La sélection des fichiers Git déjà indexés et d’une pièce jointe reste le
+contexte complémentaire décrit plus bas.
+
+Plusieurs sources utilisent le **même contrat client 1.1**, sans ajouter de
+champ obligatoire à ses requêtes ou à ses réponses. Leur nom et leur
+identifiant sont gérés dans X4B. L’API administrative X4B
+`GET /api/v1/x4b/knowledge-sources` expose la collection des réglages sans les
+jetons ; elle ne remplace pas `GET /knowledge-documents` chez le fournisseur.
+La façade historique des réglages reste disponible pour la source par défaut.
 
 ## Exemple de raccordement
 
@@ -192,9 +231,9 @@ Vérifiez le service avant de l’utiliser depuis l’Atelier de cartographie.
 
 ### Répartir et suivre les dossiers de cartographie
 
-Le connecteur documentaire reste partagé au niveau de l’organisation. Sa configuration,
-le test de connexion et la synchronisation globale relèvent de l’administration de la
-source. La distribution quotidienne est distincte : l’administrateur peut déléguer la
+Les connecteurs documentaires restent partagés au niveau de l’organisation.
+Leur configuration, leur test de connexion et leur synchronisation relèvent de
+l’administration de chaque source. La distribution quotidienne est distincte : l’administrateur peut déléguer la
 fonction de **gestionnaire de portefeuille** à une personne ou à une équipe. Cette
 fonction permet de voir le portefeuille et la file **À répartir**, d’affecter un dossier
 ou un lot, et de transférer un dossier. Elle n’accorde aucun droit de démarrage, d’arrêt
@@ -324,7 +363,7 @@ proposition, cliquez sur **Choisir les sources** pour régler les entrées de
 cette analyse. **Inclure le document source** est présélectionné avec la
 révision associée à la proposition. Vous pouvez décocher cette option ou
 sélectionner des **Fichiers du dépôt**. La connexion documentaire se règle
-dans **Connaissance → Source documentaire → Paramètres**.
+dans **Connaissance → Sources → Paramètres** de la source concernée.
 
 Les fichiers Git sont proposés pour une application déjà associée à une
 map AppControl disposant de fichiers texte indexés dans **Connaissance**.
@@ -429,10 +468,12 @@ sortie approuvée pour le backend de cette installation.
 
 #### Renseigner l’URL et le jeton dans X4B
 
-Un administrateur peut renseigner l’URL et le jeton directement dans
-**Connaissance → Source documentaire → Paramètres**. Saisissez l’URL complète terminée par
-`/api/v1`, le jeton et, si nécessaire, le nom de source utilisé pour rapprocher
-les fiches. L’activation et la désactivation du connecteur prennent effet
+Un administrateur peut ajouter une source ou ouvrir ses paramètres dans
+**Connaissance → Sources**. Saisissez un nom affiché, un identifiant technique
+stable, l’URL complète terminée par `/api/v1` et le jeton serveur.
+L’identifiant technique est conservé après création ; le nom affiché peut être
+modifié sans toucher aux références des fiches. L’activation et la désactivation
+du connecteur prennent effet
 sans redémarrage du backend.
 
 Par défaut, l’interface accepte les URLs HTTPS vers les hôtes accessibles
@@ -455,14 +496,18 @@ avant son déploiement, utilisez `-NomInstallation`. Les Services sans
 sélecteur nécessitent une règle gérée par la plateforme. Une éventuelle
 politique d’entrée du service documentaire doit aussi autoriser le backend.
 
-Dans le formulaire, **Tester la connexion** vérifie l’accès avec le
-jeton saisi et contrôle le format de la première page de
-`GET /knowledge-documents`. **Tester le prompt sur un document** appelle
-`POST /prompt-executions` sur le premier document accessible et vérifie
-la référence de la révision et la topologie AppControl renvoyée. Ce second
-test utilise l’IA du connecteur. Les tests ne sauvegardent aucun réglage,
-ne lancent aucun lot et ne publient aucune map. **Enregistrer** applique les
-paramètres.
+Après enregistrement, **Tester la connexion** dans la tuile vérifie les
+réglages de cette source et le format de la première page de
+`GET /knowledge-documents`. Ce test n’exécute pas de prompt.
+Pour tester également l’IA d’une source enregistrée, une session
+d’administration peut appeler l’API X4B
+`POST /api/v1/x4b/knowledge-sources/{source}/test` avec
+`{"test_prompt":true}`. Elle appelle `POST /prompt-executions` sur le premier
+document accessible et vérifie la révision et la topologie AppControl renvoyées.
+La page **Service d’IA → Tester sur un document** conserve le diagnostic
+de la source par défaut lorsque ses réglages sont gérés dans X4B.
+Un test IA utilise le service du connecteur concerné. Ces tests ne lancent
+aucun lot et ne publient aucune map.
 
 La plateforme peut désactiver les réglages de l’interface avec
 `X4B_KNOWLEDGE_SETTINGS_ENABLED=false`. Quand

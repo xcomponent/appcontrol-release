@@ -73,45 +73,47 @@ Custom reverse proxies also need that exception. See the complete
 
 ## Users & Authentication
 
-AppControl supports three authentication methods. Only one needs to be active at a time, although OIDC and SAML can coexist.
+Login policy is explicit and independent of `APP_ENV`. See the
+[IAM deployment and upgrade guide](IAM.md) for provider trust, account binding,
+revocation and emergency access.
 
 ### Authentication Methods Summary
 
-| Method | Use Case | Configuration |
-|--------|----------|---------------|
-| **Dev Login** | Local development, quickstart | Automatic when `APP_ENV=development` |
-| **OIDC** | Enterprise SSO (Keycloak, Okta, Azure AD, Google) | Set `OIDC_DISCOVERY_URL` |
-| **SAML 2.0** | Enterprise SSO (ADFS, Azure AD, Okta, Shibboleth) | Set `SAML_IDP_SSO_URL` |
+| Method | Configuration |
+|--------|---------------|
+| Local password | Existing active account with a bcrypt password; allowed by `AUTH_MODE` |
+| OIDC | Configured HTTPS provider, client and redirect URI |
+| SAML 2.0 | Configured IdP entity ID, signing certificate, SP entity ID and ACS URL |
 
-### Development Mode — Default User
+| Variable | Default | Behavior |
+|----------|---------|----------|
+| `AUTH_MODE` | `hybrid` | `hybrid` allows local and configured SSO; `sso_only` restricts password login; `local_only` disables SSO routes |
+| `AUTH_LOCAL_EMERGENCY_USER_IDS` | Empty | Comma-separated account UUIDs allowed to use local passwords in `sso_only`; each account must remain active, local and an organization admin |
 
-When `APP_ENV=development` (the default), the backend automatically seeds a default admin user on first startup if the database is empty.
+`APP_ENV=production` enforces production configuration checks; it does **not**
+disable password login. Configure `sso_only` deliberately when required. MFA
+must be enforced and qualified at the IdP: enabling SSO does not attest MFA.
+Legacy mode names `local`, `oidc` and `saml` normalize to `hybrid` with a warning,
+preserving their historical behavior. Select `sso_only` explicitly to require SSO.
 
-| Field | Value |
-|-------|-------|
-| **Email** | `admin@localhost` |
-| **Display name** | `Dev Admin` |
-| **Role** | `admin` (full access) |
-| **Organization** | `Dev Org` |
-| **Password** | _(none — dev mode does not require a password)_ |
+### Initial administrator and local passwords
 
-**To log in via the UI:** Open http://localhost:8080, enter `admin@localhost` in the email field, type any value in the password field (it is ignored in dev mode), and click **Sign in**.
+Bootstrap is controlled by `SEED_ENABLED` and the `SEED_*` settings. No universal
+account or password is created merely by selecting a development environment.
+The first administrator uses the configured email and password. Password login
+verifies bcrypt; it does not ignore a supplied password.
 
-**To log in via the API:**
-
-```bash
-TOKEN=$(curl -s -X POST http://localhost:3000/api/v1/auth/dev-login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"admin@localhost"}' | jq -r '.token')
-```
-
-> **Warning:** The `dev-login` and `login` endpoints are only available when `APP_ENV=development`. In production, they return `404 Not Found` — you must configure OIDC or SAML.
+New and reset passwords require at least 12 characters and at most 72 UTF-8
+bytes. Existing accounts are preserved during an upgrade. Changing a password,
+changing access or deactivating an account invalidates its previous sessions;
+review the detailed [revocation behavior](IAM.md#accounts-and-revocation).
 
 ### User Roles
 
 | Role | Scope | Description |
 |------|-------|-------------|
 | `admin` | Organization-wide | Implicit owner on all applications. Can manage users, teams, and organization settings. |
+| `operator`, `editor` | Organization account roles | Application rights still require explicit user/team grants; these role names alone do not grant access to every app. |
 | `viewer` | Default for new SSO users | Read-only access. Actual permissions depend on team memberships and per-app grants. |
 
 ### Permission Levels (per application)
@@ -188,15 +190,18 @@ curl -H "Authorization: Bearer ac_xK9m2pQ..." http://localhost:3000/api/v1/apps
 
 ### OIDC Configuration
 
-OIDC implements the Authorization Code Flow. Tested with Keycloak, Okta, Azure AD, and Google Workspace.
+OIDC uses Authorization Code Flow with S256 PKCE and validates the signed ID token. Qualify the exact customer IdP configuration before rollout.
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `OIDC_DISCOVERY_URL` | **Yes** (to enable) | - | OpenID Connect discovery URL. Example: `https://keycloak.example.com/realms/appcontrol/.well-known/openid-configuration` |
+| `OIDC_DISCOVERY_URL` | **Yes** (to enable) | - | HTTPS OpenID Connect discovery URL. Example: `https://keycloak.example.com/realms/appcontrol/.well-known/openid-configuration` |
 | `OIDC_CLIENT_ID` | **Yes** | - | Client ID registered with the OIDC provider |
 | `OIDC_CLIENT_SECRET` | **Yes** | - | Client secret |
-| `OIDC_REDIRECT_URI` | No | `/api/v1/auth/oidc/callback` | Redirect URI after authentication. Must match the provider configuration exactly. |
+| `OIDC_REDIRECT_URI` | **Yes** | - | Absolute HTTPS callback URL; must match the registered provider URI exactly |
 | `OIDC_SCOPES` | No | `openid,profile,email` | Comma-separated OIDC scopes to request |
+| `OIDC_ISSUER` | Recommended | Derived only from a standard `/.well-known/openid-configuration` URL | Exact expected issuer, including path and trailing slash; metadata must match |
+| `OIDC_ORGANIZATION_ID` | Multi-org: Yes | Sole existing organization only | UUID of the organization into which this provider can provision users |
+| `OIDC_LEGACY_LINK_ISSUER` | No | Disabled | Exact current issuer authorizing migration of a unique historical `oidc_sub`; never links by email |
 
 **OIDC Flow:**
 
@@ -228,23 +233,26 @@ OIDC_CLIENT_SECRET=your-client-secret
 OIDC_REDIRECT_URI=https://appcontrol.example.com/api/v1/auth/oidc/callback
 ```
 
-**Auto-provisioning:** Users authenticating via OIDC for the first time are automatically created with the `viewer` role in the default organization.
+**Provisioning:** New identities receive `viewer` in the explicitly configured organization, or the sole existing organization. Existing accounts are matched by provider issuer and stable subject. An email collision is refused and requires administrator review; email does not transfer an existing account or its role. Metadata and token/JWKS/userinfo requests require verified HTTPS and do not follow redirects.
 
 ### SAML 2.0 Configuration
 
-SAML implements the SP-Initiated Web Browser SSO Profile. Tested with ADFS, Azure AD, and Okta.
+SAML uses SP-initiated Web Browser SSO with cryptographic XML signature validation. Qualify the exact IdP certificate and assertion profile before rollout.
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `SAML_IDP_SSO_URL` | **Yes** (to enable) | - | Identity Provider SSO endpoint URL |
-| `SAML_IDP_CERT` | **Yes** | - | IdP signing certificate (PEM format, base64-encoded) |
+| `SAML_IDP_ENTITY_ID` | **Yes** | - | Exact issuer/entity ID expected in the signed assertion |
+| `SAML_ORGANIZATION_ID` | Multi-org: Yes | Sole existing organization only | Organization UUID for this provider |
+| `SAML_LEGACY_LINK_ISSUER` | No | Disabled | Exact current issuer authorizing migration of a unique historical `saml_name_id`; never links by email |
+| `SAML_IDP_CERT` | **Yes** | - | Pinned IdP signing certificate: PEM, base64 PEM, or base64 DER content; this is not a filesystem path |
 | `SAML_SP_ENTITY_ID` | **Yes** | - | Service Provider entity ID (e.g., `https://appcontrol.example.com/saml`) |
 | `SAML_SP_ACS_URL` | **Yes** | - | Assertion Consumer Service URL (e.g., `https://appcontrol.example.com/api/v1/auth/saml/acs`) |
 | `SAML_GROUP_ATTRIBUTE` | No | `memberOf` | SAML attribute name containing group memberships |
 | `SAML_EMAIL_ATTRIBUTE` | No | `email` | SAML attribute name for user email |
 | `SAML_NAME_ATTRIBUTE` | No | `displayName` | SAML attribute name for display name |
-| `SAML_ADMIN_GROUP` | No | - | SAML group name that maps to the `admin` role |
-| `SAML_WANT_ASSERTIONS_SIGNED` | No | `true` | Require IdP to sign SAML assertions |
+| `SAML_ADMIN_GROUP` | No | - | Explicit trusted group controlling admin/viewer for SAML-managed accounts; locally managed roles are preserved |
+| `SAML_WANT_ASSERTIONS_SIGNED` | No | `true` | `true` requires a directly signed Assertion; `false` permits a signed Response covering the Assertion. Cryptographic verification is always required |
 
 **SAML Flow:**
 
@@ -255,7 +263,8 @@ User clicks "Sign in with SSO" (configured for SAML)
   → User authenticates at the IdP
   → IdP POSTs SAMLResponse to /api/v1/auth/saml/acs
   → Backend validates response, extracts attributes
-  → Backend syncs SAML groups → AppControl teams
+  → Backend verifies the XML signature, issuer, audience, destination, time limits and request correlation
+  → Backend binds the exact issuer + NameID and syncs only authorized team mappings
   → Backend creates/updates user in PostgreSQL
   → Backend sets JWT cookie and redirects to UI
 ```
@@ -275,8 +284,9 @@ AD Group "APP_PAYMENTS_ADMINS"
   → AppControl team "Payments-Admin"
     → Permission: manage on "Paiements-SEPA"
 
-AD Group "APPCONTROL_ADMINS" (= SAML_ADMIN_GROUP)
-  → role=admin (org admin, implicit owner on everything)
+Organization admin
+  → assigned explicitly by an authorized AppControl administrator
+  → or controlled by explicitly configured SAML_ADMIN_GROUP for SAML-managed accounts
 ```
 
 **Manage mappings via API:**
@@ -301,12 +311,18 @@ curl -X DELETE http://localhost:3000/api/v1/saml/group-mappings/<mapping-id> \
   -H "Authorization: Bearer $TOKEN"
 ```
 
+`default_role` is retained mapping metadata; a team mapping grants membership,
+not an organization role. New SAML identities normally receive `viewer`.
+When `SAML_ADMIN_GROUP` is configured, SAML-managed accounts follow that signed
+group: membership gives `admin`, and losing it returns them to `viewer`.
+Locally managed roles remain under local administrator authority.
+
 **Sync behavior on login:**
 1. Extract group claims from the SAML assertion
 2. For each group, look up `saml_group_mappings` to find the target team
 3. Add user to matched teams (if not already a member)
-4. Remove user from SAML-managed teams whose group is no longer in the assertion
-5. This ensures team membership always reflects the current AD/LDAP state
+4. Remove only memberships this same SAML issuer previously created, when the group is absent
+5. Preserve existing local memberships and team leadership. Team mappings do not promote organization role; only explicitly configured `SAML_ADMIN_GROUP` controls the role of SAML-managed accounts.
 
 ---
 
@@ -340,6 +356,8 @@ The backend is the central API server. It is configured **exclusively via enviro
 |----------|----------|---------|-------------|
 | `JWT_SECRET` | **Prod: Yes** | `dev-secret-change-in-production` | JWT signing secret. **Must be >= 32 characters** in production. The backend will **panic** on startup if the secret is weak and `APP_ENV=production`. Generate a strong secret: `openssl rand -base64 48` |
 | `JWT_ISSUER` | No | `appcontrol` | JWT `iss` claim value. Must match across all backend instances in a cluster. |
+| `AUTH_MODE` | No | `hybrid` | Login policy: `hybrid`, `sso_only`, or `local_only`; independent of `APP_ENV` |
+| `AUTH_LOCAL_EMERGENCY_USER_IDS` | No | Empty | Explicit active local admin UUIDs allowed to use passwords in `sso_only` |
 
 ### High Availability
 
@@ -395,8 +413,7 @@ The backend automatically adds the following security headers to every response 
 | `/health` | GET | No | Health check (returns `{"status":"ok"}`) |
 | `/ready` | GET | No | Readiness probe (checks DB connection) |
 | `/metrics` | GET | No | Prometheus metrics |
-| `/api/v1/auth/login` | POST | No | Email+password login (dev mode only) |
-| `/api/v1/auth/dev-login` | POST | No | Email-only dev login (dev mode only) |
+| `/api/v1/auth/login` | POST | No | Local bcrypt password login, subject to `AUTH_MODE` |
 | `/api/v1/auth/oidc/login` | GET | No | OIDC login redirect |
 | `/api/v1/auth/oidc/callback` | GET | No | OIDC callback |
 | `/api/v1/auth/saml/login` | GET | No | SAML login redirect |
@@ -586,7 +603,7 @@ The agent only makes **outbound** connections:
 |-------------|----------------|---------|
 | `/etc/appcontrol/agent.yaml` | `%PROGRAMDATA%\AppControl\config\agent.yaml` | Configuration file |
 | `/etc/appcontrol/tls/` | `%PROGRAMDATA%\AppControl\config\tls\` | TLS certificates |
-| `/var/lib/appcontrol/buffer-{agent-id}` | `%PROGRAMDATA%\AppControl\buffer-{agent-id}` | Offline message buffer (sled embedded DB) |
+| `/var/lib/appcontrol/buffer-{agent-id}` | `%PROGRAMDATA%\AppControl\buffer-{agent-id}` | Offline message outbox (redb embedded DB) |
 
 ### Process Detachment
 
@@ -596,9 +613,19 @@ The agent only makes **outbound** connections:
 2. The child has its own session (setsid)
 3. Agent crash, restart, or upgrade does not kill managed processes
 
+On Windows, detached commands retain `CREATE_BREAKAWAY_FROM_JOB`. If the agent
+runs inside a restrictive Windows Job Object that denies breakaway, Windows
+refuses the launch. The agent reports the verified Job Object restriction and
+does not retry inside the inherited job. Run the agent outside that restrictive
+job, or have the job owner explicitly permit breakaway. A process launcher or
+CI runner can impose this restriction even when the agent account has local
+administrator rights. See [Windows Job Objects](https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects).
+
 ### Offline Buffer
 
-When the gateway connection is lost, the agent buffers messages in a local [sled](https://docs.rs/sled/) embedded database. When connectivity is restored, buffered messages are replayed in order. The buffer path is `/var/lib/appcontrol/buffer-{agent-id}`.
+The agent writes checks and final command results to a local redb outbox before sending them. The existing buffer directory `/var/lib/appcontrol/buffer-{agent-id}` is retained; existing redb messages are indexed on opening without changing the configured path. Command results remain until their backend acknowledgement. A socket write alone does not remove them. Other persisted telemetry is removed after a successful socket write. Interactive output and live logs use a bounded, best-effort memory queue.
+
+`BUFFER_MAX_BYTES` defaults to 104857600 (100 MiB) and bounds serialized outbox entries and their keys, excluding redb file overhead. Old telemetry can be evicted to make space; it cannot evict pending command results. If the remaining budget contains only unacknowledged results or the disk is unavailable, new evidence is refused with a local error. This bounded buffer cannot guarantee zero loss during an arbitrary outage. It does not make external commands idempotent or resume interrupted backend operations. Upgrade the backend before the agents so replayed results can be acknowledged using their persisted command record.
 
 ### Agent Failover
 
@@ -904,4 +931,4 @@ docker compose -f docker/docker-compose.yaml up -d --build
 - [ ] API keys have expiry dates set
 - [ ] SAML assertions are signed (`SAML_WANT_ASSERTIONS_SIGNED=true`)
 - [ ] CORS origins restricted to your frontend domain only
-- [ ] No dev endpoints accessible (`APP_ENV=production` disables `/auth/login` and `/auth/dev-login`)
+- [ ] `AUTH_MODE` and any explicit emergency account UUIDs have been reviewed; production password login is not controlled by `APP_ENV`

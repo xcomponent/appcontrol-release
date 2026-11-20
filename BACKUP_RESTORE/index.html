@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/BACKUP_RESTORE/">
       
       
-        <link rel="prev" href="../CONFIGURATION/">
+        <link rel="prev" href="../NATIVE_AGENT_DISCOVERY/">
       
       
         <link rel="next" href="../UPGRADE/">
@@ -914,6 +914,8 @@
       
         
       
+        
+      
     
     
       
@@ -961,6 +963,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1224,6 +1247,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1272,6 +1299,27 @@
   
   <span class="md-ellipsis">
     Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
   </span>
   
 
@@ -1674,9 +1722,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#jwt_secret" class="md-nav__link">
+  <a href="#backend-and-connector-secrets" class="md-nav__link">
     <span class="md-ellipsis">
-      JWT_SECRET
+      Backend and connector secrets
     </span>
   </a>
   
@@ -1913,6 +1961,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../SIMULATION_MAPS.fr/" class="md-nav__link">
         
   
@@ -2056,6 +2125,8 @@
       
         
       
+        
+      
     
     
       
@@ -2103,6 +2174,27 @@
   
   <span class="md-ellipsis">
     Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
   </span>
   
 
@@ -2211,6 +2303,8 @@
       
         
       
+        
+      
     
     
       
@@ -2258,6 +2352,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -2927,9 +3042,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#jwt_secret" class="md-nav__link">
+  <a href="#backend-and-connector-secrets" class="md-nav__link">
     <span class="md-ellipsis">
-      JWT_SECRET
+      Backend and connector secrets
     </span>
   </a>
   
@@ -3094,19 +3209,24 @@
 <td>From backup</td>
 </tr>
 <tr>
-<td>Append-only audit (<code>action_log</code>, <code>state_transitions</code>, <code>check_events</code>, <code>switchover_log</code>, <code>config_versions</code>)</td>
-<td>PostgreSQL tables</td>
-<td>From backup — <strong>no other source</strong></td>
+<td>Audit and recovery records</td>
+<td>PostgreSQL tables, including <code>application_procedure_*</code>, <code>procedure_run_commands</code> and <code>application_command_proposals</code></td>
+<td>Restore the database and compare a retained approval, revision, run and evidence record</td>
 </tr>
 <tr>
-<td>CA private key</td>
-<td><code>pki_authorities</code> table (encrypted)</td>
-<td>From backup — losing it forces re-enrollment of every agent</td>
+<td>CA key, certificate and pending rotation</td>
+<td><code>organizations.ca_*_pem</code> and <code>pending_ca_*_pem</code></td>
+<td>Restore the matching database backup and preserve the current trust chain</td>
 </tr>
 <tr>
 <td><code>JWT_SECRET</code></td>
 <td>Kubernetes secret <code>appcontrol-jwt</code></td>
-<td>Can be regenerated (invalidates all sessions)</td>
+<td>Restore the original secret to recover sessions and connector tokens that use the derived key</td>
+</tr>
+<tr>
+<td><code>X4B_KNOWLEDGE_SETTINGS_KEY</code>, when configured</td>
+<td>Backend environment or Kubernetes Secret</td>
+<td>Restore this specific key to read saved connector tokens</td>
 </tr>
 <tr>
 <td><code>DATABASE_URL</code></td>
@@ -3450,20 +3570,20 @@
 <hr />
 <h2 id="keys-secrets">Keys &amp; secrets<a class="headerlink" href="#keys-secrets" title="Permanent link">&para;</a></h2>
 <h3 id="ca-private-key">CA private key<a class="headerlink" href="#ca-private-key" title="Permanent link">&para;</a></h3>
-<p>The per-organization CA is stored encrypted in the <code>pki_authorities</code> table. If you lose this row:</p>
-<ul>
-<li><strong>Every agent must be re-enrolled</strong> with a new CA — there is no other way.</li>
-<li>Plan for this by including <code>pki_authorities</code> in your DB backup (it is part of the <code>pg_dump</code>).</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Roadmap: external CA</p>
-<p>Delegating CA signing to HashiCorp Vault PKI or AWS KMS so the private key never lives in the backend database is on the roadmap. It is not yet implemented (see <a href="../HARDENING/#pki-and-certificate-hygiene">Hardening</a>). Today the CA lives encrypted in <code>organizations.ca_private_key</code>; protect it via PostgreSQL TDE or volume-level encryption (LUKS, EBS encryption) and a hardened Kubernetes secret-access policy.</p>
-</div>
-<h3 id="jwt_secret"><code>JWT_SECRET</code><a class="headerlink" href="#jwt_secret" title="Permanent link">&para;</a></h3>
-<p>Stored in the Kubernetes secret <code>appcontrol-jwt</code>. Back it up the same way you back up other Kubernetes secrets (Sealed Secrets, HashiCorp Vault, AWS Secrets Manager). Losing it forces every user to re-authenticate.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>appcontrol-jwt<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>appcontrol-jwt.yaml.enc
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="c1"># Store encrypted in your secret store</span>
-</span></code></pre></div>
+<p>The organization row contains the current CA certificate and private key in
+<code>ca_cert_pem</code> and <code>ca_key_pem</code>, along with any pending rotation. Back up the
+organization rows and transport and store the backup with encryption. Keep the
+database readable only by the authorized recovery team.</p>
+<h3 id="backend-and-connector-secrets">Backend and connector secrets<a class="headerlink" href="#backend-and-connector-secrets" title="Permanent link">&para;</a></h3>
+<p>Restore <code>JWT_SECRET</code> from the vault used by the deployment. The backend also
+uses it to derive the connector encryption key when
+<code>X4B_KNOWLEDGE_SETTINGS_KEY</code> is unset. If a dedicated key is configured,
+restore that key with the same version of the database. Verify the recovery
+workspace and an authorized document connector in the isolated instance before
+it is put back in service.</p>
+<p>Keep the encrypted dossiers for approved revisions in storage accessible from
+the recovery site. Store their keys separately in the vault. Test reading an
+export on a workstation with no network access to X4B or its connectors.</p>
 <h3 id="agent-client-certificates">Agent client certificates<a class="headerlink" href="#agent-client-certificates" title="Permanent link">&para;</a></h3>
 <p>Each agent host has its own client cert at <code>/etc/appcontrol/tls/agent.crt</code>. If the host is wiped:</p>
 <ul>
@@ -3479,10 +3599,10 @@
 <li>Help satisfy DORA Article 9 (cryptographic key management).</li>
 <li>Allow hardware-backed key rotation.</li>
 </ul>
-<p>This is not yet implemented. The CA private key is currently held encrypted in the database. Until KMS integration ships, mitigate by:</p>
+<p>The current backend holds the CA private key in the organization row. Protect it by:</p>
 <ul>
 <li>enabling at-rest encryption on the PostgreSQL volume (PostgreSQL TDE, LUKS, AWS EBS encryption);</li>
-<li>restricting <code>SELECT</code> on <code>pki_authorities</code> / <code>organizations.ca_private_key</code> to the backend service account only;</li>
+<li>restricting <code>SELECT</code> on <code>organizations.ca_key_pem</code> and <code>organizations.pending_ca_key_pem</code> to the backend service account only;</li>
 <li>rotating the CA on a regular cadence (see <a href="../HARDENING/#pki-and-certificate-hygiene">PKI rotation</a>).</li>
 </ul>
 <hr />
@@ -3530,80 +3650,80 @@
 </tbody>
 </table>
 <h3 id="crontab-example">crontab example<a class="headerlink" href="#crontab-example" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a># m h dom mon dow command
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>0  3  *  *  *  /usr/local/bin/appcontrol-backup-daily.sh
-</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>0  4  *  *  0  /usr/local/bin/appcontrol-backup-weekly.sh
-</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>0  5  1  *  *  /usr/local/bin/appcontrol-backup-monthly.sh
-</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>0  6  *  *  *  /usr/local/bin/appcontrol-basebackup.sh
-</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>0 23  *  *  *  /usr/local/bin/appcontrol-restore-verify.sh
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># m h dom mon dow command
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>0  3  *  *  *  /usr/local/bin/appcontrol-backup-daily.sh
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>0  4  *  *  0  /usr/local/bin/appcontrol-backup-weekly.sh
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>0  5  1  *  *  /usr/local/bin/appcontrol-backup-monthly.sh
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>0  6  *  *  *  /usr/local/bin/appcontrol-basebackup.sh
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>0 23  *  *  *  /usr/local/bin/appcontrol-restore-verify.sh
 </span></code></pre></div>
 <h3 id="appcontrol-backup-dailysh"><code>appcontrol-backup-daily.sh</code><a class="headerlink" href="#appcontrol-backup-dailysh" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="ch">#!/usr/bin/env bash</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="nv">DEST</span><span class="o">=</span><span class="s2">&quot;s3://appcontrol-backups/daily/</span><span class="k">$(</span>date<span class="w"> </span>+%Y/%m/%d<span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="nv">DUMP</span><span class="o">=</span><span class="s2">&quot;/tmp/appcontrol-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M<span class="k">)</span><span class="s2">.dump&quot;</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>pg_dump<span class="w"> </span>--host<span class="o">=</span>db.internal<span class="w"> </span>--username<span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">        </span>--format<span class="o">=</span>custom<span class="w"> </span>--compress<span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">        </span>--file<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span><span class="w"> </span>appcontrol
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="c1"># Server-side encryption for at-rest protection</span>
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEST</span><span class="s2">/&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="w">    </span>--sse<span class="w"> </span>aws:kms<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="w">    </span>--sse-kms-key-id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KMS_KEY_ID</span><span class="s2">&quot;</span>
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>rm<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span>
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a><span class="c1"># Retention: delete &gt; 30 days</span>
+</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span>
+</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a><span class="w">  </span>awk<span class="w"> </span><span class="s1">&#39;$1 &lt; &quot;&#39;</span><span class="k">$(</span>date<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;30 days ago&#39;</span><span class="w"> </span>+%Y-%m-%d<span class="k">)</span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span><span class="p">|</span>
+</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a><span class="w">  </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="w"> </span><span class="p">|</span>
+</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a><span class="w">  </span>xargs<span class="w"> </span>-r<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>aws<span class="w"> </span>s3<span class="w"> </span>rm<span class="w"> </span><span class="s2">&quot;s3://appcontrol-backups/{}&quot;</span>
+</span></code></pre></div>
+<h3 id="appcontrol-restore-verifysh"><code>appcontrol-restore-verify.sh</code><a class="headerlink" href="#appcontrol-restore-verifysh" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="ch">#!/usr/bin/env bash</span>
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
 </span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="nv">DEST</span><span class="o">=</span><span class="s2">&quot;s3://appcontrol-backups/daily/</span><span class="k">$(</span>date<span class="w"> </span>+%Y/%m/%d<span class="k">)</span><span class="s2">&quot;</span>
-</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="nv">DUMP</span><span class="o">=</span><span class="s2">&quot;/tmp/appcontrol-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M<span class="k">)</span><span class="s2">.dump&quot;</span>
-</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
-</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>pg_dump<span class="w"> </span>--host<span class="o">=</span>db.internal<span class="w"> </span>--username<span class="o">=</span>appcontrol<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">        </span>--format<span class="o">=</span>custom<span class="w"> </span>--compress<span class="o">=</span><span class="m">9</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">        </span>--file<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span><span class="w"> </span>appcontrol
-</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
-</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="c1"># Server-side encryption for at-rest protection</span>
-</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEST</span><span class="s2">/&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">    </span>--sse<span class="w"> </span>aws:kms<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">    </span>--sse-kms-key-id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KMS_KEY_ID</span><span class="s2">&quot;</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># Find the most recent daily backup</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="nv">LATEST</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">  </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">&quot;s3://appcontrol-backups/</span><span class="nv">$LATEST</span><span class="s2">&quot;</span><span class="w"> </span>/tmp/latest.dump
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="c1"># Wipe and restore the sandbox DB</span>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;DROP DATABASE IF EXISTS appcontrol_test;&quot;</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;CREATE DATABASE appcontrol_test;&quot;</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>pg_restore<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">    </span>-d<span class="w"> </span>appcontrol_test<span class="w"> </span>/tmp/latest.dump
 </span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
-</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>rm<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DUMP</span><span class="s2">&quot;</span>
-</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>
-</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="c1"># Retention: delete &gt; 30 days</span>
-</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span>
-</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">  </span>awk<span class="w"> </span><span class="s1">&#39;$1 &lt; &quot;&#39;</span><span class="k">$(</span>date<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;30 days ago&#39;</span><span class="w"> </span>+%Y-%m-%d<span class="k">)</span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span><span class="p">|</span>
-</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="w">  </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="w"> </span><span class="p">|</span>
-</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="w">  </span>xargs<span class="w"> </span>-r<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>aws<span class="w"> </span>s3<span class="w"> </span>rm<span class="w"> </span><span class="s2">&quot;s3://appcontrol-backups/{}&quot;</span>
-</span></code></pre></div>
-<h3 id="appcontrol-restore-verifysh"><code>appcontrol-restore-verify.sh</code><a class="headerlink" href="#appcontrol-restore-verifysh" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="ch">#!/usr/bin/env bash</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># Find the most recent daily backup</span>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="nv">LATEST</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span>
-</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">  </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
-</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>
-</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">&quot;s3://appcontrol-backups/</span><span class="nv">$LATEST</span><span class="s2">&quot;</span><span class="w"> </span>/tmp/latest.dump
-</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
-</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="c1"># Wipe and restore the sandbox DB</span>
-</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;DROP DATABASE IF EXISTS appcontrol_test;&quot;</span>
-</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;CREATE DATABASE appcontrol_test;&quot;</span>
-</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>pg_restore<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="w">    </span>-d<span class="w"> </span>appcontrol_test<span class="w"> </span>/tmp/latest.dump
-</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>
-</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="c1"># Validation queries</span>
-</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a><span class="nv">COUNT</span><span class="o">=</span><span class="k">$(</span><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-At<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="w">    </span>-d<span class="w"> </span>appcontrol_test<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT count(*) FROM action_log;&quot;</span><span class="k">)</span>
-</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;action_log rows: </span><span class="nv">$COUNT</span><span class="s2">&quot;</span>
-</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>
-</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$COUNT</span><span class="s2">&quot;</span><span class="w"> </span>-lt<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;VALIDATION FAILED: action_log too small&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
-</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
-</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a><span class="k">fi</span>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="c1"># Validation queries</span>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="nv">COUNT</span><span class="o">=</span><span class="k">$(</span><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="nv">$SANDBOX_PASS</span><span class="w"> </span>psql<span class="w"> </span>-At<span class="w"> </span>-h<span class="w"> </span>sandbox-db.internal<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="w">    </span>-d<span class="w"> </span>appcontrol_test<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT count(*) FROM action_log;&quot;</span><span class="k">)</span>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;action_log rows: </span><span class="nv">$COUNT</span><span class="s2">&quot;</span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$COUNT</span><span class="s2">&quot;</span><span class="w"> </span>-lt<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;VALIDATION FAILED: action_log too small&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a><span class="k">fi</span>
 </span></code></pre></div>
 <h3 id="encryption-at-rest">Encryption at rest<a class="headerlink" href="#encryption-at-rest" title="Permanent link">&para;</a></h3>
 <p>All cron jobs use <code>--sse aws:kms</code> to ensure backups are encrypted at rest with a customer-managed KMS key. This satisfies DORA Article 9 (cryptographic protection of data at rest).</p>
 <h3 id="off-site-replication">Off-site replication<a class="headerlink" href="#off-site-replication" title="Permanent link">&para;</a></h3>
 <p>Daily backups are replicated to a second region via S3 cross-region replication. The replicated region is used for the doomsday scenario (<a href="../DISASTER_RECOVERY/#9-doomsday-primary--dr-simultaneously-lost">§9 of Disaster Recovery</a>).</p>
-<div class="language-hcl highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_s3_bucket_replication_configuration&quot;</span><span class="w"> </span><span class="nv">&quot;appcontrol_backups&quot;</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="na">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_s3_bucket.backups_primary.id</span>
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="na">role</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_iam_role.replication.arn</span>
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">  </span><span class="nb">rule</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">    </span><span class="na">id</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;replicate-all&quot;</span>
-</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span><span class="na">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Enabled&quot;</span>
-</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">    </span><span class="nb">destination</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">      </span><span class="na">bucket</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_s3_bucket.backups_secondary.arn</span>
-</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">      </span><span class="na">storage_class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;GLACIER_IR&quot;</span>
-</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="p">}</span>
+<div class="language-hcl highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_s3_bucket_replication_configuration&quot;</span><span class="w"> </span><span class="nv">&quot;appcontrol_backups&quot;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="na">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_s3_bucket.backups_primary.id</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span><span class="na">role</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_iam_role.replication.arn</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">  </span><span class="nb">rule</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span><span class="na">id</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;replicate-all&quot;</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">    </span><span class="na">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Enabled&quot;</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">    </span><span class="nb">destination</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">      </span><span class="na">bucket</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_s3_bucket.backups_secondary.arn</span>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">      </span><span class="na">storage_class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;GLACIER_IR&quot;</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr />
 <h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
@@ -3635,7 +3755,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:30:18+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-20T19:07:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-20</span>
   </span>
 
     
@@ -3682,7 +3802,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../CONFIGURATION/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration">
+          <a href="../NATIVE_AGENT_DISCOVERY/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Native agent discovery (FR)">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3692,7 +3812,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Configuration
+                Native agent discovery (FR)
               </div>
             </div>
           </a>

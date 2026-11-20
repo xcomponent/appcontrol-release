@@ -908,6 +908,8 @@
       
         
       
+        
+      
     
     
       
@@ -955,6 +957,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1216,6 +1239,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1263,6 +1290,27 @@
   
   <span class="md-ellipsis">
     Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
   </span>
   
 
@@ -1389,6 +1437,27 @@
   
   <span class="md-ellipsis">
     Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
   </span>
   
 
@@ -1548,6 +1617,8 @@
       
         
       
+        
+      
     
     
       
@@ -1595,6 +1666,27 @@
   
   <span class="md-ellipsis">
     Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
   </span>
   
 
@@ -1703,6 +1795,8 @@
       
         
       
+        
+      
     
     
       
@@ -1750,6 +1844,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -2151,9 +2266,12 @@
 <blockquote>
 <p><strong>Depuis Windows, commencer par le <a href="../INSTALLATION-WINDOWS.fr/">parcours léger PowerShell + oc</a>.</strong> Cette page concerne le kit Linux/macOS avec archives OCI. Le parcours Windows léger utilise les images publiques d’évaluation téléchargées par le cluster, via le registre autorisé ; il n’exige aucun import d’images depuis le poste.</p>
 </blockquote>
-<p>Version produit <strong>1.21.1</strong>. Consulter <code>VALIDATION.fr.md</code> et
-<code>provenance.json</code> pour le commit, les digests, la date et les contrôles réellement
-exécutés par la CI de cette release. Les rapports bruts sont dans <code>evidence/</code>.</p>
+<p>Cette procédure vise <strong>X4B / AppControl 1.27.0</strong>. Le kit Windows léger associé
+porte la révision <strong>1.27.0-1</strong>. Pour le kit effectivement publié, consulter
+<code>VALIDATION.fr.md</code>, <code>provenance.json</code> et <code>evidence/</code> : ces fichiers doivent
+identifier son commit, ses digests et les contrôles réellement exécutés.
+La présente procédure ne constitue pas une preuve de qualification ; les
+rapports d’une version précédente ne qualifient pas cette livraison.</p>
 <p>Ce kit Linux AMD64 contient les cinq images OCI, les exécutables déjà compilés,
 le frontend, les migrations, le chart Helm, les scripts, les rapports et les
 SBOM. Sa version et ses sources exactes figurent dans <code>provenance.json</code>.
@@ -2162,6 +2280,20 @@ cluster à GitHub. Il ne contient aucun identifiant ou certificat privé du
 Sandbox. Ce n’est pas une qualification de production bancaire.</p>
 <p><strong>Toutes les commandes ci-dessous se lancent depuis la racine du kit extrait</strong>,
 où se trouvent <code>images-oci/</code>, <code>images.source.lock.json</code>, <code>SHA256SUMS</code> et <code>scripts/</code>.</p>
+<p>La version 1.27.0 regroupe les sources documentaires nommées et leur bibliothèque
+Knowledge, le catalogue des composants avec informations de support sourcées,
+la Discovery par skills et plans approuvés, les contrôles IAM et les correctifs
+de persistance des résultats et de reconnexion des agents. Les propositions IA
+et les nouvelles observations restent soumises à revue avant consolidation ou
+publication. La collecte native exige un agent Linux explicitement autorisé ;
+elle n’est pas activée par la mise à jour.</p>
+<p>Pour une installation existante, sauvegarder les données et la configuration,
+mettre à jour le backend et les services de contrôle, puis vérifier leur
+fonctionnement <strong>avant de mettre à jour les agents</strong>. Le nouveau backend doit
+pouvoir acquitter les résultats persistés par les agents. Les migrations
+<strong>V080 à V086</strong> sont appliquées au démarrage ; un ancien binaire ne constitue
+pas un retour arrière de la base. Voir <a href="../../UPGRADE/">la mise à jour</a> et
+<a href="../../IAM/">le guide IAM</a> pour les paramètres SSO requis et leur précontrôle.</p>
 <h2 id="1-preparer-le-creneau-avec-lequipe-plateforme">1. Préparer le créneau avec l’équipe plateforme<a class="headerlink" href="#1-preparer-le-creneau-avec-lequipe-plateforme" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Projet OpenShift dédié, avec droits d’installation sur les ressources de ce
@@ -2191,7 +2323,7 @@ Remplacer le préfixe de registre ci-dessous ; le tag d’import doit être rés
 à cette livraison et ne pas être réutilisé pour d’autres images.</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>scripts/qualification/transfer-images.py<span class="w"> </span>import<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--lock<span class="w"> </span>images.source.lock.json<span class="w"> </span>--archive-dir<span class="w"> </span>images-oci<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--target-prefix<span class="w"> </span>registre.banque/appcontrol<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.21.1<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--target-prefix<span class="w"> </span>registre.banque/appcontrol<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.27.0<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--output-lock<span class="w"> </span>images.lock.json<span class="w"> </span>--execute
 </span></code></pre></div>
 <p>Sans <code>--execute</code>, le script affiche le plan. Le mode import lit les archives
@@ -2301,7 +2433,7 @@ une livraison ultérieure et après toute modification d'image.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T10:50:41+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-20T19:07:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-20</span>
   </span>
 
     

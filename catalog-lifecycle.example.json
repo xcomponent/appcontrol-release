@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "dry_run": true,
+  "records": [
+    {
+      "type_key": "example-database",
+      "version": "3.2",
+      "version_match": "exact",
+      "status": "deprecated",
+      "support_end": "2027-06-30",
+      "extended_support_end": "2029-06-30",
+      "source": {
+        "system": "lifecycle-reference",
+        "id": "example-database-3.2",
+        "reference": "https://reference.example.invalid/support/example-database/3.2"
+      },
+      "observed_at": "2026-11-19T10:00:00Z",
+      "evidence": "Exemple fictif : la politique de support de Example Database 3.2 indique une fin de support normal le 2027-06-30 et étendu le 2029-06-30."
+    }
+  ]
+}

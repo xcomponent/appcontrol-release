@@ -914,6 +914,8 @@
       
         
       
+        
+      
     
     
       
@@ -961,6 +963,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1224,6 +1247,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1272,6 +1299,27 @@
   
   <span class="md-ellipsis">
     Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
   </span>
   
 
@@ -1358,6 +1406,24 @@
   <a href="#before-upgrading" class="md-nav__link">
     <span class="md-ellipsis">
       Before upgrading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-and-access-changes-in-v084" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity and access changes in V084
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-recovery-and-knowledge-in-v085-and-v086" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application recovery and Knowledge in V085 and V086
     </span>
   </a>
   
@@ -1483,6 +1549,27 @@
   
   <span class="md-ellipsis">
     Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
   </span>
   
 
@@ -1642,6 +1729,8 @@
       
         
       
+        
+      
     
     
       
@@ -1689,6 +1778,27 @@
   
   <span class="md-ellipsis">
     Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
   </span>
   
 
@@ -1797,6 +1907,8 @@
       
         
       
+        
+      
     
     
       
@@ -1844,6 +1956,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -2182,6 +2315,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#identity-and-access-changes-in-v084" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity and access changes in V084
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-recovery-and-knowledge-in-v085-and-v086" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application recovery and Knowledge in V085 and V086
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#apply-the-version" class="md-nav__link">
     <span class="md-ellipsis">
       Apply the version
@@ -2251,6 +2402,47 @@ claim a zero-downtime upgrade or general N/N−1 protocol compatibility.</p>
    does not prove compatibility with every historical schema and dataset.</li>
 <li>Schedule the interruption and plan recovery with the database owner.</li>
 </ol>
+<h2 id="identity-and-access-changes-in-v084">Identity and access changes in V084<a class="headerlink" href="#identity-and-access-changes-in-v084" title="Permanent link">&para;</a></h2>
+<p>Review the <a href="../IAM/#upgrade-and-qualification">IAM upgrade procedure</a> before
+restarting. Preserve the provider issuer, organization UUID, stable subject
+bindings and any approved emergency account list. <code>AUTH_MODE</code> accepts <code>hybrid</code>,
+<code>sso_only</code> or <code>local_only</code>. Legacy <code>local</code>, <code>oidc</code> and <code>saml</code> strings normalize to
+<code>hybrid</code> with a warning, preserving their previous behavior. Select <code>sso_only</code>
+explicitly to require SSO. Other unsupported strings are refused. The default
+<code>hybrid</code> retains local-password availability.
+<code>APP_ENV=production</code> does not disable it.</p>
+<p>V084 adds account authentication versions. Later account/password/access
+changes and explicit global revocation invalidate earlier sessions across
+AppControl and X4B; renew sessions when changing login policy during rollout. Legacy SSO identities require the exact matching
+<code>OIDC_LEGACY_LINK_ISSUER</code> or <code>SAML_LEGACY_LINK_ISSUER</code> during a reviewed migration;
+email matching is never a migration rule. Remove each opt-in after qualification.</p>
+<p>Historical SAML accounts marked <code>auth_provider=local</code> are not migrated by the
+legacy issuer opt-in. Review their exact issuer/NameID and current role authority,
+then use the administrator identity-binding API. A manual binding leaves local
+role authority local; it does not delegate that account's role to SAML.</p>
+<p>The Windows manifest preflight validates the complete merged SSO wiring before
+writing resources or Secrets and again before apply. It checks required fields
+and literal HTTPS callback URLs, and validates explicit non-optional Secret
+references without reading their contents. Missing provider trust blocks the
+update; it never falls back to local login. Helm installations with custom SSO
+must use their reviewed Helm values and maintenance procedure.</p>
+<p>Legacy XOR/base64 break-glass accounts are disabled. An authorized administrator
+can recreate the same inactive username with a new bcrypt password; existing
+account ID and historical sessions remain. Session endings use append-only
+<code>break_glass_session_ends</code> records. Retain the database when upgrading.</p>
+<h2 id="application-recovery-and-knowledge-in-v085-and-v086">Application recovery and Knowledge in V085 and V086<a class="headerlink" href="#application-recovery-and-knowledge-in-v085-and-v086" title="Permanent link">&para;</a></h2>
+<p>On PostgreSQL and SQLite, V085 adds versioned application procedures, runs and
+evidence. V086 adds independently reviewed proposals for missing map commands.
+Both migrations are additive. Existing maps, site assignments, connector
+settings, gateway identities and enrolled agents carry over. The new workflows
+use the configured client AI connector and the existing AppControl agents.</p>
+<p>On the restored test database, check an existing map and its site and agent
+assignments. Review a recovery dossier and verify that its scoped evidence and
+derived documentation can be read back in Knowledge. Check that a reviewed
+Markdown document is selectable in Map Builder and that site-specific proposals
+use Discovery observations with an established collection site. See the
+<a href="../APPLICATION-PROCEDURES.fr/">procedure guide</a> and the
+<a href="../KNOWLEDGE-LOOP.fr/">Knowledge loop guide</a>.</p>
 <h2 id="apply-the-version">Apply the version<a class="headerlink" href="#apply-the-version" title="Permanent link">&para;</a></h2>
 <p>Import the new kit's OCI archives into the approved registry using
 <code>scripts/qualification/transfer-images.py</code>. Retain the previous lock; create a
@@ -2295,6 +2487,11 @@ Do not start an older backend against a changed schema unless that combination
 has been tested. If incompatible, stop new operations, restore the verified
 pre-upgrade database backup and matching manifests, images and private state.
 Reconcile any application action that occurred after the backup before resuming.</p>
+<p>Older backends may reject Knowledge revisions with recovery evidence,
+reviewed documents or Discovery observations that carry site provenance.
+To return to such a version, restore the verified pre-upgrade database backup
+and matching release configuration. Keep a separate backup of the upgraded
+database so the newer revisions and evidence remain available for recovery.</p>
 <p>There is no general supported-version matrix inferred from version numbers.
 The release evidence describes exactly the paths exercised. Upgrade an existing
 customer installation only after testing its source version and restored data.</p>
@@ -2326,7 +2523,7 @@ customer installation only after testing its source version and restored data.</
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-10-28T11:42:18+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-10-28</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-20T19:07:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-20</span>
   </span>
 
     

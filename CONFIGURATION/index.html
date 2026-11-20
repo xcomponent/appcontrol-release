@@ -16,7 +16,7 @@
         <link rel="prev" href="../GLOSSARY/">
       
       
-        <link rel="next" href="../BACKUP_RESTORE/">
+        <link rel="next" href="../NATIVE_AGENT_DISCOVERY/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -914,6 +914,8 @@
       
         
       
+        
+      
     
     
       
@@ -961,6 +963,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1224,6 +1247,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1359,9 +1386,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#development-mode-default-user" class="md-nav__link">
+  <a href="#initial-administrator-and-local-passwords" class="md-nav__link">
     <span class="md-ellipsis">
-      Development Mode — Default User
+      Initial administrator and local passwords
     </span>
   </a>
   
@@ -2006,6 +2033,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../BACKUP_RESTORE/" class="md-nav__link">
         
   
@@ -2116,6 +2164,27 @@
   
   <span class="md-ellipsis">
     Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
   </span>
   
 
@@ -2275,6 +2344,8 @@
       
         
       
+        
+      
     
     
       
@@ -2322,6 +2393,27 @@
   
   <span class="md-ellipsis">
     Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
   </span>
   
 
@@ -2430,6 +2522,8 @@
       
         
       
+        
+      
     
     
       
@@ -2477,6 +2571,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -2852,9 +2967,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#development-mode-default-user" class="md-nav__link">
+  <a href="#initial-administrator-and-local-passwords" class="md-nav__link">
     <span class="md-ellipsis">
-      Development Mode — Default User
+      Initial administrator and local passwords
     </span>
   </a>
   
@@ -3573,75 +3688,67 @@ application/site access; its long-lived key must not reach browser code.</p>
 Custom reverse proxies also need that exception. See the complete
 <a href="../EMBEDDED.fr/">Embedded integration and lifecycle guide</a>.</p>
 <h2 id="users-authentication">Users &amp; Authentication<a class="headerlink" href="#users-authentication" title="Permanent link">&para;</a></h2>
-<p>AppControl supports three authentication methods. Only one needs to be active at a time, although OIDC and SAML can coexist.</p>
+<p>Login policy is explicit and independent of <code>APP_ENV</code>. See the
+<a href="../IAM/">IAM deployment and upgrade guide</a> for provider trust, account binding,
+revocation and emergency access.</p>
 <h3 id="authentication-methods-summary">Authentication Methods Summary<a class="headerlink" href="#authentication-methods-summary" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th>Use Case</th>
 <th>Configuration</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Dev Login</strong></td>
-<td>Local development, quickstart</td>
-<td>Automatic when <code>APP_ENV=development</code></td>
+<td>Local password</td>
+<td>Existing active account with a bcrypt password; allowed by <code>AUTH_MODE</code></td>
 </tr>
 <tr>
-<td><strong>OIDC</strong></td>
-<td>Enterprise SSO (Keycloak, Okta, Azure AD, Google)</td>
-<td>Set <code>OIDC_DISCOVERY_URL</code></td>
+<td>OIDC</td>
+<td>Configured HTTPS provider, client and redirect URI</td>
 </tr>
 <tr>
-<td><strong>SAML 2.0</strong></td>
-<td>Enterprise SSO (ADFS, Azure AD, Okta, Shibboleth)</td>
-<td>Set <code>SAML_IDP_SSO_URL</code></td>
+<td>SAML 2.0</td>
+<td>Configured IdP entity ID, signing certificate, SP entity ID and ACS URL</td>
 </tr>
 </tbody>
 </table>
-<h3 id="development-mode-default-user">Development Mode — Default User<a class="headerlink" href="#development-mode-default-user" title="Permanent link">&para;</a></h3>
-<p>When <code>APP_ENV=development</code> (the default), the backend automatically seeds a default admin user on first startup if the database is empty.</p>
 <table>
 <thead>
 <tr>
-<th>Field</th>
-<th>Value</th>
+<th>Variable</th>
+<th>Default</th>
+<th>Behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Email</strong></td>
-<td><code>admin@localhost</code></td>
+<td><code>AUTH_MODE</code></td>
+<td><code>hybrid</code></td>
+<td><code>hybrid</code> allows local and configured SSO; <code>sso_only</code> restricts password login; <code>local_only</code> disables SSO routes</td>
 </tr>
 <tr>
-<td><strong>Display name</strong></td>
-<td><code>Dev Admin</code></td>
-</tr>
-<tr>
-<td><strong>Role</strong></td>
-<td><code>admin</code> (full access)</td>
-</tr>
-<tr>
-<td><strong>Organization</strong></td>
-<td><code>Dev Org</code></td>
-</tr>
-<tr>
-<td><strong>Password</strong></td>
-<td><em>(none — dev mode does not require a password)</em></td>
+<td><code>AUTH_LOCAL_EMERGENCY_USER_IDS</code></td>
+<td>Empty</td>
+<td>Comma-separated account UUIDs allowed to use local passwords in <code>sso_only</code>; each account must remain active, local and an organization admin</td>
 </tr>
 </tbody>
 </table>
-<p><strong>To log in via the UI:</strong> Open http://localhost:8080, enter <code>admin@localhost</code> in the email field, type any value in the password field (it is ignored in dev mode), and click <strong>Sign in</strong>.</p>
-<p><strong>To log in via the API:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/auth/dev-login<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;admin@localhost&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.token&#39;</span><span class="k">)</span>
-</span></code></pre></div>
-<blockquote>
-<p><strong>Warning:</strong> The <code>dev-login</code> and <code>login</code> endpoints are only available when <code>APP_ENV=development</code>. In production, they return <code>404 Not Found</code> — you must configure OIDC or SAML.</p>
-</blockquote>
+<p><code>APP_ENV=production</code> enforces production configuration checks; it does <strong>not</strong>
+disable password login. Configure <code>sso_only</code> deliberately when required. MFA
+must be enforced and qualified at the IdP: enabling SSO does not attest MFA.
+Legacy mode names <code>local</code>, <code>oidc</code> and <code>saml</code> normalize to <code>hybrid</code> with a warning,
+preserving their historical behavior. Select <code>sso_only</code> explicitly to require SSO.</p>
+<h3 id="initial-administrator-and-local-passwords">Initial administrator and local passwords<a class="headerlink" href="#initial-administrator-and-local-passwords" title="Permanent link">&para;</a></h3>
+<p>Bootstrap is controlled by <code>SEED_ENABLED</code> and the <code>SEED_*</code> settings. No universal
+account or password is created merely by selecting a development environment.
+The first administrator uses the configured email and password. Password login
+verifies bcrypt; it does not ignore a supplied password.</p>
+<p>New and reset passwords require at least 12 characters and at most 72 UTF-8
+bytes. Existing accounts are preserved during an upgrade. Changing a password,
+changing access or deactivating an account invalidates its previous sessions;
+review the detailed <a href="../IAM/#accounts-and-revocation">revocation behavior</a>.</p>
 <h3 id="user-roles">User Roles<a class="headerlink" href="#user-roles" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3658,6 +3765,11 @@ Custom reverse proxies also need that exception. See the complete
 <td>Implicit owner on all applications. Can manage users, teams, and organization settings.</td>
 </tr>
 <tr>
+<td><code>operator</code>, <code>editor</code></td>
+<td>Organization account roles</td>
+<td>Application rights still require explicit user/team grants; these role names alone do not grant access to every app.</td>
+</tr>
+<tr>
 <td><code>viewer</code></td>
 <td>Default for new SSO users</td>
 <td>Read-only access. Actual permissions depend on team memberships and per-app grants.</td>
@@ -3666,7 +3778,7 @@ Custom reverse proxies also need that exception. See the complete
 </table>
 <h3 id="permission-levels-per-application">Permission Levels (per application)<a class="headerlink" href="#permission-levels-per-application" title="Permanent link">&para;</a></h3>
 <p>Permissions are evaluated per application. The effective permission is the <strong>maximum</strong> of all grants:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>view &lt; operate &lt; edit &lt; manage &lt; owner
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>view &lt; operate &lt; edit &lt; manage &lt; owner
 </span></code></pre></div>
 <table>
 <thead>
@@ -3701,17 +3813,17 @@ Custom reverse proxies also need that exception. See the complete
 <p><strong>Effective permission = MAX(direct_user_grant, all_team_grants)</strong>. Organization admins have implicit <code>owner</code> on everything.</p>
 <h3 id="teams">Teams<a class="headerlink" href="#teams" title="Permanent link">&para;</a></h3>
 <p>Teams group users and grant them permissions on applications. Teams can be managed via the API or auto-synced from SAML groups.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Create a team</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/teams<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;: &quot;Payments-Ops&quot;, &quot;description&quot;: &quot;Payment system operators&quot;}&#39;</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Grant team permission on an application</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/apps/<span class="nv">$APP_ID</span>/permissions<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;team_id&quot;: &quot;&lt;team-uuid&gt;&quot;, &quot;level&quot;: &quot;operate&quot;}&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Create a team</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/teams<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;: &quot;Payments-Ops&quot;, &quot;description&quot;: &quot;Payment system operators&quot;}&#39;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Grant team permission on an application</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/apps/<span class="nv">$APP_ID</span>/permissions<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;team_id&quot;: &quot;&lt;team-uuid&gt;&quot;, &quot;level&quot;: &quot;operate&quot;}&#39;</span>
 </span></code></pre></div>
 <h3 id="api-keys">API Keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h3>
 <p>API keys provide non-interactive authentication for CLI tools and scheduler integrations.</p>
@@ -3741,18 +3853,18 @@ Custom reverse proxies also need that exception. See the complete
 </tr>
 </tbody>
 </table>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Create an API key (via API)</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/api-keys<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;: &quot;scheduler-prod&quot;, &quot;expires_in_days&quot;: 365}&#39;</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Use with CLI</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APPCONTROL_API_KEY</span><span class="o">=</span>ac_xK9m2pQ...
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>appctl<span class="w"> </span>status<span class="w"> </span><span class="nv">$APP_ID</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># Use with curl</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer ac_xK9m2pQ...&quot;</span><span class="w"> </span>http://localhost:3000/api/v1/apps
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Create an API key (via API)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/api-keys<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;: &quot;scheduler-prod&quot;, &quot;expires_in_days&quot;: 365}&#39;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Use with CLI</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APPCONTROL_API_KEY</span><span class="o">=</span>ac_xK9m2pQ...
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>appctl<span class="w"> </span>status<span class="w"> </span><span class="nv">$APP_ID</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># Use with curl</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer ac_xK9m2pQ...&quot;</span><span class="w"> </span>http://localhost:3000/api/v1/apps
 </span></code></pre></div>
 <h3 id="jwt-token-details">JWT Token Details<a class="headerlink" href="#jwt-token-details" title="Permanent link">&para;</a></h3>
 <table>
@@ -3786,7 +3898,7 @@ Custom reverse proxies also need that exception. See the complete
 </tbody>
 </table>
 <h3 id="oidc-configuration">OIDC Configuration<a class="headerlink" href="#oidc-configuration" title="Permanent link">&para;</a></h3>
-<p>OIDC implements the Authorization Code Flow. Tested with Keycloak, Okta, Azure AD, and Google Workspace.</p>
+<p>OIDC uses Authorization Code Flow with S256 PKCE and validates the signed ID token. Qualify the exact customer IdP configuration before rollout.</p>
 <table>
 <thead>
 <tr>
@@ -3801,7 +3913,7 @@ Custom reverse proxies also need that exception. See the complete
 <td><code>OIDC_DISCOVERY_URL</code></td>
 <td><strong>Yes</strong> (to enable)</td>
 <td>-</td>
-<td>OpenID Connect discovery URL. Example: <code>https://keycloak.example.com/realms/appcontrol/.well-known/openid-configuration</code></td>
+<td>HTTPS OpenID Connect discovery URL. Example: <code>https://keycloak.example.com/realms/appcontrol/.well-known/openid-configuration</code></td>
 </tr>
 <tr>
 <td><code>OIDC_CLIENT_ID</code></td>
@@ -3817,9 +3929,9 @@ Custom reverse proxies also need that exception. See the complete
 </tr>
 <tr>
 <td><code>OIDC_REDIRECT_URI</code></td>
-<td>No</td>
-<td><code>/api/v1/auth/oidc/callback</code></td>
-<td>Redirect URI after authentication. Must match the provider configuration exactly.</td>
+<td><strong>Yes</strong></td>
+<td>-</td>
+<td>Absolute HTTPS callback URL; must match the registered provider URI exactly</td>
 </tr>
 <tr>
 <td><code>OIDC_SCOPES</code></td>
@@ -3827,19 +3939,37 @@ Custom reverse proxies also need that exception. See the complete
 <td><code>openid,profile,email</code></td>
 <td>Comma-separated OIDC scopes to request</td>
 </tr>
+<tr>
+<td><code>OIDC_ISSUER</code></td>
+<td>Recommended</td>
+<td>Derived only from a standard <code>/.well-known/openid-configuration</code> URL</td>
+<td>Exact expected issuer, including path and trailing slash; metadata must match</td>
+</tr>
+<tr>
+<td><code>OIDC_ORGANIZATION_ID</code></td>
+<td>Multi-org: Yes</td>
+<td>Sole existing organization only</td>
+<td>UUID of the organization into which this provider can provision users</td>
+</tr>
+<tr>
+<td><code>OIDC_LEGACY_LINK_ISSUER</code></td>
+<td>No</td>
+<td>Disabled</td>
+<td>Exact current issuer authorizing migration of a unique historical <code>oidc_sub</code>; never links by email</td>
+</tr>
 </tbody>
 </table>
 <p><strong>OIDC Flow:</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>User clicks &quot;Sign in with SSO&quot;
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  → Browser redirects to /api/v1/auth/oidc/login
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  → Backend redirects to OIDC provider (authorization_endpoint)
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  → User authenticates at the OIDC provider
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  → Provider redirects back to /api/v1/auth/oidc/callback?code=...
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  → Backend exchanges code for tokens (token_endpoint)
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  → Backend fetches user info (userinfo_endpoint)
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  → Backend creates/updates user in PostgreSQL
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  → Backend returns JWT (HttpOnly cookie + JSON response)
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  → User is authenticated
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>User clicks &quot;Sign in with SSO&quot;
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  → Browser redirects to /api/v1/auth/oidc/login
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  → Backend redirects to OIDC provider (authorization_endpoint)
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  → User authenticates at the OIDC provider
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  → Provider redirects back to /api/v1/auth/oidc/callback?code=...
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  → Backend exchanges code for tokens (token_endpoint)
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  → Backend fetches user info (userinfo_endpoint)
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  → Backend creates/updates user in PostgreSQL
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  → Backend returns JWT (HttpOnly cookie + JSON response)
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>  → User is authenticated
 </span></code></pre></div>
 <p><strong>OIDC provider setup (Keycloak example):</strong></p>
 <ol>
@@ -3849,14 +3979,14 @@ Custom reverse proxies also need that exception. See the complete
 <li>Note the client ID and client secret</li>
 <li>Set environment variables on the backend:</li>
 </ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">OIDC_DISCOVERY_URL</span><span class="o">=</span>https://keycloak.example.com/realms/appcontrol/.well-known/openid-configuration
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">OIDC_CLIENT_ID</span><span class="o">=</span>appcontrol-frontend
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">OIDC_CLIENT_SECRET</span><span class="o">=</span>your-client-secret
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">OIDC_REDIRECT_URI</span><span class="o">=</span>https://appcontrol.example.com/api/v1/auth/oidc/callback
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">OIDC_DISCOVERY_URL</span><span class="o">=</span>https://keycloak.example.com/realms/appcontrol/.well-known/openid-configuration
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">OIDC_CLIENT_ID</span><span class="o">=</span>appcontrol-frontend
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nv">OIDC_CLIENT_SECRET</span><span class="o">=</span>your-client-secret
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nv">OIDC_REDIRECT_URI</span><span class="o">=</span>https://appcontrol.example.com/api/v1/auth/oidc/callback
 </span></code></pre></div>
-<p><strong>Auto-provisioning:</strong> Users authenticating via OIDC for the first time are automatically created with the <code>viewer</code> role in the default organization.</p>
+<p><strong>Provisioning:</strong> New identities receive <code>viewer</code> in the explicitly configured organization, or the sole existing organization. Existing accounts are matched by provider issuer and stable subject. An email collision is refused and requires administrator review; email does not transfer an existing account or its role. Metadata and token/JWKS/userinfo requests require verified HTTPS and do not follow redirects.</p>
 <h3 id="saml-20-configuration">SAML 2.0 Configuration<a class="headerlink" href="#saml-20-configuration" title="Permanent link">&para;</a></h3>
-<p>SAML implements the SP-Initiated Web Browser SSO Profile. Tested with ADFS, Azure AD, and Okta.</p>
+<p>SAML uses SP-initiated Web Browser SSO with cryptographic XML signature validation. Qualify the exact IdP certificate and assertion profile before rollout.</p>
 <table>
 <thead>
 <tr>
@@ -3874,10 +4004,28 @@ Custom reverse proxies also need that exception. See the complete
 <td>Identity Provider SSO endpoint URL</td>
 </tr>
 <tr>
+<td><code>SAML_IDP_ENTITY_ID</code></td>
+<td><strong>Yes</strong></td>
+<td>-</td>
+<td>Exact issuer/entity ID expected in the signed assertion</td>
+</tr>
+<tr>
+<td><code>SAML_ORGANIZATION_ID</code></td>
+<td>Multi-org: Yes</td>
+<td>Sole existing organization only</td>
+<td>Organization UUID for this provider</td>
+</tr>
+<tr>
+<td><code>SAML_LEGACY_LINK_ISSUER</code></td>
+<td>No</td>
+<td>Disabled</td>
+<td>Exact current issuer authorizing migration of a unique historical <code>saml_name_id</code>; never links by email</td>
+</tr>
+<tr>
 <td><code>SAML_IDP_CERT</code></td>
 <td><strong>Yes</strong></td>
 <td>-</td>
-<td>IdP signing certificate (PEM format, base64-encoded)</td>
+<td>Pinned IdP signing certificate: PEM, base64 PEM, or base64 DER content; this is not a filesystem path</td>
 </tr>
 <tr>
 <td><code>SAML_SP_ENTITY_ID</code></td>
@@ -3913,66 +4061,73 @@ Custom reverse proxies also need that exception. See the complete
 <td><code>SAML_ADMIN_GROUP</code></td>
 <td>No</td>
 <td>-</td>
-<td>SAML group name that maps to the <code>admin</code> role</td>
+<td>Explicit trusted group controlling admin/viewer for SAML-managed accounts; locally managed roles are preserved</td>
 </tr>
 <tr>
 <td><code>SAML_WANT_ASSERTIONS_SIGNED</code></td>
 <td>No</td>
 <td><code>true</code></td>
-<td>Require IdP to sign SAML assertions</td>
+<td><code>true</code> requires a directly signed Assertion; <code>false</code> permits a signed Response covering the Assertion. Cryptographic verification is always required</td>
 </tr>
 </tbody>
 </table>
 <p><strong>SAML Flow:</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>User clicks &quot;Sign in with SSO&quot; (configured for SAML)
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  → Browser redirects to /api/v1/auth/saml/login
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  → Backend generates AuthnRequest and redirects to IdP (SAML_IDP_SSO_URL)
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  → User authenticates at the IdP
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  → IdP POSTs SAMLResponse to /api/v1/auth/saml/acs
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  → Backend validates response, extracts attributes
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  → Backend syncs SAML groups → AppControl teams
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  → Backend creates/updates user in PostgreSQL
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  → Backend sets JWT cookie and redirects to UI
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>User clicks &quot;Sign in with SSO&quot; (configured for SAML)
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  → Browser redirects to /api/v1/auth/saml/login
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  → Backend generates AuthnRequest and redirects to IdP (SAML_IDP_SSO_URL)
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  → User authenticates at the IdP
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  → IdP POSTs SAMLResponse to /api/v1/auth/saml/acs
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  → Backend validates response, extracts attributes
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>  → Backend verifies the XML signature, issuer, audience, destination, time limits and request correlation
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>  → Backend binds the exact issuer + NameID and syncs only authorized team mappings
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>  → Backend creates/updates user in PostgreSQL
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>  → Backend sets JWT cookie and redirects to UI
 </span></code></pre></div>
 <p><strong>SP Metadata endpoint:</strong> <code>GET /api/v1/auth/saml/metadata</code> — returns XML metadata that you can import into your IdP.</p>
 <h4 id="saml-group-team-mapping">SAML Group → Team Mapping<a class="headerlink" href="#saml-group-team-mapping" title="Permanent link">&para;</a></h4>
 <p>SAML groups from the assertion are automatically mapped to AppControl teams via the <code>saml_group_mappings</code> table:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>AD Group &quot;APP_PAYMENTS_OPERATORS&quot;
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  → AppControl team &quot;Payments-Ops&quot;
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    → Permission: operate on &quot;Paiements-SEPA&quot;
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>AD Group &quot;APP_PAYMENTS_ADMINS&quot;
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  → AppControl team &quot;Payments-Admin&quot;
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    → Permission: manage on &quot;Paiements-SEPA&quot;
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>AD Group &quot;APPCONTROL_ADMINS&quot; (= SAML_ADMIN_GROUP)
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>  → role=admin (org admin, implicit owner on everything)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>AD Group &quot;APP_PAYMENTS_OPERATORS&quot;
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  → AppControl team &quot;Payments-Ops&quot;
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    → Permission: operate on &quot;Paiements-SEPA&quot;
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>AD Group &quot;APP_PAYMENTS_ADMINS&quot;
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  → AppControl team &quot;Payments-Admin&quot;
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    → Permission: manage on &quot;Paiements-SEPA&quot;
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>Organization admin
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  → assigned explicitly by an authorized AppControl administrator
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>  → or controlled by explicitly configured SAML_ADMIN_GROUP for SAML-managed accounts
 </span></code></pre></div>
 <p><strong>Manage mappings via API:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># List all group mappings</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>http://localhost:3000/api/v1/saml/group-mappings
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># Create a mapping</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/saml/group-mappings<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="s1">    &quot;saml_group&quot;: &quot;CN=APP_PAYMENTS_OPERATORS,OU=Groups,DC=corp,DC=com&quot;,</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="s1">    &quot;team_id&quot;: &quot;&lt;team-uuid&gt;&quot;,</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="s1">    &quot;default_role&quot;: &quot;operator&quot;</span>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="s1">  }&#39;</span>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="c1"># Delete a mapping</span>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>http://localhost:3000/api/v1/saml/group-mappings/&lt;mapping-id&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># List all group mappings</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>http://localhost:3000/api/v1/saml/group-mappings
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Create a mapping</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/api/v1/saml/group-mappings<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="s1">    &quot;saml_group&quot;: &quot;CN=APP_PAYMENTS_OPERATORS,OU=Groups,DC=corp,DC=com&quot;,</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="s1">    &quot;team_id&quot;: &quot;&lt;team-uuid&gt;&quot;,</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="s1">    &quot;default_role&quot;: &quot;operator&quot;</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="s1">  }&#39;</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c1"># Delete a mapping</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>http://localhost:3000/api/v1/saml/group-mappings/&lt;mapping-id&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
 </span></code></pre></div>
+<p><code>default_role</code> is retained mapping metadata; a team mapping grants membership,
+not an organization role. New SAML identities normally receive <code>viewer</code>.
+When <code>SAML_ADMIN_GROUP</code> is configured, SAML-managed accounts follow that signed
+group: membership gives <code>admin</code>, and losing it returns them to <code>viewer</code>.
+Locally managed roles remain under local administrator authority.</p>
 <p><strong>Sync behavior on login:</strong>
 1. Extract group claims from the SAML assertion
 2. For each group, look up <code>saml_group_mappings</code> to find the target team
 3. Add user to matched teams (if not already a member)
-4. Remove user from SAML-managed teams whose group is no longer in the assertion
-5. This ensures team membership always reflects the current AD/LDAP state</p>
+4. Remove only memberships this same SAML issuer previously created, when the group is absent
+5. Preserve existing local memberships and team leadership. Team mappings do not promote organization role; only explicitly configured <code>SAML_ADMIN_GROUP</code> controls the role of SAML-managed accounts.</p>
 <hr />
 <h2 id="backend-api-server">Backend (API Server)<a class="headerlink" href="#backend-api-server" title="Permanent link">&para;</a></h2>
 <p>The backend is the central API server. It is configured <strong>exclusively via environment variables</strong> — no config file is needed.</p>
@@ -4073,6 +4228,18 @@ Custom reverse proxies also need that exception. See the complete
 <td>No</td>
 <td><code>appcontrol</code></td>
 <td>JWT <code>iss</code> claim value. Must match across all backend instances in a cluster.</td>
+</tr>
+<tr>
+<td><code>AUTH_MODE</code></td>
+<td>No</td>
+<td><code>hybrid</code></td>
+<td>Login policy: <code>hybrid</code>, <code>sso_only</code>, or <code>local_only</code>; independent of <code>APP_ENV</code></td>
+</tr>
+<tr>
+<td><code>AUTH_LOCAL_EMERGENCY_USER_IDS</code></td>
+<td>No</td>
+<td>Empty</td>
+<td>Explicit active local admin UUIDs allowed to use passwords in <code>sso_only</code></td>
 </tr>
 </tbody>
 </table>
@@ -4262,13 +4429,7 @@ Custom reverse proxies also need that exception. See the complete
 <td><code>/api/v1/auth/login</code></td>
 <td>POST</td>
 <td>No</td>
-<td>Email+password login (dev mode only)</td>
-</tr>
-<tr>
-<td><code>/api/v1/auth/dev-login</code></td>
-<td>POST</td>
-<td>No</td>
-<td>Email-only dev login (dev mode only)</td>
+<td>Local bcrypt password login, subject to <code>AUTH_MODE</code></td>
 </tr>
 <tr>
 <td><code>/api/v1/auth/oidc/login</code></td>
@@ -4354,22 +4515,22 @@ Custom reverse proxies also need that exception. See the complete
 2. <code>/etc/appcontrol/gateway.yaml</code> (Linux/macOS)
 3. <code>%PROGRAMDATA%\AppControl\config\gateway.yaml</code> (Windows)</p>
 <h3 id="full-yaml-reference">Full YAML Reference<a class="headerlink" href="#full-yaml-reference" title="Permanent link">&para;</a></h3>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># /etc/appcontrol/gateway.yaml</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nt">gateway</span><span class="p">:</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gateway-prd-01&quot;</span><span class="w">            </span><span class="c1"># Unique gateway identifier (used to generate deterministic UUID)</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">zone</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PRD&quot;</span><span class="w">                     </span><span class="c1"># Network zone label (PRD, DR, DMZ, etc.)</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">listen_addr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.0.0&quot;</span><span class="w">         </span><span class="c1"># Bind address for agent connections</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="nt">listen_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4443</span><span class="w">              </span><span class="c1"># Listen port for agent WebSocket connections</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="nt">backend</span><span class="p">:</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ws://backend:3000/ws/gateway&quot;</span><span class="w">  </span><span class="c1"># Backend WebSocket URL (MUST end with /ws/gateway)</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">  </span><span class="nt">reconnect_interval_secs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">           </span><span class="c1"># Seconds to wait before reconnecting after disconnection</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="nt">tls</span><span class="p">:</span><span class="w">                              </span><span class="c1"># Omit entire section to disable mTLS (dev only!)</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/gateway.crt&quot;</span><span class="w">   </span><span class="c1"># Gateway server certificate (PEM)</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/gateway.key&quot;</span><span class="w">     </span><span class="c1"># Gateway private key (PEM)</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/ca.crt&quot;</span><span class="w">           </span><span class="c1"># CA certificate for verifying agent client certs</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># /etc/appcontrol/gateway.yaml</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nt">gateway</span><span class="p">:</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gateway-prd-01&quot;</span><span class="w">            </span><span class="c1"># Unique gateway identifier (used to generate deterministic UUID)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">zone</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PRD&quot;</span><span class="w">                     </span><span class="c1"># Network zone label (PRD, DR, DMZ, etc.)</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">listen_addr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.0.0&quot;</span><span class="w">         </span><span class="c1"># Bind address for agent connections</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">listen_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4443</span><span class="w">              </span><span class="c1"># Listen port for agent WebSocket connections</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="nt">backend</span><span class="p">:</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ws://backend:3000/ws/gateway&quot;</span><span class="w">  </span><span class="c1"># Backend WebSocket URL (MUST end with /ws/gateway)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">reconnect_interval_secs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">           </span><span class="c1"># Seconds to wait before reconnecting after disconnection</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="nt">tls</span><span class="p">:</span><span class="w">                              </span><span class="c1"># Omit entire section to disable mTLS (dev only!)</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/gateway.crt&quot;</span><span class="w">   </span><span class="c1"># Gateway server certificate (PEM)</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/gateway.key&quot;</span><span class="w">     </span><span class="c1"># Gateway private key (PEM)</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/ca.crt&quot;</span><span class="w">           </span><span class="c1"># CA certificate for verifying agent client certs</span>
 </span></code></pre></div>
 <h3 id="environment-variable-overrides">Environment Variable Overrides<a class="headerlink" href="#environment-variable-overrides" title="Permanent link">&para;</a></h3>
 <p>Environment variables take precedence over YAML values.</p>
@@ -4494,11 +4655,11 @@ Custom reverse proxies also need that exception. See the complete
 </ul>
 <h3 id="gateway-windows-service">Gateway Windows Service<a class="headerlink" href="#gateway-windows-service" title="Permanent link">&para;</a></h3>
 <p>On Windows, the gateway can run as a Windows service:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c"># Install as a Windows service</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">appcontrol-gateway</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">install</span> <span class="p">-</span><span class="n">-config</span> <span class="n">C</span><span class="p">:\</span><span class="n">ProgramData</span><span class="p">\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">config</span><span class="p">\</span><span class="n">gateway</span><span class="p">.</span><span class="n">yaml</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c"># Remove the service</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">appcontrol-gateway</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">uninstall</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c"># Install as a Windows service</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">appcontrol-gateway</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">install</span> <span class="p">-</span><span class="n">-config</span> <span class="n">C</span><span class="p">:\</span><span class="n">ProgramData</span><span class="p">\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">config</span><span class="p">\</span><span class="n">gateway</span><span class="p">.</span><span class="n">yaml</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c"># Remove the service</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">appcontrol-gateway</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">uninstall</span>
 </span></code></pre></div>
 <p>On Linux, use systemd (see <a href="#agent-as-a-systemd-service">Agent systemd section</a> for a similar unit file template).</p>
 <hr />
@@ -4511,36 +4672,36 @@ Custom reverse proxies also need that exception. See the complete
 2. <code>/etc/appcontrol/agent.yaml</code> (Linux/macOS)
 3. <code>%PROGRAMDATA%\AppControl\config\agent.yaml</code> (Windows)</p>
 <h3 id="full-yaml-reference_1">Full YAML Reference<a class="headerlink" href="#full-yaml-reference_1" title="Permanent link">&para;</a></h3>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># /etc/appcontrol/agent.yaml</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nt">agent</span><span class="p">:</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;auto&quot;</span><span class="w">                     </span><span class="c1"># &quot;auto&quot; = deterministic UUID v5 from hostname</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">                                 </span><span class="c1"># Or set a fixed UUID: &quot;550e8400-e29b-41d4-a716-446655440000&quot;</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="nt">gateway</span><span class="p">:</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="c1"># Simple setup — single gateway:</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wss://gateway.example.com:4443/ws&quot;</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">  </span><span class="c1"># Recommended — multiple gateways with failover:</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">  </span><span class="nt">urls</span><span class="p">:</span>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;wss://gateway-prd-01.example.com:4443/ws&quot;</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;wss://gateway-prd-02.example.com:4443/ws&quot;</span>
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">  </span><span class="nt">failover_strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ordered&quot;</span><span class="w">     </span><span class="c1"># &quot;ordered&quot; = try in list order; &quot;round-robin&quot; = rotate</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">  </span><span class="nt">primary_retry_secs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w">          </span><span class="c1"># Attempt to return to the first (primary) gateway every 5 min</span>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">  </span><span class="nt">reconnect_interval_secs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">     </span><span class="c1"># Wait between reconnection attempts</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="nt">tls</span><span class="p">:</span><span class="w">                              </span><span class="c1"># Omit entire section to disable mTLS (dev only!)</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/agent.crt&quot;</span><span class="w">   </span><span class="c1"># Agent client certificate (PEM)</span>
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/agent.key&quot;</span><span class="w">     </span><span class="c1"># Agent private key (PEM)</span>
-</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/ca.crt&quot;</span><span class="w">         </span><span class="c1"># CA for verifying the gateway server cert</span>
-</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>
-</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="nt">labels</span><span class="p">:</span><span class="w">                           </span><span class="c1"># Custom labels for filtering/grouping in the UI</span>
-</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;production&quot;</span>
-</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="w">  </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dc-paris-01&quot;</span>
-</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="w">  </span><span class="nt">os</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rhel8&quot;</span>
-</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="w">  </span><span class="nt">team</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;platform&quot;</span>
-</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>
-</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;appcontrol_agent=info&quot;</span><span class="w">  </span><span class="c1"># tracing-subscriber filter syntax</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># /etc/appcontrol/agent.yaml</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nt">agent</span><span class="p">:</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;auto&quot;</span><span class="w">                     </span><span class="c1"># &quot;auto&quot; = deterministic UUID v5 from hostname</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">                                 </span><span class="c1"># Or set a fixed UUID: &quot;550e8400-e29b-41d4-a716-446655440000&quot;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nt">gateway</span><span class="p">:</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="c1"># Simple setup — single gateway:</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wss://gateway.example.com:4443/ws&quot;</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">  </span><span class="c1"># Recommended — multiple gateways with failover:</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">  </span><span class="nt">urls</span><span class="p">:</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;wss://gateway-prd-01.example.com:4443/ws&quot;</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;wss://gateway-prd-02.example.com:4443/ws&quot;</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">  </span><span class="nt">failover_strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ordered&quot;</span><span class="w">     </span><span class="c1"># &quot;ordered&quot; = try in list order; &quot;round-robin&quot; = rotate</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">  </span><span class="nt">primary_retry_secs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w">          </span><span class="c1"># Attempt to return to the first (primary) gateway every 5 min</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">  </span><span class="nt">reconnect_interval_secs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">     </span><span class="c1"># Wait between reconnection attempts</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="nt">tls</span><span class="p">:</span><span class="w">                              </span><span class="c1"># Omit entire section to disable mTLS (dev only!)</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/agent.crt&quot;</span><span class="w">   </span><span class="c1"># Agent client certificate (PEM)</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/agent.key&quot;</span><span class="w">     </span><span class="c1"># Agent private key (PEM)</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/appcontrol/tls/ca.crt&quot;</span><span class="w">         </span><span class="c1"># CA for verifying the gateway server cert</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="nt">labels</span><span class="p">:</span><span class="w">                           </span><span class="c1"># Custom labels for filtering/grouping in the UI</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;production&quot;</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">  </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dc-paris-01&quot;</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">  </span><span class="nt">os</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rhel8&quot;</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">  </span><span class="nt">team</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;platform&quot;</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;appcontrol_agent=info&quot;</span><span class="w">  </span><span class="c1"># tracing-subscriber filter syntax</span>
 </span></code></pre></div>
 <h3 id="environment-variable-overrides_1">Environment Variable Overrides<a class="headerlink" href="#environment-variable-overrides_1" title="Permanent link">&para;</a></h3>
 <table>
@@ -4657,7 +4818,7 @@ Custom reverse proxies also need that exception. See the complete
 <tr>
 <td><code>/var/lib/appcontrol/buffer-{agent-id}</code></td>
 <td><code>%PROGRAMDATA%\AppControl\buffer-{agent-id}</code></td>
-<td>Offline message buffer (sled embedded DB)</td>
+<td>Offline message outbox (redb embedded DB)</td>
 </tr>
 </tbody>
 </table>
@@ -4668,8 +4829,16 @@ Custom reverse proxies also need that exception. See the complete
 <li>The child has its own session (setsid)</li>
 <li>Agent crash, restart, or upgrade does not kill managed processes</li>
 </ol>
+<p>On Windows, detached commands retain <code>CREATE_BREAKAWAY_FROM_JOB</code>. If the agent
+runs inside a restrictive Windows Job Object that denies breakaway, Windows
+refuses the launch. The agent reports the verified Job Object restriction and
+does not retry inside the inherited job. Run the agent outside that restrictive
+job, or have the job owner explicitly permit breakaway. A process launcher or
+CI runner can impose this restriction even when the agent account has local
+administrator rights. See <a href="https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects">Windows Job Objects</a>.</p>
 <h3 id="offline-buffer">Offline Buffer<a class="headerlink" href="#offline-buffer" title="Permanent link">&para;</a></h3>
-<p>When the gateway connection is lost, the agent buffers messages in a local <a href="https://docs.rs/sled/">sled</a> embedded database. When connectivity is restored, buffered messages are replayed in order. The buffer path is <code>/var/lib/appcontrol/buffer-{agent-id}</code>.</p>
+<p>The agent writes checks and final command results to a local redb outbox before sending them. The existing buffer directory <code>/var/lib/appcontrol/buffer-{agent-id}</code> is retained; existing redb messages are indexed on opening without changing the configured path. Command results remain until their backend acknowledgement. A socket write alone does not remove them. Other persisted telemetry is removed after a successful socket write. Interactive output and live logs use a bounded, best-effort memory queue.</p>
+<p><code>BUFFER_MAX_BYTES</code> defaults to 104857600 (100 MiB) and bounds serialized outbox entries and their keys, excluding redb file overhead. Old telemetry can be evicted to make space; it cannot evict pending command results. If the remaining budget contains only unacknowledged results or the disk is unavailable, new evidence is refused with a local error. This bounded buffer cannot guarantee zero loss during an arbitrary outage. It does not make external commands idempotent or resume interrupted backend operations. Upgrade the backend before the agents so replayed results can be acknowledged using their persisted command record.</p>
 <h3 id="agent-failover">Agent Failover<a class="headerlink" href="#agent-failover" title="Permanent link">&para;</a></h3>
 <p>When multiple gateway URLs are configured:</p>
 <ul>
@@ -4677,35 +4846,35 @@ Custom reverse proxies also need that exception. See the complete
 <li><strong><code>round-robin</code> strategy:</strong> Rotate through gateways on each reconnection attempt.</li>
 </ul>
 <h3 id="agent-as-a-systemd-service">Agent as a systemd Service<a class="headerlink" href="#agent-as-a-systemd-service" title="Permanent link">&para;</a></h3>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># /etc/systemd/system/appcontrol-agent.service</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="k">[Unit]</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="na">Description</span><span class="o">=</span><span class="s">AppControl Agent</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="k">[Service]</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/appcontrol-agent --config /etc/appcontrol/agent.yaml</span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">10</span>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="na">User</span><span class="o">=</span><span class="s">appcontrol</span>
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="na">Group</span><span class="o">=</span><span class="s">appcontrol</span>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="c1"># Security hardening</span>
-</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="na">NoNewPrivileges</span><span class="o">=</span><span class="s">yes</span>
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="na">ProtectSystem</span><span class="o">=</span><span class="s">strict</span>
-</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="na">ReadWritePaths</span><span class="o">=</span><span class="s">/var/lib/appcontrol</span>
-</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>
-</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="k">[Install]</span>
-</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># /etc/systemd/system/appcontrol-agent.service</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">[Unit]</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="na">Description</span><span class="o">=</span><span class="s">AppControl Agent</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="k">[Service]</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/appcontrol-agent --config /etc/appcontrol/agent.yaml</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">10</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="na">User</span><span class="o">=</span><span class="s">appcontrol</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="na">Group</span><span class="o">=</span><span class="s">appcontrol</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="c1"># Security hardening</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="na">NoNewPrivileges</span><span class="o">=</span><span class="s">yes</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="na">ProtectSystem</span><span class="o">=</span><span class="s">strict</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="na">ReadWritePaths</span><span class="o">=</span><span class="s">/var/lib/appcontrol</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="k">[Install]</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>appcontrol-agent
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>appcontrol-agent
 </span></code></pre></div>
 <h3 id="agent-windows-service">Agent Windows Service<a class="headerlink" href="#agent-windows-service" title="Permanent link">&para;</a></h3>
 <p>On Windows, the agent can run as a Windows service:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">appcontrol-agent</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">install</span> <span class="p">-</span><span class="n">-config</span> <span class="n">C</span><span class="p">:\</span><span class="n">ProgramData</span><span class="p">\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">config</span><span class="p">\</span><span class="n">agent</span><span class="p">.</span><span class="n">yaml</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">appcontrol-agent</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">uninstall</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">appcontrol-agent</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">install</span> <span class="p">-</span><span class="n">-config</span> <span class="n">C</span><span class="p">:\</span><span class="n">ProgramData</span><span class="p">\</span><span class="n">AppControl</span><span class="p">\</span><span class="n">config</span><span class="p">\</span><span class="n">agent</span><span class="p">.</span><span class="n">yaml</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">appcontrol-agent</span><span class="p">.</span><span class="n">exe</span> <span class="n">service</span> <span class="n">uninstall</span>
 </span></code></pre></div>
 <hr />
 <h2 id="frontend">Frontend<a class="headerlink" href="#frontend" title="Permanent link">&para;</a></h2>
@@ -4812,56 +4981,56 @@ Custom reverse proxies also need that exception. See the complete
 </tbody>
 </table>
 <h3 id="cli-usage-examples">CLI Usage Examples<a class="headerlink" href="#cli-usage-examples" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Configure</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APPCONTROL_URL</span><span class="o">=</span>https://appcontrol.example.com
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APPCONTROL_API_KEY</span><span class="o">=</span>ac_xK9m2pQ...
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="c1"># List applications</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>appctl<span class="w"> </span>list
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1"># Start an application (waits for completion, 2min timeout)</span>
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>appctl<span class="w"> </span>start<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--wait<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c1"># Check status</span>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>appctl<span class="w"> </span>status<span class="w"> </span><span class="nv">$APP_ID</span>
-</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
-</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="c1"># Stop application (reverse DAG order)</span>
-</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>appctl<span class="w"> </span>stop<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--wait
-</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>
-</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="c1"># Restart failed branch only</span>
-</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>appctl<span class="w"> </span>start-branch<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--component<span class="w"> </span><span class="nv">$COMPONENT_ID</span><span class="w"> </span>--wait
-</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
-</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="c1"># Run diagnostics</span>
-</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>appctl<span class="w"> </span>diagnose<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--level<span class="w"> </span><span class="m">1</span><span class="w">   </span><span class="c1"># Health</span>
-</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>appctl<span class="w"> </span>diagnose<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--level<span class="w"> </span><span class="m">2</span><span class="w">   </span><span class="c1"># Integrity</span>
-</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>appctl<span class="w"> </span>diagnose<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--level<span class="w"> </span><span class="m">3</span><span class="w">   </span><span class="c1"># Infrastructure</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Configure</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APPCONTROL_URL</span><span class="o">=</span>https://appcontrol.example.com
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APPCONTROL_API_KEY</span><span class="o">=</span>ac_xK9m2pQ...
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># List applications</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>appctl<span class="w"> </span>list
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="c1"># Start an application (waits for completion, 2min timeout)</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>appctl<span class="w"> </span>start<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--wait<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="c1"># Check status</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>appctl<span class="w"> </span>status<span class="w"> </span><span class="nv">$APP_ID</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="c1"># Stop application (reverse DAG order)</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>appctl<span class="w"> </span>stop<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--wait
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="c1"># Restart failed branch only</span>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>appctl<span class="w"> </span>start-branch<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--component<span class="w"> </span><span class="nv">$COMPONENT_ID</span><span class="w"> </span>--wait
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="c1"># Run diagnostics</span>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>appctl<span class="w"> </span>diagnose<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--level<span class="w"> </span><span class="m">1</span><span class="w">   </span><span class="c1"># Health</span>
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>appctl<span class="w"> </span>diagnose<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--level<span class="w"> </span><span class="m">2</span><span class="w">   </span><span class="c1"># Integrity</span>
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>appctl<span class="w"> </span>diagnose<span class="w"> </span><span class="nv">$APP_ID</span><span class="w"> </span>--level<span class="w"> </span><span class="m">3</span><span class="w">   </span><span class="c1"># Infrastructure</span>
 </span></code></pre></div>
 <hr />
 <h2 id="tls-mtls-certificate-configuration">TLS / mTLS Certificate Configuration<a class="headerlink" href="#tls-mtls-certificate-configuration" title="Permanent link">&para;</a></h2>
 <h3 id="certificate-chain">Certificate Chain<a class="headerlink" href="#certificate-chain" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>AppControl CA (self-signed or enterprise PKI)
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>├── Gateway server certificate
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>│   CN=appcontrol-gateway
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>│   SAN: DNS:gateway.example.com, DNS:*.gateway.internal
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>└── Agent client certificates (one per agent)
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    CN=agent-{hostname}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>AppControl CA (self-signed or enterprise PKI)
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>├── Gateway server certificate
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>│   CN=appcontrol-gateway
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>│   SAN: DNS:gateway.example.com, DNS:*.gateway.internal
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>└── Agent client certificates (one per agent)
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    CN=agent-{hostname}
 </span></code></pre></div>
 <h3 id="three-deployment-modes">Three Deployment Modes<a class="headerlink" href="#three-deployment-modes" title="Permanent link">&para;</a></h3>
 <h4 id="mode-1-enterprise-pki-recommended">Mode 1: Enterprise PKI (Recommended)<a class="headerlink" href="#mode-1-enterprise-pki-recommended" title="Permanent link">&para;</a></h4>
 <p>Use your organization's existing PKI. Provide the CA, gateway cert, and agent certs.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Gateway config</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nt">tls</span><span class="p">:</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-gateway.crt&quot;</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-gateway.key&quot;</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-ca.crt&quot;</span><span class="w">    </span><span class="c1"># Your corporate CA</span>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c1"># Agent config</span>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="nt">tls</span><span class="p">:</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-agent.crt&quot;</span>
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-agent.key&quot;</span>
-</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-ca.crt&quot;</span><span class="w">    </span><span class="c1"># Same corporate CA</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Gateway config</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nt">tls</span><span class="p">:</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-gateway.crt&quot;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-gateway.key&quot;</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-ca.crt&quot;</span><span class="w">    </span><span class="c1"># Your corporate CA</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># Agent config</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="nt">tls</span><span class="p">:</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">  </span><span class="nt">cert_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-agent.crt&quot;</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">  </span><span class="nt">key_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-agent.key&quot;</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">  </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/enterprise-ca.crt&quot;</span><span class="w">    </span><span class="c1"># Same corporate CA</span>
 </span></code></pre></div>
 <h4 id="mode-2-auto-pki-zero-config">Mode 2: Auto-PKI (Zero-Config)<a class="headerlink" href="#mode-2-auto-pki-zero-config" title="Permanent link">&para;</a></h4>
 <p>AppControl can auto-generate a CA per organization on first startup. Agents then enroll via the enrollment API to obtain their certificates. This eliminates manual certificate management.</p>
@@ -4870,37 +5039,37 @@ Custom reverse proxies also need that exception. See the complete
 <p>Automate certificate issuance and renewal in Kubernetes. See <a href="../PRODUCTION_DEPLOYMENT/#step-2-tls-certificates">PRODUCTION_DEPLOYMENT.md</a> for full cert-manager setup.</p>
 <h4 id="mode-4-manual-self-signed-development">Mode 4: Manual / Self-Signed (Development)<a class="headerlink" href="#mode-4-manual-self-signed-development" title="Permanent link">&para;</a></h4>
 <p>Generate certificates manually with OpenSSL:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># 1. Create CA</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>ca.key<span class="w"> </span><span class="m">4096</span>
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-key<span class="w"> </span>ca.key<span class="w"> </span>-out<span class="w"> </span>ca.crt<span class="w"> </span>-days<span class="w"> </span><span class="m">3650</span><span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=AppControl CA&quot;</span>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1"># 2. Generate gateway certificate</span>
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>gateway.key<span class="w"> </span><span class="m">2048</span>
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-key<span class="w"> </span>gateway.key<span class="w"> </span>-out<span class="w"> </span>gateway.csr<span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=appcontrol-gateway&quot;</span>
-</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>gateway.csr<span class="w"> </span>-CA<span class="w"> </span>ca.crt<span class="w"> </span>-CAkey<span class="w"> </span>ca.key<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">  </span>-CAcreateserial<span class="w"> </span>-out<span class="w"> </span>gateway.crt<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span>
-</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
-</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="c1"># 3. Generate agent certificate (repeat per agent)</span>
-</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>agent-host01.key<span class="w"> </span><span class="m">2048</span>
-</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-key<span class="w"> </span>agent-host01.key<span class="w"> </span>-out<span class="w"> </span>agent-host01.csr<span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=agent-host01&quot;</span>
-</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>agent-host01.csr<span class="w"> </span>-CA<span class="w"> </span>ca.crt<span class="w"> </span>-CAkey<span class="w"> </span>ca.key<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">  </span>-CAcreateserial<span class="w"> </span>-out<span class="w"> </span>agent-host01.crt<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># 1. Create CA</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>ca.key<span class="w"> </span><span class="m">4096</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-key<span class="w"> </span>ca.key<span class="w"> </span>-out<span class="w"> </span>ca.crt<span class="w"> </span>-days<span class="w"> </span><span class="m">3650</span><span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=AppControl CA&quot;</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1"># 2. Generate gateway certificate</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>gateway.key<span class="w"> </span><span class="m">2048</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-key<span class="w"> </span>gateway.key<span class="w"> </span>-out<span class="w"> </span>gateway.csr<span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=appcontrol-gateway&quot;</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>gateway.csr<span class="w"> </span>-CA<span class="w"> </span>ca.crt<span class="w"> </span>-CAkey<span class="w"> </span>ca.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">  </span>-CAcreateserial<span class="w"> </span>-out<span class="w"> </span>gateway.crt<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="c1"># 3. Generate agent certificate (repeat per agent)</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>agent-host01.key<span class="w"> </span><span class="m">2048</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-key<span class="w"> </span>agent-host01.key<span class="w"> </span>-out<span class="w"> </span>agent-host01.csr<span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=agent-host01&quot;</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>agent-host01.csr<span class="w"> </span>-CA<span class="w"> </span>ca.crt<span class="w"> </span>-CAkey<span class="w"> </span>ca.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">  </span>-CAcreateserial<span class="w"> </span>-out<span class="w"> </span>agent-host01.crt<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span>
 </span></code></pre></div>
 <h3 id="certificate-verification-flow">Certificate Verification Flow<a class="headerlink" href="#certificate-verification-flow" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Agent connects to Gateway:
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  1. Gateway presents its server cert → Agent verifies against ca_file ✓
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>  2. Agent presents its client cert   → Gateway verifies against ca_file ✓ (mTLS)
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>  3. Gateway computes SHA-256 fingerprint of agent cert for audit logging
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  4. Connection accepted → WebSocket upgrade → Agent registers with ID + hostname
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Agent connects to Gateway:
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  1. Gateway presents its server cert → Agent verifies against ca_file ✓
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  2. Agent presents its client cert   → Gateway verifies against ca_file ✓ (mTLS)
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>  3. Gateway computes SHA-256 fingerprint of agent cert for audit logging
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  4. Connection accepted → WebSocket upgrade → Agent registers with ID + hostname
 </span></code></pre></div>
 <hr />
 <h2 id="docker-compose-reference">Docker Compose Reference<a class="headerlink" href="#docker-compose-reference" title="Permanent link">&para;</a></h2>
 <h3 id="release-stack-pre-built-images">Release Stack (Pre-Built Images)<a class="headerlink" href="#release-stack-pre-built-images" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Start with latest release</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.release.yaml<span class="w"> </span>up<span class="w"> </span>-d
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Start with a specific version</span>
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nv">APPCONTROL_VERSION</span><span class="o">=</span><span class="m">0</span>.2.0<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.release.yaml<span class="w"> </span>up<span class="w"> </span>-d
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Start with latest release</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.release.yaml<span class="w"> </span>up<span class="w"> </span>-d
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Start with a specific version</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="nv">APPCONTROL_VERSION</span><span class="o">=</span><span class="m">0</span>.2.0<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.release.yaml<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
 <p><strong>Services and ports:</strong></p>
 <table>
@@ -4940,29 +5109,29 @@ Custom reverse proxies also need that exception. See the complete
 </tbody>
 </table>
 <p><strong>Default environment variables in docker-compose.release.yaml:</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nt">postgres</span><span class="p">:</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">appcontrol</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">appcontrol</span>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">appcontrol_dev</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="nt">backend</span><span class="p">:</span>
-</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">  </span><span class="nt">DATABASE_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres://appcontrol:appcontrol_dev@postgres:5432/appcontrol</span>
-</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">  </span><span class="nt">PORT</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3000&quot;</span>
-</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">  </span><span class="nt">JWT_SECRET</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev-secret-change-in-production</span><span class="w">     </span><span class="c1"># CHANGE for production!</span>
-</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">  </span><span class="nt">RUST_LOG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">info,appcontrol_backend=debug</span>
-</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>
-</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="nt">gateway</span><span class="p">:</span>
-</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">  </span><span class="nt">LISTEN_ADDR</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.0.0&quot;</span>
-</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="w">  </span><span class="nt">LISTEN_PORT</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4443&quot;</span>
-</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="w">  </span><span class="nt">BACKEND_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ws://backend:3000/ws/gateway</span>
-</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="w">  </span><span class="nt">RUST_LOG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">info,appcontrol_gateway=debug</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nt">postgres</span><span class="p">:</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">appcontrol</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">appcontrol</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">appcontrol_dev</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="nt">backend</span><span class="p">:</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span><span class="nt">DATABASE_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres://appcontrol:appcontrol_dev@postgres:5432/appcontrol</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">  </span><span class="nt">PORT</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3000&quot;</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">  </span><span class="nt">JWT_SECRET</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev-secret-change-in-production</span><span class="w">     </span><span class="c1"># CHANGE for production!</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">  </span><span class="nt">RUST_LOG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">info,appcontrol_backend=debug</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="nt">gateway</span><span class="p">:</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="w">  </span><span class="nt">LISTEN_ADDR</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.0.0&quot;</span>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="w">  </span><span class="nt">LISTEN_PORT</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4443&quot;</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="w">  </span><span class="nt">BACKEND_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ws://backend:3000/ws/gateway</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="w">  </span><span class="nt">RUST_LOG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">info,appcontrol_gateway=debug</span>
 </span></code></pre></div>
 <h3 id="dev-stack-build-from-source">Dev Stack (Build from Source)<a class="headerlink" href="#dev-stack-build-from-source" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Infrastructure only (PostgreSQL)</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.dev.yaml<span class="w"> </span>up<span class="w"> </span>-d
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Full stack (builds from Dockerfiles)</span>
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yaml<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Infrastructure only (PostgreSQL)</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.dev.yaml<span class="w"> </span>up<span class="w"> </span>-d
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># Full stack (builds from Dockerfiles)</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yaml<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
 </span></code></pre></div>
 <hr />
 <h2 id="production-checklist">Production Checklist<a class="headerlink" href="#production-checklist" title="Permanent link">&para;</a></h2>
@@ -5010,7 +5179,7 @@ Custom reverse proxies also need that exception. See the complete
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> API keys have expiry dates set</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> SAML assertions are signed (<code>SAML_WANT_ASSERTIONS_SIGNED=true</code>)</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> CORS origins restricted to your frontend domain only</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> No dev endpoints accessible (<code>APP_ENV=production</code> disables <code>/auth/login</code> and <code>/auth/dev-login</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>AUTH_MODE</code> and any explicit emergency account UUIDs have been reviewed; production password login is not controlled by <code>APP_ENV</code></li>
 </ul>
 
 
@@ -5034,7 +5203,7 @@ Custom reverse proxies also need that exception. See the complete
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-13T20:30:18+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-19T23:01:42+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-19</span>
   </span>
 
     
@@ -5098,13 +5267,13 @@ Custom reverse proxies also need that exception. See the complete
         
         
           
-          <a href="../BACKUP_RESTORE/" class="md-footer__link md-footer__link--next" aria-label="Next: Backup &amp; restore">
+          <a href="../NATIVE_AGENT_DISCOVERY/" class="md-footer__link md-footer__link--next" aria-label="Next: Native agent discovery (FR)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Backup & restore
+                Native agent discovery (FR)
               </div>
             </div>
             <div class="md-footer__button md-icon">

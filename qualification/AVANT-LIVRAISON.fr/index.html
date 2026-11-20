@@ -908,6 +908,8 @@
       
         
       
+        
+      
     
     
       
@@ -955,6 +957,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1216,6 +1239,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1263,6 +1290,27 @@
   
   <span class="md-ellipsis">
     Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
   </span>
   
 
@@ -1389,6 +1437,27 @@
   
   <span class="md-ellipsis">
     Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
   </span>
   
 
@@ -1548,6 +1617,8 @@
       
         
       
+        
+      
     
     
       
@@ -1595,6 +1666,27 @@
   
   <span class="md-ellipsis">
     Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
   </span>
   
 
@@ -1703,6 +1795,8 @@
       
         
       
+        
+      
     
     
       
@@ -1750,6 +1844,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -2121,13 +2236,19 @@
 
 
 <h1 id="premiere-installation-client-et-limites-a-qualifier">Première installation client et limites à qualifier<a class="headerlink" href="#premiere-installation-client-et-limites-a-qualifier" title="Permanent link">&para;</a></h1>
-<p>La version 1.21.1 réunit les évolutions du produit et les démonstrations.
-Son kit OpenShift vise une première installation isolée, puis un POC cadré.
-Le numéro de release stable ne constitue pas une certification de production bancaire.
-Pour Windows, le parcours recommandé est le kit léger <strong>1.21.1-2</strong>, avec
-PowerShell et le client <code>oc</code> existant. Les résultats à retenir sont ceux des
-preuves de cette livraison, une fois sa qualification terminée ; les rapports
-1.20.4 restent historiques.</p>
+<p>Cette procédure vise <strong>X4B / AppControl 1.27.0</strong> et le kit Windows léger
+<strong>1.27.0-1</strong>, avec PowerShell et le client <code>oc</code> existant. Le kit OpenShift
+vise une installation isolée ou la mise à jour d’un POC cadré. Le numéro de
+release stable ne constitue pas une certification de production bancaire.
+Les résultats applicables sont ceux des preuves du kit exact, après leur
+production par la chaîne de qualification. Les rapports 1.20.4 et 1.21.1
+restent historiques et ne doivent pas être réétiquetés pour cette livraison.</p>
+<p>Le périmètre comprend les sources Knowledge nommées et la bibliothèque de
+documents, le catalogue avec faits de support sourcés, la Discovery par skills
+et plans approuvés, le durcissement IAM et les correctifs Rust de suivi des
+commandes, de persistance des résultats et de reprise des connexions. La
+collecte native reste limitée aux agents Linux explicitement autorisés et aux
+plans approuvés. Elle ne qualifie pas les commandes métier d’une application.</p>
 <h2 id="controles-exiges-pour-publier-le-kit">Contrôles exigés pour publier le kit<a class="headerlink" href="#controles-exiges-pour-publier-le-kit" title="Permanent link">&para;</a></h2>
 <p>La CI vérifie les sources, construit les artefacts, scanne les images et les
 dépendances de production/développement, puis exécute une recette OpenShift
@@ -2137,7 +2258,7 @@ digest. Lire ses fichiers <code>VALIDATION.fr.md</code> et <code>provenance.json
 effectif de cette version ; les rapports d'octobre du dépôt restent historiques.</p>
 <p>Le parcours utilise quatre services : frontend, backend, gateway et PostgreSQL.
 Un agent supplémentaire sert aux tests synthétiques. TLS/mTLS, droits,
-ordre des dépendances, reconnexions et persistance sont éprouvés par la recette.
+ordre des dépendances, reconnexions et persistance doivent être éprouvés par la recette de cette livraison.
 Un scan sans alerte est daté ; il ne démontre pas l'absence de toute faille.</p>
 <h2 id="points-a-traiter-avec-le-client">Points à traiter avec le client<a class="headerlink" href="#points-a-traiter-avec-le-client" title="Permanent link">&para;</a></h2>
 <table>
@@ -2166,7 +2287,7 @@ Un scan sans alerte est daté ; il ne démontre pas l'absence de toute faille.</
 </tr>
 <tr>
 <td>PKI, jetons, SSO et base client</td>
-<td>La PKI générée sert à l'évaluation. Certificats de service 90 jours, jeton gateway 30 jours ; renouvellement explicite. Les raccordements client demandent leur propre recette.</td>
+<td>La PKI générée sert à l'évaluation. Certificats de service 90 jours, jeton gateway 30 jours ; renouvellement explicite. Vérifier le précontrôle SSO, l’issuer SAML/OIDC, les callbacks et les références Secret avant application du manifeste ; qualifier le véritable fournisseur client. La MFA dépend de sa politique, sans attestation automatique par X4B. Voir <a href="../../IAM/">IAM</a>.</td>
 </tr>
 <tr>
 <td>Sauvegarde et reprise</td>
@@ -2174,7 +2295,7 @@ Un scan sans alerte est daté ; il ne démontre pas l'absence de toute faille.</
 </tr>
 <tr>
 <td>Mise à jour existante</td>
-<td>Tester sur une copie restaurée. Helm ne restaure ni les migrations ni les données. Voir <a href="../../UPGRADE/">UPGRADE</a>.</td>
+<td>Tester sur une copie restaurée, préserver les paramètres et références Secret, puis vérifier les migrations V080–V086. Mettre à jour et vérifier le backend avant les agents pour les acquittements persistants. Restaurer une sauvegarde compatible en cas de retour à une version antérieure. Voir <a href="../../UPGRADE/">UPGRADE</a>.</td>
 </tr>
 <tr>
 <td>Reconstruction applicative</td>
@@ -2182,7 +2303,7 @@ Un scan sans alerte est daté ; il ne démontre pas l'absence de toute faille.</
 </tr>
 <tr>
 <td>IA et automatisation</td>
-<td>Conserver les périmètres de clés, contrôles serveur et revues indépendantes requis ; une confirmation technique n'est pas une approbation métier.</td>
+<td>Sélectionner la source du dossier et le contexte d’affinage ; valider les propositions avant publication. Pour la Discovery native, configurer la clé dédiée et le consentement local sur l’agent Linux, puis approuver le plan exact. Une confirmation technique n'est pas une approbation métier.</td>
 </tr>
 </tbody>
 </table>
@@ -2223,7 +2344,7 @@ Le premier POC peut rester manuel et non critique pendant ces qualifications.</p
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-03T16:28:16+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-20T19:07:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-20</span>
   </span>
 
     

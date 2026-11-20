@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://xcomponent.github.io/appcontrol-release/HARDENING/">
       
       
-        <link rel="prev" href="../SECURITY_ARCHITECTURE/">
+        <link rel="prev" href="../IAM/">
       
       
         <link rel="next" href="../COMPLIANCE_DORA_NIS2/">
@@ -914,6 +914,8 @@
       
         
       
+        
+      
     
     
       
@@ -961,6 +963,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1222,6 +1245,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1269,6 +1296,27 @@
   
   <span class="md-ellipsis">
     Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
   </span>
   
 
@@ -1395,6 +1443,27 @@
   
   <span class="md-ellipsis">
     Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
   </span>
   
 
@@ -1556,6 +1625,8 @@
       
         
       
+        
+      
     
     
       
@@ -1604,6 +1675,27 @@
   
   <span class="md-ellipsis">
     Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
   </span>
   
 
@@ -1703,9 +1795,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#oidc-or-saml-configured-local-auth-disabled-in-production" class="md-nav__link">
+  <a href="#explicit-sso-and-local-emergency-policy" class="md-nav__link">
     <span class="md-ellipsis">
-      OIDC or SAML configured; local auth disabled in production
+      Explicit SSO and local emergency policy
     </span>
   </a>
   
@@ -1961,9 +2053,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#break-glass-accounts-pre-provisioned" class="md-nav__link">
+  <a href="#emergency-access-prepared-and-verified" class="md-nav__link">
     <span class="md-ellipsis">
-      Break-glass accounts pre-provisioned
+      Emergency access prepared and verified
     </span>
   </a>
   
@@ -2079,6 +2171,8 @@
       
         
       
+        
+      
     
     
       
@@ -2126,6 +2220,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -2492,9 +2607,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#oidc-or-saml-configured-local-auth-disabled-in-production" class="md-nav__link">
+  <a href="#explicit-sso-and-local-emergency-policy" class="md-nav__link">
     <span class="md-ellipsis">
-      OIDC or SAML configured; local auth disabled in production
+      Explicit SSO and local emergency policy
     </span>
   </a>
   
@@ -2750,9 +2865,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#break-glass-accounts-pre-provisioned" class="md-nav__link">
+  <a href="#emergency-access-prepared-and-verified" class="md-nav__link">
     <span class="md-ellipsis">
-      Break-glass accounts pre-provisioned
+      Emergency access prepared and verified
     </span>
   </a>
   
@@ -2827,7 +2942,7 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Set and verified.</strong></li>
 </ul>
 <h3 id="app_envproduction"><code>APP_ENV=production</code><a class="headerlink" href="#app_envproduction" title="Permanent link">&para;</a></h3>
-<p><strong>Rationale.</strong> Setting <code>APP_ENV=production</code> toggles strict mode: insecure-default warnings become fatal errors, dev login endpoints are disabled, CORS becomes restrictive.</p>
+<p><strong>Rationale.</strong> <code>APP_ENV=production</code> enables production configuration checks. It does not choose the login policy or disable local passwords; configure <code>AUTH_MODE</code> separately.</p>
 <p><strong>Verify.</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>APP_ENV
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># APP_ENV=production</span>
@@ -2853,26 +2968,30 @@
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>CORS restricted and verified.</strong></li>
 </ul>
-<h3 id="oidc-or-saml-configured-local-auth-disabled-in-production">OIDC or SAML configured; local auth disabled in production<a class="headerlink" href="#oidc-or-saml-configured-local-auth-disabled-in-production" title="Permanent link">&para;</a></h3>
-<p><strong>Rationale.</strong> Local-password authentication is appropriate for development but should not be the production door. SSO centralizes account lifecycle, MFA enforcement, and SSO-level auditing.</p>
-<p><strong>Set.</strong> Configure OIDC or SAML per <a href="../CONFIGURATION/#users--authentication">Configuration §Users</a>.</p>
-<p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># In production, /auth/login returns 404</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>curl<span class="w"> </span>-is<span class="w"> </span>https://appcontrol.example.com/api/v1/auth/login<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{}&#39;</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># Expect: HTTP/2 404</span>
-</span></code></pre></div>
+<h3 id="explicit-sso-and-local-emergency-policy">Explicit SSO and local emergency policy<a class="headerlink" href="#explicit-sso-and-local-emergency-policy" title="Permanent link">&para;</a></h3>
+<p>Configure and qualify OIDC or SAML per <a href="../CONFIGURATION/#users--authentication">Configuration §Users</a>.
+Set <code>AUTH_MODE=sso_only</code> to restrict password login. Its only local exceptions
+are UUIDs explicitly listed in <code>AUTH_LOCAL_EMERGENCY_USER_IDS</code>, whose accounts
+must remain active local administrators. Keep credentials in the client's
+approved vault. Use <code>hybrid</code> only when both password and SSO access are intended.</p>
+<p><code>APP_ENV=production</code> alone does not block <code>/auth/login</code>. Confirm the configured
+policy and verify a real, ordinary local account is refused under <code>sso_only</code>;
+an empty malformed request only tests input validation. Verify a permitted
+emergency account and an ordinary non-admin account separately in qualification.</p>
+<p>MFA enforcement and assurance belong to the IdP configuration. AppControl does
+not attest MFA from the presence of an SSO connection or a provider name.</p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>SSO configured, local auth disabled.</strong></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Login mode, explicit emergency identities and IdP MFA policy reviewed.</strong></li>
 </ul>
 <h3 id="api-key-rotation-policy">API key rotation policy<a class="headerlink" href="#api-key-rotation-policy" title="Permanent link">&para;</a></h3>
 <p><strong>Rationale.</strong> Stale API keys widen the attack surface. Rotate every 90 days (industry standard for high-privilege machine credentials).</p>
 <p><strong>Set.</strong> When creating an API key, set <code>expires_in_days: 90</code>. Document the rotation procedure in your runbook.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Keys older than 90 days should be &lt; 5 % of total keys</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">SELECT</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">interval</span><span class="w"> </span><span class="s1">&#39;90 days&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">stale</span><span class="p">,</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">FROM</span><span class="w"> </span><span class="n">api_keys</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">revoked_at</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Keys older than 90 days should be &lt; 5 % of total keys</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">SELECT</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">interval</span><span class="w"> </span><span class="s1">&#39;90 days&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">stale</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">FROM</span><span class="w"> </span><span class="n">api_keys</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">revoked_at</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Rotation policy documented; stale keys identified and rotated.</strong></li>
@@ -2907,9 +3026,9 @@
 </tbody>
 </table>
 <p><strong>Verify.</strong></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">max_uses</span><span class="p">,</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">enrollment_tokens</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">revoked_at</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">now</span><span class="p">()</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">max_uses</span><span class="p">,</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">enrollment_tokens</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">revoked_at</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">now</span><span class="p">()</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">expires_at</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>All active tokens have bounded <code>max_uses</code> and <code>expires_at</code> ≤ 7 days.</strong></li>
@@ -2920,18 +3039,18 @@
 <p><strong>Rationale.</strong> Plaintext between agent and gateway exposes commands, credentials, and check output. mTLS provides mutual authentication and forward-secret encryption.</p>
 <p><strong>Set.</strong> Ensure <code>TLS_ENABLED=true</code> on every gateway and agent. Certificates come from the per-org CA (auto-PKI) or your enterprise PKI. See <a href="../CONFIGURATION/#tls--mtls-certificate-configuration">Configuration — TLS</a>.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Gateway</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-gateway<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>TLS_ENABLED
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># TLS_ENABLED=true</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Agent</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>grep<span class="w"> </span>enabled<span class="w"> </span>/etc/appcontrol/agent.yaml
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># enabled: true</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># Probe the gateway with no cert — must be rejected</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>curl<span class="w"> </span>-k<span class="w"> </span>https://gateway.example.com:4443/health<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;alert.*certificate&quot;</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1"># Or simulate a full handshake without client cert — should fail</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>gateway.example.com:4443<span class="w"> </span>&lt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;alert&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Gateway</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-gateway<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>TLS_ENABLED
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># TLS_ENABLED=true</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Agent</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>grep<span class="w"> </span>enabled<span class="w"> </span>/etc/appcontrol/agent.yaml
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># enabled: true</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Probe the gateway with no cert — must be rejected</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>curl<span class="w"> </span>-k<span class="w"> </span>https://gateway.example.com:4443/health<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;alert.*certificate&quot;</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1"># Or simulate a full handshake without client cert — should fail</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>gateway.example.com:4443<span class="w"> </span>&lt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;alert&quot;</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>mTLS enabled end-to-end.</strong></li>
@@ -2965,13 +3084,13 @@
 </tbody>
 </table>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>RATE_LIMIT
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Trigger a 429</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">12</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span>curl<span class="w"> </span>-is<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://appcontrol.example.com/api/v1/auth/login<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">done</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># Expect: 429 after the 10th request</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>RATE_LIMIT
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># Trigger a 429</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">12</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span>curl<span class="w"> </span>-is<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://appcontrol.example.com/api/v1/auth/login<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">done</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># Expect: 429 after the 10th request</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Rate limits set appropriate for fleet size.</strong></li>
@@ -2986,9 +3105,9 @@
 <li><strong>HSM / KMS-backed CA</strong> (roadmap, not yet implemented). Delegating CA signing to HashiCorp Vault PKI, AWS KMS or Azure Key Vault is planned. Today the backend signs in-process with the CA private key loaded from the database (column <code>organizations.ca_private_key</code>, encrypted at rest by PostgreSQL TDE or LUKS at the volume layer). Tracking item: hsm-ca-signing.</li>
 </ul>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Verify the backend cannot read the CA from disk</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span>/etc/appcontrol/pki/ca.key<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># Expect: No such file or directory</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Verify the backend cannot read the CA from disk</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span>/etc/appcontrol/pki/ca.key<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Expect: No such file or directory</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>CA private key not stored on the backend filesystem.</strong></li>
@@ -2997,13 +3116,13 @@
 <p><strong>Rationale.</strong> A default-password database is a common entry point for lateral movement.</p>
 <p><strong>Set.</strong> Use a strong, randomly-generated password. Restrict source IPs at the DB level.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Inspect the database URL — must not contain default password</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nv">URL</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>appcontrol-db<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.database-url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="k">)</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$URL</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>appcontrol:appcontrol@<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL: default creds&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># Also verify pg_hba.conf accepts only the backend&#39;s source</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SHOW listen_addresses;&quot;</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT * FROM pg_hba_file_rules WHERE type = &#39;host&#39;;&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Inspect the database URL — must not contain default password</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nv">URL</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>appcontrol-db<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.database-url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="k">)</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$URL</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>appcontrol:appcontrol@<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL: default creds&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Also verify pg_hba.conf accepts only the backend&#39;s source</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SHOW listen_addresses;&quot;</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT * FROM pg_hba_file_rules WHERE type = &#39;host&#39;;&quot;</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Database credentials hardened.</strong></li>
@@ -3013,14 +3132,14 @@
 <h3 id="retention_action_log_days-and-retention_check_events_days-set-per-regulation"><code>RETENTION_ACTION_LOG_DAYS</code> and <code>RETENTION_CHECK_EVENTS_DAYS</code> set per regulation<a class="headerlink" href="#retention_action_log_days-and-retention_check_events_days-set-per-regulation" title="Permanent link">&para;</a></h3>
 <p><strong>Rationale.</strong> DORA Article 16 requires incident records for at least 5 years. NIS2 has similar expectations. Defaults are <code>0</code> (unlimited) which technically satisfies the rule but exposes you to storage exhaustion. Set explicit values.</p>
 <p><strong>Set.</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">backend</span><span class="p">:</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">env</span><span class="p">:</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">RETENTION_ACTION_LOG_DAYS</span><span class="p">:</span><span class="w">   </span><span class="s">&quot;1825&quot;</span><span class="w">   </span><span class="c1"># 5 years</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">RETENTION_CHECK_EVENTS_DAYS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;90&quot;</span><span class="w">     </span><span class="c1"># 3 months hot, then offloaded to archive</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">backend</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">env</span><span class="p">:</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">RETENTION_ACTION_LOG_DAYS</span><span class="p">:</span><span class="w">   </span><span class="s">&quot;1825&quot;</span><span class="w">   </span><span class="c1"># 5 years</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">RETENTION_CHECK_EVENTS_DAYS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;90&quot;</span><span class="w">     </span><span class="c1"># 3 months hot, then offloaded to archive</span>
 </span></code></pre></div>
 <p>For check events older than 90 days, archive partitions to cold storage before the retention task drops them (see <a href="../BACKUP_RESTORE/#partitioned-check_events">Backup &amp; Restore — Partitioned check_events</a>).</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>RETENTION
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>RETENTION
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Retention values set and reviewed with compliance team.</strong></li>
@@ -3028,15 +3147,15 @@
 <h3 id="logs-go-to-a-centralized-siem-in-json-format">Logs go to a centralized SIEM in JSON format<a class="headerlink" href="#logs-go-to-a-centralized-siem-in-json-format" title="Permanent link">&para;</a></h3>
 <p><strong>Rationale.</strong> Per-pod log files are insufficient evidence for a regulator. Structured logs let you correlate access patterns and detect anomalies.</p>
 <p><strong>Set.</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">backend</span><span class="p">:</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">env</span><span class="p">:</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="nt">LOG_FORMAT</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="nt">RUST_LOG</span><span class="p">:</span><span class="w">   </span><span class="s">&quot;info,appcontrol_backend=info,tower_http=info&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">backend</span><span class="p">:</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">env</span><span class="p">:</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">LOG_FORMAT</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">RUST_LOG</span><span class="p">:</span><span class="w">   </span><span class="s">&quot;info,appcontrol_backend=info,tower_http=info&quot;</span>
 </span></code></pre></div>
 <p>Forward stdout/stderr to your SIEM (Splunk, Datadog, Elastic, Loki).</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Recent logs must be valid JSON</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--tail<span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;.&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Recent logs must be valid JSON</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--tail<span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;.&#39;</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>JSON logs forwarded to SIEM.</strong></li>
@@ -3047,12 +3166,12 @@
 <p><strong>Rationale.</strong> Production backups containing the action log are themselves sensitive. They must be encrypted at rest, and an off-site copy must exist for the doomsday scenario.</p>
 <p><strong>Set.</strong> See <a href="../BACKUP_RESTORE/#encryption-at-rest">Backup &amp; Restore — Encryption at rest</a> for <code>aws s3 cp --sse aws:kms</code> example and cross-region replication.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Confirm KMS encryption on the most recent backup</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nv">LATEST</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>aws<span class="w"> </span>s3api<span class="w"> </span>head-object<span class="w"> </span>--bucket<span class="w"> </span>appcontrol-backups<span class="w"> </span>--key<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LATEST</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.ServerSideEncryption, .SSEKMSKeyId&#39;</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="c1"># Confirm cross-region replication</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>aws<span class="w"> </span>s3api<span class="w"> </span>get-bucket-replication<span class="w"> </span>--bucket<span class="w"> </span>appcontrol-backups
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Confirm KMS encryption on the most recent backup</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nv">LATEST</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://appcontrol-backups/daily/<span class="w"> </span>--recursive<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="k">)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>aws<span class="w"> </span>s3api<span class="w"> </span>head-object<span class="w"> </span>--bucket<span class="w"> </span>appcontrol-backups<span class="w"> </span>--key<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LATEST</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.ServerSideEncryption, .SSEKMSKeyId&#39;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># Confirm cross-region replication</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>aws<span class="w"> </span>s3api<span class="w"> </span>get-bucket-replication<span class="w"> </span>--bucket<span class="w"> </span>appcontrol-backups
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Backups encrypted; off-site copy verified.</strong></li>
@@ -3062,8 +3181,8 @@
 <h3 id="agents-gateway-only-gateway-backend-only-no-direct-agent-backend">Agents → gateway only; gateway → backend only; no direct agent → backend<a class="headerlink" href="#agents-gateway-only-gateway-backend-only-no-direct-agent-backend" title="Permanent link">&para;</a></h3>
 <p><strong>Rationale.</strong> Defense in depth: even if an agent is compromised, it should not be able to talk directly to the database or to other agents.</p>
 <p><strong>Set.</strong> Kubernetes NetworkPolicies (the Helm chart ships sensible defaults — verify they are enabled).</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">networkPolicy</span><span class="p">:</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">networkPolicy</span><span class="p">:</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
 <p>This restricts:</p>
 <table>
@@ -3113,12 +3232,12 @@
 </tbody>
 </table>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>networkpolicy<span class="w"> </span>-n<span class="w"> </span>appcontrol
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>networkpolicy<span class="w"> </span>-n<span class="w"> </span>appcontrol
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># From an agent host, try the backend directly — must fail</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>nc<span class="w"> </span>-vz<span class="w"> </span>appcontrol-backend.appcontrol.svc.cluster.local<span class="w"> </span><span class="m">3000</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="c1"># Expect: connection refused / blocked</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>networkpolicy<span class="w"> </span>-n<span class="w"> </span>appcontrol
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>networkpolicy<span class="w"> </span>-n<span class="w"> </span>appcontrol
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># From an agent host, try the backend directly — must fail</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>nc<span class="w"> </span>-vz<span class="w"> </span>appcontrol-backend.appcontrol.svc.cluster.local<span class="w"> </span><span class="m">3000</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1"># Expect: connection refused / blocked</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>NetworkPolicies enabled and tested.</strong></li>
@@ -3129,12 +3248,12 @@
 <p><strong>Rationale.</strong> A privilege-escalation bug becomes far more dangerous if the process is already root.</p>
 <p><strong>Set.</strong> Helm chart uses <code>runAsNonRoot: true</code> and <code>runAsUser: 65532</code> for backend / gateway / frontend. Agent runs as <code>root</code> by default on hosts because it executes user-defined commands; restrict to a dedicated <code>appcontrol</code> user where you can.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Container UID</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>backend<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].spec.securityContext.runAsUser}&#39;</span>
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="c1"># Expect: 65532 or similar non-zero</span>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1"># Agent user (on host)</span>
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>ps<span class="w"> </span>-o<span class="w"> </span><span class="nv">user</span><span class="o">=</span><span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pidof<span class="w"> </span>appcontrol-agent<span class="k">)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Container UID</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>backend<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].spec.securityContext.runAsUser}&#39;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="c1"># Expect: 65532 or similar non-zero</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1"># Agent user (on host)</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>ps<span class="w"> </span>-o<span class="w"> </span><span class="nv">user</span><span class="o">=</span><span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pidof<span class="w"> </span>appcontrol-agent<span class="k">)</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Non-root verified for backend, gateway, frontend.</strong></li>
@@ -3142,20 +3261,20 @@
 <h3 id="postgresql-sslrequire-scram-sha-256-auth">PostgreSQL: <code>ssl=require</code>, scram-sha-256 auth<a class="headerlink" href="#postgresql-sslrequire-scram-sha-256-auth" title="Permanent link">&para;</a></h3>
 <p><strong>Rationale.</strong> Plaintext SQL on a public network leaks every query (and the JWT in some). SCRAM-SHA-256 is the strongest standard PostgreSQL auth mechanism.</p>
 <p><strong>Set.</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># pg_hba.conf
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>hostssl appcontrol appcontrol 10.0.0.0/16 scram-sha-256
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a># postgresql.conf
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>password_encryption = scram-sha-256
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>ssl = on
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># pg_hba.conf
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>hostssl appcontrol appcontrol 10.0.0.0/16 scram-sha-256
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a># postgresql.conf
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>password_encryption = scram-sha-256
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>ssl = on
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a># In DATABASE_URL
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>postgres://appcontrol:PASSWORD@db.internal:5432/appcontrol?sslmode=require
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># In DATABASE_URL
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>postgres://appcontrol:PASSWORD@db.internal:5432/appcontrol?sslmode=require
 </span></code></pre></div>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SHOW ssl; SHOW password_encryption;&quot;</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># ssl                       | on</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="c1"># password_encryption       | scram-sha-256</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>psql<span class="w"> </span><span class="nv">$DATABASE_URL</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SHOW ssl; SHOW password_encryption;&quot;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1"># ssl                       | on</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="c1"># password_encryption       | scram-sha-256</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>PostgreSQL TLS + SCRAM enabled.</strong></li>
@@ -3164,17 +3283,17 @@
 <p><strong>Rationale.</strong> Standard infrastructure hygiene. Mandatory Access Control limits the blast radius of any process compromise.</p>
 <p><strong>Set.</strong> Distribution-dependent. RHEL: <code>setenforce 1</code>; Ubuntu: <code>aa-status</code> enforcing on <code>appcontrol-agent</code>. Apply security errata weekly.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># RHEL</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>getenforce
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="c1"># Expect: Enforcing</span>
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># Ubuntu</span>
-</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>sudo<span class="w"> </span>aa-status<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-3
-</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="c1"># Expect: profiles loaded</span>
-</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
-</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="c1"># Patches</span>
-</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>updateinfo<span class="w"> </span>summary<span class="w"> </span>security<span class="w">  </span><span class="c1"># RHEL</span>
-</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>sudo<span class="w"> </span>unattended-upgrade<span class="w"> </span>--dry-run<span class="w">     </span><span class="c1"># Ubuntu</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># RHEL</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>getenforce
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="c1"># Expect: Enforcing</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="c1"># Ubuntu</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>sudo<span class="w"> </span>aa-status<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-3
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># Expect: profiles loaded</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="c1"># Patches</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>updateinfo<span class="w"> </span>summary<span class="w"> </span>security<span class="w">  </span><span class="c1"># RHEL</span>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>sudo<span class="w"> </span>unattended-upgrade<span class="w"> </span>--dry-run<span class="w">     </span><span class="c1"># Ubuntu</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>MAC enforcing; security patches current.</strong></li>
@@ -3182,8 +3301,8 @@
 <h3 id="no-debug-toolchain-on-production-hosts">No debug toolchain on production hosts<a class="headerlink" href="#no-debug-toolchain-on-production-hosts" title="Permanent link">&para;</a></h3>
 <p><strong>Rationale.</strong> Compilers, package managers, and debugging tools are the first thing an intruder reaches for. Strip them from production images.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Inside the backend container</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;which gcc gdb strace tcpdump apt yum 2&gt;&amp;1&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;not found&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Inside the backend container</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;which gcc gdb strace tcpdump apt yum 2&gt;&amp;1&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;not found&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Debug tooling absent from production images.</strong></li>
@@ -3192,10 +3311,10 @@
 <h2 id="application-layer">Application-layer<a class="headerlink" href="#application-layer" title="Permanent link">&para;</a></h2>
 <h3 id="saml_want_assertions_signedtrue"><code>SAML_WANT_ASSERTIONS_SIGNED=true</code><a class="headerlink" href="#saml_want_assertions_signedtrue" title="Permanent link">&para;</a></h3>
 <p><strong>Rationale.</strong> Unsigned SAML assertions can be tampered with. Without signature verification, an attacker who can MITM the assertion can impersonate any user.</p>
-<p><strong>Set.</strong> This is the default in production; verify it is not overridden.</p>
+<p><strong>Set.</strong> Configure the pinned signing certificate and exact <code>SAML_IDP_ENTITY_ID</code>. Use <code>SAML_WANT_ASSERTIONS_SIGNED=true</code> to require a directly signed Assertion. Setting <code>false</code> permits a verified signed Response covering the Assertion; it never accepts unsigned claims. Check audience, ACS URL and IdP clock synchronization in the qualification environment.</p>
 <p><strong>Verify.</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>SAML_WANT_ASSERTIONS_SIGNED
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1"># SAML_WANT_ASSERTIONS_SIGNED=true</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>appcontrol<span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>SAML_WANT_ASSERTIONS_SIGNED
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="c1"># SAML_WANT_ASSERTIONS_SIGNED=true</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Signed assertions enforced.</strong></li>
@@ -3235,60 +3354,64 @@
 </tbody>
 </table>
 <p><strong>Verify.</strong></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">settings</span><span class="o">-&gt;</span><span class="s1">&#39;approvals&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">approvals</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">settings</span><span class="o">-&gt;</span><span class="s1">&#39;approvals&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">approvals</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">applications</span><span class="p">;</span>
 </span></code></pre></div>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Approval policy configured for production apps.</strong></li>
 </ul>
-<h3 id="break-glass-accounts-pre-provisioned">Break-glass accounts pre-provisioned<a class="headerlink" href="#break-glass-accounts-pre-provisioned" title="Permanent link">&para;</a></h3>
-<p><strong>Rationale.</strong> When OIDC is down or all tokens have expired, you still need a way in. Pre-provisioned break-glass accounts with passwords sealed in an external vault meet this need.</p>
-<p><strong>Set.</strong> See <a href="../SECURITY_ARCHITECTURE/">Security Architecture §10</a>.</p>
-<p><strong>Verify.</strong></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">is_active</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">break_glass_accounts</span><span class="p">;</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="c1">-- Expect: at least 2 active accounts</span>
-</span></code></pre></div>
+<h3 id="emergency-access-prepared-and-verified">Emergency access prepared and verified<a class="headerlink" href="#emergency-access-prepared-and-verified" title="Permanent link">&para;</a></h3>
+<p>For password access during an IdP outage, pre-provision active local admin
+accounts and explicitly list their UUIDs in <code>AUTH_LOCAL_EMERGENCY_USER_IDS</code> when
+using <code>sso_only</code>. Verify this path before changing the login mode.</p>
+<p>The separate <code>/break-glass/activate</code> endpoint records an audited emergency
+session. Its current response is session metadata and does not issue a login
+JWT or bypass application permissions. V084 disables legacy XOR/base64
+credentials; an authenticated administrator must recreate each affected
+username with a new password. New credentials use bcrypt at cost 12, require
+12 characters and reject more than 72 UTF-8 bytes. Session termination appends
+a separate record; the original activation remains intact.</p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Break-glass procedure tested annually.</strong></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Emergency login and incident recording tested with fictitious credentials.</strong></li>
 </ul>
 <hr />
 <h2 id="verification-summary-script">Verification summary script<a class="headerlink" href="#verification-summary-script" title="Permanent link">&para;</a></h2>
 <p>Run this against your production install at any time:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="ch">#!/usr/bin/env bash</span>
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="c1"># scripts/hardening-check.sh</span>
-</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="nb">set</span><span class="w"> </span>-e
-</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="nv">NS</span><span class="o">=</span><span class="si">${</span><span class="nv">NAMESPACE</span><span class="k">:-</span><span class="nv">appcontrol</span><span class="si">}</span>
-</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
-</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== JWT_SECRET length&quot;</span>
-</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="nv">LEN</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>appcontrol-jwt<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.jwt-secret}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-c<span class="k">)</span>
-</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="o">[[</span><span class="w"> </span><span class="nv">$LEN</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (</span><span class="nv">$LEN</span><span class="s2"> bytes)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL (</span><span class="nv">$LEN</span><span class="s2"> bytes)&quot;</span>
-</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>
-</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== APP_ENV&quot;</span>
-</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="nv">ENV</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>APP_ENV<span class="k">)</span>
-</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ENV</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;production&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL (got &#39;</span><span class="nv">$ENV</span><span class="s2">&#39;)&quot;</span>
-</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>
-</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== CORS_ORIGINS&quot;</span>
-</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a><span class="nv">CORS</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>CORS_ORIGINS<span class="k">)</span>
-</span><span id="__span-28-16"><a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a><span class="o">[[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CORS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (</span><span class="nv">$CORS</span><span class="s2">)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
-</span><span id="__span-28-17"><a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a>
-</span><span id="__span-28-18"><a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== TLS on gateway&quot;</span>
-</span><span id="__span-28-19"><a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a><span class="nv">TLS</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-gateway<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>TLS_ENABLED<span class="k">)</span>
-</span><span id="__span-28-20"><a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TLS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
-</span><span id="__span-28-21"><a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a>
-</span><span id="__span-28-22"><a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== NetworkPolicies&quot;</span>
-</span><span id="__span-28-23"><a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a><span class="nv">COUNT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>networkpolicy<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
-</span><span id="__span-28-24"><a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a><span class="o">[[</span><span class="w"> </span><span class="nv">$COUNT</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (</span><span class="nv">$COUNT</span><span class="s2"> policies)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL (</span><span class="nv">$COUNT</span><span class="s2"> policies)&quot;</span>
-</span><span id="__span-28-25"><a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a>
-</span><span id="__span-28-26"><a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== Backend non-root&quot;</span>
-</span><span id="__span-28-27"><a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a><span class="nv">UID</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>backend<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].spec.securityContext.runAsUser}&#39;</span><span class="k">)</span>
-</span><span id="__span-28-28"><a id="__codelineno-28-28" name="__codelineno-28-28" href="#__codelineno-28-28"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UID</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UID</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (UID=</span><span class="nv">$UID</span><span class="s2">)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
-</span><span id="__span-28-29"><a id="__codelineno-28-29" name="__codelineno-28-29" href="#__codelineno-28-29"></a>
-</span><span id="__span-28-30"><a id="__codelineno-28-30" name="__codelineno-28-30" href="#__codelineno-28-30"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== Retention&quot;</span>
-</span><span id="__span-28-31"><a id="__codelineno-28-31" name="__codelineno-28-31" href="#__codelineno-28-31"></a><span class="nv">RET</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>RETENTION_ACTION_LOG_DAYS<span class="k">)</span>
-</span><span id="__span-28-32"><a id="__codelineno-28-32" name="__codelineno-28-32" href="#__codelineno-28-32"></a><span class="o">[[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RET</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RET</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (retention=</span><span class="nv">$RET</span><span class="s2"> days)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
-</span><span id="__span-28-33"><a id="__codelineno-28-33" name="__codelineno-28-33" href="#__codelineno-28-33"></a>
-</span><span id="__span-28-34"><a id="__codelineno-28-34" name="__codelineno-28-34" href="#__codelineno-28-34"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== JSON logs&quot;</span>
-</span><span id="__span-28-35"><a id="__codelineno-28-35" name="__codelineno-28-35" href="#__codelineno-28-35"></a><span class="nv">FMT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>LOG_FORMAT<span class="k">)</span>
-</span><span id="__span-28-36"><a id="__codelineno-28-36" name="__codelineno-28-36" href="#__codelineno-28-36"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FMT</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;json&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="ch">#!/usr/bin/env bash</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="c1"># scripts/hardening-check.sh</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="nb">set</span><span class="w"> </span>-e
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="nv">NS</span><span class="o">=</span><span class="si">${</span><span class="nv">NAMESPACE</span><span class="k">:-</span><span class="nv">appcontrol</span><span class="si">}</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== JWT_SECRET length&quot;</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="nv">LEN</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>appcontrol-jwt<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.jwt-secret}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-c<span class="k">)</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="o">[[</span><span class="w"> </span><span class="nv">$LEN</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (</span><span class="nv">$LEN</span><span class="s2"> bytes)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL (</span><span class="nv">$LEN</span><span class="s2"> bytes)&quot;</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== APP_ENV&quot;</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="nv">ENV</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>APP_ENV<span class="k">)</span>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ENV</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;production&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL (got &#39;</span><span class="nv">$ENV</span><span class="s2">&#39;)&quot;</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== CORS_ORIGINS&quot;</span>
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="nv">CORS</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>CORS_ORIGINS<span class="k">)</span>
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="o">[[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CORS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (</span><span class="nv">$CORS</span><span class="s2">)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== TLS on gateway&quot;</span>
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="nv">TLS</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-gateway<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>TLS_ENABLED<span class="k">)</span>
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TLS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== NetworkPolicies&quot;</span>
+</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a><span class="nv">COUNT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>networkpolicy<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a><span class="o">[[</span><span class="w"> </span><span class="nv">$COUNT</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (</span><span class="nv">$COUNT</span><span class="s2"> policies)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL (</span><span class="nv">$COUNT</span><span class="s2"> policies)&quot;</span>
+</span><span id="__span-26-25"><a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>
+</span><span id="__span-26-26"><a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== Backend non-root&quot;</span>
+</span><span id="__span-26-27"><a id="__codelineno-26-27" name="__codelineno-26-27" href="#__codelineno-26-27"></a><span class="nv">UID</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/component<span class="o">=</span>backend<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].spec.securityContext.runAsUser}&#39;</span><span class="k">)</span>
+</span><span id="__span-26-28"><a id="__codelineno-26-28" name="__codelineno-26-28" href="#__codelineno-26-28"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UID</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UID</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (UID=</span><span class="nv">$UID</span><span class="s2">)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
+</span><span id="__span-26-29"><a id="__codelineno-26-29" name="__codelineno-26-29" href="#__codelineno-26-29"></a>
+</span><span id="__span-26-30"><a id="__codelineno-26-30" name="__codelineno-26-30" href="#__codelineno-26-30"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== Retention&quot;</span>
+</span><span id="__span-26-31"><a id="__codelineno-26-31" name="__codelineno-26-31" href="#__codelineno-26-31"></a><span class="nv">RET</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>RETENTION_ACTION_LOG_DAYS<span class="k">)</span>
+</span><span id="__span-26-32"><a id="__codelineno-26-32" name="__codelineno-26-32" href="#__codelineno-26-32"></a><span class="o">[[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RET</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RET</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK (retention=</span><span class="nv">$RET</span><span class="s2"> days)&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
+</span><span id="__span-26-33"><a id="__codelineno-26-33" name="__codelineno-26-33" href="#__codelineno-26-33"></a>
+</span><span id="__span-26-34"><a id="__codelineno-26-34" name="__codelineno-26-34" href="#__codelineno-26-34"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== JSON logs&quot;</span>
+</span><span id="__span-26-35"><a id="__codelineno-26-35" name="__codelineno-26-35" href="#__codelineno-26-35"></a><span class="nv">FMT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NS</span><span class="w"> </span>deploy/appcontrol-backend<span class="w"> </span>--<span class="w"> </span>printenv<span class="w"> </span>LOG_FORMAT<span class="k">)</span>
+</span><span id="__span-26-36"><a id="__codelineno-26-36" name="__codelineno-26-36" href="#__codelineno-26-36"></a><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FMT</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;json&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
 </span></code></pre></div>
 <p>Schedule this in your CI / CronJob to alert on drift.</p>
 <hr />
@@ -3321,7 +3444,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-05-13T14:39:00+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-05-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-19T23:01:42+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-19</span>
   </span>
 
     
@@ -3368,7 +3491,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../SECURITY_ARCHITECTURE/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Security architecture">
+          <a href="../IAM/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Identity and access">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3378,7 +3501,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Security architecture
+                Identity and access
               </div>
             </div>
           </a>

@@ -914,6 +914,8 @@
       
         
       
+        
+      
     
     
       
@@ -961,6 +963,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1224,6 +1247,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1272,6 +1299,27 @@
   
   <span class="md-ellipsis">
     Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
   </span>
   
 
@@ -1398,6 +1446,27 @@
   
   <span class="md-ellipsis">
     Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
   </span>
   
 
@@ -1948,6 +2017,8 @@
       
         
       
+        
+      
     
     
       
@@ -1995,6 +2066,27 @@
   
   <span class="md-ellipsis">
     Security architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
   </span>
   
 
@@ -2103,6 +2195,8 @@
       
         
       
+        
+      
     
     
       
@@ -2150,6 +2244,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -3136,28 +3251,32 @@
 <li><strong>Component config snapshot</strong> — last <code>UpdateConfig</code> from the backend, kept in memory.</li>
 <li><strong>Local scheduler</strong> — runs checks autonomously based on the snapshot; does not poll the backend.</li>
 <li><strong>Delta tracking</strong> — for each component, the last <code>exit_code</code> sent. A new <code>CheckResult</code> is only sent when the exit code changes.</li>
-<li><strong>Offline buffer</strong> — sled DB at <code>/var/lib/appcontrol/buffer-{agent-id}</code>, ≤ 100 MB, FIFO rotation.</li>
+<li><strong>Durable outbox</strong> — redb at <code>/var/lib/appcontrol/buffer-{agent-id}</code>; a default 100 MiB serialized-entry budget protects pending command results from telemetry eviction. Database file overhead is additional.</li>
 </ul>
 <h3 id="reconnect-sequence">Reconnect sequence<a class="headerlink" href="#reconnect-sequence" title="Permanent link">&para;</a></h3>
 <ol>
 <li>WebSocket close detected.</li>
 <li>Agent enters reconnect loop:</li>
 <li>Try <code>gateway.urls[0]</code>. If failure, wait <code>reconnect_interval_secs</code> and try <code>[1]</code>, etc.</li>
-<li>Exponential backoff on repeated failure: 1, 2, 4, 8, 16, 32, 60 (max) seconds.</li>
+<li>Exponential backoff on repeated failure: 1, 2, 4, 8, 10 (max) seconds.</li>
 <li>On successful connect, agent sends <code>Register { agent_id, hostname, ip_addresses, labels, version }</code>.</li>
-<li>Agent replays the offline buffer in chronological order before resuming real-time deltas.</li>
+<li>Agent replays persisted entries in chronological order while processing incoming messages. Unacknowledged command results retry every 15 seconds and on reconnect. This retransmits results; it never re-executes their commands.</li>
 </ol>
 <h3 id="results-and-acks">Results and ACKs<a class="headerlink" href="#results-and-acks" title="Permanent link">&para;</a></h3>
-<p>Command results are correlated by request UUID; real backend/gateway/agent tests verify matching results and ACKs. This is a transport/persistence proof, not an exactly-once guarantee for an external effect or a durable reconstruction-resume mechanism. Inspect the recorded command and provider job before repeating an ambiguous action. See the <a href="../demo-rebuild/media/output/validation/reconstruction-v2/executor-e2e/summary.json">process and ACK evidence</a> and improvement-plan R02/R03.</p>
+<p>Command results are correlated by request UUID and sequence. They are persisted on the agent before sending and retained until a matching backend ACK. The backend acknowledges after the command result is committed to the database. Repeated identical results are acknowledged without changing the completion timestamp or broadcasting a second completion event. The persisted command record supplies the agent identity when an in-memory request mapping was lost. An unknown command or database error does not receive a persistence ACK.</p>
+<p>New cross-site probes also record their dispatch before sending. Their results commit before the waiting callback is notified, and a late result can still be acknowledged after that callback expires or the backend restarts. Older probes dispatched without a command record use only bounded, short-lived in-memory compatibility receipts; those receipts do not survive a backend restart. An unknown result is never acknowledged as durably persisted evidence.</p>
+<p>These are delivery and persistence controls, not an exactly-once guarantee for an external effect or automatic reconstruction resumption. Reconcile an ambiguous command with the external provider before repeating it. The gateway keeps a bounded in-memory replay buffer; process loss or overflow can discard telemetry. Agent command results can be replayed until acknowledged.</p>
 <h3 id="buffer-on-disk-during-disconnect">Buffer-on-disk during disconnect<a class="headerlink" href="#buffer-on-disk-during-disconnect" title="Permanent link">&para;</a></h3>
 <p>While disconnected:</p>
 <ul>
 <li>Agent continues running checks.</li>
-<li>Each <code>CheckResult</code> is written to the local sled DB with a nanosecond-precision timestamp key.</li>
-<li>Buffer is FIFO bounded at 100 MB by default (override with the <code>BUFFER_MAX_BYTES</code> environment variable on the agent process; value in bytes, <code>0</code> or unparseable value falls back to the default). When the cap is exceeded, the oldest entries are evicted in order until the buffer fits again.</li>
-<li>On reconnect, the buffer is drained in order, then the agent resumes real-time mode.</li>
+<li>Checks and command results are written to the local redb outbox before transmission, including while connected.</li>
+<li><code>BUFFER_MAX_BYTES</code> bounds serialized entries and keys, excluding redb file overhead. Its default is 100 MiB; invalid or zero values use that default.</li>
+<li>Telemetry is evicted FIFO when necessary. Unacknowledged command results are protected. If they alone exhaust the budget, or storage fails, new evidence is refused with a local error.</li>
+<li>Entries are read progressively. Telemetry is removed only after a successful socket write; command results only after a matching backend ACK. Failed socket writes leave their entries available to retry.</li>
+<li>Live terminal output, output chunks and log streaming use a bounded memory queue and are not replayable evidence.</li>
 </ul>
-<p>This means a 1 h disconnect on a 50-component agent at 30 s check interval produces ≈ 6000 buffered events × 200 bytes = ~1.2 MB — well under the buffer cap.</p>
+<p>Capacity must include actual serialized payload sizes and the expected outage length. Upgrade the backend before agents so it can acknowledge replayed command results from their database record. Retained data does not prove that a managed process or external job is currently healthy.</p>
 <hr />
 <h2 id="websocket-affinity">WebSocket affinity<a class="headerlink" href="#websocket-affinity" title="Permanent link">&para;</a></h2>
 <p>The backend exposes two WebSocket endpoints:</p>
@@ -3390,7 +3509,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-09-12T15:22:22+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-09-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-18T23:58:52+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-18</span>
   </span>
 
     

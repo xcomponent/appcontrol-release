@@ -16,7 +16,7 @@
         <link rel="prev" href="../LIMITS/">
       
       
-        <link rel="next" href="../HARDENING/">
+        <link rel="next" href="../IAM/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -914,6 +914,8 @@
       
         
       
+        
+      
     
     
       
@@ -961,6 +963,27 @@
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery (FR)
   </span>
   
 
@@ -1222,6 +1245,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1269,6 +1296,27 @@
   
   <span class="md-ellipsis">
     Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NATIVE_AGENT_DISCOVERY/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Native agent discovery (FR)
   </span>
   
 
@@ -1395,6 +1443,27 @@
   
   <span class="md-ellipsis">
     Knowledge Engine connector (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CATALOG-LIFECYCLE.fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Component lifecycle protocol (FR)
   </span>
   
 
@@ -1547,6 +1616,8 @@
   
     
     
+      
+        
       
         
       
@@ -1901,9 +1972,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_7" class="md-nav__link">
+  <a href="#implemented-access-paths" class="md-nav__link">
     <span class="md-ellipsis">
-      Architecture
+      Implemented access paths
     </span>
   </a>
   
@@ -1925,7 +1996,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_8" class="md-nav__link">
+  <a href="#architecture_7" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
     </span>
@@ -1949,7 +2020,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_9" class="md-nav__link">
+  <a href="#architecture_8" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
     </span>
@@ -1973,7 +2044,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_10" class="md-nav__link">
+  <a href="#architecture_9" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
     </span>
@@ -2047,6 +2118,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and access
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -2151,6 +2243,8 @@
       
         
       
+        
+      
     
     
       
@@ -2198,6 +2292,27 @@
   
   <span class="md-ellipsis">
     Swagger UI and map API walkthrough (FR)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGENTIC_DISCOVERY_API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agentic discovery API
   </span>
   
 
@@ -2783,9 +2898,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_7" class="md-nav__link">
+  <a href="#implemented-access-paths" class="md-nav__link">
     <span class="md-ellipsis">
-      Architecture
+      Implemented access paths
     </span>
   </a>
   
@@ -2807,7 +2922,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_8" class="md-nav__link">
+  <a href="#architecture_7" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
     </span>
@@ -2831,7 +2946,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_9" class="md-nav__link">
+  <a href="#architecture_8" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
     </span>
@@ -2855,7 +2970,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture_10" class="md-nav__link">
+  <a href="#architecture_9" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
     </span>
@@ -3320,170 +3435,151 @@
 <h2 id="10-break-glass-emergency-access">10. Break-Glass Emergency Access<a class="headerlink" href="#10-break-glass-emergency-access" title="Permanent link">&para;</a></h2>
 <p><strong>Threat addressed:</strong> T8 (Emergency Lockout)
 <strong>Inspired by:</strong> ServiceNow (Emergency Change + ECAB), Banking industry (Shamir secret sharing)</p>
-<h3 id="architecture_7">Architecture<a class="headerlink" href="#architecture_7" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>┌──────────────────────────────────────────────────────────────────┐
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>│                   BREAK-GLASS PROCEDURE                          │
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>│                                                                  │
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>│  Normal Operations:                                              │
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>│  ┌──────────┐    OIDC/SAML    ┌──────────┐                      │
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>│  │ Operator │───────────────►│ Backend  │   Standard auth       │
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>│  └──────────┘                └──────────┘                       │
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>│                                                                  │
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>│  Emergency (OIDC down / all tokens expired):                     │
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>│  ┌──────────┐                ┌──────────┐                        │
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>│  │ On-call  │──break-glass──►│ Backend  │                        │
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>│  │ engineer │  account       │          │                        │
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>│  └──────────┘                └──────────┘                        │
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>│                                                                  │
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>│  Break-Glass Lifecycle:                                          │
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>│  ┌──────────────────────────────────────────────────────────┐    │
-</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>│  │ 1. Pre-provisioned accounts: breakglass-01, breakglass-02│    │
-</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>│  │ 2. Passwords stored in external vault (sealed)           │    │
-</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>│  │ 3. Access request triggers:                              │    │
-</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>│  │    a) Immediate alert to ALL org admins (email+WS)       │    │
-</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>│  │    b) Session timer starts (default: 60 minutes)         │    │
-</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>│  │    c) All actions tagged: { break_glass: true }          │    │
-</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>│  │ 4. Session auto-expires after timeout                    │    │
-</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>│  │ 5. Post-incident:                                        │    │
-</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>│  │    a) Password rotated automatically                     │    │
-</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>│  │    b) Mandatory review of all break-glass actions        │    │
-</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>│  │    c) Incident report generated from action_log          │    │
-</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>│  └──────────────────────────────────────────────────────────┘    │
-</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>│                                                                  │
-</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>│  Database Schema:                                                │
-</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>│  ┌──────────────────────────────────────────────────────────┐    │
-</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>│  │ break_glass_accounts                                      │    │
-</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>│  │   id, username, password_hash, org_id, is_active          │    │
-</span><span id="__span-9-34"><a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>│  │                                                           │    │
-</span><span id="__span-9-35"><a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>│  │ break_glass_sessions (APPEND-ONLY)                        │    │
-</span><span id="__span-9-36"><a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a>│  │   id, account_id, activated_by_ip, reason,                │    │
-</span><span id="__span-9-37"><a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>│  │   started_at, expires_at, ended_at, actions_taken         │    │
-</span><span id="__span-9-38"><a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a>│  └──────────────────────────────────────────────────────────┘    │
-</span><span id="__span-9-39"><a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a>└──────────────────────────────────────────────────────────────────┘
-</span></code></pre></div>
+<h3 id="implemented-access-paths">Implemented access paths<a class="headerlink" href="#implemented-access-paths" title="Permanent link">&para;</a></h3>
+<p>Login policy is explicit: <code>AUTH_MODE=hybrid</code> permits local and configured SSO;
+<code>sso_only</code> restricts passwords to explicitly listed active local admin UUIDs in
+<code>AUTH_LOCAL_EMERGENCY_USER_IDS</code>; <code>local_only</code> disables SSO. <code>APP_ENV=production</code>
+does not select this policy. MFA is enforced and qualified at the IdP;
+AppControl does not attest MFA simply because SSO is configured.</p>
+<p>The separate break-glass endpoint verifies a dedicated bcrypt credential and
+atomically appends an audit event and a time-limited incident session. It returns
+session metadata, not a login token. The current implementation does not promise
+automatic password rotation, email delivery to every administrator, or elevation
+of a caller's application permissions. Prepare the permitted local login path
+before an IdP outage.</p>
+<p>New emergency passwords use bcrypt cost 12, require at least 12 characters and
+at most 72 UTF-8 bytes, and run hashing/verification outside the async request
+worker. Legacy XOR/base64 hashes never authenticate. V084 disables them; an
+authorized administrator can recreate the same inactive legacy username with a
+new password while preserving account identity and historical evidence.</p>
+<p>Activations in <code>break_glass_sessions</code> remain append-only. Early termination is
+recorded in <code>break_glass_session_ends</code> with session, organization, ending actor
+and timestamp. Audit failure rolls back activation and termination writes.</p>
+<p>See the <a href="https://docs.appcontrol.io/IAM/">IAM guide</a> for exact provider trust, account revocation,
+upgrade controls and qualification boundaries.</p>
 <hr />
 <h2 id="11-credential-vault-integration">11. Credential Vault Integration<a class="headerlink" href="#11-credential-vault-integration" title="Permanent link">&para;</a></h2>
 <p><strong>Threat addressed:</strong> T11 (Credential Exposure in Commands)
 <strong>Inspired by:</strong> Ansible ("Use but don't See"), BMC BladeLogic (AES-256-GCM write-only vault)</p>
-<h3 id="architecture_8">Architecture<a class="headerlink" href="#architecture_8" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>┌──────────────────────────────────────────────────────────────────┐
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>│              CREDENTIAL VAULT INTEGRATION                        │
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│                                                                  │
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│  Principle: &quot;Use but don&#39;t See&quot;                                  │
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│  Operators can use credentials in commands without ever seeing   │
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│  the plaintext secret value.                                     │
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>│                                                                  │
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>│  ┌──────────┐   ┌──────────┐   ┌───────────┐   ┌─────────────┐ │
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>│  │ Frontend │   │ Backend  │   │   Agent   │   │ Vault/KMS   │ │
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>│  │          │   │          │   │           │   │             │ │
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>│  │ $(secret │   │ resolves │   │ fetches   │   │ stores      │ │
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>│  │  :name)  │──►│ variable │──►│ from vault│──►│ encrypted   │ │
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>│  │ in UI    │   │ reference│   │ at runtime│   │ secrets     │ │
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>│  └──────────┘   └──────────┘   └───────────┘   └─────────────┘ │
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>│                                                                  │
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>│  Flow:                                                           │
-</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>│  1. Admin creates secret variable: name=&quot;ORACLE_PWD&quot;, value=*** │
-</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>│  2. Command references it: check_cmd=&quot;sqlplus user/$(secret:    │
-</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>│     ORACLE_PWD)@PROD&quot;                                            │
-</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>│  3. Backend sends command with $(secret:ORACLE_PWD) placeholder  │
-</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>│  4. Agent resolves placeholder:                                  │
-</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>│     a) From local env var (APPCONTROL_SECRET_ORACLE_PWD)         │
-</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>│     b) From Vault (vault://secret/data/appcontrol/ORACLE_PWD)   │
-</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>│     c) From built-in encrypted store (fallback)                  │
-</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>│  5. Secret is substituted in memory, never written to disk/logs  │
-</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>│  6. After execution, memory is zeroed                            │
-</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>│                                                                  │
-</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>│  Vault Backends:                                                 │
-</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>│  ┌────────────────────────────────────────────────────────────┐  │
-</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>│  │ Provider     │ Auth Method       │ Secret Path             │  │
-</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>│  ├──────────────┼───────────────────┼─────────────────────────┤  │
-</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>│  │ HashiCorp    │ AppRole / TLS     │ secret/data/appcontrol/ │  │
-</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>│  │ AWS KMS      │ IAM Role          │ /appcontrol/secrets/    │  │
-</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>│  │ Azure KV     │ Managed Identity  │ appcontrol-vault/       │  │
-</span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>│  │ Built-in     │ Agent mTLS cert   │ Local AES-256 store     │  │
-</span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>│  └──────────────┴───────────────────┴─────────────────────────┘  │
-</span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>└──────────────────────────────────────────────────────────────────┘
+<h3 id="architecture_7">Architecture<a class="headerlink" href="#architecture_7" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>┌──────────────────────────────────────────────────────────────────┐
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>│              CREDENTIAL VAULT INTEGRATION                        │
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>│                                                                  │
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>│  Principle: &quot;Use but don&#39;t See&quot;                                  │
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>│  Operators can use credentials in commands without ever seeing   │
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>│  the plaintext secret value.                                     │
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>│                                                                  │
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>│  ┌──────────┐   ┌──────────┐   ┌───────────┐   ┌─────────────┐ │
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>│  │ Frontend │   │ Backend  │   │   Agent   │   │ Vault/KMS   │ │
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>│  │          │   │          │   │           │   │             │ │
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>│  │ $(secret │   │ resolves │   │ fetches   │   │ stores      │ │
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>│  │  :name)  │──►│ variable │──►│ from vault│──►│ encrypted   │ │
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>│  │ in UI    │   │ reference│   │ at runtime│   │ secrets     │ │
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>│  └──────────┘   └──────────┘   └───────────┘   └─────────────┘ │
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>│                                                                  │
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>│  Flow:                                                           │
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>│  1. Admin creates secret variable: name=&quot;ORACLE_PWD&quot;, value=*** │
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>│  2. Command references it: check_cmd=&quot;sqlplus user/$(secret:    │
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>│     ORACLE_PWD)@PROD&quot;                                            │
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>│  3. Backend sends command with $(secret:ORACLE_PWD) placeholder  │
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>│  4. Agent resolves placeholder:                                  │
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>│     a) From local env var (APPCONTROL_SECRET_ORACLE_PWD)         │
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>│     b) From Vault (vault://secret/data/appcontrol/ORACLE_PWD)   │
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>│     c) From built-in encrypted store (fallback)                  │
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>│  5. Secret is substituted in memory, never written to disk/logs  │
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>│  6. After execution, memory is zeroed                            │
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>│                                                                  │
+</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>│  Vault Backends:                                                 │
+</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>│  ┌────────────────────────────────────────────────────────────┐  │
+</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>│  │ Provider     │ Auth Method       │ Secret Path             │  │
+</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>│  ├──────────────┼───────────────────┼─────────────────────────┤  │
+</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>│  │ HashiCorp    │ AppRole / TLS     │ secret/data/appcontrol/ │  │
+</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>│  │ AWS KMS      │ IAM Role          │ /appcontrol/secrets/    │  │
+</span><span id="__span-9-34"><a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>│  │ Azure KV     │ Managed Identity  │ appcontrol-vault/       │  │
+</span><span id="__span-9-35"><a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>│  │ Built-in     │ Agent mTLS cert   │ Local AES-256 store     │  │
+</span><span id="__span-9-36"><a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a>│  └──────────────┴───────────────────┴─────────────────────────┘  │
+</span><span id="__span-9-37"><a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>└──────────────────────────────────────────────────────────────────┘
 </span></code></pre></div>
 <hr />
 <h2 id="12-centralized-agent-update">12. Centralized Agent Update<a class="headerlink" href="#12-centralized-agent-update" title="Permanent link">&para;</a></h2>
 <p><strong>Threat addressed:</strong> T10 (Stale Agent Binaries)
 <strong>Inspired by:</strong> Broadcom Automic (Centralized Agent Upgrade), IBM BigFix (relay-based distribution)</p>
-<h3 id="architecture_9">Architecture<a class="headerlink" href="#architecture_9" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>┌──────────────────────────────────────────────────────────────────┐
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>│                 CENTRALIZED AGENT UPDATE                         │
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>│                                                                  │
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>│  Admin                  Backend               Agent              │
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>│    │                      │                     │                │
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>│    │──POST /admin/agent-  │                     │                │
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>│    │  update { version,   │                     │                │
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>│    │  binary_url, sha256 }│                     │                │
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>│    │                      │                     │                │
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>│    │                      │──UpdateAgent {      │                │
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>│    │                      │  binary_url,        │                │
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>│    │                      │  checksum_sha256,   │                │
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>│    │                      │  version }──────────►│                │
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>│    │                      │                     │                │
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>│    │                      │                     │──download      │
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>│    │                      │                     │  binary        │
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>│    │                      │                     │──verify        │
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>│    │                      │                     │  SHA-256       │
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>│    │                      │                     │──atomic        │
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>│    │                      │                     │  replace       │
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>│    │                      │                     │──self-restart  │
-</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>│    │                      │                     │                │
-</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>│    │                      │◄──Register {        │                │
-</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>│    │                      │   version: &quot;new&quot; }──│                │
-</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>│    │                      │                     │                │
-</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>│    │                      │  if health fails:   │                │
-</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>│    │                      │                     │──rollback to   │
-</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>│    │                      │                     │  previous      │
-</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>│    │                      │                     │  binary        │
-</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>│    │                      │                     │                │
-</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>│  Dashboard shows:                                                │
-</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>│  ┌─────────────────────────────────────────────────────────┐     │
-</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a>│  │ Agent         │ Current │ Target  │ Status              │     │
-</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>│  ├───────────────┼─────────┼─────────┼─────────────────────┤     │
-</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>│  │ prd-oracle-01 │ 0.2.0   │ 0.3.0   │ ✓ Updated          │     │
-</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>│  │ prd-web-01    │ 0.2.0   │ 0.3.0   │ ↻ Downloading      │     │
-</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a>│  │ prd-batch-01  │ 0.1.0   │ 0.3.0   │ ⚠ Rollback (fail) │     │
-</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a>│  │ dr-oracle-01  │ 0.2.0   │ 0.3.0   │ ○ Pending          │     │
-</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a>│  └───────────────┴─────────┴─────────┴─────────────────────┘     │
-</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a>└──────────────────────────────────────────────────────────────────┘
+<h3 id="architecture_8">Architecture<a class="headerlink" href="#architecture_8" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>┌──────────────────────────────────────────────────────────────────┐
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>│                 CENTRALIZED AGENT UPDATE                         │
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│                                                                  │
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│  Admin                  Backend               Agent              │
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│    │                      │                     │                │
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│    │──POST /admin/agent-  │                     │                │
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>│    │  update { version,   │                     │                │
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>│    │  binary_url, sha256 }│                     │                │
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>│    │                      │                     │                │
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>│    │                      │──UpdateAgent {      │                │
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>│    │                      │  binary_url,        │                │
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>│    │                      │  checksum_sha256,   │                │
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>│    │                      │  version }──────────►│                │
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>│    │                      │                     │                │
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>│    │                      │                     │──download      │
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>│    │                      │                     │  binary        │
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>│    │                      │                     │──verify        │
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>│    │                      │                     │  SHA-256       │
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>│    │                      │                     │──atomic        │
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>│    │                      │                     │  replace       │
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>│    │                      │                     │──self-restart  │
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>│    │                      │                     │                │
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>│    │                      │◄──Register {        │                │
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>│    │                      │   version: &quot;new&quot; }──│                │
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>│    │                      │                     │                │
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>│    │                      │  if health fails:   │                │
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>│    │                      │                     │──rollback to   │
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>│    │                      │                     │  previous      │
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>│    │                      │                     │  binary        │
+</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>│    │                      │                     │                │
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>│  Dashboard shows:                                                │
+</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>│  ┌─────────────────────────────────────────────────────────┐     │
+</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>│  │ Agent         │ Current │ Target  │ Status              │     │
+</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>│  ├───────────────┼─────────┼─────────┼─────────────────────┤     │
+</span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>│  │ prd-oracle-01 │ 0.2.0   │ 0.3.0   │ ✓ Updated          │     │
+</span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>│  │ prd-web-01    │ 0.2.0   │ 0.3.0   │ ↻ Downloading      │     │
+</span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>│  │ prd-batch-01  │ 0.1.0   │ 0.3.0   │ ⚠ Rollback (fail) │     │
+</span><span id="__span-10-38"><a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a>│  │ dr-oracle-01  │ 0.2.0   │ 0.3.0   │ ○ Pending          │     │
+</span><span id="__span-10-39"><a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>│  └───────────────┴─────────┴─────────┴─────────────────────┘     │
+</span><span id="__span-10-40"><a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>└──────────────────────────────────────────────────────────────────┘
 </span></code></pre></div>
 <hr />
 <h2 id="13-certificate-lifecycle-management">13. Certificate Lifecycle Management<a class="headerlink" href="#13-certificate-lifecycle-management" title="Permanent link">&para;</a></h2>
 <p><strong>Inspired by:</strong> HashiCorp Consul + Vault PKI (auto-rotation with short TTL)</p>
-<h3 id="architecture_10">Architecture<a class="headerlink" href="#architecture_10" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>┌──────────────────────────────────────────────────────────────────┐
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>│            CERTIFICATE LIFECYCLE MANAGEMENT                      │
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>│                                                                  │
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>│  ┌──────────┐   CSR    ┌──────────┐   Sign    ┌──────────────┐ │
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>│  │  Agent   │─────────►│ Backend  │──────────►│ CA (Vault    │ │
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>│  │          │◄─────────│ /Gateway │◄──────────│  or built-in)│ │
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>│  │          │  New Cert │          │  Signed   │              │ │
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>│  └──────────┘          └──────────┘  Cert     └──────────────┘ │
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>│                                                                  │
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>│  Auto-Rotation Flow:                                             │
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>│  1. Agent checks cert expiry on startup and every 6 hours        │
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>│  2. If cert expires within renewal_before (default: 7 days):     │
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>│     a) Generate new private key + CSR                            │
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>│     b) Send CSR to backend via CertificateRenewal message        │
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>│     c) Backend forwards to CA, receives signed cert              │
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>│     d) Backend sends new cert to agent                           │
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>│     e) Agent atomically replaces cert files                      │
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>│     f) Agent reconnects with new cert                            │
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>│  3. Old cert is kept as fallback until new cert is verified       │
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>│                                                                  │
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>│  Monitoring:                                                     │
-</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>│  ┌────────────────────────────────────────────────────────────┐  │
-</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>│  │ Alert Level    │ Condition                                 │  │
-</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>│  ├────────────────┼───────────────────────────────────────────┤  │
-</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>│  │ INFO           │ Cert renewed successfully                 │  │
-</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>│  │ WARNING        │ Cert expires in &lt; 7 days                  │  │
-</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>│  │ CRITICAL       │ Cert expires in &lt; 24 hours                │  │
-</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>│  │ ALERT          │ Cert expired — agent connection rejected  │  │
-</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>│  └────────────────┴───────────────────────────────────────────┘  │
-</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>└──────────────────────────────────────────────────────────────────┘
+<h3 id="architecture_9">Architecture<a class="headerlink" href="#architecture_9" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>┌──────────────────────────────────────────────────────────────────┐
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>│            CERTIFICATE LIFECYCLE MANAGEMENT                      │
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>│                                                                  │
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>│  ┌──────────┐   CSR    ┌──────────┐   Sign    ┌──────────────┐ │
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>│  │  Agent   │─────────►│ Backend  │──────────►│ CA (Vault    │ │
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>│  │          │◄─────────│ /Gateway │◄──────────│  or built-in)│ │
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>│  │          │  New Cert │          │  Signed   │              │ │
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>│  └──────────┘          └──────────┘  Cert     └──────────────┘ │
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>│                                                                  │
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>│  Auto-Rotation Flow:                                             │
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>│  1. Agent checks cert expiry on startup and every 6 hours        │
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>│  2. If cert expires within renewal_before (default: 7 days):     │
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>│     a) Generate new private key + CSR                            │
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>│     b) Send CSR to backend via CertificateRenewal message        │
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>│     c) Backend forwards to CA, receives signed cert              │
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>│     d) Backend sends new cert to agent                           │
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>│     e) Agent atomically replaces cert files                      │
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>│     f) Agent reconnects with new cert                            │
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>│  3. Old cert is kept as fallback until new cert is verified       │
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>│                                                                  │
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>│  Monitoring:                                                     │
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>│  ┌────────────────────────────────────────────────────────────┐  │
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>│  │ Alert Level    │ Condition                                 │  │
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>│  ├────────────────┼───────────────────────────────────────────┤  │
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>│  │ INFO           │ Cert renewed successfully                 │  │
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>│  │ WARNING        │ Cert expires in &lt; 7 days                  │  │
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>│  │ CRITICAL       │ Cert expires in &lt; 24 hours                │  │
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>│  │ ALERT          │ Cert expired — agent connection rejected  │  │
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>│  └────────────────┴───────────────────────────────────────────┘  │
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>└──────────────────────────────────────────────────────────────────┘
 </span></code></pre></div>
 <hr />
 <h2 id="14-configuration-security">14. Configuration Security<a class="headerlink" href="#14-configuration-security" title="Permanent link">&para;</a></h2>
@@ -3495,30 +3591,30 @@
 <li>Startup validation checks for known-insecure values and logs CRITICAL warnings</li>
 <li>SAML/OIDC secrets follow the same pattern — required when enabled</li>
 </ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>┌──────────────────────────────────────────────────────────────────┐
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>│               STARTUP SECURITY VALIDATION                        │
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>│                                                                  │
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>│  Backend Startup                                                 │
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>│     │                                                            │
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>│     ├─ JWT_SECRET set?                                           │
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>│     │  ├─ NO → FATAL: &quot;JWT_SECRET must be set&quot; → exit(1)        │
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>│     │  └─ YES → contains &quot;dev&quot; or &quot;change&quot; or &quot;secret&quot;?         │
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>│     │           └─ YES → WARN: &quot;Insecure JWT_SECRET detected&quot;   │
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>│     │                                                            │
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>│     ├─ DATABASE_URL set?                                         │
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>│     │  ├─ NO → FATAL: &quot;DATABASE_URL must be set&quot; → exit(1)      │
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>│     │  └─ YES → contains &quot;localhost&quot; and password &quot;appcontrol&quot;?  │
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>│     │           └─ YES → WARN: &quot;Default database credentials&quot;   │
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>│     │                                                            │
-</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>│     ├─ OIDC enabled?                                             │
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>│     │  └─ YES → OIDC_CLIENT_SECRET set? Required.               │
-</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>│     │                                                            │
-</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>│     └─ SAML enabled?                                             │
-</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>│        └─ YES → SAML_CERT_FILE set? Required.                   │
-</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>│                                                                  │
-</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>│  Environment: APP_ENV=production triggers strict mode            │
-</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>│  In strict mode, warnings become fatal errors.                   │
-</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>└──────────────────────────────────────────────────────────────────┘
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>┌──────────────────────────────────────────────────────────────────┐
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>│               STARTUP SECURITY VALIDATION                        │
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>│                                                                  │
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>│  Backend Startup                                                 │
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>│     │                                                            │
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>│     ├─ JWT_SECRET set?                                           │
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>│     │  ├─ NO → FATAL: &quot;JWT_SECRET must be set&quot; → exit(1)        │
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>│     │  └─ YES → contains &quot;dev&quot; or &quot;change&quot; or &quot;secret&quot;?         │
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>│     │           └─ YES → WARN: &quot;Insecure JWT_SECRET detected&quot;   │
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>│     │                                                            │
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>│     ├─ DATABASE_URL set?                                         │
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>│     │  ├─ NO → FATAL: &quot;DATABASE_URL must be set&quot; → exit(1)      │
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>│     │  └─ YES → contains &quot;localhost&quot; and password &quot;appcontrol&quot;?  │
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>│     │           └─ YES → WARN: &quot;Default database credentials&quot;   │
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>│     │                                                            │
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>│     ├─ OIDC enabled?                                             │
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>│     │  └─ YES → OIDC_CLIENT_SECRET set? Required.               │
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>│     │                                                            │
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>│     └─ SAML enabled?                                             │
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>│        └─ YES → SAML_IDP_CERT + entity ID set? Required.                   │
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>│                                                                  │
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>│  Environment: APP_ENV=production triggers strict mode            │
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>│  In strict mode, warnings become fatal errors.                   │
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>└──────────────────────────────────────────────────────────────────┘
 </span></code></pre></div>
 <hr />
 <h2 id="15-competitive-benchmarking">15. Competitive Benchmarking<a class="headerlink" href="#15-competitive-benchmarking" title="Permanent link">&para;</a></h2>
@@ -3659,7 +3755,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-18T21:29:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-20T22:41:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-20</span>
   </span>
 
     
@@ -3669,7 +3765,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-18T21:29:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago"><span class="timeago" datetime="2026-11-20T22:41:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2026-11-20</span>
   </span>
 
     
@@ -3723,13 +3819,13 @@
         
         
           
-          <a href="../HARDENING/" class="md-footer__link md-footer__link--next" aria-label="Next: Hardening checklist">
+          <a href="../IAM/" class="md-footer__link md-footer__link--next" aria-label="Next: Identity and access">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Hardening checklist
+                Identity and access
               </div>
             </div>
             <div class="md-footer__button md-icon">
